@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="font_size_very_large">31sp</dimen>
+    <dimen name="font_size_large">23sp</dimen>
+    <dimen name="font_size_medium">19sp</dimen>
+    <dimen name="font_size_small">17sp</dimen>
+    <dimen name="font_size_very_small">13sp</dimen>
+    
+    <color name="text_color_light">#E5E3D3</color>
+    <color name="text_color_red">#B9312F</color>
+    <color name="text_color_dark">#252420</color>
+
+</resources>

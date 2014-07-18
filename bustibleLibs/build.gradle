@@ -1,0 +1,26 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.1.0"
+
+    defaultConfig {
+        applicationId "com.bustiblelemons.bustiblelibs"
+        minSdkVersion 14
+        targetSdkVersion 19
+    }
+
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    provided 'com.android.support:appcompat-v7:19.1.+'
+    provided 'commons-httpclient:commons-httpclient:3.+'
+    provided 'com.nostra13.universalimageloader:universal-image-loader:1.9.+'
+    provided 'org.apache.httpcomponents:httpmime:4.2.5'
+}

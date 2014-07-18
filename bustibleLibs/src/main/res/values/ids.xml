@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <item name="seekbar_preference_container" type="id"/>
+    <item name="seekbar_preference_value" type="id"/>
+    <item name="tag_holder" type="id"/>
+    <item name="pager" type="id"/>
+    <item name="___image" type="id"/>
+    <item name="___progress" type="id"/>
+    <item name="tag_url" type="id"/>
+    <item name="___tag_url" type="id"/>
+
+</resources>

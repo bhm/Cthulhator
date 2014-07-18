@@ -1,0 +1,31 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.1.0"
+
+    defaultConfig {
+        applicationId "com.bustiblelemons.cthulhator"
+        minSdkVersion 14
+        targetSdkVersion 19
+    }
+
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    compile project(':bustibleLibs')
+    compile 'com.android.support:appcompat-v7:19.1.+'
+    compile 'org.codehaus.jackson:jackson-core-asl:1.1.0'
+    compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
+    compile 'commons-io:commons-io:2.4'
+    compile 'commons-httpclient:commons-httpclient:3.1'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.+'
+    compile 'com.github.manuelpeinado.fadingactionbar:fadingactionbar-abc:3.1.2'
+    compile 'org.apache.httpcomponents:httpmime:4.2.5'
+}

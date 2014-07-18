@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LoadingImage">
+        <attr name="no_image" format="reference"/>
+        <attr name="show_progressbar" format="reference"/>
+        <attr name="progress_style" format="reference" />
+        <attr name="progress_gravity" format="integer" />
+        <attr name="use_animations" format="boolean" />
+        <attr name="animationIn" format="reference" />
+        <attr name="animationOut" format="reference" />
+    </declare-styleable>
+</resources>

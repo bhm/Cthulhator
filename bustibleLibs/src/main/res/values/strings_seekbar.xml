@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="bustiblelemons_xml_namespace">com.bustiblelemons.views_namespace</string>
+    
+    <string name="seekbar_summary_placeholder">Seekbar summary</string>
+    <string name="seekbar_title_placeholder">Seekbar Title</string>
+    <string name="seekbar_value_placeholder">100</string>
+    
+</resources>
