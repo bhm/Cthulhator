@@ -3,9 +3,10 @@ package com.bustiblelemons.cthulhator.async;
 import android.content.Context;
 
 import com.bustiblelemons.async.SimpleAsync;
-import com.bustiblelemons.google.apis.model.GImageResponseData;
 import com.bustiblelemons.google.apis.model.GoogleImageObject;
+import com.bustiblelemons.google.apis.model.GoogleImageResponse;
 import com.bustiblelemons.google.apis.search.params.ImageSearch;
+import com.bustiblelemons.logging.Logger;
 
 import org.apache.http.HttpResponse;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -18,6 +19,8 @@ import java.util.List;
  * Created by bhm on 18.07.14.
  */
 public class QueryGImagesAsyn extends SimpleAsync<ImageSearch, List<GoogleImageObject>> {
+
+    private Logger log = new Logger(QueryGImagesAsyn.class);
 
     public QueryGImagesAsyn(Context context) {
         super(context);
@@ -35,14 +38,15 @@ public class QueryGImagesAsyn extends SimpleAsync<ImageSearch, List<GoogleImageO
     }
 
     @Override
-    public List<GoogleImageObject> call(ImageSearch... params) throws Exception {
+    protected List<GoogleImageObject> call(ImageSearch... params) throws Exception {
         for (ImageSearch search : params) {
             ObjectMapper mapper = new ObjectMapper();
-            HttpResponse response = search.query();
-            InputStream in = response.getEntity().getContent();
+            HttpResponse httpResponse = search.query();
+            InputStream in = httpResponse.getEntity().getContent();
             try {
-                GImageResponseData responseData = mapper.readValue(in, GImageResponseData.class);
-                publishProgress(responseData.getResults());
+                GoogleImageResponse response = mapper.readValue(in, GoogleImageResponse.class);
+                log.d("Response \n%s", response.getResults().size());
+                publishProgress(response.getResults());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -61,12 +65,12 @@ public class QueryGImagesAsyn extends SimpleAsync<ImageSearch, List<GoogleImageO
     }
 
     @Override
-    public boolean onException(Exception e) {
+    protected boolean onException(Exception e) {
         return false;
     }
 
     @Override
-    public boolean onSuccess(List<GoogleImageObject> result) {
+    protected boolean onSuccess(List<GoogleImageObject> result) {
         return false;
     }
 }

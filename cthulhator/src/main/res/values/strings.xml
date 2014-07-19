@@ -4,5 +4,6 @@
     <string name="app_name">Cthulhator</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="activity_portraits">Portraits</string>
 
 </resources>

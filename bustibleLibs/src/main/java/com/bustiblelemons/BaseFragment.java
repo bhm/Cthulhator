@@ -12,7 +12,7 @@ import com.bustiblelemons.logging.Logger;
  */
 public class BaseFragment extends Fragment {
 
-    private static Logger log;
+    protected static Logger log;
 
     private Context context;
 

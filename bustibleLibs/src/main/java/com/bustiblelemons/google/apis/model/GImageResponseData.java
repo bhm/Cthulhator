@@ -6,23 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by bhm on 18.07.14.
+ * Created by bhm on 19.07.14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GImageResponseData {
     private List<GoogleImageObject> results = new ArrayList<GoogleImageObject>();
-    private String moreResultsUrl;
-    private String resultCount;
 
     public List<GoogleImageObject> getResults() {
         return results;
     }
 
-    public String getMoreResultsUrl() {
-        return moreResultsUrl;
+    public void setResults(List<GoogleImageObject> results) {
+        this.results = results;
     }
 
-    public String getResultCount() {
-        return resultCount;
-    }
 }

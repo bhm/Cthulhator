@@ -3,6 +3,7 @@ package com.bustiblelemons.views;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,8 +34,14 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
     private Animation animationOut;
     private boolean   useAnimations;
 
+    public LoadingImage(Context context) {
+        super(context);
+        init(context, null);
+    }
+
     public LoadingImage(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init(context, attrs);
     }
 
     public LoadingImage(Context context, AttributeSet attrs, int defStyle) {
@@ -46,10 +53,15 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
         rootView = LayoutInflater.from(context).inflate(R.layout.loading_image, this, true);
         image = (ImageView) rootView.findViewById(R.id.___image);
         progress = (ProgressBar) rootView.findViewById(R.id.___progress);
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.LoadingImage);
-        noImageRes = array.getResourceId(R.styleable.LoadingImage_no_image, R.drawable.lemons);
-        showProgress = array.getBoolean(R.styleable.LoadingImage_show_progressbar, false);
-        setupAnimations(array);
+        if (attrs != null) {
+            TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.LoadingImage);
+            noImageRes = array.getResourceId(R.styleable.LoadingImage_no_image, R.drawable.lemons);
+            showProgress = array.getBoolean(R.styleable.LoadingImage_show_progressbar, false);
+            if (showProgress) {
+                progress.setVisibility(View.VISIBLE);
+            }
+            setupAnimations(array);
+        }
     }
 
     private void setupAnimations(TypedArray array) {
@@ -79,9 +91,9 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
     }
 
     public void loadFrom(String url, String fallbackUrl) {
-        this.addresToLoad = url;
         this.failbackAddress = fallbackUrl;
-        if (!isSameUrl(url)) {
+        this.addresToLoad = !TextUtils.isEmpty(url) ? url : fallbackUrl;
+        if (!isSameUrl(addresToLoad)) {
             rLoadUrl(addresToLoad);
         }
     }
@@ -115,6 +127,10 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
 
     @Override
     public void onLoadingStarted(String imageUri, View view) {
+        showProgressBar();
+    }
+
+    private void showProgressBar() {
         if (showProgress) {
             progress.setVisibility(VISIBLE);
         }
@@ -125,6 +141,10 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
         if (failbackAddress != null) {
             rLoadUrl(failbackAddress);
         }
+        hideProgressbar();
+    }
+
+    private void hideProgressbar() {
         if (showProgress) {
             progress.setVisibility(GONE);
         }
@@ -132,7 +152,12 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
 
     @Override
     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+        hideProgressbar();
         setTag(R.id.___tag_url, imageUri);
+        loadBitmap(loadedImage);
+    }
+
+    private void loadBitmap(Bitmap loadedImage) {
         if (useAnimations && animationIn != null) {
             image.startAnimation(animationIn);
         }
@@ -144,6 +169,7 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
 
     @Override
     public void onLoadingCancelled(String imageUri, View view) {
+        hideProgressbar();
         image.setImageResource(noImageRes);
     }
 }

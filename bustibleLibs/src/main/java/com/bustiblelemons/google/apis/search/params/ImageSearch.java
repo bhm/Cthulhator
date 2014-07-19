@@ -3,15 +3,21 @@ package com.bustiblelemons.google.apis.search.params;
 import org.apache.http.HttpResponse;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Locale;
 
 /**
  * Created by bhm on 18.07.14.
  */
 public interface ImageSearch {
-    String URL   = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0";
-    String QUERY = "q";
-    String START = "start";
+    String VERSION   = "v";
+    String VERSION_1 = "1.0";
+    String URL       = "https://ajax.googleapis.com/ajax/services/search/images";
+    String SCHEME    = "http";
+    String HOST      = "ajax.googleapis.com";
+    String METHOD    = "ajax/services/search/images";
+    String QUERY     = "q";
+    String START     = "start";
 
     public enum as_rights {
         cc_publicdomain {
@@ -83,6 +89,7 @@ public interface ImageSearch {
     String RESULTS_PER_PAGE = "rsz";
     int    rsz              = 4;
 
-    HttpResponse query(String query) throws IOException;
-    HttpResponse query() throws IOException;
+    HttpResponse query(String query) throws IOException, URISyntaxException;
+
+    HttpResponse query() throws IOException, URISyntaxException;
 }

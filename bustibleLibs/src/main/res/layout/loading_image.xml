@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:visibility="invisible"
+        android:visibility="visible"
         tools:src="@drawable/lemons"
         tools:visibility="visible"/>
 
@@ -21,6 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="gone"
-        tools:visibility="visible"/>
+        tools:visibility="gone"/>
 
 </RelativeLayout>

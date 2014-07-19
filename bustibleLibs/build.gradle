@@ -16,11 +16,24 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/LICENSE.TXT'
+        exclude 'META-INF/license.txt'
+        exclude 'APK META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.TXT'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+    }
 }
 
 dependencies {
     provided 'com.android.support:appcompat-v7:19.1.+'
-    provided 'commons-httpclient:commons-httpclient:3.+'
+    provided 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
     provided 'com.nostra13.universalimageloader:universal-image-loader:1.9.+'
     provided 'org.apache.httpcomponents:httpmime:4.2.5'
 }

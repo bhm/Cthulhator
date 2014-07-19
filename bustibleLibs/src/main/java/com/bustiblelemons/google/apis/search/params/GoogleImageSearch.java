@@ -1,14 +1,19 @@
 package com.bustiblelemons.google.apis.search.params;
 
+import com.bustiblelemons.logging.Logger;
+
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URIUtils;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -19,11 +24,12 @@ import java.util.List;
 public class GoogleImageSearch implements ImageSearch {
 
 
-    private List<Enum<?>>      params         = new ArrayList<Enum<?>>();
-    private int                resultsPerPage = ImageSearch.rsz;
-    private Collection<String> sites          = new ArrayList<String>();
-    private int                start          = 0 - resultsPerPage;
-    private String             mQuery         = "";
+    private              List<Enum<?>>      params         = new ArrayList<Enum<?>>();
+    private              int                resultsPerPage = ImageSearch.rsz;
+    private              Collection<String> sites          = new ArrayList<String>();
+    private              int                start          = 0 - resultsPerPage;
+    private              String             mQuery         = "";
+    private static final Logger             log            = new Logger(GoogleImageSearch.class);
 
     private GoogleImageSearch(Options b) {
         params.add(b.filetype);
@@ -78,43 +84,56 @@ public class GoogleImageSearch implements ImageSearch {
     }
 
     @Override
-    public HttpResponse query(String query) throws IOException {
+    public HttpResponse query(String query) throws IOException, URISyntaxException {
         this.mQuery = query;
         this.start = 0 - resultsPerPage;
         return query();
     }
 
     @Override
-    public HttpResponse query() throws IOException {
-        HttpPost post = new HttpPost(URL);
-        MultipartEntity multipartEntity = new MultipartEntity();
-        fillEnumParams(multipartEntity);
-        fillResultsPerPage(multipartEntity);
-        fillQuery(this.mQuery, multipartEntity);
+    public HttpResponse query() throws IOException, URISyntaxException {
+        List<NameValuePair> valuePairs = getNameValuePairs();
+        URI uri = getUri(valuePairs);
+        HttpGet get = new HttpGet(uri);
         HttpClient client = new DefaultHttpClient();
-        return client.execute(post);
+        return client.execute(get);
     }
 
-    private void fillQuery(String query, MultipartEntity multipartEntity) throws UnsupportedEncodingException {
-        StringBody queryBody = new StringBody(query);
-        multipartEntity.addPart(QUERY, queryBody);
+    private List<NameValuePair> getNameValuePairs() {
+        List<NameValuePair> valuePairs = new ArrayList<NameValuePair>();
+        valuePairs.add(new BasicNameValuePair(VERSION, VERSION_1));
+        fillEnumParams(valuePairs);
+        fillResultsPerPage(valuePairs);
+        fillQuery(this.mQuery, valuePairs);
+        return valuePairs;
     }
 
-    private void fillResultsPerPage(MultipartEntity multipartEntity) throws UnsupportedEncodingException {
-        multipartEntity.addPart(RESULTS_PER_PAGE, new StringBody(resultsPerPage + ""));
-        start += resultsPerPage;
-        multipartEntity.addPart(START, new StringBody(start + ""));
+    private URI getUri(List<NameValuePair> valuePairs) throws URISyntaxException {
+        String query = URLEncodedUtils.format(valuePairs, "utf-8");
+        return URIUtils.createURI(SCHEME, HOST, -1, METHOD, query, null);
     }
 
-    private void fillEnumParams(MultipartEntity multipartEntity) throws UnsupportedEncodingException {
+    private void fillQuery(String mQuery, List<NameValuePair> valuePairs) {
+        valuePairs.add(new BasicNameValuePair(QUERY, mQuery));
+    }
+
+    private void fillResultsPerPage(List<NameValuePair> valuePairs) {
+        valuePairs.add(new BasicNameValuePair(RESULTS_PER_PAGE, resultsPerPage + ""));
+        this.start += this.resultsPerPage;
+        log.d("Start %s", start);
+        valuePairs.add(new BasicNameValuePair(START, start + ""));
+    }
+
+    private void fillEnumParams(List<NameValuePair> valuePairs) {
         for (Enum<?> e : params) {
             String name = e.getClass().getSimpleName();
-            StringBody body = new StringBody(e.name());
-            multipartEntity.addPart(name, body);
+            String value = e.name();
+            valuePairs.add(new BasicNameValuePair(name, value));
         }
     }
 
-    public class Options {
+
+    public static class Options {
         protected safe        safe       = ImageSearch.safe.off;
         protected as_filetype filetype   = ImageSearch.as_filetype.png;
         protected as_rights   rights     = ImageSearch.as_rights.none;
@@ -176,6 +195,14 @@ public class GoogleImageSearch implements ImageSearch {
 
         public ImageSearch build() {
             return new GoogleImageSearch(this);
+        }
+
+        public void nextPage() {
+            start += resultsPerPage;
+        }
+
+        public void setQuery(String query) {
+            this.query = query;
         }
     }
 }

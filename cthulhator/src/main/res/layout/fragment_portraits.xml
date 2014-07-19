@@ -6,4 +6,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+    <com.bustiblelemons.views.LoadingImage
+        android:id="@android:id/icon"
+        app:show_progressbar="true"
+        app:progress_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </RelativeLayout>

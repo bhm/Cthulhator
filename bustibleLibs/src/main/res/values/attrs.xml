@@ -2,11 +2,22 @@
 <resources>
     <declare-styleable name="LoadingImage">
         <attr name="no_image" format="reference"/>
-        <attr name="show_progressbar" format="reference"/>
-        <attr name="progress_style" format="reference" />
-        <attr name="progress_gravity" format="integer" />
-        <attr name="use_animations" format="boolean" />
-        <attr name="animationIn" format="reference" />
-        <attr name="animationOut" format="reference" />
+        <attr name="show_progressbar" format="boolean"/>
+        <attr name="progress_style" format="reference"/>
+        <attr name="progress_gravity" />
+        <attr name="use_animations" format="boolean"/>
+        <attr name="animationIn" format="reference"/>
+        <attr name="animationOut" format="reference"/>
     </declare-styleable>
+    <declare-styleable name="LoadMoreViewPager">
+        <attr name="threshold" format="integer"/>
+    </declare-styleable>
+
+    <attr name="progress_gravity" >
+        <flag name="bottom" value="80"/>
+        <flag name="top" value="48"/>
+        <flag name="center" value="17"/>
+        <flag name="left" value="3"/>
+        <flag name="right" value="5"/>
+    </attr>
 </resources>
