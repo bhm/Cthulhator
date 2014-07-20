@@ -3,6 +3,7 @@ package com.bustiblelemons.views;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ public class SkillView extends RelativeLayout {
     private TextView titleView;
     private TextView valueView;
     private boolean isPercentile = false;
-    private boolean valueBelow   = false;
+    private boolean valueLeft    = false;
     private boolean hideTitle    = false;
 
     public SkillView(Context context) {
@@ -38,19 +39,20 @@ public class SkillView extends RelativeLayout {
     }
 
     private void init(Context context, AttributeSet attrs) {
+//        rootView = LayoutInflater.from(context).inflate(R.layout.skill_view, this, true);
         rootView = LayoutInflater.from(context).inflate(R.layout.skill_view, this, true);
         valueView = (TextView) rootView.findViewById(android.R.id.custom);
         titleView = (TextView) rootView.findViewById(android.R.id.title);
         if (attrs != null) {
-            TypedArray statArray = context.obtainStyledAttributes(attrs, R.styleable.StatisticView);
-            isPercentile = statArray.getBoolean(R.styleable.StatisticView_percentile, false);
-            valueBelow = statArray.getBoolean(R.styleable.StatisticView_valueBelow, valueBelow);
-            if (valueBelow) {
-                setVerticalParams();
+            TypedArray skillArray = context.obtainStyledAttributes(attrs, R.styleable.SkillView);
+            valueLeft = skillArray.getBoolean(R.styleable.SkillView_valueLeft, valueLeft);
+            if (valueLeft) {
+                setValueLeftParams();
             } else {
-                setHorizontalParams();
+                setValueRightParams();
             }
             TypedArray propArray = context.obtainStyledAttributes(attrs, R.styleable.PropertyView);
+            isPercentile = propArray.getBoolean(R.styleable.PropertyView_percentile, false);
             hideTitle = propArray.getBoolean(R.styleable.PropertyView_hideTitle, hideTitle);
             if (hideTitle) {
                 hideTitle();
@@ -62,21 +64,33 @@ public class SkillView extends RelativeLayout {
         }
     }
 
-    private void setHorizontalParams() {
+    private void setValueLeftParams() {
         LayoutParams titleParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        titleParams.addRule(LEFT_OF, valueView.getId());
+        titleParams.addRule(RIGHT_OF, valueView.getId());
+        titleParams.addRule(ALIGN_PARENT_RIGHT);
+        titleView.setLayoutParams(titleParams);
+        titleView.setGravity(Gravity.CENTER | Gravity.RIGHT);
         titleView.setLayoutParams(titleParams);
         LayoutParams valueParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        valueParams.addRule(ALIGN_PARENT_RIGHT);
-        titleView.setLayoutParams(valueParams);
+        valueParams.addRule(ALIGN_PARENT_LEFT);
+        valueView.setGravity(Gravity.CENTER | Gravity.LEFT);
+        valueView.setLayoutParams(valueParams);
     }
 
-    private void setVerticalParams() {
-        LayoutParams params = new LayoutParams(valueView.getLayoutParams());
-        params.addRule(RelativeLayout.BELOW, titleView.getId());
-        valueView.setLayoutParams(params);
+    private void setValueRightParams() {
+        LayoutParams titleParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        titleParams.addRule(LEFT_OF, valueView.getId());
+        titleParams.addRule(ALIGN_PARENT_LEFT);
+        titleView.setLayoutParams(titleParams);
+        titleView.setGravity(Gravity.CENTER | Gravity.LEFT);
+        LayoutParams valueParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        valueParams.addRule(ALIGN_PARENT_RIGHT);
+        valueView.setGravity(Gravity.CENTER | Gravity.RIGHT);
+        valueView.setLayoutParams(valueParams);
     }
 
     public void setTtitle(String title) {

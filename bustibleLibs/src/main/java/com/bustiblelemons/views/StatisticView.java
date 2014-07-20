@@ -3,10 +3,8 @@ package com.bustiblelemons.views;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -50,16 +48,14 @@ public class StatisticView extends RelativeLayout {
         titleView = (TextView) rootView.findViewById(android.R.id.title);
         if (attrs != null) {
             TypedArray statArray = context.obtainStyledAttributes(attrs, R.styleable.StatisticView);
-            isPercentile = statArray.getBoolean(R.styleable.StatisticView_percentile, false);
             valueBelow = statArray.getBoolean(R.styleable.StatisticView_valueBelow, valueBelow);
-//            if (valueBelow) {
-//                setValueBottom();
-//            } else {
-//                setValueTop();
-//            }
+            if (valueBelow) {
+                setValueParams();
+            } else {
+                setTitleParams();
+            }
             TypedArray propArray = context.obtainStyledAttributes(attrs, R.styleable.PropertyView);
-            valuePosition = propArray.getInteger(R.styleable.PropertyView_valuePosition, VALUE_RIGHT);
-            alignViews(valuePosition);
+            isPercentile = propArray.getBoolean(R.styleable.PropertyView_percentile, false);
             hideTitle = propArray.getBoolean(R.styleable.PropertyView_hideTitle, hideTitle);
             if (hideTitle) {
                 hideTitle();
@@ -71,55 +67,13 @@ public class StatisticView extends RelativeLayout {
         }
     }
 
-    private void alignViews(int valuePosition) {
-        switch(valuePosition) {
-            case VALUE_TOP:
-                setValueTop();
-                break;
-            case VALUE_BOTTOM:
-                setValueBottom();
-                break;
-            case VALUE_RIGHT:
-                setValueRight();
-                break;
-            case VALUE_LEFT:
-                setValueLeft();
-                break;
-        }
-    }
-
-    private void setValueLeft() {
-        LayoutParams titleParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        titleParams.addRule(RIGHT_OFg, titleView.getId());
-        titleView.setGravity(Gravity.CENTER | Gravity.LEFT);
-        titleView.setLayoutParams(titleParams);
-        LayoutParams valueParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        valueParams.addRule(ALIGN_PARENT_LEFT);
-        titleView.setLayoutParams(valueParams);
-    }
-
-    private void setValueRight() {
-        LayoutParams titleParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        titleParams.addRule(LEFT_OF, valueView.getId());
-        titleParams.addRule(ALIGN_PARENT_RIGHT);
-        titleView.setGravity(Gravity.CENTER | Gravity.RIGHT);
-        titleView.setLayoutParams(titleParams);
-        LayoutParams valueParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        valueParams.addRule(ALIGN_PARENT_RIGHT);
-        titleView.setLayoutParams(valueParams);
-    }
-
-    public void setValueTop() {
+    private void setTitleParams() {
         LayoutParams params = new LayoutParams(titleView.getLayoutParams());
         params.addRule(RelativeLayout.BELOW, valueView.getId());
         titleView.setLayoutParams(params);
     }
 
-    public void setValueBottom() {
+    private void setValueParams() {
         LayoutParams params = new LayoutParams(valueView.getLayoutParams());
         params.addRule(RelativeLayout.BELOW, titleView.getId());
         valueView.setLayoutParams(params);

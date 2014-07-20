@@ -18,6 +18,7 @@
         <attr name="statTitle" format="reference"/>
         <attr name="titleSize" format="dimension"/>
         <attr name="valueSize" format="dimension"/>
+        <attr name="percentile" format="boolean"/>
         <attr name="valuePosition" />
     </declare-styleable>
 
@@ -28,11 +29,11 @@
         <enum name="left" value="4"/>
     </attr>
     <declare-styleable name="StatisticView">
-        <attr name="percentile" format="boolean"/>
         <attr name="valueBelow" format="boolean"/>
+
     </declare-styleable>
     <declare-styleable name="SkillView">
-
+        <attr name="valueLeft" format="boolean"/>
     </declare-styleable>
 
     <attr name="progress_gravity">

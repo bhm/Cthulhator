@@ -50,9 +50,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="6"
+
             app:statTitle="@string/edu"
             app:statValue="@string/placeholder_perc_val"
-            app:valueBelow="false"/>
+            app:valueBelow="true"/>
 
         <com.bustiblelemons.views.StatisticView
             android:layout_width="0dip"
@@ -61,8 +62,23 @@
             android:layout_weight="5"
             app:percentile="true"
             app:statTitle="@string/knowledge"
-            app:statValue="@string/placeholder_perc_val"/>
+            app:statValue="@string/placeholder_perc_val"
+            app:valueBelow="true"/>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.bustiblelemons.views.SkillView
+            app:statTitle="@string/knowledge"
+            app:statValue="@string/placeholder_perc_val"
+            android:layout_width="match_parent"
+            app:valueLeft="false"
+            app:percentile="true"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </LinearLayout>
