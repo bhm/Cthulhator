@@ -4,7 +4,7 @@
         <attr name="no_image" format="reference"/>
         <attr name="show_progressbar" format="boolean"/>
         <attr name="progress_style" format="reference"/>
-        <attr name="progress_gravity" />
+        <attr name="progress_gravity"/>
         <attr name="use_animations" format="boolean"/>
         <attr name="animationIn" format="reference"/>
         <attr name="animationOut" format="reference"/>
@@ -12,8 +12,30 @@
     <declare-styleable name="LoadMoreViewPager">
         <attr name="threshold" format="integer"/>
     </declare-styleable>
+    <declare-styleable name="PropertyView">
+        <attr name="hideTitle" format="boolean"/>
+        <attr name="statValue" format="reference"/>
+        <attr name="statTitle" format="reference"/>
+        <attr name="titleSize" format="dimension"/>
+        <attr name="valueSize" format="dimension"/>
+        <attr name="valuePosition" />
+    </declare-styleable>
 
-    <attr name="progress_gravity" >
+    <attr name="valuePosition" format="integer">
+        <enum name="top" value="1"/>
+        <enum name="right" value="2"/>
+        <enum name="bottom" value="3"/>
+        <enum name="left" value="4"/>
+    </attr>
+    <declare-styleable name="StatisticView">
+        <attr name="percentile" format="boolean"/>
+        <attr name="valueBelow" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="SkillView">
+
+    </declare-styleable>
+
+    <attr name="progress_gravity">
         <flag name="bottom" value="80"/>
         <flag name="top" value="48"/>
         <flag name="center" value="17"/>

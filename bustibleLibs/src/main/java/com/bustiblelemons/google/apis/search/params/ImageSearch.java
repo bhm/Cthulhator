@@ -56,7 +56,7 @@ public interface ImageSearch {
     }
 
     enum as_filetype {
-        jpg, png, gif, bmp, filetype;
+        jpg, png, gif, bmp;
     }
 
     enum imgsz {

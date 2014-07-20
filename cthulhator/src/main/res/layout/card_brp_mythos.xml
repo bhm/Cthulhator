@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    android:padding="@dimen/padding_16"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:tag="@string/mythos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="6"
+            android:textSize="@dimen/font_16"
+            android:padding="@dimen/padding_16"
+            android:text="@string/mythos"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@id/mythos_value"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:padding="@dimen/padding_16"
+            tools:text="@string/placeholder_perc_val"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/thin_line"
+        android:layout_height="@dimen/thin_line" />
+
+    <LinearLayout
+        android:tag="@string/sanity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="6"
+            android:padding="@dimen/padding_16"
+            android:text="@string/sanity"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@id/sanity_value"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:padding="@dimen/padding_16"
+            tools:text="@string/placeholder_perc_val"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="cards_container" type="id"/>
+    <item name="value" type="id"/>
+    <item name="mythos_value" type="id"/>
+    <item name="sanity_value" type="id"/>
+    <item name="idea_value" type="id"/>
+</resources>

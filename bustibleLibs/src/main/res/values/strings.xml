@@ -1,5 +1,7 @@
 <resources>
 
     <string name="app_name">Bustible Libs</string>
+    <string name="placeholder_title">Title</string>
+    <string name="placeholder_perc_val">99</string>
 
 </resources>

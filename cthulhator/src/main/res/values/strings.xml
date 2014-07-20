@@ -5,5 +5,12 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="activity_portraits">Portraits</string>
+    <string name="mythos">Mythos</string>
+    <string name="placeholder_perc_val">99</string>
+    <string name="sanity">Sanity</string>
+    <string name="idea">Idea</string>
+    <string name="knowledge">Knowledge</string>
+    <string name="edu">EDU</string>
+    <string name="_int">INT</string>
 
 </resources>
