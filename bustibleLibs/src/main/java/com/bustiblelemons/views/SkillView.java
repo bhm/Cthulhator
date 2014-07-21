@@ -31,6 +31,8 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
     private int valueSizeResId = R.dimen.font_16;
     private int valueSize;
     private int titleSize;
+    private int defTitleSize;
+    private int defValSize;
 
 
     public SkillView(Context context) {
@@ -52,6 +54,7 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         rootView = LayoutInflater.from(context).inflate(R.layout.skill_view, this, true);
         valueView = (TextView) rootView.findViewById(android.R.id.custom);
         titleView = (TextView) rootView.findViewById(android.R.id.title);
+        setupDefaultTextSize(context);
         incView = (ImageView) rootView.findViewById(R.id.inc);
         decView = (ImageView) rootView.findViewById(R.id.dec);
         if (attrs != null) {
@@ -80,6 +83,11 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         }
     }
 
+    private void setupDefaultTextSize(Context context) {
+        defTitleSize = context.getResources().getDimensionPixelSize(R.dimen.font_16);
+        defValSize = context.getResources().getDimensionPixelSize(R.dimen.font_16);
+    }
+
     private void positionValue() {
         if (valueLeft) {
             setValueLeftParams();
@@ -89,8 +97,8 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
     }
 
     private void setUpTextSize(TypedArray propArray) {
-        valueSize = propArray.getDimensionPixelSize(R.styleable.PropertyView_valueSize, R.dimen.font_16);
-        titleSize = propArray.getDimensionPixelSize(R.styleable.PropertyView_titleSize, R.dimen.font_24);
+        valueSize = propArray.getDimensionPixelSize(R.styleable.PropertyView_valueSize, defValSize);
+        titleSize = propArray.getDimensionPixelSize(R.styleable.PropertyView_titleSize, defTitleSize);
         setValueSize(valueSize);
         setTitleSize(titleSize);
     }

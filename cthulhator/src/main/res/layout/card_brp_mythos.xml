@@ -13,11 +13,12 @@
     <com.bustiblelemons.views.SkillView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:percentile="true"
+        app:showModifiers="false"
         app:statTitle="@string/mythos"
-        app:valueSize="@dimen/font_16"
+        app:statValue="@string/placeholder_perc_val"
         app:titleSize="@dimen/font_16"
-        app:showModifiers="true"
-        app:statValue="@string/placeholder_perc_val"/>
+        app:valueSize="@dimen/font_16"/>
 
     <View
         style="@style/inset_divider"
