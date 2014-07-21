@@ -9,5 +9,7 @@
     <item name="___progress" type="id"/>
     <item name="tag_url" type="id"/>
     <item name="___tag_url" type="id"/>
+    <item name="inc" type="id"/>
+    <item name="dec" type="id"/>
 
 </resources>

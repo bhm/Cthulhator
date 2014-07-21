@@ -3,7 +3,7 @@ package com.bustiblelemons.cthulhator.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-import com.bustiblelemons.adapters.viewpager.BaseViewPagerAdapter;
+import com.bustiblelemons.adapters.viewpager.BaseFragmentPagerAdapter;
 import com.bustiblelemons.cthulhator.fragments.PortraitFragment;
 import com.bustiblelemons.google.apis.model.GoogleImageObject;
 
@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by bhm on 18.07.14.
  */
-public class PortraitsPagerAdapter extends BaseViewPagerAdapter<PortraitFragment> {
+public class PortraitsPagerAdapter extends BaseFragmentPagerAdapter<PortraitFragment> {
     private List<GoogleImageObject> data = new ArrayList<GoogleImageObject>();
 
     public PortraitsPagerAdapter(FragmentManager fm) {

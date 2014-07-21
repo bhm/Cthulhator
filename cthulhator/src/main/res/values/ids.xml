@@ -5,4 +5,8 @@
     <item name="mythos_value" type="id"/>
     <item name="sanity_value" type="id"/>
     <item name="idea_value" type="id"/>
+    <item name="str" type="id"/>
+    <item name="siz" type="id"/>
+    <item name="kon" type="id"/>
+    <item name="dex" type="id"/>
 </resources>

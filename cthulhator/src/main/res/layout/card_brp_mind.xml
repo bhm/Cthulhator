@@ -5,9 +5,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/padding_16">
+    style="@style/card"
+    android:padding="@dimen/padding_16"
+    tools:context=".AppClass">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,10 +36,10 @@
 
     </LinearLayout>
 
+
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/thin_line"
-        android:background="@color/thin_line"/>
+        style="@style/inset_divider"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,7 +52,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="6"
-
             app:statTitle="@string/edu"
             app:statValue="@string/placeholder_perc_val"
             app:valueBelow="true"/>
@@ -67,16 +68,22 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/full_bleed_divider"
+        android:background="@drawable/full_bleed_divider"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <com.bustiblelemons.views.SkillView
-            app:statTitle="@string/knowledge"
+            app:statTitle="@string/placeholder_title"
             app:statValue="@string/placeholder_perc_val"
             android:layout_width="match_parent"
             app:valueLeft="false"
+            app:showModifiers="true"
             app:percentile="true"
             android:layout_height="wrap_content"/>
     </LinearLayout>

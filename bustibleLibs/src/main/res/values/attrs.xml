@@ -33,6 +33,7 @@
 
     </declare-styleable>
     <declare-styleable name="SkillView">
+        <attr name="showModifiers" format="boolean" />
         <attr name="valueLeft" format="boolean"/>
     </declare-styleable>
 

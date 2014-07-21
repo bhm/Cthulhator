@@ -8,11 +8,11 @@ import android.util.SparseArray;
 /**
  * Created by bhm on 18.07.14.
  */
-public abstract class BaseViewPagerAdapter<T extends Fragment> extends FragmentStatePagerAdapter {
+public abstract class BaseFragmentPagerAdapter<T extends Fragment> extends FragmentStatePagerAdapter {
 
     private SparseArray<T> fragments = new SparseArray<T>();
 
-    public BaseViewPagerAdapter(FragmentManager fm) {
+    public BaseFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 

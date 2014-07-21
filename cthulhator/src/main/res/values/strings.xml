@@ -12,5 +12,10 @@
     <string name="knowledge">Knowledge</string>
     <string name="edu">EDU</string>
     <string name="_int">INT</string>
+    <string name="dex">DEX</string>
+    <string name="str">STR</string>
+    <string name="siz">SIZ</string>
+    <string name="kon">KON</string>
+    <string name="activity_test">Test</string>
 
 </resources>

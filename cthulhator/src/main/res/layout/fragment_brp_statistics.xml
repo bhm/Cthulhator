@@ -5,13 +5,19 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/thin_line">
+                android:background="@color/light_blue_50">
 
     <LinearLayout
-        android:layout_margin="@dimen/padding_2"
         android:id="@id/cards_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"/>
+        android:orientation="vertical">
+
+        <include layout="@layout/card_brp_mythos"/>
+
+        <include layout="@layout/card_brp_mind"/>
+        <!--<include layout="@layout/card_brp_combat"/>-->
+
+    </LinearLayout>
 
 </RelativeLayout>

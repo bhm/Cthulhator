@@ -20,11 +20,19 @@ public class MainActivity extends BaseFragmentActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_test:
+                return launchTestActivity();
             case R.id.action_portriats:
                 return launchPortraitsChooser();
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private boolean launchTestActivity() {
+        Intent i = new Intent(this, TestActivity.class);
+        startActivity(i);
+        return false;
     }
 
     private boolean launchPortraitsChooser() {

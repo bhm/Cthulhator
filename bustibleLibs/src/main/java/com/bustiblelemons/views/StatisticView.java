@@ -96,6 +96,9 @@ public class StatisticView extends RelativeLayout {
     }
 
     public void hideTitle() {
+        /**
+         * TODO Increase the value view by half of titleview font size
+         */
         if (titleView != null) {
             titleView.setVisibility(GONE);
         }
