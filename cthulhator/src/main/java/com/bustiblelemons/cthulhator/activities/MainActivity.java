@@ -20,6 +20,8 @@ public class MainActivity extends BaseFragmentActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_character:
+                return launchCharacterViewer(-1);
             case R.id.action_test:
                 return launchTestActivity();
             case R.id.action_portriats:
@@ -27,6 +29,13 @@ public class MainActivity extends BaseFragmentActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private boolean launchCharacterViewer(int characterId) {
+        Intent i = new Intent(this, CharcterViewerActivity.class);
+        i.putExtra(CharcterViewerActivity.CHARCTER_ID, characterId);
+        startActivity(i);
+        return true;
     }
 
     private boolean launchTestActivity() {

@@ -9,4 +9,6 @@
     <item name="siz" type="id"/>
     <item name="kon" type="id"/>
     <item name="dex" type="id"/>
+    <item name="add_picture" type="id"/>
+    <item name="bottom_card" type="id"/>
 </resources>

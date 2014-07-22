@@ -7,6 +7,12 @@
         android:title="@string/activity_test"
         app:showAsAction="always"/>
     <item
+        android:id="@+id/action_character"
+        android:icon="@drawable/ic_action_test"
+        android:orderInCategory="1"
+        android:title="@string/activity_character"
+        app:showAsAction="always"/>
+    <item
         android:id="@+id/action_portriats"
         android:icon="@drawable/ic_action_portraits"
         android:orderInCategory="2"

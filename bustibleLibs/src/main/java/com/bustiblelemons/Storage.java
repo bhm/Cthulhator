@@ -12,7 +12,7 @@ public class Storage {
 
     public static File getStorage(Context context) {
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-            return Environment.getExternalStorageDirectory();
+            return context.getExternalCacheDir();
         }
         return context.getCacheDir();
     }

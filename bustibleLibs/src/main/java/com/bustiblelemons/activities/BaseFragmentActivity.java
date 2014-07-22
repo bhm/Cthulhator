@@ -1,17 +1,19 @@
 package com.bustiblelemons.activities;
 
-import android.app.Activity;
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 
+import com.bustiblelemons.BaseFragment;
+import com.bustiblelemons.bustiblelibs.R;
 import com.bustiblelemons.logging.Logger;
 
 /**
  * Created by bhm on 19.07.14.
  */
-public class BaseFragmentActivity extends FragmentActivity {
+public class BaseFragmentActivity extends ActionBarActivity
+        implements BaseFragment.ActionBarInterface {
 
     protected static Logger log;
 
@@ -21,14 +23,25 @@ public class BaseFragmentActivity extends FragmentActivity {
         log = new Logger(getClass());
     }
 
-    protected boolean startActivity(Class<? extends Activity> activity) {
-        try {
-            Intent intent = new Intent(this, activity.getClass());
-            startActivity(intent);
-            return true;
-        } catch (ActivityNotFoundException e) {
-            log.d("could not found activity %s", activity);
-            return false;
+    @Override
+    public boolean onSetActionBarToClosable() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setIcon(null);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayUseLogoEnabled(false);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_close);
+        return false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

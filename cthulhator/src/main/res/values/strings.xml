@@ -17,5 +17,9 @@
     <string name="siz">SIZ</string>
     <string name="kon">KON</string>
     <string name="activity_test">Test</string>
+    <string name="hit_points">Hit Points</string>
+    <string name="placholder_value">14</string>
+    <string name="know">Know</string>
+    <string name="activity_character">Character</string>
 
 </resources>

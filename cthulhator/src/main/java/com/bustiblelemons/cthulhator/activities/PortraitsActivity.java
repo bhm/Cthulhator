@@ -1,9 +1,9 @@
 package com.bustiblelemons.cthulhator.activities;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 
+import com.bustiblelemons.activities.BaseFragmentActivity;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.adapters.PortraitsPagerAdapter;
 import com.bustiblelemons.cthulhator.async.QueryGImagesAsyn;
@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by bhm on 18.07.14.
  */
-public class PortraitsActivity extends FragmentActivity implements
+public class PortraitsActivity extends BaseFragmentActivity implements
                                                         LoadMoreViewPager.LoadMore,
                                                         QueryGImagesAsyn.ReceiveGoogleImages {
 
@@ -41,7 +41,7 @@ public class PortraitsActivity extends FragmentActivity implements
         searchOptions.setQuery("1920+male+portrait");
         this.imageSearch =searchOptions.build();
         queryForImages(imageSearch);
-
+        onSetActionBarToClosable();
     }
 
     private void queryForImages(ImageSearch search) {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -11,4 +11,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <RelativeLayout
+        android:id="@id/bottom_card"
+        style="@style/card.peeking.bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/peeking_sheet"
+        android:layout_alignParentBottom="true"/>
+
+    <at.markushi.ui.CircleButton
+        android:layout_width="@dimen/fab_padding_8"
+        android:layout_height="@dimen/fab_padding_8"
+        android:layout_above="@id/bottom_card"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="-40dp"
+        android:layout_marginLeft="@dimen/padding_16"
+        android:src="@drawable/ic_download_image"
+        app:cb_color="@color/portraits_fab"/>
 </RelativeLayout>

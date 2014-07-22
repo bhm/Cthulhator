@@ -16,7 +16,8 @@
         <include layout="@layout/card_brp_mythos"/>
 
         <include layout="@layout/card_brp_mind"/>
-        <!--<include layout="@layout/card_brp_combat"/>-->
+
+        <include layout="@layout/card_brp_combat"/>
 
     </LinearLayout>
 

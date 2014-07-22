@@ -16,7 +16,7 @@
 
             <corners android:radius="2dp" />
 
-            <solid android:color="@color/blue_grey_200" />
+            <solid android:color="@color/card_background" />
 
             <padding android:bottom="8dp"
                      android:left="8dp"

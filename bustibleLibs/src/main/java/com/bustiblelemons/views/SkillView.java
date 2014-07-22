@@ -2,6 +2,7 @@ package com.bustiblelemons.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -29,11 +30,13 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
     private ImageView decView;
     private int titleSizeResId = R.dimen.font_16;
     private int valueSizeResId = R.dimen.font_16;
-    private int valueSize;
-    private int titleSize;
-    private int defTitleSize;
-    private int defValSize;
-
+    private int             valueSize;
+    private int             titleSize;
+    private int             defTitleSize;
+    private int             defValSize;
+    private Drawable        incDrawable;
+    private Drawable        decDrawable;
+    private OnClickListener cachedOnClick;
 
     public SkillView(Context context) {
         super(context);
@@ -57,29 +60,86 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         setupDefaultTextSize(context);
         incView = (ImageView) rootView.findViewById(R.id.inc);
         decView = (ImageView) rootView.findViewById(R.id.dec);
+        setOnClicks();
         if (attrs != null) {
             TypedArray skillArray = context.obtainStyledAttributes(attrs, R.styleable.SkillView);
-            showModifiers = skillArray.getBoolean(R.styleable.SkillView_showModifiers, false);
-            if (showModifiers) {
-                showModifers();
-            } else {
-                hideModifiers();
-            }
+            setupModifiers(skillArray);
             valueLeft = skillArray.getBoolean(R.styleable.SkillView_valueLeft, valueLeft);
             positionValue();
-            TypedArray propArray = context.obtainStyledAttributes(attrs, R.styleable.PropertyView);
-            isPercentile = propArray.getBoolean(R.styleable.PropertyView_percentile, false);
-            hideTitle = propArray.getBoolean(R.styleable.PropertyView_hideTitle, hideTitle);
-            setUpTextSize(propArray);
+            isPercentile = skillArray.getBoolean(R.styleable.SkillView_percentile, false);
+            hideTitle = skillArray.getBoolean(R.styleable.SkillView_hideTitle, hideTitle);
+            setUpTextSize(skillArray);
             if (hideTitle) {
                 hideTitle();
             }
-            String value = propArray.getString(R.styleable.PropertyView_statValue);
-            setValue(value);
-            String title = propArray.getString(R.styleable.PropertyView_statTitle);
-            setTtitle(title);
-            propArray.recycle();
+            setTexts(skillArray);
             skillArray.recycle();
+        }
+    }
+
+    private void setOnClicks() {
+        setOnClick(valueView, titleView, incView, decView);
+    }
+
+    private void setOnClick(View... views) {
+        if (views != null) {
+            for(View view : views) {
+                if (view != null) {
+                    view.setOnClickListener(this);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void setOnClickListener(OnClickListener l) {
+        cachedOnClick = l;
+        super.setOnClickListener(this);
+    }
+
+    private void setTexts(TypedArray skillArray) {
+        String value = skillArray.getString(R.styleable.SkillView_statValue);
+        setValue(value);
+        String title = skillArray.getString(R.styleable.SkillView_statTitle);
+        setTtitle(title);
+    }
+
+    private void setupModifiers(TypedArray skillArray) {
+        showModifiers = skillArray.getBoolean(R.styleable.SkillView_showModifiers, false);
+        setupIncreaseModifier(skillArray);
+        setIncreaseDrawable(incDrawable);
+        setupDecreaseDrawablew(skillArray);
+        if (showModifiers) {
+            showModifers();
+        } else {
+            hideModifiers();
+        }
+    }
+
+    private void setupDecreaseDrawablew(TypedArray skillArray) {
+        decDrawable = skillArray.getDrawable(R.styleable.SkillView_decreaseSrc);
+        if (decDrawable == null) {
+            decDrawable = getResources().getDrawable(R.drawable.decrease_selector);
+        }
+        setDecreaseDrawable(decDrawable);
+    }
+
+    private void setupIncreaseModifier(TypedArray skillArray) {
+        incDrawable = skillArray.getDrawable(R.styleable.SkillView_increaseSrc);
+        if (incDrawable == null) {
+            incDrawable = getResources().getDrawable(R.drawable.increase_selector);
+        }
+    }
+
+    public void setDecreaseDrawable(Drawable drawable) {
+        if (decView != null) {
+            decView.setImageDrawable(drawable);
+        }
+    }
+
+    public void setIncreaseDrawable(Drawable drawable) {
+        if (incView != null) {
+            incView.setImageDrawable(drawable);
         }
     }
 
@@ -97,8 +157,8 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
     }
 
     private void setUpTextSize(TypedArray propArray) {
-        valueSize = propArray.getDimensionPixelSize(R.styleable.PropertyView_valueSize, defValSize);
-        titleSize = propArray.getDimensionPixelSize(R.styleable.PropertyView_titleSize, defTitleSize);
+        valueSize = propArray.getDimensionPixelSize(R.styleable.SkillView_valueSize, defValSize);
+        titleSize = propArray.getDimensionPixelSize(R.styleable.SkillView_titleSize, defTitleSize);
         setValueSize(valueSize);
         setTitleSize(titleSize);
     }
@@ -158,55 +218,59 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
     public void showDecreaser() {
         if (decView != null) {
             decView.setVisibility(VISIBLE);
+            decView.setClickable(true);
         }
     }
 
     public void showIncreaser() {
         if (incView != null) {
             incView.setVisibility(VISIBLE);
+            incView.setClickable(true);
         }
     }
 
     public void hideDecreaser() {
         if (decView != null) {
             decView.setVisibility(INVISIBLE);
+            decView.setClickable(false);
         }
     }
 
     public void hideIncreaser() {
         if (incView != null) {
             incView.setVisibility(INVISIBLE);
+            incView.setClickable(false);
         }
     }
 
     private void setValueLeftParams() {
+        LayoutParams valueParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        valueParams.addRule(RIGHT_OF, decView.getId());
+        valueView.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+        valueView.setLayoutParams(valueParams);
+
         LayoutParams titleParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         titleParams.addRule(LEFT_OF, incView.getId());
         titleParams.addRule(RIGHT_OF, valueView.getId());
         titleView.setGravity(Gravity.CENTER | Gravity.RIGHT);
         titleView.setLayoutParams(titleParams);
-
-        LayoutParams valueParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        valueParams.addRule(RIGHT_OF, decView.getId());
-        valueView.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-        valueView.setLayoutParams(valueParams);
     }
 
     private void setValueRightParams() {
+        LayoutParams valueParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        valueParams.addRule(LEFT_OF, incView.getId());
+        valueView.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+        valueView.setLayoutParams(valueParams);
+
         LayoutParams titleParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         titleParams.addRule(RIGHT_OF, decView.getId());
         titleParams.addRule(LEFT_OF, valueView.getId());
         titleView.setLayoutParams(titleParams);
         titleView.setGravity(Gravity.CENTER | Gravity.LEFT);
-
-        LayoutParams valueParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        valueParams.addRule(LEFT_OF, incView.getId());
-        valueView.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-        valueView.setLayoutParams(valueParams);
     }
 
     public void setTtitle(String title) {
@@ -245,21 +309,26 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        int id = view.getId();
-        if (id == R.id.dec) {
-
-        } else if (id == R.id.inc) {
-
-        } else if (id == android.R.id.custom && listener != null) {
-            listener.onSkillValueClick(this);
-        } else if (id == android.R.id.title && listener != null) {
-            listener.onSkillTitleClick(this);
+        if (listener != null) {
+            int id = view.getId();
+            if (id == R.id.dec) {
+                listener.onDecreaseClicked(this);
+            } else if (id == R.id.inc) {
+                listener.onIncreaseClicked(this);
+            } else if (id == android.R.id.custom) {
+                listener.onSkillValueClick(this);
+            } else if (id == android.R.id.title) {
+                listener.onSkillTitleClick(this);
+            } else {
+                cachedOnClick.onClick(view);
+            }
+        } else {
+            if (cachedOnClick != null) {
+                cachedOnClick.onClick(view);
+            }
         }
     }
 
-    public interface SkillViewListener {
-        void onSkillValueClick(SkillView skillView);
-
-        void onSkillTitleClick(SkillView skillView);
+    public interface SkillViewListener extends PropertyViewListener<SkillView> {
     }
 }

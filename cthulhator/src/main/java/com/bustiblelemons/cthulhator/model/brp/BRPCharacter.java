@@ -31,6 +31,7 @@ public abstract class BRPCharacter implements ICharacter {
     private MagicPoints magicPoints;
 
     private List<Weapon> weapons = new ArrayList<Weapon>();
+    private int id;
 
     @Override
     public int getSkillValue(Skill s) {
@@ -64,5 +65,9 @@ public abstract class BRPCharacter implements ICharacter {
     @Override
     public int getMaxSanity() {
         return sanity.getMax();
+    }
+
+    public int getId() {
+        return id;
     }
 }

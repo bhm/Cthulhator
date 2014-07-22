@@ -14,17 +14,27 @@ public class BaseFragment extends Fragment {
 
     protected static Logger log;
 
-    private Context context;
+    private Context            context;
+    private ActionBarInterface actionbarInterface;
 
     public Context getContext() {
         return context;
     }
+
+
+    public interface ActionBarInterface {
+        boolean onSetActionBarToClosable();
+    }
+
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         log = new Logger(getClass());
         context = activity;
+        if (activity instanceof ActionBarInterface) {
+            actionbarInterface = (ActionBarInterface) activity;
+        }
     }
 
     public boolean hasArguments() {
@@ -40,5 +50,11 @@ public class BaseFragment extends Fragment {
         Bundle args = new Bundle();
         r.setArguments(args);
         return r;
+    }
+
+    protected void setActionBarCloseIcon() {
+        if (actionbarInterface != null) {
+            actionbarInterface.onSetActionBarToClosable();
+        }
     }
 }

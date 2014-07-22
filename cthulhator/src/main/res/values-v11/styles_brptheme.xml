@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="AutoCompleteTextViewBRPTheme" parent="android:Widget.Holo.Light.AutoCompleteTextView">
+      <item name="android:dropDownSelector">@drawable/brptheme_list_selector_holo_light</item>
+	    <item name="android:background">@drawable/brptheme_edit_text_holo_light</item>
+  </style>
+
+  <style name="ButtonBRPTheme" parent="android:Widget.Holo.Light.Button">
+	  <item name="android:background">@drawable/brptheme_btn_default_holo_light</item>
+  </style>
+
+  <style name="ImageButtonBRPTheme" parent="android:Widget.Holo.Light.ImageButton">
+	  <item name="android:background">@drawable/brptheme_btn_default_holo_light</item>
+  </style>
+
+</resources>

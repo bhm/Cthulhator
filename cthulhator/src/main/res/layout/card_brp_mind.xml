@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout
+    style="@style/card"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    style="@style/card"
     android:padding="@dimen/padding_16"
     tools:context=".AppClass">
 
@@ -18,6 +18,8 @@
         android:tag="@string/mythos">
 
         <com.bustiblelemons.views.StatisticView
+            app:valueSize="@dimen/font_24"
+            app:titleSize="@dimen/font_16"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -26,6 +28,8 @@
             app:statValue="@string/placeholder_perc_val"/>
 
         <com.bustiblelemons.views.StatisticView
+            app:valueSize="@dimen/font_24"
+            app:titleSize="@dimen/font_16"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -38,8 +42,8 @@
 
 
     <View
-        android:layout_width="match_parent"
-        style="@style/inset_divider"/>
+        style="@style/inset_divider"
+        android:layout_width="match_parent"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,6 +52,8 @@
         android:tag="@string/mythos">
 
         <com.bustiblelemons.views.StatisticView
+            app:valueSize="@dimen/font_24"
+            app:titleSize="@dimen/font_16"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -57,21 +63,22 @@
             app:valueBelow="true"/>
 
         <com.bustiblelemons.views.StatisticView
+            app:valueSize="@dimen/font_24"
+            app:titleSize="@dimen/font_16"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="5"
             app:percentile="true"
-            app:statTitle="@string/knowledge"
+            app:statTitle="@string/know"
             app:statValue="@string/placeholder_perc_val"
             app:valueBelow="true"/>
 
     </LinearLayout>
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/full_bleed_divider"
-        android:background="@drawable/full_bleed_divider"/>
+        style="@style/full_bleed_divider"
+        android:layout_width="match_parent"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -79,13 +86,15 @@
         android:orientation="vertical">
 
         <com.bustiblelemons.views.SkillView
+            app:valueSize="@dimen/font_18"
+            app:titleSize="@dimen/font_16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:percentile="true"
+            app:showModifiers="true"
             app:statTitle="@string/placeholder_title"
             app:statValue="@string/placeholder_perc_val"
-            android:layout_width="match_parent"
-            app:valueLeft="false"
-            app:showModifiers="true"
-            app:percentile="true"
-            android:layout_height="wrap_content"/>
+            app:valueLeft="false"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -19,7 +19,10 @@
         <attr name="titleSize" format="dimension"/>
         <attr name="valueSize" format="dimension"/>
         <attr name="percentile" format="boolean"/>
-        <attr name="valuePosition" />
+        <attr name="showModifiers" format="boolean"/>
+        <attr name="increaseSrc" format="reference"/>
+        <attr name="decreaseSrc" format="reference"/>
+        <attr name="valuePosition"/>
     </declare-styleable>
 
     <attr name="valuePosition" format="integer">
@@ -29,12 +32,34 @@
         <enum name="left" value="4"/>
     </attr>
     <declare-styleable name="StatisticView">
+        <attr name="hideTitle"/>
+        <attr name="statValue"/>
+        <attr name="statTitle"/>
+        <attr name="titleSize"/>
+        <attr name="valueSize"/>
+        <attr name="percentile"/>
+        <attr name="showModifiers"/>
+        <attr name="increaseSrc"/>
+        <attr name="decreaseSrc"/>
+        <attr name="valueBiggerIfTitleMissing" format="boolean"/>
         <attr name="valueBelow" format="boolean"/>
 
     </declare-styleable>
     <declare-styleable name="SkillView">
-        <attr name="showModifiers" format="boolean" />
+        <attr name="hideTitle"/>
+        <attr name="statValue"/>
+        <attr name="statTitle"/>
+        <attr name="titleSize"/>
+        <attr name="valueSize"/>
+        <attr name="percentile"/>
+        <attr name="showModifiers"/>
+        <attr name="increaseSrc"/>
+        <attr name="decreaseSrc"/>
         <attr name="valueLeft" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="FloatingActionButton">
+        <attr name="buttonColor" format="color" />
+        <attr name="anchorView" format="reference" />
     </declare-styleable>
 
     <attr name="progress_gravity">

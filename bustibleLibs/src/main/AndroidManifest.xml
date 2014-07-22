@@ -1,17 +1,10 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
     package="com.bustiblelemons.bustiblelibs"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:versionCode="1"
-    android:versionName="1.0" >
-
-    <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="17" />
+    android:versionName="1.0">
 
     <application
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-    </application>
+        android:allowBackup="true"></application>
 
 </manifest>

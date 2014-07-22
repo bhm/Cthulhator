@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,26 +14,54 @@ import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.fragments.main.BRPCard;
 import com.bustiblelemons.cthulhator.model.BRPSKills;
 import com.bustiblelemons.cthulhator.model.brp.BRPCharacter;
+import com.manuelpeinado.fadingactionbar.FadingActionBarHelperBase;
+import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarHelper;
 
 /**
  * Created by bhm on 20.07.14.
  */
-public class BRPCharacterFragment extends BaseFragment {
+public class BRPCharacterFragment extends BaseFragment implements View.OnClickListener {
 
-    private LinearLayout cardsContainer;
-    private BRPCharacter character;
+    private LinearLayout              cardsContainer;
+    private BRPCharacter              character;
+    private FadingActionBarHelperBase mFadingHelper;
+    private ImageButton               addPicture;
+    public interface BRPCharacterListener {
+        boolean onPickPicture(int characterId);
+    }
+
+    private BRPCharacterListener characterListener;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        mFadingHelper = new FadingActionBarHelper()
+                .actionBarBackground(R.drawable.actionbar_brp)
+                .headerLayout(R.layout.header_brp_header_background)
+                .headerOverlayLayout(R.layout.fragment_brp_header_overlay)
+                .contentLayout(R.layout.fragment_brp_statistics)
+                .lightActionBar(false);
+        mFadingHelper.initActionBar(activity);
+        setActionBarCloseIcon();
+        setCharacterListener(activity);
+    }
+
+    private void setCharacterListener(Activity activity) {
+        if (activity instanceof BRPCharacterListener) {
+            characterListener = (BRPCharacterListener) activity;
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_brp_statistics, container, false);
+        View rootView = mFadingHelper.createView(getContext());
+        addPicture = (ImageButton) rootView.findViewById(R.id.add_picture);
+        if (addPicture != null) {
+            addPicture.setOnClickListener(this);
+        }
         cardsContainer = (LinearLayout) rootView.findViewById(R.id.cards_container);
         if (cardsContainer != null) {
-            inflateCards(cardsContainer, inflater);
+//            inflateCards(cardsContainer, inflater);
         }
         return rootView;
     }
@@ -70,5 +99,23 @@ public class BRPCharacterFragment extends BaseFragment {
         mythosValue.setText(character.getSkillValue(BRPSKills.mythos));
         TextView sanityValue = (TextView) view.findViewById(R.id.sanity_value);
         sanityValue.setText(character.getCurrentSanity());
+    }
+
+    public static BRPCharacterFragment newInstance(Bundle extras) {
+        BRPCharacterFragment r = new BRPCharacterFragment();
+        extras = extras == null ? new Bundle() : extras;
+        r.setArguments(extras);
+        return r;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.add_picture:
+                if (characterListener != null) {
+                    characterListener.onPickPicture(-1);
+                }
+                break;
+        }
     }
 }

@@ -14,11 +14,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:percentile="true"
-        app:showModifiers="false"
+        app:showModifiers="true"
         app:statTitle="@string/mythos"
         app:statValue="@string/placeholder_perc_val"
         app:titleSize="@dimen/font_16"
-        app:valueSize="@dimen/font_16"/>
+        app:valueSize="@dimen/font_18"/>
 
     <View
         style="@style/inset_divider"
@@ -27,8 +27,11 @@
     <com.bustiblelemons.views.SkillView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:showModifiers="true"
         app:statTitle="@string/sanity"
-        app:statValue="@string/placeholder_perc_val"/>
+        app:statValue="@string/placeholder_perc_val"
+        app:titleSize="@dimen/font_16"
+        app:valueSize="@dimen/font_18"/>
 
 
 </LinearLayout>
