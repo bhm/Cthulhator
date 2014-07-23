@@ -12,6 +12,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -133,7 +134,7 @@ public class GoogleImageSearch implements ImageSearch {
     }
 
 
-    public static class Options {
+    public static class Options implements Serializable {
         protected safe        safe       = ImageSearch.safe.off;
         protected as_filetype filetype   = ImageSearch.as_filetype.png;
         protected as_rights   rights     = ImageSearch.as_rights.none;

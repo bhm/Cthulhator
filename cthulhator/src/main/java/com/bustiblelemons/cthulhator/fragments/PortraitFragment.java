@@ -36,4 +36,8 @@ public class PortraitFragment extends BaseFragment {
         r.setArguments(args);
         return r;
     }
+
+    public static PortraitFragment newInstance() {
+        return new PortraitFragment();
+    }
 }

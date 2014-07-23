@@ -27,8 +27,9 @@
         android:textStyle="bold"
         tools:text="@string/placeholder_title"/>
 
-    <ImageView
+    <ImageButton
         android:id="@id/inc"
+        android:background="@null"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClick"
@@ -36,8 +37,9 @@
         android:src="@drawable/increase_selector"
         tools:visibility="visible"/>
 
-    <ImageView
+    <ImageButton
         android:id="@id/dec"
+        android:background="@null"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClick"

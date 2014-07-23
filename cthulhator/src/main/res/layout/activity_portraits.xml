@@ -15,8 +15,10 @@
         android:id="@id/bottom_card"
         style="@style/card.peeking.bottom"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/peeking_sheet"
-        android:layout_alignParentBottom="true"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+    </RelativeLayout>
 
     <at.markushi.ui.CircleButton
         android:layout_width="@dimen/fab_padding_8"

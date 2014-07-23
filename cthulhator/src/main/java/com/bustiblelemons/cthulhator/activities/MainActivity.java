@@ -6,10 +6,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.bustiblelemons.activities.BaseFragmentActivity;
+import com.bustiblelemons.activities.BaseActionBarActivity;
 import com.bustiblelemons.cthulhator.R;
 
-public class MainActivity extends BaseFragmentActivity {
+public class MainActivity extends BaseActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

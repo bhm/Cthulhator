@@ -12,7 +12,7 @@ import com.bustiblelemons.logging.Logger;
 /**
  * Created by bhm on 19.07.14.
  */
-public class BaseFragmentActivity extends ActionBarActivity
+public class BaseActionBarActivity extends ActionBarActivity
         implements BaseFragment.ActionBarInterface {
 
     protected static Logger log;
@@ -30,7 +30,7 @@ public class BaseFragmentActivity extends ActionBarActivity
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayUseLogoEnabled(false);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_close);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_action_navigation_back_dark);
         return false;
     }
 

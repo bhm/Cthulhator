@@ -14,11 +14,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bustiblelemons.bustiblelibs.R;
+import com.bustiblelemons.logging.Logger;
 
 /**
  * Created by bhm on 20.07.14.
  */
 public class SkillView extends RelativeLayout implements View.OnClickListener {
+    private static final Logger log = new Logger(SkillView.class);
+
     private View     rootView;
     private TextView titleView;
     private TextView valueView;
@@ -83,7 +86,7 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
 
     private void setOnClick(View... views) {
         if (views != null) {
-            for(View view : views) {
+            for (View view : views) {
                 if (view != null) {
                     view.setOnClickListener(this);
                 }
@@ -309,6 +312,7 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        log.d("onCLick %s", view);
         if (listener != null) {
             int id = view.getId();
             if (id == R.id.dec) {

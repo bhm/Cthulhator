@@ -11,4 +11,7 @@
     <item name="dex" type="id"/>
     <item name="add_picture" type="id"/>
     <item name="bottom_card" type="id"/>
+    <item name="action_settings" type="id"/>
+    <item name="action_portriats" type="id"/>
+    <item name="action_character" type="id"/>
 </resources>

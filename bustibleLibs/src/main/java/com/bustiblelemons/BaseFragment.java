@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import com.bustiblelemons.google.apis.search.params.GoogleImageSearch;
 import com.bustiblelemons.logging.Logger;
 
 /**
@@ -43,13 +44,6 @@ public class BaseFragment extends Fragment {
 
     public boolean hasArgument(String key) {
         return hasArguments() ? getArguments().containsKey(key) : false;
-    }
-
-    public static BaseFragment newInstance() {
-        BaseFragment r = new BaseFragment();
-        Bundle args = new Bundle();
-        r.setArguments(args);
-        return r;
     }
 
     protected void setActionBarCloseIcon() {
