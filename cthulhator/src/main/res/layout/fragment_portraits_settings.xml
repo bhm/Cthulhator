@@ -5,7 +5,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:background="@color/deep_orange_50">
+                android:background="@drawable/bg_card_peek_bottom">
 
     <ImageButton
         android:id="@id/action_settings"
@@ -29,8 +29,8 @@
         android:id="@android:id/custom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_below="@id/action_settings">
+        android:layout_below="@id/action_settings"
+        android:visibility="gone">
 
         <Switch
             android:layout_width="wrap_content"
