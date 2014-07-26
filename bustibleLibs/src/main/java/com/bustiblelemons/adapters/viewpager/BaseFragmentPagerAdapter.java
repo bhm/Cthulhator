@@ -5,39 +5,71 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.SparseArray;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by bhm on 18.07.14.
  */
-public abstract class BaseFragmentPagerAdapter<T extends Fragment> extends FragmentStatePagerAdapter {
+public abstract class BaseFragmentPagerAdapter<T, F extends Fragment>
+        extends FragmentStatePagerAdapter {
 
-    private SparseArray<T> fragments = new SparseArray<T>();
+    private SparseArray<F> mFragments = new SparseArray<F>();
+    private List<T>        mData      = new ArrayList<T>();
 
     public BaseFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    public void setFragments(SparseArray<T> fragments) {
-        this.fragments = fragments;
+    public BaseFragmentPagerAdapter(FragmentManager fm, List<T> data) {
+        super(fm);
+        this.mData = data;
+    }
+
+    public void setFragments(SparseArray<F> fragments) {
+        this.mFragments = fragments;
         notifyDataSetChanged();
     }
 
     public boolean hasFragment(int atPos) {
-        return fragments != null ? fragments.get(atPos) != null : false;
+        return mFragments != null ? mFragments.get(atPos) != null : false;
     }
 
-    public abstract T getEmptyFragment();
+    public void addData(List<T> data) {
+        for (T item : data) {
+            mData.add(item);
+            int pos = mData.size();
+            F f = newInstance(item);
+            mFragments.put(pos, f);
+        }
+        notifyDataSetChanged();
+    }
+
+    public boolean addData(T item) {
+        boolean r = mData.add(item);
+        notifyDataSetChanged();
+        return r;
+    }
+
+    public abstract F newInstance(T item);
 
     @Override
-    public Fragment getItem(int position) {
-        return fragments != null ? fragments.get(position) : null;
+    public F getItem(int position) {
+        if (mFragments.get(position) == null) {
+            T item = mData.get(position);
+            F f = newInstance(item);
+            mFragments.put(position, f);
+        }
+        return mFragments.get(position);
     }
 
-    protected void addFragment(int pos, T fragment) {
-        fragments.put(pos, fragment);
+    protected void addFragment(int pos, F fragment) {
+        mFragments.put(pos, fragment);
+        notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return fragments.size();
+        return this.mData.size();
     }
 }

@@ -11,8 +11,8 @@ import com.bustiblelemons.cthulhator.adapters.PortraitsPagerAdapter;
 import com.bustiblelemons.cthulhator.async.QueryGImagesAsyn;
 import com.bustiblelemons.cthulhator.fragments.PortraitsSettingsFragment;
 import com.bustiblelemons.google.apis.model.GoogleImageObject;
+import com.bustiblelemons.google.apis.search.params.GImageSearch;
 import com.bustiblelemons.google.apis.search.params.GoogleImageSearch;
-import com.bustiblelemons.google.apis.search.params.ImageSearch;
 import com.bustiblelemons.logging.Logger;
 import com.bustiblelemons.views.LoadMoreViewPager;
 
@@ -30,7 +30,7 @@ public class PortraitsActivity extends BaseActionBarActivity implements
     private PortraitsPagerAdapter pagerAdapter;
     private static final Logger log = new Logger(PortraitsActivity.class);
     private GoogleImageSearch.Options searchOptions;
-    private ImageSearch               imageSearch;
+    private GImageSearch              imageSearch;
     private PortraitsSettingsFragment settingsFragment;
 
     @Override
@@ -43,7 +43,7 @@ public class PortraitsActivity extends BaseActionBarActivity implements
         pager.setLoadMoreListener(this);
         searchOptions = new GoogleImageSearch.Options();
         searchOptions.setQuery("1920+male+portrait");
-        this.imageSearch =searchOptions.build();
+        this.imageSearch = searchOptions.build();
         queryForImages(imageSearch);
         attachSettings();
         onSetActionBarToClosable();
@@ -63,7 +63,7 @@ public class PortraitsActivity extends BaseActionBarActivity implements
         return transaction.commit();
     }
 
-    private void queryForImages(ImageSearch search) {
+    private void queryForImages(GImageSearch search) {
         QueryGImagesAsyn queryGImagesAsyn = new QueryGImagesAsyn(this, this);
         queryGImagesAsyn.executeCrossPlatform(search);
     }

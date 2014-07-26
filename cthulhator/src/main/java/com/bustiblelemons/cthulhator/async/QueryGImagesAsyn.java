@@ -5,7 +5,7 @@ import android.content.Context;
 import com.bustiblelemons.async.SimpleAsync;
 import com.bustiblelemons.google.apis.model.GoogleImageObject;
 import com.bustiblelemons.google.apis.model.GoogleImageResponse;
-import com.bustiblelemons.google.apis.search.params.ImageSearch;
+import com.bustiblelemons.google.apis.search.params.GImageSearch;
 import com.bustiblelemons.logging.Logger;
 
 import org.apache.http.HttpResponse;
@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by bhm on 18.07.14.
  */
-public class QueryGImagesAsyn extends SimpleAsync<ImageSearch, List<GoogleImageObject>> {
+public class QueryGImagesAsyn extends SimpleAsync<GImageSearch, List<GoogleImageObject>> {
 
     private Logger log = new Logger(QueryGImagesAsyn.class);
 
@@ -38,8 +38,8 @@ public class QueryGImagesAsyn extends SimpleAsync<ImageSearch, List<GoogleImageO
     }
 
     @Override
-    protected List<GoogleImageObject> call(ImageSearch... params) throws Exception {
-        for (ImageSearch search : params) {
+    protected List<GoogleImageObject> call(GImageSearch... params) throws Exception {
+        for (GImageSearch search : params) {
             ObjectMapper mapper = new ObjectMapper();
             HttpResponse httpResponse = search.query();
             InputStream in = httpResponse.getEntity().getContent();

@@ -1,15 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
-    <item name="seekbar_preference_container" type="id"/>
-    <item name="seekbar_preference_value" type="id"/>
-    <item name="tag_holder" type="id"/>
-    <item name="pager" type="id"/>
-    <item name="___image" type="id"/>
+    <item name="cards_container" type="id"/>
+    <item name="value" type="id"/>
+    <item name="mythos_value" type="id"/>
+    <item name="sanity_value" type="id"/>
+    <item name="idea_value" type="id"/>
+    <item name="str" type="id"/>
+    <item name="siz" type="id"/>
+    <item name="kon" type="id"/>
+    <item name="dex" type="id"/>
+    <item name="add_picture" type="id"/>
+    <item name="bottom_card" type="id"/>
+    <item name="action_settings" type="id"/>
+    <item name="action_portriats" type="id"/>
+    <item name="action_character" type="id"/>
+    <item name="gender_spinner" type="id"/>
+    <item name="name" type="id"/>
+    <item name="location" type="id"/>
+    <item name="street_title" type="id"/>
+    <item name="pick_location" type="id"/>
     <item name="___progress" type="id"/>
-    <item name="tag_url" type="id"/>
-    <item name="___tag_url" type="id"/>
+    <item name="___image" type="id"/>
+    <item name="seekbar_preference_value" type="id"/>
+    <item name="seekbar_preference_container" type="id"/>
     <item name="inc" type="id"/>
     <item name="dec" type="id"/>
-
+    <item name="___tag_url" type="id"/>
+    <item name="tag_holder" type="id"/>
+    <item name="state" type="id"/>
+    <item name="zipcode" type="id"/>
+    <item name="street" type="id"/>
+    <item name="city" type="id"/>
 </resources>

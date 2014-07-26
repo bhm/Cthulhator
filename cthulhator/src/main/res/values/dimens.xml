@@ -26,4 +26,6 @@
     <dimen name="fab_padding_8">64dp</dimen>
     <dimen name="peeking_sheet">64dp</dimen>
     <dimen name="fab_offset">-32dp</dimen>
+    <dimen name="padding_20">20dp</dimen>
+    <dimen name="button_size">48dp</dimen>
 </resources>

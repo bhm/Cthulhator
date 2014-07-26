@@ -1,11 +1,13 @@
 package com.bustiblelemons.cthulhator.activities;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 
-import com.bustiblelemons.adapters.ValuePagerAdapter;
+import com.bustiblelemons.activities.BaseActionBarActivity;
 import com.bustiblelemons.cthulhator.R;
+import com.bustiblelemons.cthulhator.adapters.tes.BRPCharacterPagerAdapter;
+import com.bustiblelemons.cthulhator.model.JazzAgeBRPChar;
+import com.bustiblelemons.cthulhator.model.brp.BRPCharacter;
 import com.bustiblelemons.logging.Logger;
 
 import java.util.ArrayList;
@@ -14,10 +16,10 @@ import java.util.List;
 /**
  * Created by bhm on 21.07.14.
  */
-public class TestActivity extends FragmentActivity implements ViewPager.OnPageChangeListener {
+public class TestActivity extends BaseActionBarActivity implements ViewPager.OnPageChangeListener {
 
-    private ViewPager         pager;
-    private ValuePagerAdapter adapter;
+    private ViewPager                pager;
+    private BRPCharacterPagerAdapter adapter;
     private static final Logger log = new Logger(TestActivity.class);
 
     @Override
@@ -25,17 +27,17 @@ public class TestActivity extends FragmentActivity implements ViewPager.OnPageCh
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistic_pager_view);
         pager = (ViewPager) findViewById(android.R.id.custom);
-        adapter = new ValuePagerAdapter(this);
-        List<String> data = getDataList();
-        adapter.addItems(data);
+        adapter = new BRPCharacterPagerAdapter(getSupportFragmentManager());
+        List<BRPCharacter> data = getDataList();
+        adapter.addData(data);
         pager.setAdapter(adapter);
         pager.setOnPageChangeListener(this);
     }
 
-    public List<String> getDataList() {
-        List<String> r = new ArrayList<String>();
+    public List<BRPCharacter> getDataList() {
+        List<BRPCharacter> r = new ArrayList<BRPCharacter>();
         for (int i = 0; i < 100; i++) {
-            r.add(i + "");
+            r.add(new JazzAgeBRPChar());
         }
         return r;
     }

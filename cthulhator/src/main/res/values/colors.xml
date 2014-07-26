@@ -7,5 +7,8 @@
     <color name="card_background">@color/amber_50</color>
     <color name="portraits_fab">@color/main_color_active</color>
     <color name="male_female_color">@color/main_color</color>
+    <color name="flat_button_selected">@color/blue_grey_50</color>
+    <color name="hint_focused">@color/blue_grey_500</color>
+    <color name="hint_unfocused">@color/blue_grey_400</color>
 
 </resources>

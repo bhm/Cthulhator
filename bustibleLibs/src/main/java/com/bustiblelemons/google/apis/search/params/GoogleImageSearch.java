@@ -1,19 +1,14 @@
 package com.bustiblelemons.google.apis.search.params;
 
+import com.bustiblelemons.api.AbsOnlineQuery;
 import com.bustiblelemons.logging.Logger;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.utils.URIUtils;
-import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,11 +17,11 @@ import java.util.List;
 /**
  * Created by bhm on 18.07.14.
  */
-public class GoogleImageSearch implements ImageSearch {
+public class GoogleImageSearch extends AbsOnlineQuery implements GImageSearch {
 
 
     private              List<Enum<?>>      params         = new ArrayList<Enum<?>>();
-    private              int                resultsPerPage = ImageSearch.rsz;
+    private              int                resultsPerPage = GImageSearch.rsz;
     private              Collection<String> sites          = new ArrayList<String>();
     private              int                start          = 0 - resultsPerPage;
     private              String             mQuery         = "";
@@ -60,28 +55,28 @@ public class GoogleImageSearch implements ImageSearch {
     }
 
     @Override
-    public safe getSafeMode() {
-        return (safe) getValue(safe.class);
+    public GImageSearch.safe getSafeMode() {
+        return (GImageSearch.safe) getValue(GImageSearch.safe.class);
     }
 
     @Override
-    public imgtype getImageType() {
-        return (imgtype) getValue(imgtype.class);
+    public GImageSearch.imgtype getImageType() {
+        return (GImageSearch.imgtype) getValue(GImageSearch.imgtype.class);
     }
 
     @Override
-    public as_filetype getFileType() {
-        return (as_filetype) getValue(as_filetype.class);
+    public GImageSearch.as_filetype getFileType() {
+        return (GImageSearch.as_filetype) getValue(GImageSearch.as_filetype.class);
     }
 
     @Override
-    public imgsz getImageSize() {
-        return (imgsz) getValue(imgsz.class);
+    public GImageSearch.imgsz getImageSize() {
+        return (GImageSearch.imgsz) getValue(GImageSearch.imgsz.class);
     }
 
     @Override
-    public as_rights getRights() {
-        return (as_rights) getValue(as_rights.class);
+    public GImageSearch.as_rights getRights() {
+        return (GImageSearch.as_rights) getValue(GImageSearch.as_rights.class);
     }
 
     @Override
@@ -92,26 +87,18 @@ public class GoogleImageSearch implements ImageSearch {
     }
 
     @Override
-    public HttpResponse query() throws IOException, URISyntaxException {
-        List<NameValuePair> valuePairs = getNameValuePairs();
-        URI uri = getUri(valuePairs);
-        HttpGet get = new HttpGet(uri);
-        HttpClient client = new DefaultHttpClient();
-        return client.execute(get);
-    }
-
-    private List<NameValuePair> getNameValuePairs() {
+    protected List<NameValuePair> getNameValuePairs() {
         List<NameValuePair> valuePairs = new ArrayList<NameValuePair>();
-        valuePairs.add(new BasicNameValuePair(VERSION, VERSION_1));
+        valuePairs.add(new BasicNameValuePair(GImageSearch.VERSION, GImageSearch.VERSION_1));
         fillEnumParams(valuePairs);
         fillResultsPerPage(valuePairs);
         fillQuery(this.mQuery, valuePairs);
         return valuePairs;
     }
 
-    private URI getUri(List<NameValuePair> valuePairs) throws URISyntaxException {
-        String query = URLEncodedUtils.format(valuePairs, "utf-8");
-        return URIUtils.createURI(SCHEME, HOST, -1, METHOD, query, null);
+    @Override
+    protected boolean usesSSL() {
+        return true;
     }
 
     private void fillQuery(String mQuery, List<NameValuePair> valuePairs) {
@@ -127,59 +114,75 @@ public class GoogleImageSearch implements ImageSearch {
 
     private void fillEnumParams(List<NameValuePair> valuePairs) {
         for (Enum<?> e : params) {
-            String name = e.getClass().getSimpleName();
-            String value = e.name();
-            valuePairs.add(new BasicNameValuePair(name, value));
+            if (e != null) {
+                String name = e.getClass().getSimpleName();
+                String value = e.name();
+                valuePairs.add(new BasicNameValuePair(name, value));
+            }
         }
+    }
+
+    @Override
+    public String getScheme() {
+        return GImageSearch.SCHEME;
+    }
+
+    @Override
+    public String getHost() {
+        return GImageSearch.HOST;
+    }
+
+    @Override
+    public String getMethod() {
+        return GImageSearch.METHOD;
     }
 
 
     public static class Options implements Serializable {
-        protected safe        safe       = ImageSearch.safe.off;
-        protected as_filetype filetype   = ImageSearch.as_filetype.png;
-        protected as_rights   rights     = ImageSearch.as_rights.none;
-        protected imgtype     imagetype  = imgtype.face;
-        protected imgsz       imagesize  = imgsz.large;
-        protected imgc        imagecolor = imgc.color;
+        protected GImageSearch.safe        safe       = GImageSearch.safe.off;
+        protected GImageSearch.as_filetype filetype   = null;
+        protected GImageSearch.as_rights   rights     = null;
+        protected GImageSearch.imgtype     imagetype  = GImageSearch.imgtype.face;
+        protected GImageSearch.imgsz                    imagesize  = null;
+        protected GImageSearch.imgc                     imagecolor = null;
 
-        protected int resultsPerPage = ImageSearch.rsz;
+        protected int resultsPerPage = GImageSearch.rsz;
 
         public Collection<String> sites = new ArrayList<String>();
         public int                start = 0;
 
         protected String query = "";
 
-
         public void start(int start) {
             this.start = start;
         }
 
-        public Options safe(ImageSearch.safe safe) {
+        public Options safe(GImageSearch.safe safe) {
             this.safe = safe;
             return this;
         }
 
-        public Options setFiletype(as_filetype filetype) {
+        public Options setFiletype(GImageSearch.as_filetype filetype) {
             this.filetype = filetype;
             return this;
         }
 
-        public Options setRights(as_rights rights) {
+        public Options setRights(GImageSearch.as_rights rights) {
             this.rights = rights;
             return this;
         }
 
-        public Options setImageType(imgtype imagetype) {
+        public Options setImageType(GImageSearch.imgtype imagetype) {
             this.imagetype = imagetype;
             return this;
         }
 
-        public Options setImageSize(imgsz imagesize) {
+        public Options setImageSize(GImageSearch.imgsz imagesize) {
             this.imagesize = imagesize;
             return this;
         }
 
-        public Options setImageColor(imgc imagecolor) {
+        public Options setImageColor(GImageSearch.imgc imagecolor) {
             this.imagecolor = imagecolor;
             return this;
         }
@@ -194,7 +197,7 @@ public class GoogleImageSearch implements ImageSearch {
             return this;
         }
 
-        public ImageSearch build() {
+        public GImageSearch build() {
             return new GoogleImageSearch(this);
         }
 

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@android:id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:enabled="false"
+        android:gravity="center"
+        android:padding="@dimen/padding_16"
+        android:textSize="@dimen/font_12"
+        android:textStyle="bold"
+        tools:text="@string/placeholder_title"/>
+
+    <TextView
+        android:id="@android:id/custom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@android:id/title"
+        android:layout_centerHorizontal="true"
+        android:enabled="true"
+        android:gravity="center"
+        android:padding="@dimen/padding_16"
+        android:textSize="@dimen/font_16"
+        android:textStyle="bold"
+        tools:text="@string/placeholder_year"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <SeekBar
+        android:id="@android:id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@android:id/custom"
+        android:layout_marginLeft="@dimen/padding_8"
+        android:layout_marginRight="@dimen/padding_8"
+        android:padding="@dimen/padding_16"/>
+
+</RelativeLayout>

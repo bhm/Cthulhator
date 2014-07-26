@@ -1,3 +1,4 @@
 include ':bustibleLibs'
 include ':circle-button'
 include ':cthulhator'
+include ':floatlabel'

@@ -104,7 +104,7 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         String value = skillArray.getString(R.styleable.SkillView_statValue);
         setValue(value);
         String title = skillArray.getString(R.styleable.SkillView_statTitle);
-        setTtitle(title);
+        setTitle(title);
     }
 
     private void setupModifiers(TypedArray skillArray) {
@@ -276,7 +276,7 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         titleView.setGravity(Gravity.CENTER | Gravity.LEFT);
     }
 
-    public void setTtitle(String title) {
+    public void setTitle(String title) {
         if (titleView != null) {
             titleView.setText(title);
         }

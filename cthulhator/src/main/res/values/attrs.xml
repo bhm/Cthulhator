@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LocationWidget">
+        <attr name="enableMapPicker" format="boolean" />
+        <attr name="pickerDrawable" format="reference" />
+    </declare-styleable>
+</resources>

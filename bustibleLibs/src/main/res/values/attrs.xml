@@ -22,6 +22,11 @@
         <attr name="showModifiers" format="boolean"/>
         <attr name="increaseSrc" format="reference"/>
         <attr name="decreaseSrc" format="reference"/>
+        <attr name="minValue" format="integer"/>
+        <attr name="maxValue" format="integer"/>
+        <attr name="jumpValue" format="integer"/>
+        <attr name="defaultValue" format="integer"/>
+        <attr name="compact" format="boolean"/>
         <attr name="valuePosition"/>
     </declare-styleable>
 
@@ -58,8 +63,24 @@
         <attr name="valueLeft" format="boolean"/>
     </declare-styleable>
     <declare-styleable name="FloatingActionButton">
-        <attr name="buttonColor" format="color" />
-        <attr name="anchorView" format="reference" />
+        <attr name="buttonColor" format="color"/>
+        <attr name="anchorView" format="reference"/>
+    </declare-styleable>
+    <declare-styleable name="TitledSeekbar">
+        <attr name="hideTitle"/>
+        <attr name="compact" />
+        <attr name="statTitle"/>
+        <attr name="titleSize"/>
+        <attr name="valueSize"/>
+        <attr name="percentile"/>
+        <attr name="increaseSrc"/>
+        <attr name="decreaseSrc"/>
+        <attr name="minValue"/>
+        <attr name="defaultValue"/>
+        <attr name="maxValue"/>
+        <attr name="jumpValue"/>
+        <attr name="valuesArray" format="reference"/>
+
     </declare-styleable>
 
     <attr name="progress_gravity">

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.micromobs.android.floatlabel.FloatLabelEditText
+        android:id="@id/street"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_20"
+        android:textSize="@dimen/font_16"
+        app:hint="@string/street"
+        app:textColorHintFocused="@color/hint_focused"
+        app:textColorHintUnFocused="@color/hint_unfocused"
+        tools:text="@string/placeholder_street"/>
+
+    <com.micromobs.android.floatlabel.FloatLabelEditText
+        android:id="@id/city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/street"
+        android:padding="@dimen/padding_20"
+        android:textSize="@dimen/font_16"
+        app:hint="@string/city"
+        app:textColorHintFocused="@color/hint_focused"
+        app:textColorHintUnFocused="@color/hint_unfocused"
+        tools:text="@string/placeholder_city"/>
+
+    <com.micromobs.android.floatlabel.FloatLabelEditText
+        android:id="@id/state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/city"
+        android:padding="@dimen/padding_20"
+        android:textSize="@dimen/font_16"
+        app:hint="@string/state"
+        app:textColorHintFocused="@color/hint_focused"
+        app:textColorHintUnFocused="@color/hint_unfocused"
+        tools:text="@string/placeholder_state"/>
+
+    <com.micromobs.android.floatlabel.FloatLabelEditText
+        android:id="@id/zipcode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/state"
+        android:padding="@dimen/padding_20"
+        android:textSize="@dimen/font_16"
+        app:hint="@string/hint_zipcode"
+        app:textColorHintFocused="@color/hint_focused"
+        app:textColorHintUnFocused="@color/hint_unfocused"
+        tools:text="@string/placeholder_zipcode"/>
+
+    <ImageButton
+        android:id="@id/pick_location"
+        android:layout_below="@id/zipcode"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/pic_location_selector"
+        android:background="@drawable/flatt_button_selector"
+        android:layout_width="@dimen/button_size"
+        android:layout_height="@dimen/button_size"/>
+
+</RelativeLayout>

@@ -1,5 +1,7 @@
 package com.bustiblelemons.google.apis.search.params;
 
+import com.bustiblelemons.api.OnlineQuery;
+
 import org.apache.http.HttpResponse;
 
 import java.io.IOException;
@@ -9,7 +11,7 @@ import java.util.Locale;
 /**
  * Created by bhm on 18.07.14.
  */
-public interface ImageSearch {
+public interface GImageSearch extends OnlineQuery {
     String VERSION   = "v";
     String VERSION_1 = "1.0";
     String URL       = "https://ajax.googleapis.com/ajax/services/search/images";
@@ -90,6 +92,4 @@ public interface ImageSearch {
     int    rsz              = 4;
 
     HttpResponse query(String query) throws IOException, URISyntaxException;
-
-    HttpResponse query() throws IOException, URISyntaxException;
 }
