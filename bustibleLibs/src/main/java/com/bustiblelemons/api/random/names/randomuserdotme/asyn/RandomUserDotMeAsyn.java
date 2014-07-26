@@ -8,6 +8,7 @@ import com.bustiblelemons.api.random.names.randomuserdotme.model.RandomUserDotMe
 import com.bustiblelemons.api.random.names.randomuserdotme.model.Results;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.User;
 import com.bustiblelemons.async.SimpleAsync;
+import com.bustiblelemons.logging.Logger;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -21,6 +22,7 @@ public class RandomUserDotMeAsyn
         extends SimpleAsync<RandomUserDotMeQuery, Pair<RandomUserDotMeQuery, List<User>>> {
 
     private OnRandomUsersRetreived listener;
+    private Logger                 log = new Logger(RandomUserDotMeAsyn.class);
 
     public RandomUserDotMeAsyn(Context context, OnRandomUsersRetreived listener) {
         super(context);
@@ -33,6 +35,7 @@ public class RandomUserDotMeAsyn
         Pair<RandomUserDotMeQuery, List<User>> r = Pair.create(null, null);
         if (queries != null) {
             for (RandomUserDotMeQuery query : queries) {
+                log.d("Random query %s", query);
                 List<User> users = getRandomUsers(query);
                 Pair<RandomUserDotMeQuery, List<User>> pair = Pair.create(query, users);
                 publishProgress(pair);
@@ -46,6 +49,7 @@ public class RandomUserDotMeAsyn
         List<User> r = new ArrayList<User>();
         if (rudmQuery != null) {
             RandomUserDotMe randomUser = rudmQuery.getObject(RandomUserDotMe.class);
+            log.d("random user %s", randomUser.getResults().size());
             for (Results result : randomUser.getResults()) {
                 User u = result.getUser();
                 if (u != null) {

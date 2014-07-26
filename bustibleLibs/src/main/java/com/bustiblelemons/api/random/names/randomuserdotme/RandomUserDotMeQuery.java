@@ -60,7 +60,7 @@ public class RandomUserDotMeQuery extends AbsJacksonQuery<RandomUserDotMe> {
         return null;
     }
 
-    public class Options {
+    public static class Options {
         private Gender gender;
         private String seed;
         private int results = 4;

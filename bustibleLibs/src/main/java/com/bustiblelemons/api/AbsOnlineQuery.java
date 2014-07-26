@@ -1,5 +1,7 @@
 package com.bustiblelemons.api;
 
+import com.bustiblelemons.logging.Logger;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -18,13 +20,15 @@ import java.util.List;
  */
 public abstract class AbsOnlineQuery implements OnlineQuery {
 
+    private static final Logger log = new Logger(AbsOnlineQuery.class);
+
     protected abstract List<NameValuePair> getNameValuePairs();
 
     protected abstract boolean usesSSL();
 
     @Override
     public String getScheme() {
-        return usesSSL() ? "http://" : "https://";
+        return usesSSL() ? "https" : "http";
     }
 
     @Override
@@ -34,7 +38,8 @@ public abstract class AbsOnlineQuery implements OnlineQuery {
 
     protected URI getUri(List<NameValuePair> valuePairs) throws URISyntaxException {
         String query = URLEncodedUtils.format(valuePairs, "utf-8");
-        return URIUtils.createURI(getScheme(), getHost(), getPort(), getMethod(), query, getFragment());
+        return URIUtils.createURI(getScheme(), getHost(), getPort(), getMethod(), query,
+                getFragment());
     }
 
     @Override
@@ -46,6 +51,7 @@ public abstract class AbsOnlineQuery implements OnlineQuery {
     public HttpResponse query() throws IOException, URISyntaxException {
         List<NameValuePair> valuePairs = getNameValuePairs();
         URI uri = getUri(valuePairs);
+        log.d("Uri %s", uri.toString());
         HttpGet get = new HttpGet(uri);
         HttpClient client = new DefaultHttpClient();
         return client.execute(get);

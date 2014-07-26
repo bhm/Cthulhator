@@ -15,7 +15,7 @@ public interface GImageSearch extends OnlineQuery {
     String VERSION   = "v";
     String VERSION_1 = "1.0";
     String URL       = "https://ajax.googleapis.com/ajax/services/search/images";
-    String SCHEME    = "http";
+    String SCHEME    = "https";
     String HOST      = "ajax.googleapis.com";
     String METHOD    = "ajax/services/search/images";
     String QUERY     = "q";

@@ -7,6 +7,12 @@
         android:title="@string/activity_test"
         app:showAsAction="always"/>
     <item
+        android:id="@+id/action_random_user"
+        android:icon="@drawable/ic_action_test"
+        android:orderInCategory="1"
+        android:title="@string/activity_random_user"
+        app:showAsAction="always"/>
+    <item
         android:id="@id/action_character"
         android:icon="@drawable/ic_action_test"
         android:orderInCategory="1"

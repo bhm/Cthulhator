@@ -10,5 +10,7 @@
     <color name="flat_button_selected">@color/blue_grey_50</color>
     <color name="hint_focused">@color/blue_grey_500</color>
     <color name="hint_unfocused">@color/blue_grey_400</color>
+    <color name="main_background">@color/blue_grey_500</color>
+
 
 </resources>

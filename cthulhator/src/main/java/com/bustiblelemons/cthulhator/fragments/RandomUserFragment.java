@@ -5,14 +5,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.bustiblelemons.BaseFragment;
+import com.bustiblelemons.api.random.names.randomuserdotme.model.Name;
+import com.bustiblelemons.api.random.names.randomuserdotme.model.User;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.view.LocationWidget;
+import com.bustiblelemons.cthulhator.view.NameWidget;
 import com.manuelpeinado.fadingactionbar.FadingActionBarHelperBase;
 import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarHelper;
 
+import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 /**
@@ -22,12 +26,13 @@ public class RandomUserFragment extends BaseFragment {
     public static final String USER = "user";
     private FadingActionBarHelperBase mFadingHelper;
 
-    @InjectView(R.id.title)
-    TextView       title;
     @InjectView(R.id.name)
-    TextView       name;
+    NameWidget     nameWidget;
     @InjectView(R.id.location)
-    LocationWidget locationView;
+    LocationWidget locationWidget;
+    @InjectView(R.id.image_header)
+    ImageView      pictureView;
+    private User user;
 
     @Override
     public void onAttach(Activity activity) {
@@ -45,6 +50,19 @@ public class RandomUserFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = mFadingHelper.createView(getContext());
+        ButterKnife.inject(this, rootView);
+        if (hasArgument(USER)) {
+            user = (User) getArguments().getSerializable(USER);
+            if (locationWidget != null) {
+                locationWidget.setLocation(user.getLocation());
+            }
+            if (nameWidget != null) {
+                Name name = user.getName();
+                String fullName = name.getFullName();
+                nameWidget.setName(fullName);
+                nameWidget.setTitle(name.getTitle());
+            }
+        }
         return rootView;
     }
 }

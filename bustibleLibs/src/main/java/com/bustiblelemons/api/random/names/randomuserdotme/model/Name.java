@@ -2,6 +2,9 @@
 package com.bustiblelemons.api.random.names.randomuserdotme.model;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+import java.util.Locale;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Name{
    	private String first;
@@ -26,4 +29,8 @@ public class Name{
 	public void setTitle(String title){
 		this.title = title;
 	}
+
+    public String getFullName() {
+        return String.format(Locale.ENGLISH, "%s %s", getFirst(), getLast());
+    }
 }

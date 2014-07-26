@@ -9,6 +9,7 @@ repositories {
     mavenCentral()
 }
 
+
 dependencies {
     provided 'com.android.support:appcompat-v7:+'
 
@@ -29,7 +30,24 @@ android {
 
         testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
     }
-
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/LICENSE.TXT'
+        exclude 'META-INF/license.txt'
+        exclude 'LICENSE'
+        exclude 'LICENSE.txt'
+        exclude 'LICENSE.TXT'
+        exclude 'license.txt'
+        exclude 'APK META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.TXT'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+    }
     buildTypes {
         release {
             runProguard false

@@ -24,6 +24,8 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="year">Year</string>
+    <string name="hint_name">Name</string>
+    <string name="activity_random_user">Random User</string>
 
 
 </resources>

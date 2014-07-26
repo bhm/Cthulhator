@@ -5,13 +5,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:background="@color/blue_grey_600">
 
+
+    <com.bustiblelemons.cthulhator.view.NameWidget
+        android:id="@id/name"
+        style="@style/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/font_16"
+        app:text="@string/placeholder_name"
+        app:textSize="@dimen/font_16"/>
 
     <com.bustiblelemons.cthulhator.view.LocationWidget
         android:id="@id/location"
+        style="@style/card"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
+        android:layout_height="wrap_content"
+        android:layout_below="@id/name"/>
 
 </RelativeLayout>

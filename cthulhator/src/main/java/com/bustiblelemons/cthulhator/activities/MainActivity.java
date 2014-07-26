@@ -26,9 +26,17 @@ public class MainActivity extends BaseActionBarActivity {
                 return launchTestActivity();
             case R.id.action_portriats:
                 return launchPortraitsChooser();
+            case R.id.action_random_user:
+                return launchRandomUser();
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private boolean launchRandomUser() {
+        Intent i = new Intent(this, RandomCharactersActivity.class);
+        startActivity(i);
+        return false;
     }
 
     private boolean launchCharacterViewer(int characterId) {
