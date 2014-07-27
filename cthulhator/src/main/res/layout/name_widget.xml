@@ -8,7 +8,7 @@
     android:layout_height="match_parent">
 
     <com.micromobs.android.floatlabel.FloatLabelEditText
-        android:id="@id/title"
+        android:id="@id/name_widget_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/font_12"
@@ -18,10 +18,10 @@
         app:textSize="@dimen/font_16"/>
 
     <com.micromobs.android.floatlabel.FloatLabelEditText
-        android:id="@id/name"
+        android:id="@id/name_widget_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title"
+        android:layout_below="@id/name_widget_title"
         android:padding="@dimen/font_16"
         app:hint="@string/hint_name"
         app:textColorHintFocused="@color/hint_focused"

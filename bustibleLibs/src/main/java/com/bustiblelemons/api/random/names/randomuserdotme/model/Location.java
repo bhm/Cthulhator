@@ -5,8 +5,10 @@ import com.bustiblelemons.model.LocationInfo;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+import java.io.Serializable;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Location implements LocationInfo {
+public class Location implements LocationInfo, Serializable {
     private String city;
     private String state;
     private String street;

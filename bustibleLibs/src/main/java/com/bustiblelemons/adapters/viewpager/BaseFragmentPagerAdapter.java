@@ -47,6 +47,9 @@ public abstract class BaseFragmentPagerAdapter<T, F extends Fragment>
 
     public boolean addData(T item) {
         boolean r = mData.add(item);
+        int pos = mData.size();
+        F f = newInstance(item);
+        mFragments.put(pos, f);
         notifyDataSetChanged();
         return r;
     }
@@ -61,11 +64,6 @@ public abstract class BaseFragmentPagerAdapter<T, F extends Fragment>
             mFragments.put(position, f);
         }
         return mFragments.get(position);
-    }
-
-    protected void addFragment(int pos, F fragment) {
-        mFragments.put(pos, fragment);
-        notifyDataSetChanged();
     }
 
     @Override

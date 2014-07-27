@@ -11,7 +11,6 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,31 +25,36 @@ public class FloatLabelEditText
         extends LinearLayout {
 
     private int mCurrentApiVersion = android.os.Build.VERSION.SDK_INT, mFocusedColor, mUnFocusedColor, mFitScreenWidth, mGravity;
-    private float  mTextSizeInSp;
+    private float mTextSizeInSp;
     private String mHintText, mEditText;
     private boolean mIsPassword = false;
 
+    private AttributeSet mAttrs;
+    private Context mContext;
     private EditText mEditTextView;
     private TextView mFloatingLabel;
-    private int      defaultTextSize;
-    private View     rootView;
 
     // -----------------------------------------------------------------------
     // default constructors
 
     public FloatLabelEditText(Context context) {
         super(context);
-        initializeView(context, null);
+        mContext = context;
+        initializeView();
     }
 
     public FloatLabelEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initializeView(context, attrs);
+        mContext = context;
+        mAttrs = attrs;
+        initializeView();
     }
 
     public FloatLabelEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        initializeView(context, attrs);
+        mContext = context;
+        mAttrs = attrs;
+        initializeView();
     }
 
     // -----------------------------------------------------------------------
@@ -78,42 +82,47 @@ public class FloatLabelEditText
     // -----------------------------------------------------------------------
     // private helpers
 
-    private void initializeView(Context context, AttributeSet attrs) {
+    private void initializeView() {
 
-        defaultTextSize = getResources().getDimensionPixelSize(R.dimen.default_font_size);
-        LayoutInflater mInflater = LayoutInflater.from(context);
-        rootView = mInflater.inflate(R.layout.weddingparty_floatlabel_edittext, this, true);
+        if (mContext == null) {
+            return;
+        }
 
-        mFloatingLabel = (TextView) rootView.findViewById(R.id.floating_label_hint);
-        mEditTextView = (EditText) rootView.findViewById(R.id.floating_label_edit_text);
+        LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mInflater.inflate(R.layout.weddingparty_floatlabel_edittext, this, true);
 
-        applyAttributes(context, attrs);
+        mFloatingLabel = (TextView) findViewById(R.id.floating_label_hint);
+        mEditTextView = (EditText) findViewById(R.id.floating_label_edit_text);
+
+        getAttributesFromXmlAndStoreLocally();
         setupEditTextView();
         setupFloatingLabel();
     }
 
-    private void applyAttributes(Context ctx, AttributeSet attrs) {
-        TypedArray array = ctx.obtainStyledAttributes(attrs, R.styleable.FloatLabelEditText);
-        if (array == null) {
+    private void getAttributesFromXmlAndStoreLocally() {
+        TypedArray attributesFromXmlLayout = mContext.obtainStyledAttributes(mAttrs,
+                R.styleable.FloatLabelEditText);
+        if (attributesFromXmlLayout == null) {
             return;
         }
 
-        mHintText = array.getString(R.styleable.FloatLabelEditText_hint);
-        mEditText = array.getString(R.styleable.FloatLabelEditText_text);
-        mGravity = array.getInt(R.styleable.FloatLabelEditText_gravity, Gravity.LEFT);
-        if (mEditTextView != null) {
-            defaultTextSize = (int) mEditTextView.getTextSize();
-        }
-        int pixelSize = array.getDimensionPixelSize(R.styleable.FloatLabelEditText_textSize,
-                defaultTextSize);
-        mTextSizeInSp = getScaledFontSize(pixelSize);
-        mFocusedColor = array.getColor(R.styleable.FloatLabelEditText_textColorHintFocused,
+        mHintText = attributesFromXmlLayout.getString(R.styleable.FloatLabelEditText_hint);
+        mEditText = attributesFromXmlLayout.getString(R.styleable.FloatLabelEditText_text);
+        mGravity = attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_gravity,
+                Gravity.LEFT);
+        mTextSizeInSp = getScaledFontSize(attributesFromXmlLayout.getDimensionPixelSize(R.styleable.FloatLabelEditText_textSize,
+                (int) mEditTextView
+                        .getTextSize()
+        ));
+        mFocusedColor = attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintFocused,
                 android.R.color.black);
-        mUnFocusedColor = array.getColor(R.styleable.FloatLabelEditText_textColorHintUnFocused,
+        mUnFocusedColor = attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintUnFocused,
                 android.R.color.darker_gray);
-        mFitScreenWidth = array.getInt(R.styleable.FloatLabelEditText_fitScreenWidth, 0);
-        mIsPassword = (array.getInt(R.styleable.FloatLabelEditText_inputType, 0) == 1);
-        array.recycle();
+        mFitScreenWidth = attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_fitScreenWidth,
+                0);
+        mIsPassword = (attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_inputType,
+                0) == 1);
+        attributesFromXmlLayout.recycle();
     }
 
     private void setupEditTextView() {
@@ -155,12 +164,10 @@ public class FloatLabelEditText
         return new TextWatcher() {
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -246,10 +253,8 @@ public class FloatLabelEditText
     }
 
     private int getSpecialWidth() {
-        WindowManager windowManager = ((WindowManager) getContext().getSystemService(
-                Context.WINDOW_SERVICE));
-        Display display = windowManager.getDefaultDisplay();
-        float screenWidth = display.getWidth();
+        float screenWidth = ((WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay()
+                .getWidth();
         int prevWidth = mEditTextView.getWidth();
 
         switch (mFitScreenWidth) {
@@ -260,15 +265,16 @@ public class FloatLabelEditText
         }
     }
 
+
     public void setText(int resId) {
         if (mEditTextView != null) {
             mEditTextView.setText(resId);
         }
     }
 
-    public void setText(CharSequence text) {
+    public void setText(CharSequence title) {
         if (mEditTextView != null) {
-            mEditTextView.setText(text);
+            mEditTextView.setText(title);
         }
     }
 }

@@ -13,8 +13,6 @@ import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.model.LocationInfo;
 import com.micromobs.android.floatlabel.FloatLabelEditText;
 
-import butterknife.ButterKnife;
-
 /**
  * Created by bhm on 26.07.14.
  */
@@ -49,10 +47,6 @@ public class LocationWidget extends RelativeLayout {
         init(context, attrs);
     }
 
-    public String getZipcode() {
-        return mZipcode == null ? mInfo != null ? mInfo.getZipCode() : mZipcode : null;
-    }
-
     public void setZipcode(String zipcode) {
         if (zipCodeInput != null) {
             zipCodeInput.setText(zipcode);
@@ -61,7 +55,7 @@ public class LocationWidget extends RelativeLayout {
     }
 
     public String getCity() {
-        return mCity == null ? mInfo != null ? mInfo.getZipCode() : mCity : null;
+        return mCity == null ? mInfo != null ? mInfo.getCity() : mCity : null;
     }
 
     public void setCity(String city) {
@@ -72,7 +66,7 @@ public class LocationWidget extends RelativeLayout {
     }
 
     public String getState() {
-        return mState == null ? mInfo != null ? mInfo.getZipCode() : mState : null;
+        return mState == null ? mInfo != null ? mInfo.getState() : mState : null;
     }
 
     public void setState(String state) {
@@ -108,7 +102,6 @@ public class LocationWidget extends RelativeLayout {
         streetInput = (FloatLabelEditText) rootView.findViewById(R.id.street);
         zipCodeInput = (FloatLabelEditText) rootView.findViewById(R.id.zipcode);
         pickLocationButton = (ImageButton) rootView.findViewById(R.id.pick_location);
-        ButterKnife.inject(this, rootView);
         if (attrs != null) {
             TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.LocationWidget);
             enableMapPicker = array.getBoolean(R.styleable.LocationWidget_enableMapPicker,
@@ -151,5 +144,9 @@ public class LocationWidget extends RelativeLayout {
         setState(info.getState());
         setCity(info.getCity());
         setZipcode(info.getZipCode());
+    }
+
+    public String getZipCode() {
+        return mZipcode != null ? mZipcode : mInfo != null ? mInfo.getZipCode() : null;
     }
 }

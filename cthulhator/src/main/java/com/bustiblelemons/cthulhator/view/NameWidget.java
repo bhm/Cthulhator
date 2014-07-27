@@ -10,16 +10,12 @@ import android.widget.FrameLayout;
 import com.bustiblelemons.cthulhator.R;
 import com.micromobs.android.floatlabel.FloatLabelEditText;
 
-import butterknife.InjectView;
-
 /**
  * Created by bhm on 26.07.14.
  */
 public class NameWidget extends FrameLayout {
     private View rootView;
-    @InjectView(R.id.name)
     FloatLabelEditText nameView;
-    @InjectView(R.id.title)
     FloatLabelEditText titleView;
     private boolean hideTitle = false;
     private boolean disableInput = false;
@@ -41,6 +37,8 @@ public class NameWidget extends FrameLayout {
 
     private void init(Context context, AttributeSet attrs) {
         rootView = LayoutInflater.from(context).inflate(R.layout.name_widget, this, true);
+        nameView = (FloatLabelEditText) rootView.findViewById(R.id.name_widget_name);
+        titleView = (FloatLabelEditText) rootView.findViewById(R.id.name_widget_title);
         if (attrs != null) {
             TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.NameWidget);
             hideTitle = array.getBoolean(R.styleable.NameWidget_hideTitle, hideTitle);
@@ -109,14 +107,14 @@ public class NameWidget extends FrameLayout {
     }
 
     public void setTitle(int resId) {
-        if (nameView != null) {
-            nameView.setText(resId);
+        if (titleView != null) {
+            titleView.setText(resId);
         }
     }
 
     public void setTitle(CharSequence title) {
-        if (nameView != null) {
-            nameView.setText(title);
+        if (titleView != null) {
+            titleView.setText(title);
         }
     }
 
@@ -130,4 +128,6 @@ public class NameWidget extends FrameLayout {
             nameView.setText(resId);
         }
     }
+
+
 }

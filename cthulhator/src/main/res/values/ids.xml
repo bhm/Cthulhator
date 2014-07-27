@@ -24,4 +24,6 @@
     <item name="street_title" type="id"/>
     <item name="pick_location" type="id"/>
     <item name="pager" type="id"/>
+    <item name="name_widget_title" type="id"/>
+    <item name="name_widget_name" type="id"/>
 </resources>
