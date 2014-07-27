@@ -21,17 +21,19 @@ import java.util.List;
 /**
  * Created by bhm on 18.07.14.
  */
-public class PortraitsActivity extends BaseActionBarActivity implements
-                                                        LoadMoreViewPager.LoadMore,
-                                                        QueryGImagesAsyn.ReceiveGoogleImages {
+public class PortraitsActivity extends BaseActionBarActivity
+        implements LoadMoreViewPager.LoadMore,
+                   QueryGImagesAsyn.ReceiveGoogleImages,
+                   PortraitsSettingsFragment.GoogleSearchOptsListener {
 
     private LoadMoreViewPager pager;
 
     private PortraitsPagerAdapter pagerAdapter;
     private static final Logger log = new Logger(PortraitsActivity.class);
     private GoogleImageSearch.Options searchOptions;
-    private GImageSearch              imageSearch;
+    private GImageSearch              mImageSearch;
     private PortraitsSettingsFragment settingsFragment;
+    private GImageSearch              mSearchToPublish;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +45,8 @@ public class PortraitsActivity extends BaseActionBarActivity implements
         pager.setLoadMoreListener(this);
         searchOptions = new GoogleImageSearch.Options();
         searchOptions.setQuery("1920+male+portrait");
-        this.imageSearch = searchOptions.build();
-        queryForImages(imageSearch);
+        this.mImageSearch = searchOptions.build();
+        queryForImages(mImageSearch);
         attachSettings();
         onSetActionBarToClosable();
     }
@@ -70,13 +72,25 @@ public class PortraitsActivity extends BaseActionBarActivity implements
 
     @Override
     public void onLoadMore(ViewPager pager) {
-        queryForImages(imageSearch);
+        queryForImages(mImageSearch);
         log.d("onLoadMore %s", pager.getCurrentItem());
     }
 
     @Override
-    public boolean onGoogleImagesReceived(List<GoogleImageObject> results) {
+    public boolean onGoogleImagesReceived(GImageSearch search, List<GoogleImageObject> results) {
+        if (mSearchToPublish != null && search.equals(mSearchToPublish)) {
+            pagerAdapter.removeAll();
+            mImageSearch = search;
+            mSearchToPublish = null;
+        }
         pagerAdapter.addData(results);
+        return false;
+    }
+
+    @Override
+    public boolean onGoogleSearchOptionsChanged(GoogleImageSearch.Options newOptions) {
+        mSearchToPublish = newOptions.build();
+        queryForImages(mSearchToPublish);
         return false;
     }
 }

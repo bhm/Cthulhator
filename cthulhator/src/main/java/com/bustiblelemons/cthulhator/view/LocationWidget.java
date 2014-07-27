@@ -13,24 +13,32 @@ import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.model.LocationInfo;
 import com.micromobs.android.floatlabel.FloatLabelEditText;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 /**
  * Created by bhm on 26.07.14.
  */
 public class LocationWidget extends RelativeLayout {
 
+    private View rootView;
+    @InjectView(R.id.street)
     FloatLabelEditText streetInput;
+    @InjectView(R.id.city)
     FloatLabelEditText cityInput;
+    @InjectView(R.id.zipcode)
     FloatLabelEditText zipCodeInput;
+    @InjectView(R.id.state)
     FloatLabelEditText stateInput;
-    private View         rootView;
+    @InjectView(R.id.pick_location)
+    ImageButton  pickLocationButton;
     private LocationInfo mInfo;
     private String       mStreet;
     private String       mState;
     private String       mCity;
     private String       mZipcode;
     private boolean enableMapPicker = true;
-    private ImageButton pickLocationButton;
-    private Drawable    locationPickerDrawable;
+    private Drawable locationPickerDrawable;
 
     public LocationWidget(Context context) {
         super(context);
@@ -97,11 +105,7 @@ public class LocationWidget extends RelativeLayout {
 
     private void init(Context context, AttributeSet attrs) {
         rootView = LayoutInflater.from(context).inflate(R.layout.location_widget, this, true);
-        cityInput = (FloatLabelEditText) rootView.findViewById(R.id.city);
-        stateInput = (FloatLabelEditText) rootView.findViewById(R.id.state);
-        streetInput = (FloatLabelEditText) rootView.findViewById(R.id.street);
-        zipCodeInput = (FloatLabelEditText) rootView.findViewById(R.id.zipcode);
-        pickLocationButton = (ImageButton) rootView.findViewById(R.id.pick_location);
+        ButterKnife.inject(this, rootView);
         if (attrs != null) {
             TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.LocationWidget);
             enableMapPicker = array.getBoolean(R.styleable.LocationWidget_enableMapPicker,

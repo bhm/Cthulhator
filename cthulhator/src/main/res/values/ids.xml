@@ -26,4 +26,5 @@
     <item name="pager" type="id"/>
     <item name="name_widget_title" type="id"/>
     <item name="name_widget_name" type="id"/>
+    <item name="year_seekbar" type="id"/>
 </resources>

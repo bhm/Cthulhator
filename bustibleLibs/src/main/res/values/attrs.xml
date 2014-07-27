@@ -67,8 +67,9 @@
         <attr name="anchorView" format="reference"/>
     </declare-styleable>
     <declare-styleable name="TitledSeekbar">
+        <attr name="progress" format="integer"/>
         <attr name="hideTitle"/>
-        <attr name="compact" />
+        <attr name="compact"/>
         <attr name="statTitle"/>
         <attr name="titleSize"/>
         <attr name="valueSize"/>

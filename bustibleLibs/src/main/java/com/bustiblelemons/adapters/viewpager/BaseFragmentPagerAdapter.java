@@ -66,6 +66,12 @@ public abstract class BaseFragmentPagerAdapter<T, F extends Fragment>
         return mFragments.get(position);
     }
 
+
+    public void removeAll() {
+        mData.clear();
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
         return this.mData.size();

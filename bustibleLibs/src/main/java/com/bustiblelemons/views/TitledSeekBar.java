@@ -46,6 +46,7 @@ public class TitledSeekBar extends RelativeLayout implements SeekBar.OnSeekBarCh
     private int            valueSize;
     private String         value;
     private onValueChanged valueChanged;
+    private int currentProgress = 0;
 
     public TitledSeekBar(Context context) {
         super(context);
@@ -67,12 +68,13 @@ public class TitledSeekBar extends RelativeLayout implements SeekBar.OnSeekBarCh
         return value;
     }
 
-    public void setValue(CharSequence charSequence) {
+    public void setValue(CharSequence value) {
         if (valueView != null) {
+            this.value = value != null ? value.toString() : "";
             if (isPercentile) {
-                valueView.setText(String.format("%s%%", charSequence));
+                valueView.setText(String.format("%s%%", value));
             } else {
-                valueView.setText(charSequence);
+                valueView.setText(value);
             }
         }
     }
@@ -101,9 +103,11 @@ public class TitledSeekBar extends RelativeLayout implements SeekBar.OnSeekBarCh
             jumpValue = array.getInteger(R.styleable.TitledSeekbar_jumpValue, DEFAULT_JUMP);
             maxValue = array.getInteger(R.styleable.TitledSeekbar_maxValue, DEFAULT_MAX);
             minValue = array.getInteger(R.styleable.TitledSeekbar_minValue, DEFAULT_MIN);
+            currentProgress = array.getInteger(R.styleable.TitledSeekbar_progress, 0);
             setMaxValue(maxValue);
             setMinValue(minValue);
             setJumpValue(jumpValue);
+            seekBar.setProgress(currentProgress);
             setupValuesArray(array);
             array.recycle();
         }

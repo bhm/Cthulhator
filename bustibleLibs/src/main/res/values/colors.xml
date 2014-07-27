@@ -4,6 +4,7 @@
 
     <color name="thin_line">#ffcccccc</color>
     <color name="main_color">@color/blue_grey_500</color>
+    <color name="text_color">@color/blue_grey_900</color>
     <color name="main_color_selected">@color/orange_A100</color>
     <color name="main_color_active">@color/orange_A700</color>
     <color name="card_background">@color/amber_50</color>

@@ -43,6 +43,11 @@ public abstract class BaseViewHolderImpl<T> implements BaseViewHolder<T> {
         return position;
     }
 
+    public boolean setTitle(int resId) {
+        titleView.setText(resId);
+        return hasTitleView();
+    }
+
     public boolean setTitle(String title) {
         titleView.setText(title);
         return hasTitleView();

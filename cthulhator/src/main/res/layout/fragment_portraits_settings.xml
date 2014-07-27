@@ -32,10 +32,12 @@
             android:layout_height="wrap_content"/>
 
         <com.bustiblelemons.views.TitledSeekBar
+            android:id="@id/year_seekbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/gender_spinner"
             app:compact="false"
+            app:progress="2"
             app:jumpValue="5"
             app:maxValue="@integer/jazz_age_max"
             app:minValue="@integer/jazz_age_min"

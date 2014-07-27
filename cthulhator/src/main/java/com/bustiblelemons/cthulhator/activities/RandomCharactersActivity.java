@@ -14,13 +14,17 @@ import com.bustiblelemons.views.LoadMoreViewPager;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 /**
  * Created by bhm on 25.07.14.
  */
 public class RandomCharactersActivity extends BaseActionBarActivity
         implements LoadMoreViewPager.LoadMore, OnRandomUsersRetreived {
 
-    private LoadMoreViewPager            pager;
+    @InjectView(R.id.pager)
+    LoadMoreViewPager pager;
     private RandomUserDotMePagerAdapter  pagerAdapter;
     private RandomUserDotMeQuery         query;
     private RandomUserDotMeQuery.Options queryOptions;
@@ -29,7 +33,7 @@ public class RandomCharactersActivity extends BaseActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_random_characters);
-        pager = (LoadMoreViewPager) findViewById(R.id.pager);
+        ButterKnife.inject(this);
         pagerAdapter = new RandomUserDotMePagerAdapter(getSupportFragmentManager());
         pager.setLoadMoreListener(this);
         pager.setAdapter(pagerAdapter);

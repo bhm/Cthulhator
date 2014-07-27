@@ -19,4 +19,5 @@ public class PortraitsPagerAdapter extends BaseFragmentPagerAdapter<GoogleImageO
     public PortraitFragment newInstance(GoogleImageObject item) {
         return PortraitFragment.newInstance(item);
     }
+
 }

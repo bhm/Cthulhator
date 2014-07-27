@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TextView
+    android:id="@android:id/title"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/padding_16"
+    tools:text="@string/female"
+    android:textColor="@color/text_color"
+    android:background="@color/grey_white_1000"
+    android:textSize="@dimen/font_16">
+
+</TextView>

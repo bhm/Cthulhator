@@ -17,17 +17,20 @@ import com.manuelpeinado.fadingactionbar.FadingActionBarHelperBase;
 import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarHelper;
 
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /**
  * Created by bhm on 26.07.14.
  */
 public class RandomUserFragment extends BaseFragment {
     public static final  String USER     = "user";
-    private static final String LOCATION = "location";
     private FadingActionBarHelperBase mFadingHelper;
 
-    NameWidget     nameWidget;
+    @InjectView(R.id.name)
+    NameWidget nameWidget;
+    @InjectView(R.id.location)
     LocationWidget locationWidget;
+    @InjectView(R.id.image_header)
     LoadingImage   pictureView;
     private User user;
 
@@ -53,9 +56,7 @@ public class RandomUserFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = mFadingHelper.createView(getContext());
-        nameWidget = (NameWidget) rootView.findViewById(R.id.name);
-        locationWidget = (LocationWidget) rootView.findViewById(R.id.location);
-        pictureView = (LoadingImage) rootView.findViewById(R.id.image_header);
+        ButterKnife.inject(this, rootView);
         if (hasArgument(USER)) {
             user = (User) getArguments().getSerializable(USER);
             fillUserInfo();

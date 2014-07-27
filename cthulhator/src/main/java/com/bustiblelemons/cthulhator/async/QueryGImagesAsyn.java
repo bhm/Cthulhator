@@ -1,6 +1,7 @@
 package com.bustiblelemons.cthulhator.async;
 
 import android.content.Context;
+import android.util.Pair;
 
 import com.bustiblelemons.async.SimpleAsync;
 import com.bustiblelemons.google.apis.model.GoogleImageObject;
@@ -18,7 +19,7 @@ import java.util.List;
 /**
  * Created by bhm on 18.07.14.
  */
-public class QueryGImagesAsyn extends SimpleAsync<GImageSearch, List<GoogleImageObject>> {
+public class QueryGImagesAsyn extends SimpleAsync<GImageSearch, Pair<GImageSearch, List<GoogleImageObject>>> {
 
     private Logger log = new Logger(QueryGImagesAsyn.class);
 
@@ -27,7 +28,7 @@ public class QueryGImagesAsyn extends SimpleAsync<GImageSearch, List<GoogleImage
     }
 
     public interface ReceiveGoogleImages {
-        public boolean onGoogleImagesReceived(List<GoogleImageObject> results);
+        public boolean onGoogleImagesReceived(GImageSearch first, List<GoogleImageObject> results);
     }
 
     private ReceiveGoogleImages listener;
@@ -38,7 +39,7 @@ public class QueryGImagesAsyn extends SimpleAsync<GImageSearch, List<GoogleImage
     }
 
     @Override
-    protected List<GoogleImageObject> call(GImageSearch... params) throws Exception {
+    protected Pair<GImageSearch, List<GoogleImageObject>> call(GImageSearch... params) throws Exception {
         for (GImageSearch search : params) {
             ObjectMapper mapper = new ObjectMapper();
             HttpResponse httpResponse = search.query();
@@ -46,7 +47,7 @@ public class QueryGImagesAsyn extends SimpleAsync<GImageSearch, List<GoogleImage
             try {
                 GoogleImageResponse response = mapper.readValue(in, GoogleImageResponse.class);
                 log.d("Response \n%s", response.getResults().size());
-                publishProgress(response.getResults());
+                publishProgress(search, response.getResults());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -54,12 +55,17 @@ public class QueryGImagesAsyn extends SimpleAsync<GImageSearch, List<GoogleImage
         return null;
     }
 
+    private void publishProgress(GImageSearch search, List<GoogleImageObject> results) {
+        Pair<GImageSearch, List<GoogleImageObject>> progress;
+        progress = Pair.create(search, results);
+    }
+
     @Override
-    protected void onProgressUpdate(List<GoogleImageObject>... values) {
+    protected void onProgressUpdate(Pair<GImageSearch, List<GoogleImageObject>>... values) {
         super.onProgressUpdate(values);
         if (values != null && listener != null) {
-            for (List<GoogleImageObject> result : values) {
-                listener.onGoogleImagesReceived(result);
+            for (Pair<GImageSearch, List<GoogleImageObject>> pair : values) {
+                listener.onGoogleImagesReceived(pair.first, pair.second);
             }
         }
     }
@@ -70,7 +76,7 @@ public class QueryGImagesAsyn extends SimpleAsync<GImageSearch, List<GoogleImage
     }
 
     @Override
-    protected boolean onSuccess(List<GoogleImageObject> result) {
+    protected boolean onSuccess(Pair<GImageSearch, List<GoogleImageObject>> result) {
         return false;
     }
 }
