@@ -14,6 +14,9 @@ public class Location implements LocationInfo, Serializable {
     private String street;
     private String zip;
 
+    private double longitude;
+    private double latitude;
+
     @Override
     public String getCity() {
         return this.city;
@@ -43,10 +46,30 @@ public class Location implements LocationInfo, Serializable {
 
     @Override
     public String getZipCode() {
-        return this.zip;
+        return getZip();
+    }
+
+    public String getZip() {
+        return zip;
     }
 
     public void setZip(String zip) {
         this.zip = zip;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 }

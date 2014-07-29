@@ -45,4 +45,5 @@ dependencies {
     provided 'com.nostra13.universalimageloader:universal-image-loader:1.9.+'
     provided 'org.apache.httpcomponents:httpmime:4.2.5'
     provided 'com.jakewharton:butterknife:5.1.1'
+    provided 'commons-io:commons-io:2.4'
 }

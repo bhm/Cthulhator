@@ -1,73 +1,45 @@
 package com.bustiblelemons.cthulhator.model.brp;
 
+import com.bustiblelemons.cthulhator.model.CharacterProperty;
+import com.bustiblelemons.cthulhator.model.CthulhuCharacter;
 import com.bustiblelemons.cthulhator.model.ICharacter;
 import com.bustiblelemons.cthulhator.model.Skill;
-import com.bustiblelemons.cthulhator.model.brp.items.Weapon;
-import com.bustiblelemons.cthulhator.model.brp.skills.BRPSkill;
-import com.bustiblelemons.cthulhator.model.brp.statistics.HitPoints;
-import com.bustiblelemons.cthulhator.model.brp.statistics.MagicPoints;
-import com.bustiblelemons.cthulhator.model.brp.statistics.Sanity;
-import com.bustiblelemons.cthulhator.model.brp.statistics.Statistic;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created 5 Nov 2013
  */
-public abstract class BRPCharacter implements ICharacter {
+public abstract class BRPCharacter extends CthulhuCharacter implements ICharacter {
 
     private CoCEdition edition;
 
-    private String name;
-    private String secondName;
+    public CoCEdition getEdition() {
+        return edition;
+    }
 
-    private List<Statistic> statistics = new ArrayList<Statistic>();
-
-    private List<BRPSkill> skills = new ArrayList<BRPSkill>();
-
-    private Sanity      sanity;
-    private HitPoints   hitPoints;
-    private MagicPoints magicPoints;
-
-    private List<Weapon> weapons = new ArrayList<Weapon>();
-    private int id;
-
-    @Override
-    public int getSkillValue(Skill s) {
-        for (BRPSkill skill : skills) {
-            if (skill != null) {
-                if (skill.getName().equalsIgnoreCase(s.getName())) {
-                    return skill.getValue();
-                }
-            }
-        }
-        return -1;
+    public void setEdition(CoCEdition edition) {
+        this.edition = edition;
     }
 
     @Override
-    public int getStatisticValue(String name) {
-        for (Statistic statistic : statistics) {
-            if (statistic != null) {
-                if (statistic.getName().equalsIgnoreCase(name)) {
-                    return statistic.getValue();
-                }
-            }
-        }
-        return -1;
+    public int getSkillValue(Skill soughtSkill) {
+        CharacterProperty skill = getSkill(soughtSkill.getName());
+        return skill != null ? skill.getValue() : -1;
+    }
+
+    @Override
+    public int getStatisticValue(String soughtStatistic) {
+        CharacterProperty stat = getStatistic(soughtStatistic);
+        return stat != null ? stat.getValue() : -1;
     }
 
     @Override
     public int getCurrentSanity() {
-        return sanity.getCurrent();
+        return 0;
     }
 
     @Override
     public int getMaxSanity() {
-        return sanity.getMax();
+        return 0;
     }
 
-    public int getId() {
-        return id;
-    }
 }

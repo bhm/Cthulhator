@@ -1,11 +1,30 @@
 package com.bustiblelemons.cthulhator.cache;
 
-import android.support.v4.util.LruCache;
+import com.bustiblelemons.cthulhator.model.ToCCharacter;
+import com.bustiblelemons.cthulhator.model.brp.BRPCharacter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by bhm on 20.07.14.
  */
 public class CharacterCache {
-    int size = 2048;
-    private LruCache<String, Object> characters = new LruCache<String, Object>(size);
+
+    protected CharacterCache() {
+    }
+
+    private static CharacterCache instance;
+
+    public static CharacterCache getInstance() {
+        return instance == null ? instance = new CharacterCache() : instance;
+    }
+
+    public static List<BRPCharacter> getBRPCharacters() {
+        return new ArrayList<BRPCharacter>();
+    }
+
+    public static List<ToCCharacter> getToCCharacters() {
+        return new ArrayList<ToCCharacter>();
+    }
 }
