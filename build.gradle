@@ -9,6 +9,11 @@ buildscript {
 }
 
 allprojects {
+    configurations.all {
+        resolutionStrategy {
+            force 'com.android.support:appcompat-v7:19.1.0'
+        }
+    }
     repositories {
         jcenter()
     }
