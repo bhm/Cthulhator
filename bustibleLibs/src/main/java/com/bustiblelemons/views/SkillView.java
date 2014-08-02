@@ -22,17 +22,19 @@ import com.bustiblelemons.logging.Logger;
 public class SkillView extends RelativeLayout implements View.OnClickListener {
     private static final Logger log = new Logger(SkillView.class);
 
-    private View     rootView;
-    private TextView titleView;
-    private TextView valueView;
-    private boolean isPercentile  = false;
-    private boolean valueLeft     = false;
-    private boolean hideTitle     = false;
-    private boolean showModifiers = false;
-    private ImageView incView;
-    private ImageView decView;
-    private int titleSizeResId = R.dimen.font_16;
-    private int valueSizeResId = R.dimen.font_16;
+    private boolean isPercentile   = false;
+    private boolean valueLeft      = false;
+    private boolean hideTitle      = false;
+    private boolean showModifiers  = false;
+    private int     titleSizeResId = R.dimen.font_16;
+    private int     valueSizeResId = R.dimen.font_16;
+    private int     titleGravity   = Gravity.RIGHT;
+    private int     valueGravity   = Gravity.LEFT;
+    private View            rootView;
+    private TextView        titleView;
+    private TextView        valueView;
+    private ImageView       incView;
+    private ImageView       decView;
     private int             valueSize;
     private int             titleSize;
     private int             defTitleSize;
@@ -68,6 +70,10 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
             TypedArray skillArray = context.obtainStyledAttributes(attrs, R.styleable.SkillView);
             setupModifiers(skillArray);
             valueLeft = skillArray.getBoolean(R.styleable.SkillView_valueLeft, valueLeft);
+            int defValGravity = valueLeft ? Gravity.LEFT : Gravity.RIGHT;
+            int defTitlteGravity = valueLeft ? Gravity.RIGHT : Gravity.LEFT;
+            valueGravity = skillArray.getInteger(R.styleable.SkillView_titleGravity, defValGravity);
+            titleGravity = skillArray.getInteger(R.styleable.SkillView_titleGravity, defTitlteGravity);
             positionValue();
             isPercentile = skillArray.getBoolean(R.styleable.SkillView_percentile, false);
             hideTitle = skillArray.getBoolean(R.styleable.SkillView_hideTitle, hideTitle);
@@ -250,14 +256,14 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         LayoutParams valueParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         valueParams.addRule(RIGHT_OF, decView.getId());
-        valueView.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+        valueView.setGravity(Gravity.CENTER_VERTICAL | valueGravity);
         valueView.setLayoutParams(valueParams);
 
         LayoutParams titleParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         titleParams.addRule(LEFT_OF, incView.getId());
         titleParams.addRule(RIGHT_OF, valueView.getId());
-        titleView.setGravity(Gravity.CENTER | Gravity.RIGHT);
+        titleView.setGravity(Gravity.CENTER | titleGravity);
         titleView.setLayoutParams(titleParams);
     }
 

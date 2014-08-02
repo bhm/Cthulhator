@@ -27,4 +27,10 @@
     <item name="name_widget_title" type="id"/>
     <item name="name_widget_name" type="id"/>
     <item name="year_seekbar" type="id"/>
+    <item name="characteristic_pager" type="id"/>
+    <item name="hair" type="id"/>
+    <item name="personality" type="id"/>
+    <item name="speech" type="id"/>
+    <item name="characteristic" type="id"/>
+    <item name="facial" type="id"/>
 </resources>

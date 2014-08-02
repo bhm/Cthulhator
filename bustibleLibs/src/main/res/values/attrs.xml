@@ -27,8 +27,18 @@
         <attr name="jumpValue" format="integer"/>
         <attr name="defaultValue" format="integer"/>
         <attr name="compact" format="boolean"/>
+        <attr name="titleGravity"/>
+        <attr name="valueGravity"/>
         <attr name="valuePosition"/>
     </declare-styleable>
+
+    <attr name="titleGravity" format="integer">
+        <flag name="left" value="3"/>
+        <flag name="top" value="48"/>
+        <flag name="right" value="80"/>
+        <flag name="bottom" value="5"/>
+    </attr>
+    <attr name="valueGravity"/>
 
     <attr name="valuePosition" format="integer">
         <enum name="top" value="1"/>
@@ -60,6 +70,8 @@
         <attr name="showModifiers"/>
         <attr name="increaseSrc"/>
         <attr name="decreaseSrc"/>
+        <attr name="titleGravity"/>
+        <attr name="valueGravity"/>
         <attr name="valueLeft" format="boolean"/>
     </declare-styleable>
     <declare-styleable name="FloatingActionButton">

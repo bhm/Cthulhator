@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bustiblelemons.bustiblelibs.R;
-import com.bustiblelemons.holders.impl.BaseViewHolder;
+import com.bustiblelemons.holders.impl.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -46,26 +46,26 @@ public abstract class BaseViewPagerAdapter<T> extends RecyclingPagerAdapter {
         return context;
     }
 
-    protected abstract BaseViewHolder<T> getViewHolder(int position);
+    protected abstract ViewHolder<T> getViewHolder(int position);
 
     protected abstract int getItemLayoutId(int position);
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        BaseViewHolder<T> holder;
+        ViewHolder<T> holder;
         if (convertView == null) {
             holder = getViewHolder(position);
             convertView = inflater.inflate(getItemLayoutId(position), parent, false);
             holder.create(convertView);
             convertView.setTag(R.id.tag_holder, holder);
         } else {
-            holder = (BaseViewHolder<T>) convertView.getTag(R.id.tag_holder);
+            holder = (ViewHolder<T>) convertView.getTag(R.id.tag_holder);
         }
         bindViewHolder(position, holder);
         return convertView;
     }
 
-    protected void bindViewHolder(int position, BaseViewHolder<T> holder) {
+    protected void bindViewHolder(int position, ViewHolder<T> holder) {
         holder.bindValues(getItem(position), position);
     }
 

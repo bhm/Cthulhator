@@ -32,6 +32,11 @@
     <string name="woman">Woman</string>
     <string name="none">None</string>
     <string name="any">Any</string>
+    <string name="hair">Hair</string>
+    <string name="speech">Speech</string>
+    <string name="personality">Personality</string>
+    <string name="characteristic">Characteristic</string>
+    <string name="facial">Facial Feature</string>
 
 
 </resources>

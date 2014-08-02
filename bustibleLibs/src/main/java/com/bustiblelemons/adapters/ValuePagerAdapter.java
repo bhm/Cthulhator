@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.bustiblelemons.bustiblelibs.R;
 import com.bustiblelemons.holders.ValuePagerHolder;
-import com.bustiblelemons.holders.impl.BaseViewHolder;
+import com.bustiblelemons.holders.impl.ViewHolder;
 
 /**
  * Created by bhm on 21.07.14.
@@ -16,7 +16,7 @@ public class ValuePagerAdapter extends BaseViewPagerAdapter<String> {
     }
 
     @Override
-    protected BaseViewHolder<String> getViewHolder(int position) {
+    protected ViewHolder<String> getViewHolder(int position) {
         return new ValuePagerHolder(getContext());
     }
 

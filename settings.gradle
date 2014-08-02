@@ -1,4 +1,6 @@
 include ':bustibleLibs'
+//include ':CharacterTraitsJSON2POJO'
 include ':circle-button'
+include ':character.traits'
 include ':cthulhator'
 include ':floatlabel'

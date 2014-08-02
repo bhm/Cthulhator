@@ -4,12 +4,12 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-import com.bustiblelemons.holders.impl.BaseViewHolder;
+import com.bustiblelemons.holders.impl.ViewHolder;
 
 /**
  * Created by bhm on 21.07.14.
  */
-public class ValuePagerHolder implements BaseViewHolder<String> {
+public class ValuePagerHolder implements ViewHolder<String> {
     private final Context  context;
     private       TextView title;
 

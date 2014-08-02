@@ -16,4 +16,8 @@ public class Storage {
         }
         return context.getCacheDir();
     }
+
+    public static File getStorageFile(Context context, String filename) {
+        return new File(getStorage(context), filename);
+    }
 }

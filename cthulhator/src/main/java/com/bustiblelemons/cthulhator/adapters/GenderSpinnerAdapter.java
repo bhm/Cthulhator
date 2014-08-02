@@ -4,18 +4,18 @@ import android.content.Context;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.bustiblelemons.adapters.BaseSpinnerAdapter;
+import com.bustiblelemons.adapters.AbsSpinnerAdapter;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.holders.GImageGenderHolder;
 import com.bustiblelemons.cthulhator.model.brp.gimagesearch.GImageSearchGender;
-import com.bustiblelemons.holders.impl.BaseViewHolder;
+import com.bustiblelemons.holders.impl.ViewHolder;
 
 import java.util.Arrays;
 
 /**
  * Created by bhm on 27.07.14.
  */
-public class GenderSpinnerAdapter extends BaseSpinnerAdapter<GImageSearchGender>
+public class GenderSpinnerAdapter extends AbsSpinnerAdapter<GImageSearchGender>
         implements AdapterView.OnItemSelectedListener {
 
     private GenderSelected listener;
@@ -26,7 +26,7 @@ public class GenderSpinnerAdapter extends BaseSpinnerAdapter<GImageSearchGender>
     }
 
     @Override
-    public BaseViewHolder<GImageSearchGender> getDropDownHolder(int position) {
+    public ViewHolder<GImageSearchGender> getDropDownHolder(int position) {
         return new GImageGenderHolder(getContext());
     }
 
@@ -36,7 +36,7 @@ public class GenderSpinnerAdapter extends BaseSpinnerAdapter<GImageSearchGender>
     }
 
     @Override
-    protected BaseViewHolder<GImageSearchGender> getViewHolder(int position) {
+    protected ViewHolder<GImageSearchGender> getViewHolder(int position) {
         return new GImageGenderHolder(getContext());
     }
 

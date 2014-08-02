@@ -8,7 +8,7 @@ import com.bustiblelemons.adapters.SequentialAdapter;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.holders.BRPSkillHolder;
 import com.bustiblelemons.cthulhator.model.brp.skills.BRPSkill;
-import com.bustiblelemons.holders.impl.BaseViewHolder;
+import com.bustiblelemons.holders.impl.ViewHolder;
 
 /**
  * Created by bhm on 20.07.14.
@@ -20,7 +20,7 @@ public class BRPSkillsAdapter extends SequentialAdapter<BRPSkill>
     }
 
     @Override
-    protected BaseViewHolder<BRPSkill> getViewHolder(int position) {
+    protected ViewHolder<BRPSkill> getViewHolder(int position) {
         return new BRPSkillHolder(getContext());
     }
 
