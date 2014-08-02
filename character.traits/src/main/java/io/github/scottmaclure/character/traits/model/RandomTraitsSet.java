@@ -21,6 +21,7 @@ public class RandomTraitsSet implements Serializable{
         this.hair = b.hair;
         this.facial = b.facial;
         this.characteristic = b.characteristic;
+        this.personality = b.personality;
         this.speech = b.speech;
     }
 

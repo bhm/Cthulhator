@@ -23,7 +23,7 @@ public class Characteristic {
     @JsonProperty("text")
     private String text;
     @JsonProperty("hasLocation")
-    private Boolean hasLocation;
+    private boolean hasLocation;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -38,7 +38,7 @@ public class Characteristic {
     }
 
     @JsonProperty("hasLocation")
-    public Boolean getHasLocation() {
+    public boolean getHasLocation() {
         return hasLocation;
     }
 
