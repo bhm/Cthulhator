@@ -14,6 +14,30 @@ public class Logger {
         this.mTag = cls.getSimpleName();
     }
 
+    public static int d(Throwable throwable) {
+        return Log.d(mTag, throwable != null ? throwable.getLocalizedMessage() : "", throwable);
+    }
+
+    public static int e(Throwable throwable) {
+        return Log.d(mTag, throwable != null ? throwable.getLocalizedMessage() : "", throwable);
+    }
+
+    public static int i(Throwable throwable) {
+        return Log.d(mTag, throwable != null ? throwable.getLocalizedMessage() : "", throwable);
+    }
+
+    public static int v(Throwable throwable) {
+        return Log.d(mTag, throwable != null ? throwable.getLocalizedMessage() : "", throwable);
+    }
+
+    public static int w(Throwable throwable) {
+        return Log.d(mTag, throwable != null ? throwable.getLocalizedMessage() : "", throwable);
+    }
+
+    public static int wtf(Throwable throwable) {
+        return Log.d(mTag, throwable != null ? throwable.getLocalizedMessage() : "", throwable);
+    }
+
     public static int d(Throwable throwable, String format, Object... args) {
         return Log.d(mTag, String.format(Locale.ENGLISH, format, args), throwable);
     }
@@ -62,6 +86,4 @@ public class Logger {
     public static int w(String format, Object... args) {
         return Log.w(mTag, String.format(Locale.ENGLISH, format, args));
     }
-
-
 }

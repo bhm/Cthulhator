@@ -12,8 +12,7 @@ import java.util.List;
 /**
  * Created by bhm on 26.07.14.
  */
-public class RandomUserDotMePagerAdapter
-        extends AbsFragmentPagerAdapter<User, RandomUserFragment> {
+public class RandomUserDotMePagerAdapter extends AbsFragmentPagerAdapter<User, RandomUserFragment> {
 
     public RandomUserDotMePagerAdapter(FragmentManager fm) {
         super(fm);
@@ -24,11 +23,7 @@ public class RandomUserDotMePagerAdapter
     }
 
     @Override
-    public RandomUserFragment newInstance(User item) {
-        RandomUserFragment r = new RandomUserFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(RandomUserFragment.USER, item);
-        r.setArguments(args);
-        return r;
+    public RandomUserFragment newInstance(User user) {
+        return RandomUserFragment.newInstane(user);
     }
 }

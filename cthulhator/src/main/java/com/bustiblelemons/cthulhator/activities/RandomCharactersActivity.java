@@ -21,16 +21,18 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import io.github.scottmaclure.character.traits.model.RandomTraitsSet;
+import io.github.scottmaclure.character.traits.model.TraitsSet;
 import io.github.scottmaclure.character.traits.model.providers.RandomTraitsSetProvider;
+import io.github.scottmaclure.character.traits.network.api.asyn.AsyncInfo;
 import io.github.scottmaclure.character.traits.network.api.asyn.DownloadDefaultTraitsAsyn;
+import io.github.scottmaclure.character.traits.network.api.asyn.OnTraitsDownload;
 
 /**
  * Created by bhm on 25.07.14.
  */
-public class RandomCharactersActivity extends BaseActionBarActivity
-        implements LoadMoreViewPager.LoadMore,
-                   OnRandomUsersRetreived,
-                   DownloadDefaultTraitsAsyn.OnTraitsDownloaded {
+public class RandomCharactersActivity extends BaseActionBarActivity implements LoadMoreViewPager.LoadMore,
+                                                                               OnRandomUsersRetreived,
+                                                                               OnTraitsDownload {
 
     @InjectView(R.id.pager)
     LoadMoreViewPager pager;
@@ -49,6 +51,7 @@ public class RandomCharactersActivity extends BaseActionBarActivity
         ButterKnife.inject(this);
         setupRandomUserDotMe();
         DownloadDefaultTraitsAsyn traitsAsyn = new DownloadDefaultTraitsAsyn(this, this);
+        traitsAsyn.executeCrossPlatform();
         if (characteristicPager != null) {
             characteristicAdapter = new CharacteristicTraitsAdapter(getSupportFragmentManager());
             characteristicPager.setAdapter(characteristicAdapter);
@@ -71,7 +74,7 @@ public class RandomCharactersActivity extends BaseActionBarActivity
             RandomUserDotMeAsyn async = new RandomUserDotMeAsyn(this, this);
             async.executeCrossPlatform(query);
         } else if (pager.getId() == R.id.characteristic_pager) {
-
+            onTraitsDownloaded(TraitsSet.FILE);
         }
     }
 
@@ -81,7 +84,6 @@ public class RandomCharactersActivity extends BaseActionBarActivity
         return 0;
     }
 
-    @Override
     public boolean onTraitsDownloaded(String fileName) {
         File traitsFile = Storage.getStorageFile(this, fileName);
         try {
@@ -94,5 +96,15 @@ public class RandomCharactersActivity extends BaseActionBarActivity
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public void onAsynTaskProgress(AsyncInfo<String, TraitsSet> info, String param, TraitsSet result) {
+        onTraitsDownloaded(param);
+    }
+
+    @Override
+    public void onAsynTaskFinish(AsyncInfo<String, TraitsSet> info, TraitsSet result) {
+
     }
 }

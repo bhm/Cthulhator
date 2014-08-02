@@ -23,11 +23,11 @@ import butterknife.InjectView;
  * Created by bhm on 26.07.14.
  */
 public class RandomUserFragment extends BaseFragment {
-    public static final  String USER     = "user";
+    public static final String USER = "user";
     private FadingActionBarHelperBase mFadingHelper;
 
     @InjectView(R.id.name)
-    NameWidget nameWidget;
+    NameWidget     nameWidget;
     @InjectView(R.id.location)
     LocationWidget locationWidget;
     @InjectView(R.id.image_header)
@@ -96,5 +96,13 @@ public class RandomUserFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
+    }
+
+    public static RandomUserFragment newInstane(User user) {
+        RandomUserFragment r = new RandomUserFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(RandomUserFragment.USER, user);
+        r.setArguments(args);
+        return r;
     }
 }

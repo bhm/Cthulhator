@@ -24,7 +24,7 @@ public class CharacteristicSetFragment extends BaseFragment {
     SkillView hair;
     @InjectView(R.id.facial)
     SkillView facial;
-    @InjectView(R.id.characteristic_pager)
+    @InjectView(R.id.characteristic)
     SkillView characteristic;
     @InjectView(R.id.personality)
     SkillView personality;
