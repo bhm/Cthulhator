@@ -8,10 +8,12 @@ import android.support.v4.app.Fragment;
 import com.bustiblelemons.google.apis.search.params.GoogleImageSearch;
 import com.bustiblelemons.logging.Logger;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by bhm on 18.07.14.
  */
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
 
     protected static Logger log;
 
@@ -26,7 +28,6 @@ public class BaseFragment extends Fragment {
     public interface ActionBarInterface {
         boolean onSetActionBarToClosable();
     }
-
 
     @Override
     public void onAttach(Activity activity) {
@@ -50,5 +51,11 @@ public class BaseFragment extends Fragment {
         if (actionbarInterface != null) {
             actionbarInterface.onSetActionBarToClosable();
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
     }
 }

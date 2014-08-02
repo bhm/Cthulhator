@@ -1,6 +1,5 @@
 package com.bustiblelemons.cthulhator.adapters;
 
-import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
 import com.bustiblelemons.adapters.viewpager.AbsFragmentPagerAdapter;
@@ -12,13 +11,13 @@ import java.util.List;
 /**
  * Created by bhm on 26.07.14.
  */
-public class RandomUserDotMePagerAdapter extends AbsFragmentPagerAdapter<User, RandomUserFragment> {
+public class RUDMEPagerAdapter extends AbsFragmentPagerAdapter<User, RandomUserFragment> {
 
-    public RandomUserDotMePagerAdapter(FragmentManager fm) {
+    public RUDMEPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    public RandomUserDotMePagerAdapter(FragmentManager fm, List<User> data) {
+    public RUDMEPagerAdapter(FragmentManager fm, List<User> data) {
         super(fm, data);
     }
 

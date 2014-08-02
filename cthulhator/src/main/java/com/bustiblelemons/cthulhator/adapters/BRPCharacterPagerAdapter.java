@@ -1,4 +1,4 @@
-package com.bustiblelemons.cthulhator.adapters.tes;
+package com.bustiblelemons.cthulhator.adapters;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;

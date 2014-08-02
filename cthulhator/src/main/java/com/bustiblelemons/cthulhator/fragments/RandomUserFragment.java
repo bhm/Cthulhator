@@ -1,12 +1,7 @@
 package com.bustiblelemons.cthulhator.fragments;
 
 import android.app.Activity;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.bustiblelemons.BaseFragment;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.Name;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.User;
 import com.bustiblelemons.cthulhator.R;
@@ -16,14 +11,12 @@ import com.bustiblelemons.views.LoadingImage;
 import com.manuelpeinado.fadingactionbar.FadingActionBarHelperBase;
 import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarHelper;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 /**
  * Created by bhm on 26.07.14.
  */
-public class RandomUserFragment extends BaseFragment {
-    public static final String USER = "user";
+public class RandomUserFragment extends AbsArgFragment<User> {
     private FadingActionBarHelperBase mFadingHelper;
 
     @InjectView(R.id.name)
@@ -32,7 +25,6 @@ public class RandomUserFragment extends BaseFragment {
     LocationWidget locationWidget;
     @InjectView(R.id.image_header)
     LoadingImage   pictureView;
-    private User user;
 
     @Override
     public void onAttach(Activity activity) {
@@ -48,34 +40,11 @@ public class RandomUserFragment extends BaseFragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putSerializable(USER, user);
+    protected void onInstanceArgumentRead(User instanceArgument) {
+       loadUserInfo(instanceArgument);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = mFadingHelper.createView(getContext());
-        ButterKnife.inject(this, rootView);
-        if (hasArgument(USER)) {
-            user = (User) getArguments().getSerializable(USER);
-            fillUserInfo();
-        }
-        return rootView;
-    }
-
-    @Override
-    public void onViewStateRestored(Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        if (savedInstanceState != null) {
-            savedInstanceState.containsKey(USER);
-            user = (User) savedInstanceState.getSerializable(USER);
-            log.d("onViewStateRestored %s", user.getName().getFullName());
-            fillUserInfo();
-        }
-    }
-
-    public void fillUserInfo() {
+    public void loadUserInfo(User user) {
         if (locationWidget != null) {
             locationWidget.setLocation(user.getLocation());
         }
@@ -91,18 +60,9 @@ public class RandomUserFragment extends BaseFragment {
         }
     }
 
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.reset(this);
-    }
-
     public static RandomUserFragment newInstane(User user) {
         RandomUserFragment r = new RandomUserFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(RandomUserFragment.USER, user);
-        r.setArguments(args);
+        r.setNewInstanceArgument(user);
         return r;
     }
 }

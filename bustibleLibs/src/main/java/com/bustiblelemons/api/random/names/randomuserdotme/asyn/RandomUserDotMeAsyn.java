@@ -3,7 +3,7 @@ package com.bustiblelemons.api.random.names.randomuserdotme.asyn;
 import android.content.Context;
 import android.util.Pair;
 
-import com.bustiblelemons.api.random.names.randomuserdotme.RandomUserDotMeQuery;
+import com.bustiblelemons.api.random.names.randomuserdotme.RandomUserMEQuery;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.RandomUserDotMe;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.Results;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.User;
@@ -19,7 +19,7 @@ import java.util.List;
  * Created by bhm on 25.07.14.
  */
 public class RandomUserDotMeAsyn
-        extends SimpleAsync<RandomUserDotMeQuery, Pair<RandomUserDotMeQuery, List<User>>> {
+        extends SimpleAsync<RandomUserMEQuery, Pair<RandomUserMEQuery, List<User>>> {
 
     private OnRandomUsersRetreived listener;
     private Logger                 log = new Logger(RandomUserDotMeAsyn.class);
@@ -30,21 +30,21 @@ public class RandomUserDotMeAsyn
     }
 
     @Override
-    protected Pair<RandomUserDotMeQuery, List<User>> call(RandomUserDotMeQuery... queries) throws
+    protected Pair<RandomUserMEQuery, List<User>> call(RandomUserMEQuery... queries) throws
                                                                                            Exception {
-        Pair<RandomUserDotMeQuery, List<User>> r = Pair.create(null, null);
+        Pair<RandomUserMEQuery, List<User>> r = Pair.create(null, null);
         if (queries != null) {
-            for (RandomUserDotMeQuery query : queries) {
+            for (RandomUserMEQuery query : queries) {
                 log.d("Random query %s", query);
                 List<User> users = getRandomUsers(query);
-                Pair<RandomUserDotMeQuery, List<User>> pair = Pair.create(query, users);
+                Pair<RandomUserMEQuery, List<User>> pair = Pair.create(query, users);
                 publishProgress(pair);
             }
         }
         return r;
     }
 
-    private List<User> getRandomUsers(RandomUserDotMeQuery rudmQuery) throws IOException,
+    private List<User> getRandomUsers(RandomUserMEQuery rudmQuery) throws IOException,
                                                                              URISyntaxException {
         List<User> r = new ArrayList<User>();
         if (rudmQuery != null) {
@@ -61,10 +61,10 @@ public class RandomUserDotMeAsyn
     }
 
     @Override
-    protected void onProgressUpdate(Pair<RandomUserDotMeQuery, List<User>>... values) {
+    protected void onProgressUpdate(Pair<RandomUserMEQuery, List<User>>... values) {
         super.onProgressUpdate(values);
         if (values != null) {
-            for (Pair<RandomUserDotMeQuery, List<User>> pair : values) {
+            for (Pair<RandomUserMEQuery, List<User>> pair : values) {
                 if (listener != null) {
                     listener.onRandomUsersRetreived(pair.first, pair.second);
                 }
@@ -78,7 +78,7 @@ public class RandomUserDotMeAsyn
     }
 
     @Override
-    protected boolean onSuccess(Pair<RandomUserDotMeQuery, List<User>> result) {
+    protected boolean onSuccess(Pair<RandomUserMEQuery, List<User>> result) {
         return false;
     }
 

@@ -14,7 +14,7 @@ import java.util.Locale;
 /**
  * Created by bhm on 25.07.14.
  */
-public class RandomUserDotMeQuery extends AbsJacksonQuery<RandomUserDotMe> {
+public class RandomUserMEQuery extends AbsJacksonQuery<RandomUserDotMe> {
 
     public static final String HOST    = "api.randomuser.me";
     public static final String RESULTS = "results";
@@ -25,7 +25,7 @@ public class RandomUserDotMeQuery extends AbsJacksonQuery<RandomUserDotMe> {
     private int    results;
 
 
-    protected RandomUserDotMeQuery(Options o) {
+    protected RandomUserMEQuery(Options o) {
         this.gender = o.gender;
         this.seed = o.seed;
         this.results = o.results;
@@ -80,8 +80,8 @@ public class RandomUserDotMeQuery extends AbsJacksonQuery<RandomUserDotMe> {
             return this;
         }
 
-        public RandomUserDotMeQuery build() {
-            return new RandomUserDotMeQuery(this);
+        public RandomUserMEQuery build() {
+            return new RandomUserMEQuery(this);
         }
 
     }

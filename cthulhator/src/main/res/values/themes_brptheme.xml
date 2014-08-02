@@ -19,6 +19,7 @@
     <style name="Widget" />
 
     <style name="Widget.ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:actionBarSize">@dimen/actionbar_height</item>
     </style>
 
     <style name="Widget.Light" />
@@ -52,4 +53,6 @@
         <item name="windowActionBarOverlay">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
+
+    <dimen name="actionbar_height">56dp</dimen>
 </resources>

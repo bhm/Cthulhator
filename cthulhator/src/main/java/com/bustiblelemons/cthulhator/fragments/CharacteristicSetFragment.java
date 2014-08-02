@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bustiblelemons.BaseFragment;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.views.SkillView;
 
@@ -17,9 +16,8 @@ import io.github.scottmaclure.character.traits.model.RandomTraitsSet;
 /**
  * Created by bhm on 02.08.14.
  */
-public class CharacteristicSetFragment extends BaseFragment {
+public class CharacteristicSetFragment extends AbsArgFragment<RandomTraitsSet> {
 
-    public static final String SET = "set";
     @InjectView(R.id.hair)
     SkillView hair;
     @InjectView(R.id.facial)
@@ -30,8 +28,6 @@ public class CharacteristicSetFragment extends BaseFragment {
     SkillView personality;
     @InjectView(R.id.speech)
     SkillView speech;
-    private RandomTraitsSet mRandomTraitsSet;
-
 
     @Override
     public void onAttach(Activity activity) {
@@ -42,36 +38,28 @@ public class CharacteristicSetFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_random_trait_set, container, false);
         ButterKnife.inject(this, rootView);
-        if (hasArgument(SET)) {
-            mRandomTraitsSet = (RandomTraitsSet) getArguments().getSerializable(SET);
-        } else if (savedInstanceState != null && savedInstanceState.containsKey(SET)) {
-            mRandomTraitsSet = (RandomTraitsSet) savedInstanceState.getSerializable(SET);
-        }
-        loadTraitSet();
         return rootView;
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putSerializable(SET, mRandomTraitsSet);
+    protected void onInstanceArgumentRead(RandomTraitsSet instanceArgument) {
+        loadTraitSet(instanceArgument);
     }
 
-    private void loadTraitSet() {
-        if (mRandomTraitsSet != null) {
-            hair.setValue(mRandomTraitsSet.getHair());
-            facial.setValue(mRandomTraitsSet.getFacial());
-            characteristic.setValue(mRandomTraitsSet.getCharacteristic());
-            personality.setValue(mRandomTraitsSet.getPersonality());
-            speech.setValue(mRandomTraitsSet.getSpeech());
+
+    private void loadTraitSet(RandomTraitsSet traitsSet) {
+        if (traitsSet != null) {
+            hair.setValue(traitsSet.getHair());
+            facial.setValue(traitsSet.getFacial());
+            characteristic.setValue(traitsSet.getCharacteristic());
+            personality.setValue(traitsSet.getPersonality());
+            speech.setValue(traitsSet.getSpeech());
         }
     }
 
     public static CharacteristicSetFragment newInstance(RandomTraitsSet set) {
         CharacteristicSetFragment r = new CharacteristicSetFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(CharacteristicSetFragment.SET, set);
-        r.setArguments(args);
+        r.setNewInstanceArgument(set);
         return r;
     }
 }

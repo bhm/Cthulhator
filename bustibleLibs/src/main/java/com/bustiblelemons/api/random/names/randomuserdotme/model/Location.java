@@ -3,6 +3,7 @@ package com.bustiblelemons.api.random.names.randomuserdotme.model;
 
 import com.bustiblelemons.model.LocationInfo;
 
+import org.apache.commons.lang.WordUtils;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import java.io.Serializable;
@@ -23,7 +24,7 @@ public class Location implements LocationInfo, Serializable {
     }
 
     public void setCity(String city) {
-        this.city = city;
+        this.city = WordUtils.capitalizeFully(city);
     }
 
     @Override
@@ -32,7 +33,7 @@ public class Location implements LocationInfo, Serializable {
     }
 
     public void setState(String state) {
-        this.state = state;
+        this.state = WordUtils.capitalizeFully(state);
     }
 
     @Override
@@ -41,7 +42,7 @@ public class Location implements LocationInfo, Serializable {
     }
 
     public void setStreet(String street) {
-        this.street = street;
+        this.street = WordUtils.capitalizeFully(street);
     }
 
     @Override
@@ -54,7 +55,7 @@ public class Location implements LocationInfo, Serializable {
     }
 
     public void setZip(String zip) {
-        this.zip = zip;
+        this.zip = WordUtils.capitalizeFully(zip);
     }
 
     public double getLongitude() {

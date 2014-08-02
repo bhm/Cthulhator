@@ -43,6 +43,7 @@ dependencies {
     provided ('com.android.support:appcompat-v7:19.1.0') {
         force = true
     }
+    provided 'commons-lang:commons-lang:2.6'
     provided 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
     provided 'com.nostra13.universalimageloader:universal-image-loader:1.9.+'
     provided 'org.apache.httpcomponents:httpmime:4.2.5'

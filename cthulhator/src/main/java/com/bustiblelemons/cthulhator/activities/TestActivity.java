@@ -5,7 +5,7 @@ import android.support.v4.view.ViewPager;
 
 import com.bustiblelemons.activities.BaseActionBarActivity;
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.adapters.tes.BRPCharacterPagerAdapter;
+import com.bustiblelemons.cthulhator.adapters.BRPCharacterPagerAdapter;
 import com.bustiblelemons.cthulhator.model.JazzAgeBRPChar;
 import com.bustiblelemons.cthulhator.model.brp.BRPCharacter;
 import com.bustiblelemons.logging.Logger;

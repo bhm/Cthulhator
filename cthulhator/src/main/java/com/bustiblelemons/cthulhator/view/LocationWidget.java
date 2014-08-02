@@ -143,6 +143,9 @@ public class LocationWidget extends RelativeLayout {
     }
 
     public void setLocation(LocationInfo info) {
+        if (info == null) {
+            return;
+        }
         this.mInfo = info;
         setStreet(info.getStreet());
         setState(info.getState());

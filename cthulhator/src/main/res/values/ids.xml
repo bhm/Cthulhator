@@ -33,4 +33,7 @@
     <item name="speech" type="id"/>
     <item name="characteristic" type="id"/>
     <item name="facial" type="id"/>
+    <item name="photos_pager" type="id"/>
+    <item name="names_pager" type="id"/>
+    <item name="location_pager" type="id"/>
 </resources>
