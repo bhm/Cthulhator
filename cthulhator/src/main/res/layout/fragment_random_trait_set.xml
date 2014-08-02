@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    style="@style/card"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.bustiblelemons.views.SkillView
+        android:id="@id/hair"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleGravity="left"
+        app:statTitle="@string/hair"/>
+
+    <com.bustiblelemons.views.SkillView
+        android:id="@id/facial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hair"
+        app:statTitle="@string/facial"/>
+
+    <com.bustiblelemons.views.SkillView
+        android:id="@id/characteristic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/facial"
+        app:statTitle="@string/characteristic"/>
+
+    <com.bustiblelemons.views.SkillView
+        android:id="@id/speech"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/personality"
+        app:statTitle="@string/speech"/>
+
+    <com.bustiblelemons.views.SkillView
+        android:id="@id/personality"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/characteristic"
+        app:statTitle="@string/personality"/>
+
+</RelativeLayout>
