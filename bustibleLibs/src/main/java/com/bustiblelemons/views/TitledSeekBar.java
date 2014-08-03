@@ -68,6 +68,14 @@ public class TitledSeekBar extends RelativeLayout implements SeekBar.OnSeekBarCh
         return value;
     }
 
+    public int getIntValue() {
+        try {
+            return Integer.valueOf(getValue());
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+    }
+
     public void setValue(CharSequence value) {
         if (valueView != null) {
             this.value = value != null ? value.toString() : "";
@@ -203,11 +211,12 @@ public class TitledSeekBar extends RelativeLayout implements SeekBar.OnSeekBarCh
 
     private int calculateNewMax(int jumpValue, int minValue, int maxValue) {
         int difference = (maxValue - minValue);
-        if (difference <= 0) {
+        if (difference < 0) {
             throw new IllegalArgumentException();
         }
+        jumpValue = jumpValue <= 0 ? 1 : jumpValue;
         int newMax = difference / jumpValue;
-        if (newMax <= 0) {
+        if (newMax < 0) {
             throw new IllegalArgumentException();
         }
         return newMax;
@@ -281,7 +290,7 @@ public class TitledSeekBar extends RelativeLayout implements SeekBar.OnSeekBarCh
         this.minValue = minValue;
     }
 
-    public void setValueChanged(onValueChanged valueChanged) {
+    public void setValueChangedCallback(onValueChanged valueChanged) {
         this.valueChanged = valueChanged;
     }
 

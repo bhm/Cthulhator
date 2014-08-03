@@ -28,4 +28,9 @@
     <dimen name="fab_offset">-32dp</dimen>
     <dimen name="padding_20">20dp</dimen>
     <dimen name="button_size">48dp</dimen>
+    <dimen name="padding_72">72dp</dimen>
+    <dimen name="photos_pager">400dp</dimen>
+    <dimen name="location_pager_height">388dp</dimen>
+    <dimen name="characteristic_pager_height">280dp</dimen>
+    <dimen name="name_pager_height">202dp</dimen>
 </resources>

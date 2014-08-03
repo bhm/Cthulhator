@@ -7,11 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Spinner;
 
-import com.bustiblelemons.BaseFragment;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.adapters.GenderSpinnerAdapter;
 import com.bustiblelemons.cthulhator.model.brp.gimagesearch.BRPGimageQuery;
-import com.bustiblelemons.cthulhator.model.brp.gimagesearch.GImageSearchGender;
+import com.bustiblelemons.cthulhator.model.brp.gimagesearch.Gender;
 import com.bustiblelemons.google.apis.search.params.GoogleImageSearch;
 import com.bustiblelemons.views.TitledSeekBar;
 
@@ -21,31 +20,48 @@ import butterknife.InjectView;
 /**
  * Created by bhm on 23.07.14.
  */
-public class PortraitsSettingsFragment extends BaseFragment implements View.OnClickListener,
-                                                                       GenderSpinnerAdapter.
-                                                                               GenderSelected,
-                                                                       TitledSeekBar.onValueChanged {
-    private static final String SHOW_UNFOLDED  = "show_unfolded";
-    private static final String SEARCH_OPTIONS = "search_options";
+public class PortraitsSettingsFragment extends AbsArgFragment<GoogleImageSearch.Options>
+        implements View.OnClickListener,
+                   GenderSpinnerAdapter.GenderSelected,
+                   TitledSeekBar.onValueChanged {
+
     @InjectView(R.id.action_settings)
     View          settingsButton;
     @InjectView(R.id.gender_spinner)
     Spinner       spinner;
     @InjectView(R.id.year_seekbar)
     TitledSeekBar yearSeekbar;
-    private View                      content;
+    @InjectView(android.R.id.custom)
+    View          content;
+
     private GoogleImageSearch.Options searchOptions;
     private GoogleSearchOptsListener  searchOptsListener;
     private GenderSpinnerAdapter      genderAdapter;
     private BRPGimageQuery            brpImageQuery;
+    private OnOpenSearchSettings      onOpenSearchSettings;
+    private Gender  mGender     = Gender.ANY;
+    private boolean MFoldedOnly = false;
+
+    public static PortraitsSettingsFragment newInstance(GoogleImageSearch.Options searchOptions) {
+        PortraitsSettingsFragment r = new PortraitsSettingsFragment();
+        r.setNewInstanceArgument(searchOptions);
+        return r;
+    }
+
+    public void setFoldedOnly(boolean foldedOnly) {
+        this.MFoldedOnly = foldedOnly;
+        if (content != null) {
+            content.setVisibility(foldedOnly ? View.GONE : View.VISIBLE);
+        }
+    }
+
+    public void setOnOpenSearchSettings(OnOpenSearchSettings onOpenSearchSettings) {
+        this.onOpenSearchSettings = onOpenSearchSettings;
+    }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (hasArgument(SEARCH_OPTIONS)) {
-            searchOptions = (GoogleImageSearch.Options)
-                    getArguments().getSerializable(SEARCH_OPTIONS);
-        }
         if (activity instanceof GoogleSearchOptsListener) {
             searchOptsListener = (GoogleSearchOptsListener) activity;
         }
@@ -54,29 +70,52 @@ public class PortraitsSettingsFragment extends BaseFragment implements View.OnCl
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_portraits_settings, container, false);
-        content = rootView.findViewById(android.R.id.custom);
         ButterKnife.inject(this, rootView);
-        yearSeekbar.setValueChanged(this);
-        genderAdapter = new GenderSpinnerAdapter(getActivity(), this);
-        spinner.setAdapter(genderAdapter);
-        spinner.setOnItemSelectedListener(genderAdapter);
+        yearSeekbar.setValueChangedCallback(this);
+        setupGenderSpinner();
         if (settingsButton != null) {
             settingsButton.setOnClickListener(this);
         }
         brpImageQuery = new BRPGimageQuery();
-        brpImageQuery.gender(GImageSearchGender.ANY);
+        brpImageQuery.gender(Gender.ANY);
         brpImageQuery.year(yearSeekbar.getValue());
         return rootView;
+    }
+
+    @Override
+    protected void onInstanceArgumentRead(GoogleImageSearch.Options arg) {
+        searchOptions = arg;
+    }
+
+    private void setupGenderSpinner() {
+        genderAdapter = new GenderSpinnerAdapter(getActivity(), this);
+        spinner.setAdapter(genderAdapter);
+        spinner.setOnItemSelectedListener(genderAdapter);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.action_settings:
-                boolean expand = !view.isSelected();
-                expandSettings(expand);
-                view.setSelected(expand);
+                handleSettingsButton(view);
                 break;
+        }
+    }
+
+    public void handleSettingsButton(View view) {
+        if (!MFoldedOnly) {
+            boolean expand = !view.isSelected();
+            expandSettings(expand);
+            view.setSelected(expand);
+            if (onOpenSearchSettings != null) {
+                int year = yearSeekbar.getIntValue();
+                onOpenSearchSettings.onOpenSearchSettings(year, mGender);
+            }
+        } else {
+            if (onOpenSearchSettings != null) {
+                int year = yearSeekbar.getIntValue();
+                onOpenSearchSettings.onOpenSearchSettings(year, mGender);
+            }
         }
     }
 
@@ -86,18 +125,13 @@ public class PortraitsSettingsFragment extends BaseFragment implements View.OnCl
         }
     }
 
-    public static PortraitsSettingsFragment newInstance(GoogleImageSearch.Options searchOptions) {
-        PortraitsSettingsFragment r = new PortraitsSettingsFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(SEARCH_OPTIONS, searchOptions);
-        r.setArguments(args);
-        return r;
-    }
-
     @Override
-    public boolean onGenderSelected(GImageSearchGender gender) {
-        searchOptions.setQuery(brpImageQuery.gender(gender));
-        publishNewOptions(searchOptions);
+    public boolean onGenderSelected(Gender gender) {
+        if (searchOptions != null) {
+            mGender = gender;
+            searchOptions.setQuery(brpImageQuery.gender(gender));
+            publishNewOptions(searchOptions);
+        }
         return false;
     }
 
@@ -117,9 +151,7 @@ public class PortraitsSettingsFragment extends BaseFragment implements View.OnCl
         boolean onGoogleSearchOptionsChanged(GoogleImageSearch.Options newOptions);
     }
 
-    @Override
-    public void onDestroyView() {
-        ButterKnife.reset(this);
-        super.onDestroyView();
+    public interface OnOpenSearchSettings {
+        void onOpenSearchSettings(int year, Gender gender);
     }
 }

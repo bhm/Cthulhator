@@ -3,6 +3,7 @@ package com.bustiblelemons;
 import android.app.Application;
 
 import com.bustiblelemons.bustiblelibs.R;
+import com.bustiblelemons.storage.Storage;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.memory.MemoryCache;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;

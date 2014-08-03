@@ -1,11 +1,13 @@
 package com.bustiblelemons.activities;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 
-import com.bustiblelemons.BaseFragment;
+import com.bustiblelemons.fragments.BaseFragment;
 import com.bustiblelemons.bustiblelibs.R;
 import com.bustiblelemons.logging.Logger;
 
@@ -33,6 +35,14 @@ public class BaseActionBarActivity extends ActionBarActivity
         actionBar.setHomeAsUpIndicator(R.drawable.ic_action_navigation_back_dark);
         return false;
     }
+
+
+    protected int addFragment(int containerId, Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(containerId, fragment);
+        return transaction.commit();
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

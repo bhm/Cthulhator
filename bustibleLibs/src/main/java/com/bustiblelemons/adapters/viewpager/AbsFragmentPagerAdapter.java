@@ -35,7 +35,17 @@ public abstract class AbsFragmentPagerAdapter<T, F extends Fragment>
         return mFragments != null ? mFragments.get(atPos) != null : false;
     }
 
-    public void addData(List<T> data) {
+    public void addData(T...data) {
+        for (T item : data) {
+            mData.add(item);
+            int pos = mData.size();
+            F f = newInstance(item);
+            mFragments.put(pos, f);
+        }
+        notifyDataSetChanged();
+    }
+
+    public void addData(Iterable<T> data) {
         for (T item : data) {
             mData.add(item);
             int pos = mData.size();
@@ -75,5 +85,10 @@ public abstract class AbsFragmentPagerAdapter<T, F extends Fragment>
     @Override
     public int getCount() {
         return this.mData.size();
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return String.valueOf(position);
     }
 }

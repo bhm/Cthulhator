@@ -7,7 +7,7 @@ import android.widget.AdapterView;
 import com.bustiblelemons.adapters.AbsSpinnerAdapter;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.holders.GImageGenderHolder;
-import com.bustiblelemons.cthulhator.model.brp.gimagesearch.GImageSearchGender;
+import com.bustiblelemons.cthulhator.model.brp.gimagesearch.Gender;
 import com.bustiblelemons.holders.impl.ViewHolder;
 
 import java.util.Arrays;
@@ -15,18 +15,18 @@ import java.util.Arrays;
 /**
  * Created by bhm on 27.07.14.
  */
-public class GenderSpinnerAdapter extends AbsSpinnerAdapter<GImageSearchGender>
+public class GenderSpinnerAdapter extends AbsSpinnerAdapter<Gender>
         implements AdapterView.OnItemSelectedListener {
 
     private GenderSelected listener;
 
     public GenderSpinnerAdapter(Context context, GenderSelected listener) {
-        super(context, Arrays.asList(GImageSearchGender.values()));
+        super(context, Arrays.asList(Gender.values()));
         this.listener = listener;
     }
 
     @Override
-    public ViewHolder<GImageSearchGender> getDropDownHolder(int position) {
+    public ViewHolder<Gender> getDropDownHolder(int position) {
         return new GImageGenderHolder(getContext());
     }
 
@@ -36,7 +36,7 @@ public class GenderSpinnerAdapter extends AbsSpinnerAdapter<GImageSearchGender>
     }
 
     @Override
-    protected ViewHolder<GImageSearchGender> getViewHolder(int position) {
+    protected ViewHolder<Gender> getViewHolder(int position) {
         return new GImageGenderHolder(getContext());
     }
 
@@ -58,6 +58,6 @@ public class GenderSpinnerAdapter extends AbsSpinnerAdapter<GImageSearchGender>
     }
 
     public interface GenderSelected {
-        boolean onGenderSelected(GImageSearchGender gender);
+        boolean onGenderSelected(Gender gender);
     }
 }

@@ -37,6 +37,7 @@
     <string name="personality">Personality</string>
     <string name="characteristic">Characteristic</string>
     <string name="facial">Facial Feature</string>
+    <string name="gaslight">Gaslight</string>
 
 
 </resources>

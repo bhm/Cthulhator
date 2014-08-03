@@ -1,8 +1,6 @@
 package com.bustiblelemons.cthulhator.activities;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 
 import com.bustiblelemons.activities.BaseActionBarActivity;
@@ -57,12 +55,6 @@ public class PortraitsActivity extends BaseActionBarActivity
         }
         addFragment(R.id.bottom_card, settingsFragment);
 
-    }
-
-    private int addFragment(int containerId, Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(containerId, fragment);
-        return transaction.commit();
     }
 
     private void queryForImages(GImageSearch search) {

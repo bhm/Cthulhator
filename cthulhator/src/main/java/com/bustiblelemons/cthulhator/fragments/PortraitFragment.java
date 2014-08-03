@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bustiblelemons.BaseFragment;
+import com.bustiblelemons.fragments.BaseFragment;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.google.apis.model.GoogleImageObject;
 import com.bustiblelemons.views.LoadingImage;

@@ -9,7 +9,7 @@
 
     <com.bustiblelemons.views.LoadMoreViewPager
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:minHeight="250dp" />
+        android:layout_height="@dimen/photos_pager"
+        android:minHeight="@dimen/photos_pager" />
 
 </RelativeLayout>

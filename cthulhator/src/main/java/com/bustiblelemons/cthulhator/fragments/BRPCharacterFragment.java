@@ -9,7 +9,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bustiblelemons.BaseFragment;
+import com.bustiblelemons.fragments.BaseFragment;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.fragments.main.BRPCard;
 import com.bustiblelemons.cthulhator.model.BRPSKills;

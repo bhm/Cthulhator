@@ -10,7 +10,26 @@
     <com.bustiblelemons.views.LoadMoreViewPager
         android:id="@id/photos_pager"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:minHeight="250dp" />
+        android:layout_height="@dimen/photos_pager"
+        android:minHeight="@dimen/photos_pager"/>
 
+    <RelativeLayout
+        android:id="@id/bottom_card"
+        style="@style/card.peeking.bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/transparent">
+    </RelativeLayout>
+
+    <at.markushi.ui.CircleButton
+        android:id="@id/fab"
+        android:layout_width="@dimen/fab_padding_8"
+        android:layout_height="@dimen/fab_padding_8"
+        android:layout_above="@id/bottom_card"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="-40dp"
+        android:layout_marginLeft="@dimen/padding_16"
+        android:src="@drawable/ic_navigation_accept"
+        app:cb_color="@color/portraits_fab"/>
 </RelativeLayout>

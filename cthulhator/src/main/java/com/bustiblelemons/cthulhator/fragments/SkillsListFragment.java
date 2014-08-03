@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.bustiblelemons.BaseFragment;
+import com.bustiblelemons.fragments.BaseFragment;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.adapters.BRPSkillsAdapter;
 

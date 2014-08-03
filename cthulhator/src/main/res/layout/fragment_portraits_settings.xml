@@ -16,6 +16,19 @@
         android:padding="@dimen/padding_16"
         android:src="@drawable/settings_unfold_selector"/>
 
+    <TextView
+        android:id="@android:id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/action_settings"
+        android:gravity="center|left"
+        android:padding="@dimen/padding_16"
+        android:textSize="@dimen/font_16"
+        android:layout_alignBottom="@id/action_settings"
+        android:layout_alignTop="@id/action_settings"
+        android:layout_marginLeft="@dimen/padding_72"
+        tools:text="@string/placeholder_title"/>
 
     <RelativeLayout
         android:id="@android:id/custom"
@@ -28,8 +41,8 @@
         <Spinner
             android:id="@id/gender_spinner"
             android:layout_width="match_parent"
-            android:padding="@dimen/padding_16"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_16"/>
 
         <com.bustiblelemons.views.TitledSeekBar
             android:id="@id/year_seekbar"
@@ -37,10 +50,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/gender_spinner"
             app:compact="false"
-            app:progress="2"
             app:jumpValue="5"
             app:maxValue="@integer/jazz_age_max"
             app:minValue="@integer/jazz_age_min"
+            app:progress="2"
             app:statTitle="@string/year"/>
     </RelativeLayout>
 

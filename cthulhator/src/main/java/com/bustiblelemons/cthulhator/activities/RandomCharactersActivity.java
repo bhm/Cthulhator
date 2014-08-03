@@ -1,9 +1,10 @@
 package com.bustiblelemons.cthulhator.activities;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
-import com.bustiblelemons.Storage;
 import com.bustiblelemons.activities.BaseActionBarActivity;
 import com.bustiblelemons.api.random.names.randomuserdotme.RandomUserMEQuery;
 import com.bustiblelemons.api.random.names.randomuserdotme.asyn.OnRandomUsersRetreived;
@@ -14,6 +15,12 @@ import com.bustiblelemons.cthulhator.adapters.CharacteristicTraitsAdapter;
 import com.bustiblelemons.cthulhator.adapters.RandomUserMELocationPagerAdapter;
 import com.bustiblelemons.cthulhator.adapters.RandomUserMENamePagerAdapter;
 import com.bustiblelemons.cthulhator.adapters.RandomUserMEPhotoPagerAdapter;
+import com.bustiblelemons.cthulhator.fragments.PortraitsSettingsFragment;
+import com.bustiblelemons.cthulhator.fragments.dialog.RandomCharSettingsDialog;
+import com.bustiblelemons.cthulhator.model.brp.gimagesearch.Gender;
+import com.bustiblelemons.google.apis.search.params.GImageSearch;
+import com.bustiblelemons.google.apis.search.params.GoogleImageSearch;
+import com.bustiblelemons.storage.Storage;
 import com.bustiblelemons.views.LoadMoreViewPager;
 import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarHelper;
 
@@ -21,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import at.markushi.ui.CircleButton;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import io.github.scottmaclure.character.traits.model.RandomTraitsSet;
@@ -33,10 +41,12 @@ import io.github.scottmaclure.character.traits.network.api.asyn.OnTraitsDownload
 /**
  * Created by bhm on 25.07.14.
  */
-public class RandomCharactersActivity extends BaseActionBarActivity implements
-                                                                    LoadMoreViewPager.LoadMore,
-                                                                    OnRandomUsersRetreived,
-                                                                    OnTraitsDownload {
+public class RandomCharactersActivity extends BaseActionBarActivity
+        implements
+        LoadMoreViewPager.LoadMore,
+        OnRandomUsersRetreived,
+        OnTraitsDownload, View.OnClickListener,
+        PortraitsSettingsFragment.OnOpenSearchSettings {
 
     @InjectView(R.id.photos_pager)
     LoadMoreViewPager photosPager;
@@ -46,13 +56,18 @@ public class RandomCharactersActivity extends BaseActionBarActivity implements
     LoadMoreViewPager characteristicPager;
     @InjectView(R.id.location_pager)
     LoadMoreViewPager locationsPager;
+    @InjectView(R.id.fab)
+    CircleButton      settingsFab;
 
     private RandomUserMEPhotoPagerAdapter    photosPagerAdapter;
     private RandomUserMENamePagerAdapter     namesPagerAdapter;
     private RandomUserMELocationPagerAdapter locationPagerAdapter;
     private RandomUserMEQuery                query;
+    private GImageSearch                     imageSearch;
     private RandomUserMEQuery.Options        queryOptions;
     private CharacteristicTraitsAdapter      characteristicAdapter;
+    private RandomCharSettingsDialog         randomCharSettingsDialog;
+    private PortraitsSettingsFragment        portraitSettingsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +79,11 @@ public class RandomCharactersActivity extends BaseActionBarActivity implements
                 .contentLayout(R.layout.activity_random_characters)
                 .lightActionBar(true);
         setContentView(helper.createView(this));
+        attachPortraitSettings();
         onSetActionBarToClosable();
         helper.initActionBar(this);
         ButterKnife.inject(this);
+        settingsFab.setOnClickListener(this);
         setupPhotosPager();
         setupNamesPager();
         setupLocationsPager();
@@ -75,6 +92,17 @@ public class RandomCharactersActivity extends BaseActionBarActivity implements
         DownloadDefaultTraitsAsyn traitsAsyn = new DownloadDefaultTraitsAsyn(this, this);
         traitsAsyn.executeCrossPlatform();
     }
+
+    private void attachPortraitSettings() {
+        if (portraitSettingsFragment == null) {
+            GoogleImageSearch.Options opts = new GoogleImageSearch.Options();
+            portraitSettingsFragment = PortraitsSettingsFragment.newInstance(opts);
+            portraitSettingsFragment.setFoldedOnly(true);
+            portraitSettingsFragment.setOnOpenSearchSettings(this);
+        }
+        addFragment(R.id.bottom_card, portraitSettingsFragment);
+    }
+
 
     private void setupLocationsPager() {
         if (locationsPager != null) {
@@ -155,5 +183,31 @@ public class RandomCharactersActivity extends BaseActionBarActivity implements
     @Override
     public void onAsynTaskFinish(AsyncInfo<String, TraitsSet> info, TraitsSet result) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.action_settings:
+                handleSettingsButton();
+                break;
+            case R.id.fab:
+                //TODO Save the set as a character properties set
+                this.finish();
+                break;
+        }
+    }
+
+    public void handleSettingsButton() {
+        if (randomCharSettingsDialog == null) {
+            randomCharSettingsDialog = RandomCharSettingsDialog.newInstance();
+        }
+        FragmentManager fm = getSupportFragmentManager();
+        randomCharSettingsDialog.show(fm, randomCharSettingsDialog.TAG);
+    }
+
+    @Override
+    public void onOpenSearchSettings(int year, Gender gender) {
+        handleSettingsButton();
     }
 }
