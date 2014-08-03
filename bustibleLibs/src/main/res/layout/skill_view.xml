@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:onClick="onClick"
-        android:padding="@dimen/padding_16"
+        android:paddingBottom="@dimen/padding_16"
+        android:paddingTop="@dimen/padding_16"
         tools:text="@string/placeholder_perc_val"/>
 
     <TextView
@@ -22,8 +23,8 @@
         android:layout_height="wrap_content"
         android:gravity="center|left"
         android:onClick="onClick"
-        android:padding="@dimen/padding_16"
-        android:textSize="@dimen/font_16"
+        android:paddingBottom="@dimen/padding_16"
+        android:paddingTop="@dimen/padding_16"
         android:textStyle="bold"
         tools:text="@string/placeholder_title"/>
 

@@ -38,6 +38,7 @@
     <string name="characteristic">Characteristic</string>
     <string name="facial">Facial Feature</string>
     <string name="gaslight">Gaslight</string>
+    <string name="apply">Apply</string>
 
 
 </resources>

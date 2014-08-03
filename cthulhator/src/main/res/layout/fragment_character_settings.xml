@@ -1,31 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_card_peek_bottom">
-
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@android:id/custom"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible">
+        android:layout_above="@android:id/button1"
+        android:background="@drawable/bg_card_peek_bottom">
 
-        <Spinner
-            android:id="@id/gender_spinner"
+        <ImageButton
+            android:id="@android:id/closeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/flatt_button_selector"
+            android:padding="@dimen/padding_8"
+            android:src="@drawable/ic_action_navigation_back_dark"/>
+
+        <RelativeLayout
+            android:id="@android:id/custom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding_16"/>
+            android:layout_below="@android:id/closeButton"
+            android:visibility="visible">
 
-        <android.support.v4.view.ViewPager
-            android:id="@id/pager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/gender_spinner"/>
+            <Spinner
+                android:id="@id/gender_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_16"/>
 
+            <android.support.v4.view.ViewPager
+                android:id="@id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/gender_spinner"/>
+        </RelativeLayout>
     </RelativeLayout>
 
+   <Button
+       android:background="@drawable/flatt_button_selector"
+       android:id="@android:id/button1"
+       android:text="@string/apply"
+       android:padding="@dimen/padding_16"
+       android:textColor="@color/flatt_button_set"
+       android:textStyle="bold"
+       android:layout_alignParentBottom="true"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"/>
 </RelativeLayout>
