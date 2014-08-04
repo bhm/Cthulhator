@@ -39,6 +39,7 @@ public class PortraitsSettingsFragment extends AbsArgFragment<GoogleImageSearch.
     private GenderSpinnerAdapter      genderAdapter;
     private BRPGimageQuery            brpImageQuery;
     private OnOpenSearchSettings      onOpenSearchSettings;
+    private OnCloseSearchSettings     onCloseSearchSettings;
     private Gender  mGender     = Gender.ANY;
     private boolean MFoldedOnly = false;
 
@@ -46,6 +47,10 @@ public class PortraitsSettingsFragment extends AbsArgFragment<GoogleImageSearch.
         PortraitsSettingsFragment r = new PortraitsSettingsFragment();
         r.setNewInstanceArgument(searchOptions);
         return r;
+    }
+
+    public void setOnCloseSearchSettings(OnCloseSearchSettings onCloseSearchSettings) {
+        this.onCloseSearchSettings = onCloseSearchSettings;
     }
 
     public void setFoldedOnly(boolean foldedOnly) {
@@ -64,6 +69,9 @@ public class PortraitsSettingsFragment extends AbsArgFragment<GoogleImageSearch.
         super.onAttach(activity);
         if (activity instanceof GoogleSearchOptsListener) {
             searchOptsListener = (GoogleSearchOptsListener) activity;
+        }
+        if (activity instanceof OnCloseSearchSettings) {
+            onCloseSearchSettings = (OnCloseSearchSettings) activity;
         }
     }
 
@@ -151,7 +159,4 @@ public class PortraitsSettingsFragment extends AbsArgFragment<GoogleImageSearch.
         boolean onGoogleSearchOptionsChanged(GoogleImageSearch.Options newOptions);
     }
 
-    public interface OnOpenSearchSettings {
-        void onOpenSearchSettings(int year, Gender gender);
-    }
 }

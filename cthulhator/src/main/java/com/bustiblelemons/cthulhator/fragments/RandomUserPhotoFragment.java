@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.bustiblelemons.api.random.names.randomuserdotme.model.User;
 import com.bustiblelemons.cthulhator.R;
+import com.bustiblelemons.model.OnlinePhotoUrl;
 import com.bustiblelemons.views.LoadingImage;
 
 import butterknife.ButterKnife;
@@ -15,7 +16,7 @@ import butterknife.InjectView;
 /**
  * Created by bhm on 02.08.14.
  */
-public class RandomUserPhotoFragment extends AbsArgFragment<User> {
+public class RandomUserPhotoFragment extends AbsArgFragment<OnlinePhotoUrl> {
 
     @InjectView(android.R.id.icon)
     LoadingImage imageView;
@@ -28,8 +29,8 @@ public class RandomUserPhotoFragment extends AbsArgFragment<User> {
     }
 
     @Override
-    protected void onInstanceArgumentRead(User instanceArgument) {
-        loadUrl(instanceArgument.getPicture());
+    protected void onInstanceArgumentRead(OnlinePhotoUrl instanceArgument) {
+        loadUrl(instanceArgument.getUrl());
     }
 
     public void loadUrl(String url) {
@@ -37,7 +38,7 @@ public class RandomUserPhotoFragment extends AbsArgFragment<User> {
         imageView.loadFrom(url);
     }
 
-    public static RandomUserPhotoFragment newInstance(User user) {
+    public static RandomUserPhotoFragment newInstance(OnlinePhotoUrl user) {
         RandomUserPhotoFragment r = new RandomUserPhotoFragment();
         r.setNewInstanceArgument(user);
         return r;

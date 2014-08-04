@@ -1,7 +1,9 @@
 package com.bustiblelemons.cthulhator.fragments.dialog;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -13,9 +15,14 @@ import android.widget.Spinner;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.adapters.GenderSpinnerAdapter;
 import com.bustiblelemons.cthulhator.adapters.PeriodPagerAdapter;
+import com.bustiblelemons.cthulhator.fragments.OnCloseSearchSettings;
+import com.bustiblelemons.cthulhator.model.OnlinePhotoSearch;
+import com.bustiblelemons.cthulhator.model.OnlinePhotoSearchImpl;
 import com.bustiblelemons.cthulhator.model.brp.gimagesearch.Gender;
 import com.bustiblelemons.fragments.dialog.AbsDialogFragment;
+import com.bustiblelemons.views.TitledSeekBar;
 
+import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 /**
@@ -29,8 +36,19 @@ public class RandomCharSettingsDialog extends AbsDialogFragment
     Spinner   genderSpinner;
     @InjectView(R.id.pager)
     ViewPager pager;
-    private GenderSpinnerAdapter genderAdapter;
-    private PeriodPagerAdapter   periodPagerAdapter;
+    private GenderSpinnerAdapter  genderAdapter;
+    private PeriodPagerAdapter    periodPagerAdapter;
+    private OnCloseSearchSettings onCloseSearchSettings;
+    private TitledSeekBar         yearSeekbar;
+    private Gender                mGender;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof OnCloseSearchSettings) {
+            onCloseSearchSettings = (OnCloseSearchSettings) activity;
+        }
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -42,6 +60,7 @@ public class RandomCharSettingsDialog extends AbsDialogFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_character_settings, container, false);
+        ButterKnife.inject(this, rootView);
         if (genderSpinner != null) {
             setupGenderSpinner(inflater.getContext());
         }
@@ -50,6 +69,16 @@ public class RandomCharSettingsDialog extends AbsDialogFragment
             pager.setAdapter(periodPagerAdapter);
         }
         return rootView;
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        if (onCloseSearchSettings != null) {
+            int year = yearSeekbar.getIntValue();
+            OnlinePhotoSearch search = OnlinePhotoSearchImpl.create(year, mGender);
+            onCloseSearchSettings.onCloseSearchSettings(search);
+        }
     }
 
     private void setupGenderSpinner(Context context) {
@@ -67,4 +96,5 @@ public class RandomCharSettingsDialog extends AbsDialogFragment
         RandomCharSettingsDialog r = new RandomCharSettingsDialog();
         return r;
     }
+
 }

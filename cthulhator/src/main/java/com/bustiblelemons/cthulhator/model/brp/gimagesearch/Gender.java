@@ -45,4 +45,15 @@ public enum Gender {
     };
 
     public abstract int getTitleId();
+
+    public boolean isMale() {
+        switch(this) {
+            case MALE:
+            case BOY:
+            case MEN:
+                return true;
+            default:
+                return false;
+        }
+    }
 }

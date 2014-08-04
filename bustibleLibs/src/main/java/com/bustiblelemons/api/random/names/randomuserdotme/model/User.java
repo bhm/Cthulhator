@@ -1,12 +1,14 @@
 
 package com.bustiblelemons.api.random.names.randomuserdotme.model;
 
+import com.bustiblelemons.model.OnlinePhotoUrl;
+
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import java.io.Serializable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class User implements Serializable {
+public class User implements OnlinePhotoUrl, Serializable {
    	private String sSN;
    	private String cell;
    	private String dob;
@@ -120,4 +122,9 @@ public class User implements Serializable {
 	public void setUsername(String username){
 		this.username = username;
 	}
+
+    @Override
+    public String getUrl() {
+        return getPicture();
+    }
 }

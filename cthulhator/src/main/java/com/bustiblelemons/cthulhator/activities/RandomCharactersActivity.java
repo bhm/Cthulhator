@@ -15,9 +15,10 @@ import com.bustiblelemons.cthulhator.adapters.CharacteristicTraitsAdapter;
 import com.bustiblelemons.cthulhator.adapters.RandomUserMELocationPagerAdapter;
 import com.bustiblelemons.cthulhator.adapters.RandomUserMENamePagerAdapter;
 import com.bustiblelemons.cthulhator.adapters.RandomUserMEPhotoPagerAdapter;
+import com.bustiblelemons.cthulhator.fragments.OnOpenSearchSettings;
 import com.bustiblelemons.cthulhator.fragments.PortraitsSettingsFragment;
 import com.bustiblelemons.cthulhator.fragments.dialog.RandomCharSettingsDialog;
-import com.bustiblelemons.cthulhator.model.brp.gimagesearch.Gender;
+import com.bustiblelemons.cthulhator.model.OnlinePhotoSearch;
 import com.bustiblelemons.google.apis.search.params.GImageSearch;
 import com.bustiblelemons.google.apis.search.params.GoogleImageSearch;
 import com.bustiblelemons.storage.Storage;
@@ -46,7 +47,7 @@ public class RandomCharactersActivity extends BaseActionBarActivity
         LoadMoreViewPager.LoadMore,
         OnRandomUsersRetreived,
         OnTraitsDownload, View.OnClickListener,
-        PortraitsSettingsFragment.OnOpenSearchSettings {
+        OnOpenSearchSettings {
 
     @InjectView(R.id.photos_pager)
     LoadMoreViewPager photosPager;
@@ -68,6 +69,7 @@ public class RandomCharactersActivity extends BaseActionBarActivity
     private CharacteristicTraitsAdapter      characteristicAdapter;
     private RandomCharSettingsDialog         randomCharSettingsDialog;
     private PortraitsSettingsFragment        portraitSettingsFragment;
+    private OnlinePhotoSearch                mOnlinePhotoSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,12 +146,15 @@ public class RandomCharactersActivity extends BaseActionBarActivity
         int id = pager.getId();
         if (id == R.id.names_pager ||
                 id == R.id.names_pager ||
-                id == R.id.location_pager ||
-                id == R.id.photos_pager) {
+                id == R.id.location_pager) {
             RandomUserDotMeAsyn async = new RandomUserDotMeAsyn(this, this);
             async.executeCrossPlatform(query);
         } else if (id == R.id.characteristic_pager) {
             onTraitsDownloaded(TraitsSet.FILE);
+        } else if (id == R.id.photos_pager) {
+            if (mOnlinePhotoSearch.isModern()) {
+
+            }
         }
     }
 
@@ -207,7 +212,8 @@ public class RandomCharactersActivity extends BaseActionBarActivity
     }
 
     @Override
-    public void onOpenSearchSettings(int year, Gender gender) {
+    public void onOpenSearchSettings(OnlinePhotoSearch search) {
+        mOnlinePhotoSearch = search;
         handleSettingsButton();
     }
 }

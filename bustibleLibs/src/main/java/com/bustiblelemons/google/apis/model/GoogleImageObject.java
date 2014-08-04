@@ -1,12 +1,14 @@
 package com.bustiblelemons.google.apis.model;
 
+import com.bustiblelemons.model.OnlinePhotoUrl;
+
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  * Created by bhm on 18.07.14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class GoogleImageObject {
+public class GoogleImageObject implements OnlinePhotoUrl {
     private int width;
     private int height;
     private String unescapedUrl;
@@ -60,6 +62,7 @@ public class GoogleImageObject {
         return unescapedUrl;
     }
 
+    @Override
     public String getUrl() {
         return url;
     }
