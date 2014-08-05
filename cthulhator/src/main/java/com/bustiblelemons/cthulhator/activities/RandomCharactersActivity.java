@@ -15,10 +15,13 @@ import com.bustiblelemons.cthulhator.adapters.CharacteristicTraitsAdapter;
 import com.bustiblelemons.cthulhator.adapters.RandomUserMELocationPagerAdapter;
 import com.bustiblelemons.cthulhator.adapters.RandomUserMENamePagerAdapter;
 import com.bustiblelemons.cthulhator.adapters.RandomUserMEPhotoPagerAdapter;
+import com.bustiblelemons.cthulhator.async.QueryGImagesAsyn;
 import com.bustiblelemons.cthulhator.fragments.OnOpenSearchSettings;
 import com.bustiblelemons.cthulhator.fragments.PortraitsSettingsFragment;
 import com.bustiblelemons.cthulhator.fragments.dialog.RandomCharSettingsDialog;
-import com.bustiblelemons.cthulhator.model.OnlinePhotoSearch;
+import com.bustiblelemons.cthulhator.model.OnlinePhotoSearchQuery;
+import com.bustiblelemons.cthulhator.view.TouchRedelegate;
+import com.bustiblelemons.google.apis.model.GoogleImageObject;
 import com.bustiblelemons.google.apis.search.params.GImageSearch;
 import com.bustiblelemons.google.apis.search.params.GoogleImageSearch;
 import com.bustiblelemons.storage.Storage;
@@ -47,10 +50,12 @@ public class RandomCharactersActivity extends BaseActionBarActivity
         LoadMoreViewPager.LoadMore,
         OnRandomUsersRetreived,
         OnTraitsDownload, View.OnClickListener,
-        OnOpenSearchSettings {
+        OnOpenSearchSettings, QueryGImagesAsyn.ReceiveGoogleImages {
 
     @InjectView(R.id.photos_pager)
     LoadMoreViewPager photosPager;
+    @InjectView(R.id.dummy_photos_pager)
+    LoadMoreViewPager dummyPhotosPager;
     @InjectView(R.id.names_pager)
     LoadMoreViewPager namesPager;
     @InjectView(R.id.characteristic_pager)
@@ -65,27 +70,24 @@ public class RandomCharactersActivity extends BaseActionBarActivity
     private RandomUserMELocationPagerAdapter locationPagerAdapter;
     private RandomUserMEQuery                query;
     private GImageSearch                     imageSearch;
+    private GoogleImageSearch.Options        googleSearchOptions;
     private RandomUserMEQuery.Options        queryOptions;
     private CharacteristicTraitsAdapter      characteristicAdapter;
     private RandomCharSettingsDialog         randomCharSettingsDialog;
     private PortraitsSettingsFragment        portraitSettingsFragment;
-    private OnlinePhotoSearch                mOnlinePhotoSearch;
+    private OnlinePhotoSearchQuery           mOnlinePhotoSearchQuery;
+    private TouchRedelegate touchRedelegate = new TouchRedelegate();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FadingActionBarHelper helper = new FadingActionBarHelper()
-                .actionBarBackground(R.drawable.actionbar_brp)
-                .headerLayout(R.layout.header_random_characters)
-                .headerOverlayLayout(R.layout.header_random_characters_overlay)
-                .contentLayout(R.layout.activity_random_characters)
-                .lightActionBar(true);
-        setContentView(helper.createView(this));
+        FadingActionBarHelper helper = setupFadingBar();
         attachPortraitSettings();
         onSetActionBarToClosable();
         helper.initActionBar(this);
         ButterKnife.inject(this);
         settingsFab.setOnClickListener(this);
+        redelegateTouch();
         setupPhotosPager();
         setupNamesPager();
         setupLocationsPager();
@@ -93,6 +95,24 @@ public class RandomCharactersActivity extends BaseActionBarActivity
         setupCharacteristicsPager();
         DownloadDefaultTraitsAsyn traitsAsyn = new DownloadDefaultTraitsAsyn(this, this);
         traitsAsyn.executeCrossPlatform();
+    }
+
+    private void redelegateTouch() {
+        if (photosPager != null && dummyPhotosPager != null) {
+            touchRedelegate.setReceiver(photosPager);
+            touchRedelegate.setReceiver(dummyPhotosPager);
+        }
+    }
+
+    private FadingActionBarHelper setupFadingBar() {
+        FadingActionBarHelper helper = new FadingActionBarHelper()
+                .actionBarBackground(R.drawable.actionbar_brp)
+                .headerLayout(R.layout.header_random_characters)
+                .headerOverlayLayout(R.layout.header_random_characters_overlay)
+                .contentLayout(R.layout.activity_random_characters)
+                .lightActionBar(true);
+        setContentView(helper.createView(this));
+        return helper;
     }
 
     private void attachPortraitSettings() {
@@ -147,15 +167,35 @@ public class RandomCharactersActivity extends BaseActionBarActivity
         if (id == R.id.names_pager ||
                 id == R.id.names_pager ||
                 id == R.id.location_pager) {
-            RandomUserDotMeAsyn async = new RandomUserDotMeAsyn(this, this);
-            async.executeCrossPlatform(query);
+            executeRandomUserMeQuery();
         } else if (id == R.id.characteristic_pager) {
             onTraitsDownloaded(TraitsSet.FILE);
         } else if (id == R.id.photos_pager) {
-            if (mOnlinePhotoSearch.isModern()) {
-
+            if (mOnlinePhotoSearchQuery.isModern()) {
+                executeRandomUserMeQuery();
+            } else {
+                if (googleSearchOptions == null) {
+                    googleSearchOptions = new GoogleImageSearch.Options();
+                    googleSearchOptions.setQuery(mOnlinePhotoSearchQuery.getQuery());
+                    executeGoogleImageSearch(googleSearchOptions);
+                }
             }
         }
+    }
+
+    private void executeGoogleImageSearch(GoogleImageSearch.Options options) {
+        if (options != null) {
+            queryForImages(options.build());
+        }
+    }
+
+    private void queryForImages(GImageSearch search) {
+        QueryGImagesAsyn queryGImagesAsyn = new QueryGImagesAsyn(this, this);
+        queryGImagesAsyn.executeCrossPlatform(search);
+    }
+    public void executeRandomUserMeQuery() {
+        RandomUserDotMeAsyn async = new RandomUserDotMeAsyn(this, this);
+        async.executeCrossPlatform(query);
     }
 
     @Override
@@ -212,8 +252,27 @@ public class RandomCharactersActivity extends BaseActionBarActivity
     }
 
     @Override
-    public void onOpenSearchSettings(OnlinePhotoSearch search) {
-        mOnlinePhotoSearch = search;
+    public void onOpenSearchSettings(OnlinePhotoSearchQuery search) {
+        mOnlinePhotoSearchQuery = search;
         handleSettingsButton();
+    }
+
+    @Override
+    public boolean onGoogleImagesReceived(GImageSearch search, List<GoogleImageObject> results) {
+        Object cachedSearch = photosPager.getTag(R.id.tag_search);
+        if (cachedSearch != null) {
+            if (cachedSearch.equals(search)) {
+                photosPagerAdapter.addData(results);
+                return true;
+            } else {
+                photosPagerAdapter.removeAll();
+                photosPagerAdapter.addData(results);
+                photosPager.setTag(R.id.tag_search, search);
+                return true;
+            }
+        } else {
+            photosPagerAdapter.addData(results);
+            return true;
+        }
     }
 }

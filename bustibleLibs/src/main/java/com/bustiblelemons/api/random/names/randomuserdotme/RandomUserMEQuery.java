@@ -84,5 +84,26 @@ public class RandomUserMEQuery extends AbsJacksonQuery<RandomUserDotMe> {
             return new RandomUserMEQuery(this);
         }
 
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) { return true; }
+            if (o == null || getClass() != o.getClass()) { return false; }
+
+            Options options = (Options) o;
+
+            if (results != options.results) { return false; }
+            if (gender != options.gender) { return false; }
+            if (seed != null ? !seed.equals(options.seed) : options.seed != null) { return false; }
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = gender != null ? gender.hashCode() : 0;
+            result = 31 * result + (seed != null ? seed.hashCode() : 0);
+            result = 31 * result + results;
+            return result;
+        }
     }
 }

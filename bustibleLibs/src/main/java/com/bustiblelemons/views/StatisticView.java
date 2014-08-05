@@ -104,7 +104,7 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
     private void setupModifiers(TypedArray skillArray) {
         showModifiers = skillArray.getBoolean(R.styleable.SkillView_showModifiers, false);
         setupIncreaseModifier(skillArray);
-        setIncreaseDrawable(incDrawable);
+
         setupDecreaseDrawablew(skillArray);
         if (showModifiers) {
             showModifers();
@@ -126,6 +126,7 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
         if (incDrawable == null) {
             incDrawable = getResources().getDrawable(R.drawable.increase_selector);
         }
+        setIncreaseDrawable(incDrawable);
     }
 
     public void setDecreaseDrawable(Drawable drawable) {

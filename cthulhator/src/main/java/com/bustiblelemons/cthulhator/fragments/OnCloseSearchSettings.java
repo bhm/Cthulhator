@@ -1,7 +1,7 @@
 package com.bustiblelemons.cthulhator.fragments;
 
-import com.bustiblelemons.cthulhator.model.OnlinePhotoSearch;
+import com.bustiblelemons.cthulhator.model.OnlinePhotoSearchQuery;
 
 public interface OnCloseSearchSettings {
-    void onCloseSearchSettings(OnlinePhotoSearch onlinePhotoSearch);
+    void onCloseSearchSettings(OnlinePhotoSearchQuery onlinePhotoSearchQuery);
 }

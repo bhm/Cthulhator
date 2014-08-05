@@ -16,8 +16,8 @@ import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.adapters.GenderSpinnerAdapter;
 import com.bustiblelemons.cthulhator.adapters.PeriodPagerAdapter;
 import com.bustiblelemons.cthulhator.fragments.OnCloseSearchSettings;
-import com.bustiblelemons.cthulhator.model.OnlinePhotoSearch;
-import com.bustiblelemons.cthulhator.model.OnlinePhotoSearchImpl;
+import com.bustiblelemons.cthulhator.model.OnlinePhotoSearchQuery;
+import com.bustiblelemons.cthulhator.model.OnlinePhotoSearchQueryImpl;
 import com.bustiblelemons.cthulhator.model.brp.gimagesearch.Gender;
 import com.bustiblelemons.fragments.dialog.AbsDialogFragment;
 import com.bustiblelemons.views.TitledSeekBar;
@@ -41,6 +41,7 @@ public class RandomCharSettingsDialog extends AbsDialogFragment
     private OnCloseSearchSettings onCloseSearchSettings;
     private TitledSeekBar         yearSeekbar;
     private Gender                mGender;
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -76,7 +77,7 @@ public class RandomCharSettingsDialog extends AbsDialogFragment
         super.onDismiss(dialog);
         if (onCloseSearchSettings != null) {
             int year = yearSeekbar.getIntValue();
-            OnlinePhotoSearch search = OnlinePhotoSearchImpl.create(year, mGender);
+            OnlinePhotoSearchQuery search = OnlinePhotoSearchQueryImpl.create(year, mGender);
             onCloseSearchSettings.onCloseSearchSettings(search);
         }
     }

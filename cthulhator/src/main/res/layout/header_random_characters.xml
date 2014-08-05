@@ -8,6 +8,8 @@
     android:layout_height="match_parent">
 
     <com.bustiblelemons.views.LoadMoreViewPager
+        android:id="@id/dummy_photos_pager"
+        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="@dimen/photos_pager"
         android:minHeight="@dimen/photos_pager" />

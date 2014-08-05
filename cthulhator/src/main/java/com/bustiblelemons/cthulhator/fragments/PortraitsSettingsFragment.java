@@ -9,6 +9,8 @@ import android.widget.Spinner;
 
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.adapters.GenderSpinnerAdapter;
+import com.bustiblelemons.cthulhator.model.OnlinePhotoSearchQuery;
+import com.bustiblelemons.cthulhator.model.OnlinePhotoSearchQueryImpl;
 import com.bustiblelemons.cthulhator.model.brp.gimagesearch.BRPGimageQuery;
 import com.bustiblelemons.cthulhator.model.brp.gimagesearch.Gender;
 import com.bustiblelemons.google.apis.search.params.GoogleImageSearch;
@@ -117,12 +119,14 @@ public class PortraitsSettingsFragment extends AbsArgFragment<GoogleImageSearch.
             view.setSelected(expand);
             if (onOpenSearchSettings != null) {
                 int year = yearSeekbar.getIntValue();
-                onOpenSearchSettings.onOpenSearchSettings(year, mGender);
+                OnlinePhotoSearchQuery q = OnlinePhotoSearchQueryImpl.create(year, mGender);
+                onOpenSearchSettings.onOpenSearchSettings(q);
             }
         } else {
             if (onOpenSearchSettings != null) {
                 int year = yearSeekbar.getIntValue();
-                onOpenSearchSettings.onOpenSearchSettings(year, mGender);
+                OnlinePhotoSearchQuery q = OnlinePhotoSearchQueryImpl.create(year, mGender);
+                onOpenSearchSettings.onOpenSearchSettings(q);
             }
         }
     }
