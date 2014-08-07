@@ -72,7 +72,7 @@
             android:layout_weight="6"
             app:statTitle="@string/dex"
             app:statValue="@string/placeholder_perc_val"
-            app:valueBelow="true"
+            app:valueBelow="false"
             app:valueSize="@dimen/font_24"/>
 
         <com.bustiblelemons.views.StatisticView
@@ -83,7 +83,7 @@
             app:statTitle="@string/kon"
             app:statValue="@string/placeholder_perc_val"
             app:titleSize="@dimen/font_16"
-            app:valueBelow="true"
+            app:valueBelow="false"
             app:valueSize="@dimen/font_24"/>
     </LinearLayout>
 

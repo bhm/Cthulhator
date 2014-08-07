@@ -13,12 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@android:id/button1"
+        android:layout_alignParentTop="true"
         android:background="@drawable/bg_card_peek_bottom">
 
         <ImageButton
             android:id="@android:id/closeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:background="@drawable/flatt_button_selector"
             android:padding="@dimen/padding_8"
             android:src="@drawable/ic_action_navigation_back_dark"/>
@@ -36,22 +38,35 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/padding_16"/>
 
-            <android.support.v4.view.ViewPager
-                android:id="@id/pager"
+            <Spinner
+                android:id="@id/year_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/gender_spinner"/>
+                android:layout_below="@id/gender_spinner"
+                android:padding="@dimen/padding_16"/>
+
+            <com.bustiblelemons.views.TitledSeekBar
+                android:id="@id/year_seekbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/year_spinner"
+                app:compact="false"
+                app:jumpValue="5"
+                app:maxValue="@integer/jazz_age_max"
+                app:minValue="@integer/jazz_age_min"
+                app:progress="2"
+                app:statTitle="@string/year"/>
         </RelativeLayout>
     </RelativeLayout>
 
-   <Button
-       android:background="@drawable/flatt_button_selector"
-       android:id="@android:id/button1"
-       android:text="@string/apply"
-       android:padding="@dimen/padding_16"
-       android:textColor="@color/flatt_button_set"
-       android:textStyle="bold"
-       android:layout_alignParentBottom="true"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"/>
+    <Button
+        android:id="@android:id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/flatt_button_selector"
+        android:padding="@dimen/padding_16"
+        android:text="@string/apply"
+        android:textColor="@color/flatt_button_set"
+        android:textStyle="bold"/>
 </RelativeLayout>

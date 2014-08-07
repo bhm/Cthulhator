@@ -40,4 +40,5 @@
     <item name="seekbar" type="id"/>
     <item name="tag_search" type="id"/>
     <item name="dummy_photos_pager" type="id"/>
+    <item name="year_spinner" type="id"/>
 </resources>

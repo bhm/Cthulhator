@@ -13,6 +13,7 @@ import com.bustiblelemons.cthulhator.model.OnlinePhotoSearchQuery;
 import com.bustiblelemons.cthulhator.model.OnlinePhotoSearchQueryImpl;
 import com.bustiblelemons.cthulhator.model.brp.gimagesearch.BRPGimageQuery;
 import com.bustiblelemons.cthulhator.model.brp.gimagesearch.Gender;
+import com.bustiblelemons.cthulhator.settings.Settings;
 import com.bustiblelemons.google.apis.search.params.GoogleImageSearch;
 import com.bustiblelemons.views.TitledSeekBar;
 
@@ -36,12 +37,13 @@ public class PortraitsSettingsFragment extends AbsArgFragment<GoogleImageSearch.
     @InjectView(android.R.id.custom)
     View          content;
 
-    private GoogleImageSearch.Options searchOptions;
-    private GoogleSearchOptsListener  searchOptsListener;
-    private GenderSpinnerAdapter      genderAdapter;
-    private BRPGimageQuery            brpImageQuery;
-    private OnOpenSearchSettings      onOpenSearchSettings;
-    private OnCloseSearchSettings     onCloseSearchSettings;
+    private GoogleImageSearch.Options       searchOptions;
+    private GoogleSearchOptsListener        searchOptsListener;
+    private GenderSpinnerAdapter            genderAdapter;
+    private BRPGimageQuery                  brpImageQuery;
+    private OnOpenSearchSettings            onOpenSearchSettings;
+    private OnBroadcastOnlineSearchSettings onBroadcastOnlineSearchSettings;
+    private OnlinePhotoSearchQuery          onlinePhotoSearchQuery;
     private Gender  mGender     = Gender.ANY;
     private boolean MFoldedOnly = false;
 
@@ -51,8 +53,8 @@ public class PortraitsSettingsFragment extends AbsArgFragment<GoogleImageSearch.
         return r;
     }
 
-    public void setOnCloseSearchSettings(OnCloseSearchSettings onCloseSearchSettings) {
-        this.onCloseSearchSettings = onCloseSearchSettings;
+    public void setOnBroadcastOnlineSearchSettings(OnBroadcastOnlineSearchSettings onBroadcastOnlineSearchSettings) {
+        this.onBroadcastOnlineSearchSettings = onBroadcastOnlineSearchSettings;
     }
 
     public void setFoldedOnly(boolean foldedOnly) {
@@ -69,12 +71,19 @@ public class PortraitsSettingsFragment extends AbsArgFragment<GoogleImageSearch.
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        readLastSettings();
         if (activity instanceof GoogleSearchOptsListener) {
             searchOptsListener = (GoogleSearchOptsListener) activity;
         }
-        if (activity instanceof OnCloseSearchSettings) {
-            onCloseSearchSettings = (OnCloseSearchSettings) activity;
+        if (activity instanceof OnBroadcastOnlineSearchSettings) {
+            onBroadcastOnlineSearchSettings = (OnBroadcastOnlineSearchSettings) activity;
+            onBroadcastOnlineSearchSettings.onBroadcastOnlineSearchSettings(onlinePhotoSearchQuery,
+                    true);
         }
+    }
+
+    public void readLastSettings() {
+        onlinePhotoSearchQuery = Settings.getLastPortratiSettings(getActivity());
     }
 
     @Override
@@ -117,17 +126,11 @@ public class PortraitsSettingsFragment extends AbsArgFragment<GoogleImageSearch.
             boolean expand = !view.isSelected();
             expandSettings(expand);
             view.setSelected(expand);
-            if (onOpenSearchSettings != null) {
-                int year = yearSeekbar.getIntValue();
-                OnlinePhotoSearchQuery q = OnlinePhotoSearchQueryImpl.create(year, mGender);
-                onOpenSearchSettings.onOpenSearchSettings(q);
-            }
-        } else {
-            if (onOpenSearchSettings != null) {
-                int year = yearSeekbar.getIntValue();
-                OnlinePhotoSearchQuery q = OnlinePhotoSearchQueryImpl.create(year, mGender);
-                onOpenSearchSettings.onOpenSearchSettings(q);
-            }
+        }
+        if (onOpenSearchSettings != null) {
+            int year = yearSeekbar.getIntValue();
+            OnlinePhotoSearchQuery q = OnlinePhotoSearchQueryImpl.create(year, mGender);
+            onOpenSearchSettings.onOpenSearchSettings(q);
         }
     }
 

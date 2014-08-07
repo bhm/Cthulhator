@@ -22,45 +22,36 @@ public enum CthulhuPeriod implements YearsPeriod {
             return 1860;
         }
 
-        @Override
-        public int getYearJump() {
-            return 10;
-        }
-
     }, JAZZAGE {
         @Override
         public int getDefaultYear() {
-            return 0;
+            return 1920;
         }
 
         @Override
         public int getMaxYear() {
-            return 0;
+            return 1940;
         }
 
         @Override
         public int getMinYear() {
-            return 0;
+            return 1920;
         }
 
-        @Override
-        public int getYearJump() {
-            return 0;
-        }
     }, MODERN {
         @Override
         public int getDefaultYear() {
-            return 0;
+            return CURRENT_YEAR;
         }
 
         @Override
         public int getMaxYear() {
-            return 0;
+            return CURRENT_YEAR;
         }
 
         @Override
         public int getMinYear() {
-            return 0;
+            return CURRENT_YEAR;
         }
 
         @Override
@@ -69,6 +60,12 @@ public enum CthulhuPeriod implements YearsPeriod {
         }
 
     };
+
+
+    @Override
+    public int getYearJump() {
+        return 5;
+    }
 
     @Override
     public String getName() {

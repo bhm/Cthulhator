@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@android:id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grey_white_1000"
+        android:paddingLeft="@dimen/padding_16"
+        android:paddingTop="@dimen/padding_16"
+        android:paddingRight="@dimen/padding_16"
+        android:paddingBottom="@dimen/padding_8"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/font_16"
+        android:textStyle="bold"
+        tools:text="@string/jazzage">
+    </TextView>
+
+    <TextView
+        android:id="@android:id/custom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@android:id/title"
+        android:background="@color/grey_white_1000"
+        android:paddingLeft="@dimen/padding_16"
+        android:paddingTop="@dimen/padding_8"
+        android:paddingRight="@dimen/padding_16"
+        android:paddingBottom="@dimen/padding_16"
+        tools:text="@string/jazzage_years"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/font_14">
+    </TextView>
+
+
+</RelativeLayout>

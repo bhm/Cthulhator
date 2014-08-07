@@ -16,6 +16,7 @@ import com.bustiblelemons.cthulhator.adapters.RandomUserMELocationPagerAdapter;
 import com.bustiblelemons.cthulhator.adapters.RandomUserMENamePagerAdapter;
 import com.bustiblelemons.cthulhator.adapters.RandomUserMEPhotoPagerAdapter;
 import com.bustiblelemons.cthulhator.async.QueryGImagesAsyn;
+import com.bustiblelemons.cthulhator.fragments.OnBroadcastOnlineSearchSettings;
 import com.bustiblelemons.cthulhator.fragments.OnOpenSearchSettings;
 import com.bustiblelemons.cthulhator.fragments.PortraitsSettingsFragment;
 import com.bustiblelemons.cthulhator.fragments.dialog.RandomCharSettingsDialog;
@@ -49,8 +50,11 @@ public class RandomCharactersActivity extends BaseActionBarActivity
         implements
         LoadMoreViewPager.LoadMore,
         OnRandomUsersRetreived,
-        OnTraitsDownload, View.OnClickListener,
-        OnOpenSearchSettings, QueryGImagesAsyn.ReceiveGoogleImages {
+        OnTraitsDownload,
+        View.OnClickListener,
+        OnOpenSearchSettings,
+        OnBroadcastOnlineSearchSettings,
+        QueryGImagesAsyn.ReceiveGoogleImages {
 
     @InjectView(R.id.photos_pager)
     LoadMoreViewPager photosPager;
@@ -87,7 +91,7 @@ public class RandomCharactersActivity extends BaseActionBarActivity
         helper.initActionBar(this);
         ButterKnife.inject(this);
         settingsFab.setOnClickListener(this);
-        redelegateTouch();
+//        redelegateTouch();
         setupPhotosPager();
         setupNamesPager();
         setupLocationsPager();
@@ -200,7 +204,9 @@ public class RandomCharactersActivity extends BaseActionBarActivity
 
     @Override
     public int onRandomUsersRetreived(RandomUserMEQuery query, List<User> users) {
-        photosPagerAdapter.addData(users);
+        if (mOnlinePhotoSearchQuery.isModern()) {
+            photosPagerAdapter.addData(users);
+        }
         namesPagerAdapter.addData(users);
         locationPagerAdapter.addData(users);
         return 0;
@@ -253,7 +259,6 @@ public class RandomCharactersActivity extends BaseActionBarActivity
 
     @Override
     public void onOpenSearchSettings(OnlinePhotoSearchQuery search) {
-        mOnlinePhotoSearchQuery = search;
         handleSettingsButton();
     }
 
@@ -274,5 +279,11 @@ public class RandomCharactersActivity extends BaseActionBarActivity
             photosPagerAdapter.addData(results);
             return true;
         }
+    }
+
+    @Override
+    public void onBroadcastOnlineSearchSettings(OnlinePhotoSearchQuery onlinePhotoSearchQuery,
+                                                boolean apply) {
+        mOnlinePhotoSearchQuery = onlinePhotoSearchQuery;
     }
 }
