@@ -2,6 +2,7 @@ package com.bustiblelemons.cthulhator.cache;
 
 import com.bustiblelemons.cthulhator.model.ToCCharacter;
 import com.bustiblelemons.cthulhator.model.brp.BRPCharacter;
+import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,5 +27,9 @@ public class CharacterCache {
 
     public static List<ToCCharacter> getToCCharacters() {
         return new ArrayList<ToCCharacter>();
+    }
+
+    private static List<SavedCharacter> getSavedCharacters() {
+        return new ArrayList<SavedCharacter>();
     }
 }

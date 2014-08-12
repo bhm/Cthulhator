@@ -9,6 +9,9 @@ import com.bustiblelemons.activities.BaseActionBarActivity;
 import com.bustiblelemons.api.random.names.randomuserdotme.RandomUserMEQuery;
 import com.bustiblelemons.api.random.names.randomuserdotme.asyn.OnRandomUsersRetreived;
 import com.bustiblelemons.api.random.names.randomuserdotme.asyn.RandomUserDotMeAsyn;
+import com.bustiblelemons.api.random.names.randomuserdotme.model.Location;
+import com.bustiblelemons.api.random.names.randomuserdotme.model.Name;
+import com.bustiblelemons.api.random.names.randomuserdotme.model.RandomUserMe;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.User;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.adapters.CharacteristicTraitsAdapter;
@@ -22,7 +25,7 @@ import com.bustiblelemons.cthulhator.fragments.OnOpenSearchSettings;
 import com.bustiblelemons.cthulhator.fragments.PortraitsSettingsFragment;
 import com.bustiblelemons.cthulhator.fragments.dialog.RandomCharSettingsDialog;
 import com.bustiblelemons.cthulhator.model.OnlinePhotoSearchQuery;
-import com.bustiblelemons.api.random.names.randomuserdotme.model.RandomUserMe;
+import com.bustiblelemons.cthulhator.model.desc.CharacterDescription;
 import com.bustiblelemons.cthulhator.settings.Settings;
 import com.bustiblelemons.google.apis.model.GoogleImageObject;
 import com.bustiblelemons.google.apis.search.params.GImageSearch;
@@ -153,6 +156,7 @@ public class RandomCharactersActivity extends BaseActionBarActivity
         namesPagerAdapter = new RandomUserMENamePagerAdapter(getSupportFragmentManager());
         namesPager.setLoadMoreListener(this);
         namesPager.setAdapter(namesPagerAdapter);
+        namesPagerAdapter.getItem(0).getInstanceArgument();
     }
 
     @Override
@@ -268,9 +272,23 @@ public class RandomCharactersActivity extends BaseActionBarActivity
                 break;
             case R.id.fab:
                 //TODO Save the set as a character properties set
+                saveCharacter();
                 this.finish();
                 break;
         }
+    }
+
+    private void saveCharacter() {
+        CharacterDescription description = new CharacterDescription();
+        int position = namesPager.getCurrentItem();
+        Name name = namesPagerAdapter.getItem(position).getInstanceArgument();
+        description.setName(name);
+        position = locationsPager.getCurrentItem();
+        Location location = locationPagerAdapter.getItem(position).getInstanceArgument();
+        description.setLocation(location);
+        position = characteristicPager.getCurrentItem();
+        RandomTraitsSet traits = characteristicAdapter.getItem(position).getInstanceArgument();
+        description.setTraits(traits);
     }
 
     public void handleSettingsButton() {
@@ -290,7 +308,8 @@ public class RandomCharactersActivity extends BaseActionBarActivity
     @Override
     public void onBroadcastOnlineSearchSettings(OnlinePhotoSearchQuery onlinePhotoSearchQuery,
                                                 boolean apply) {
-        OnlinePhotoSearchQuery prevQuery = (OnlinePhotoSearchQuery) photosPager.getTag(R.id.tag_search);
+        OnlinePhotoSearchQuery prevQuery = (OnlinePhotoSearchQuery) photosPager.getTag(
+                R.id.tag_search);
         photosPager.setTag(R.id.tag_search, onlinePhotoSearchQuery);
         photosPager.setTag(R.id.tag_search_prev, prevQuery);
         onLoadMore(photosPager);
