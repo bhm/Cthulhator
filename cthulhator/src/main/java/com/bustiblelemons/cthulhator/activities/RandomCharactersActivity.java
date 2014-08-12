@@ -16,12 +16,14 @@ import com.bustiblelemons.cthulhator.adapters.RandomUserMELocationPagerAdapter;
 import com.bustiblelemons.cthulhator.adapters.RandomUserMENamePagerAdapter;
 import com.bustiblelemons.cthulhator.adapters.RandomUserMEPhotoPagerAdapter;
 import com.bustiblelemons.cthulhator.async.QueryGImagesAsyn;
+import com.bustiblelemons.cthulhator.async.ReceiveGoogleImages;
 import com.bustiblelemons.cthulhator.fragments.OnBroadcastOnlineSearchSettings;
 import com.bustiblelemons.cthulhator.fragments.OnOpenSearchSettings;
 import com.bustiblelemons.cthulhator.fragments.PortraitsSettingsFragment;
 import com.bustiblelemons.cthulhator.fragments.dialog.RandomCharSettingsDialog;
 import com.bustiblelemons.cthulhator.model.OnlinePhotoSearchQuery;
-import com.bustiblelemons.cthulhator.view.TouchRedelegate;
+import com.bustiblelemons.api.random.names.randomuserdotme.model.RandomUserMe;
+import com.bustiblelemons.cthulhator.settings.Settings;
 import com.bustiblelemons.google.apis.model.GoogleImageObject;
 import com.bustiblelemons.google.apis.search.params.GImageSearch;
 import com.bustiblelemons.google.apis.search.params.GoogleImageSearch;
@@ -36,12 +38,11 @@ import java.util.List;
 import at.markushi.ui.CircleButton;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import io.github.scottmaclure.character.traits.model.RandomTraitsSet;
 import io.github.scottmaclure.character.traits.model.TraitsSet;
 import io.github.scottmaclure.character.traits.model.providers.RandomTraitsSetProvider;
 import io.github.scottmaclure.character.traits.network.api.asyn.AsyncInfo;
-import io.github.scottmaclure.character.traits.network.api.asyn.DownloadDefaultTraitsAsyn;
-import io.github.scottmaclure.character.traits.network.api.asyn.OnTraitsDownload;
 
 /**
  * Created by bhm on 25.07.14.
@@ -50,16 +51,13 @@ public class RandomCharactersActivity extends BaseActionBarActivity
         implements
         LoadMoreViewPager.LoadMore,
         OnRandomUsersRetreived,
-        OnTraitsDownload,
         View.OnClickListener,
         OnOpenSearchSettings,
         OnBroadcastOnlineSearchSettings,
-        QueryGImagesAsyn.ReceiveGoogleImages {
+        ReceiveGoogleImages {
 
     @InjectView(R.id.photos_pager)
     LoadMoreViewPager photosPager;
-    @InjectView(R.id.dummy_photos_pager)
-    LoadMoreViewPager dummyPhotosPager;
     @InjectView(R.id.names_pager)
     LoadMoreViewPager namesPager;
     @InjectView(R.id.characteristic_pager)
@@ -79,8 +77,6 @@ public class RandomCharactersActivity extends BaseActionBarActivity
     private CharacteristicTraitsAdapter      characteristicAdapter;
     private RandomCharSettingsDialog         randomCharSettingsDialog;
     private PortraitsSettingsFragment        portraitSettingsFragment;
-    private OnlinePhotoSearchQuery           mOnlinePhotoSearchQuery;
-    private TouchRedelegate touchRedelegate = new TouchRedelegate();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,22 +86,11 @@ public class RandomCharactersActivity extends BaseActionBarActivity
         onSetActionBarToClosable();
         helper.initActionBar(this);
         ButterKnife.inject(this);
-        settingsFab.setOnClickListener(this);
-//        redelegateTouch();
         setupPhotosPager();
         setupNamesPager();
         setupLocationsPager();
         setupRandomUserMEQuery();
         setupCharacteristicsPager();
-        DownloadDefaultTraitsAsyn traitsAsyn = new DownloadDefaultTraitsAsyn(this, this);
-        traitsAsyn.executeCrossPlatform();
-    }
-
-    private void redelegateTouch() {
-        if (photosPager != null && dummyPhotosPager != null) {
-            touchRedelegate.setReceiver(photosPager);
-            touchRedelegate.setReceiver(dummyPhotosPager);
-        }
     }
 
     private FadingActionBarHelper setupFadingBar() {
@@ -150,13 +135,15 @@ public class RandomCharactersActivity extends BaseActionBarActivity
     private void setupPhotosPager() {
         photosPagerAdapter = new RandomUserMEPhotoPagerAdapter(getSupportFragmentManager());
         photosPager.setLoadMoreListener(this);
+        OnlinePhotoSearchQuery searchQuery = Settings.getLastPortratiSettings(this);
+        photosPager.setTag(R.id.tag_search, searchQuery);
         photosPager.setAdapter(photosPagerAdapter);
     }
 
     private void setupRandomUserMEQuery() {
         queryOptions = new RandomUserMEQuery.Options();
         query = queryOptions.build();
-        onLoadMore(namesPager);
+        executeRandomUserMeQuery(RandomUserMe.All);
     }
 
     private void setupNamesPager() {
@@ -168,28 +155,43 @@ public class RandomCharactersActivity extends BaseActionBarActivity
     @Override
     public void onLoadMore(ViewPager pager) {
         int id = pager.getId();
-        if (id == R.id.names_pager ||
-                id == R.id.names_pager ||
-                id == R.id.location_pager) {
-            executeRandomUserMeQuery();
+        if (id == R.id.names_pager) {
+            executeRandomUserMeQuery(RandomUserMe.Names);
+        } else if (id == R.id.location_pager) {
+            executeRandomUserMeQuery(RandomUserMe.Location);
         } else if (id == R.id.characteristic_pager) {
             onTraitsDownloaded(TraitsSet.FILE);
         } else if (id == R.id.photos_pager) {
-            if (mOnlinePhotoSearchQuery.isModern()) {
-                executeRandomUserMeQuery();
+            OnlinePhotoSearchQuery currentQuery = (OnlinePhotoSearchQuery) pager.getTag(
+                    R.id.tag_search);
+            OnlinePhotoSearchQuery prevQuery = (OnlinePhotoSearchQuery) pager.getTag(
+                    R.id.tag_search_prev);
+            if (!currentQuery.equals(prevQuery)) {
+                photosPagerAdapter.removeAll();
+            }
+            if (currentQuery.isModern()) {
+                executeRandomUserMeQuery(RandomUserMe.Portraits);
             } else {
                 if (googleSearchOptions == null) {
                     googleSearchOptions = new GoogleImageSearch.Options();
-                    googleSearchOptions.setQuery(mOnlinePhotoSearchQuery.getQuery());
-                    executeGoogleImageSearch(googleSearchOptions);
+                    googleSearchOptions.setQuery(currentQuery.getQuery());
                 }
+                String searchStringQuery = googleSearchOptions.getQuery();
+                log.d("google %s \t tag %s", searchStringQuery, currentQuery.getQuery());
+                if (!searchStringQuery.equalsIgnoreCase(currentQuery.getQuery())) {
+                    googleSearchOptions.setQuery(currentQuery.getQuery());
+                }
+                executeGoogleImageSearch(googleSearchOptions);
             }
         }
     }
 
     private void executeGoogleImageSearch(GoogleImageSearch.Options options) {
         if (options != null) {
-            queryForImages(options.build());
+            if (imageSearch == null) {
+                imageSearch = options.build();
+            }
+            queryForImages(imageSearch);
         }
     }
 
@@ -197,19 +199,44 @@ public class RandomCharactersActivity extends BaseActionBarActivity
         QueryGImagesAsyn queryGImagesAsyn = new QueryGImagesAsyn(this, this);
         queryGImagesAsyn.executeCrossPlatform(search);
     }
-    public void executeRandomUserMeQuery() {
+
+    public void executeRandomUserMeQuery(RandomUserMe postPart) {
         RandomUserDotMeAsyn async = new RandomUserDotMeAsyn(this, this);
+        async.postPart(postPart);
         async.executeCrossPlatform(query);
     }
 
     @Override
     public int onRandomUsersRetreived(RandomUserMEQuery query, List<User> users) {
-        if (mOnlinePhotoSearchQuery.isModern()) {
+        if (isModernSearch()) {
             photosPagerAdapter.addData(users);
         }
         namesPagerAdapter.addData(users);
         locationPagerAdapter.addData(users);
         return 0;
+    }
+
+    @Override
+    public int onRandomUsersLocations(RandomUserMEQuery query, List<User> users) {
+        locationPagerAdapter.addData(users);
+        return 0;
+    }
+
+    @Override
+    public int onRandomUsersNames(RandomUserMEQuery query, List<User> users) {
+        namesPagerAdapter.addData(users);
+        return 0;
+    }
+
+    @Override
+    public int onRandomUsersPortraits(RandomUserMEQuery query, List<User> users) {
+        photosPagerAdapter.addData(users);
+        return 0;
+    }
+
+    private boolean isModernSearch() {
+        OnlinePhotoSearchQuery query = (OnlinePhotoSearchQuery) photosPager.getTag(R.id.tag_search);
+        return query.isModern();
     }
 
     public boolean onTraitsDownloaded(String fileName) {
@@ -226,17 +253,9 @@ public class RandomCharactersActivity extends BaseActionBarActivity
         return false;
     }
 
-    @Override
-    public void onAsynTaskProgress(AsyncInfo<String, TraitsSet> info, String param, TraitsSet result) {
-        onTraitsDownloaded(param);
-    }
 
     @Override
-    public void onAsynTaskFinish(AsyncInfo<String, TraitsSet> info, TraitsSet result) {
-
-    }
-
-    @Override
+    @OnClick(R.id.fab)
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.action_settings:
@@ -262,28 +281,27 @@ public class RandomCharactersActivity extends BaseActionBarActivity
         handleSettingsButton();
     }
 
-    @Override
-    public boolean onGoogleImagesReceived(GImageSearch search, List<GoogleImageObject> results) {
-        Object cachedSearch = photosPager.getTag(R.id.tag_search);
-        if (cachedSearch != null) {
-            if (cachedSearch.equals(search)) {
-                photosPagerAdapter.addData(results);
-                return true;
-            } else {
-                photosPagerAdapter.removeAll();
-                photosPagerAdapter.addData(results);
-                photosPager.setTag(R.id.tag_search, search);
-                return true;
-            }
-        } else {
-            photosPagerAdapter.addData(results);
-            return true;
-        }
-    }
 
     @Override
     public void onBroadcastOnlineSearchSettings(OnlinePhotoSearchQuery onlinePhotoSearchQuery,
                                                 boolean apply) {
-        mOnlinePhotoSearchQuery = onlinePhotoSearchQuery;
+        OnlinePhotoSearchQuery prevQuery = (OnlinePhotoSearchQuery) photosPager.getTag(R.id.tag_search);
+        photosPager.setTag(R.id.tag_search, onlinePhotoSearchQuery);
+        photosPager.setTag(R.id.tag_search_prev, prevQuery);
+        onLoadMore(photosPager);
+    }
+
+    @Override
+    public void onAsynTaskProgress(AsyncInfo<GImageSearch, List<GoogleImageObject>> info,
+                                   GImageSearch search, List<GoogleImageObject> results) {
+        if (results != null && photosPagerAdapter != null) {
+            photosPagerAdapter.addData(results);
+        }
+    }
+
+    @Override
+    public void onAsynTaskFinish(AsyncInfo<GImageSearch, List<GoogleImageObject>> info,
+                                 List<GoogleImageObject> result) {
+
     }
 }

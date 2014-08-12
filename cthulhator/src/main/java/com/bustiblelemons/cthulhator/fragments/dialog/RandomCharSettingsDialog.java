@@ -20,6 +20,7 @@ import com.bustiblelemons.cthulhator.model.brp.gimagesearch.Gender;
 import com.bustiblelemons.cthulhator.model.time.YearsPeriod;
 import com.bustiblelemons.cthulhator.settings.Settings;
 import com.bustiblelemons.fragments.dialog.AbsDialogFragment;
+import com.bustiblelemons.logging.Logger;
 import com.bustiblelemons.views.TitledSeekBar;
 
 import butterknife.ButterKnife;
@@ -31,23 +32,24 @@ import butterknife.OnClick;
  */
 public class RandomCharSettingsDialog extends AbsDialogFragment
         implements GenderSpinnerAdapter.GenderSelected,
-                   PeriodSpinnerAdapter.OnYearsPeriodSelected, View.OnClickListener {
+                   PeriodSpinnerAdapter.OnYearsPeriodSelected,
+                   View.OnClickListener {
 
-    public static final String TAG = RandomCharSettingsDialog.class.getSimpleName();
+    public static final  String TAG = RandomCharSettingsDialog.class.getSimpleName();
+    private static final Logger log = new Logger(RandomCharSettingsDialog.class);
     @InjectView(R.id.gender_spinner)
-    Spinner       genderSpinner;
+    Spinner genderSpinner;
     @InjectView(R.id.year_spinner)
-    Spinner       yearSpinner;
+    Spinner periodSpinner;
     @InjectView(R.id.year_seekbar)
     TitledSeekBar yearSeekbar;
-
 
     private GenderSpinnerAdapter            genderAdapter;
     private PeriodSpinnerAdapter            periodSpinnerAdapter;
     private OnBroadcastOnlineSearchSettings onBroadcastOnlineSearchSettings;
     private Gender                          mGender;
     private OnlinePhotoSearchQuery          onlinePhotoSearchQuery;
-
+    private RandomCharSettings              randomCharSettings;
 
     @Override
     public void onAttach(Activity activity) {
@@ -55,11 +57,12 @@ public class RandomCharSettingsDialog extends AbsDialogFragment
         if (activity instanceof OnBroadcastOnlineSearchSettings) {
             onBroadcastOnlineSearchSettings = (OnBroadcastOnlineSearchSettings) activity;
         }
-        readLastSettings();
+        readLastSettings(activity);
     }
 
-    public void readLastSettings() {
-        onlinePhotoSearchQuery = Settings.getLastPortratiSettings(getActivity());
+    public void readLastSettings(Activity activity) {
+        onlinePhotoSearchQuery = Settings.getLastPortratiSettings(activity);
+        randomCharSettings = Settings.getLastRandomCharSettings(activity);
         mGender = onlinePhotoSearchQuery.getGender();
     }
 
@@ -74,15 +77,28 @@ public class RandomCharSettingsDialog extends AbsDialogFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_character_settings, container, false);
         ButterKnife.inject(this, rootView);
-        if (genderSpinner != null) {
-            setupGenderSpinner(inflater.getContext());
-        }
-        if (yearSpinner != null) {
-            periodSpinnerAdapter = new PeriodSpinnerAdapter(getActivity(), this);
-            yearSpinner.setOnItemSelectedListener(periodSpinnerAdapter);
-            yearSpinner.setAdapter(periodSpinnerAdapter);
-        }
         return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (genderSpinner != null) {
+            setupGenderSpinner(view.getContext());
+        }
+        if (periodSpinner != null) {
+            setupPeriodSpinner(view.getContext());
+        }
+        if (yearSeekbar != null) {
+            yearSeekbar.setProgress(randomCharSettings.getSeekbarPosition());
+        }
+    }
+
+    public void setupPeriodSpinner(Context context) {
+        periodSpinnerAdapter = new PeriodSpinnerAdapter(context, this);
+        periodSpinner.setOnItemSelectedListener(periodSpinnerAdapter);
+        periodSpinner.setAdapter(periodSpinnerAdapter);
+        periodSpinner.setSelection(randomCharSettings.getPeriodSpinnerPosition());
     }
 
 
@@ -90,6 +106,7 @@ public class RandomCharSettingsDialog extends AbsDialogFragment
         genderAdapter = new GenderSpinnerAdapter(context, this);
         genderSpinner.setAdapter(genderAdapter);
         genderSpinner.setOnItemSelectedListener(genderAdapter);
+        genderSpinner.setSelection(randomCharSettings.getGenderSpinnerPosition());
     }
 
     @Override
@@ -111,6 +128,7 @@ public class RandomCharSettingsDialog extends AbsDialogFragment
             onlinePhotoSearchQuery = OnlinePhotoSearchQueryImpl.create(year, mGender);
             if (apply) {
                 Settings.saveLastOnlinePhotoSearchQuery(getActivity(), onlinePhotoSearchQuery);
+                Settings.saveLastRandomCharSettings(getActivity(), randomCharSettings);
             }
             onBroadcastOnlineSearchSettings.onBroadcastOnlineSearchSettings(onlinePhotoSearchQuery,
                     apply);
@@ -121,9 +139,10 @@ public class RandomCharSettingsDialog extends AbsDialogFragment
     @Override
     public void onYearsPeriodSelected(YearsPeriod period) {
         if (yearSeekbar != null) {
+            log.d("onYearsPeriodSelected %s", period);
             yearSeekbar.setMinValue(period.getMinYear());
-            yearSeekbar.setMaxValue(period.getMaxYear());
             yearSeekbar.setJumpValue(period.getYearJump());
+            yearSeekbar.setMaxValue(period.getMaxYear());
         }
     }
 }

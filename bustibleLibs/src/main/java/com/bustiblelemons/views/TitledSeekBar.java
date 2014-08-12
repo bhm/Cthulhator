@@ -47,6 +47,7 @@ public class TitledSeekBar extends RelativeLayout implements SeekBar.OnSeekBarCh
     private String         value;
     private onValueChanged valueChanged;
     private int currentProgress = 0;
+    private int progress;
 
     public TitledSeekBar(Context context) {
         super(context);
@@ -292,6 +293,12 @@ public class TitledSeekBar extends RelativeLayout implements SeekBar.OnSeekBarCh
 
     public void setValueChangedCallback(onValueChanged valueChanged) {
         this.valueChanged = valueChanged;
+    }
+
+    public void setProgress(int progress) {
+        if (seekBar != null) {
+            seekBar.setProgress(progress);
+        }
     }
 
     public enum DisplayMode {

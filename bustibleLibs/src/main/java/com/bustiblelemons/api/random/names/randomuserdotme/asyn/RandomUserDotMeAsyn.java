@@ -5,6 +5,7 @@ import android.util.Pair;
 
 import com.bustiblelemons.api.random.names.randomuserdotme.RandomUserMEQuery;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.RandomUserDotMe;
+import com.bustiblelemons.api.random.names.randomuserdotme.model.RandomUserMe;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.Results;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.User;
 import com.bustiblelemons.async.SimpleAsync;
@@ -22,7 +23,8 @@ public class RandomUserDotMeAsyn
         extends SimpleAsync<RandomUserMEQuery, Pair<RandomUserMEQuery, List<User>>> {
 
     private OnRandomUsersRetreived listener;
-    private Logger                 log = new Logger(RandomUserDotMeAsyn.class);
+    private Logger       log      = new Logger(RandomUserDotMeAsyn.class);
+    private RandomUserMe postPart = RandomUserMe.All;
 
     public RandomUserDotMeAsyn(Context context, OnRandomUsersRetreived listener) {
         super(context);
@@ -31,7 +33,7 @@ public class RandomUserDotMeAsyn
 
     @Override
     protected Pair<RandomUserMEQuery, List<User>> call(RandomUserMEQuery... queries) throws
-                                                                                           Exception {
+                                                                                     Exception {
         Pair<RandomUserMEQuery, List<User>> r = Pair.create(null, null);
         if (queries != null) {
             for (RandomUserMEQuery query : queries) {
@@ -45,7 +47,7 @@ public class RandomUserDotMeAsyn
     }
 
     private List<User> getRandomUsers(RandomUserMEQuery rudmQuery) throws IOException,
-                                                                             URISyntaxException {
+                                                                          URISyntaxException {
         List<User> r = new ArrayList<User>();
         if (rudmQuery != null) {
             RandomUserDotMe randomUser = rudmQuery.getObject(RandomUserDotMe.class);
@@ -66,9 +68,27 @@ public class RandomUserDotMeAsyn
         if (values != null) {
             for (Pair<RandomUserMEQuery, List<User>> pair : values) {
                 if (listener != null) {
-                    listener.onRandomUsersRetreived(pair.first, pair.second);
+                    postData(pair);
                 }
             }
+        }
+    }
+
+    private void postData(Pair<RandomUserMEQuery, List<User>> pair) {
+        switch (postPart) {
+            default:
+            case All:
+                listener.onRandomUsersRetreived(pair.first, pair.second);
+                break;
+            case Names:
+                listener.onRandomUsersNames(pair.first, pair.second);
+                break;
+            case Location:
+                listener.onRandomUsersLocations(pair.first, pair.second);
+                break;
+            case Portraits:
+                listener.onRandomUsersPortraits(pair.first, pair.second);
+                break;
         }
     }
 
@@ -82,4 +102,7 @@ public class RandomUserDotMeAsyn
         return false;
     }
 
+    public void postPart(RandomUserMe postPart) {
+        this.postPart = postPart;
+    }
 }

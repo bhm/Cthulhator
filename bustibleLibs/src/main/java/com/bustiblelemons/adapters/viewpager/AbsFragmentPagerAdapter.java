@@ -78,7 +78,7 @@ public abstract class AbsFragmentPagerAdapter<T, F extends Fragment>
 
 
     public void removeAll() {
-        mData.clear();
+        mData = new ArrayList<T>();
         notifyDataSetChanged();
     }
 

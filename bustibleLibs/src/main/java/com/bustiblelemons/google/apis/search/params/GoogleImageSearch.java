@@ -208,6 +208,10 @@ public class GoogleImageSearch extends AbsOnlineQuery implements GImageSearch {
         public void setQuery(String query) {
             this.query = query;
         }
+
+        public String getQuery() {
+            return this.query;
+        }
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.bustiblelemons.cthulhator.model.time;
 
 import org.apache.commons.lang.WordUtils;
 
+import java.util.Locale;
+
 /**
  * Created by bhm on 03.08.14.
  */
@@ -61,6 +63,11 @@ public enum CthulhuPeriod implements YearsPeriod {
 
     };
 
+    @Override
+    public String toString() {
+        return String.format(Locale.ENGLISH, "Period %s : [Min=%s; Jump=%s; Max=%s", name(),
+                getMinYear(), getYearJump(), getMaxYear());
+    }
 
     @Override
     public int getYearJump() {

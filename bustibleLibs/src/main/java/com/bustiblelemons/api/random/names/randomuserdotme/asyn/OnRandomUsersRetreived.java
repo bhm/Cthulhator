@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface OnRandomUsersRetreived {
     public int onRandomUsersRetreived(RandomUserMEQuery query, List<User> users);
+    public int onRandomUsersLocations(RandomUserMEQuery query, List<User> users);
+    public int onRandomUsersNames(RandomUserMEQuery query, List<User> users);
+    public int onRandomUsersPortraits(RandomUserMEQuery query, List<User> users);
+
 }
