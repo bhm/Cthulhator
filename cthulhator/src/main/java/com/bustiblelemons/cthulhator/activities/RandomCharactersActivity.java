@@ -31,6 +31,8 @@ import com.bustiblelemons.storage.Storage;
 import com.bustiblelemons.views.LoadMoreViewPager;
 import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarHelper;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -127,8 +129,9 @@ public class RandomCharactersActivity extends BaseActionBarActivity
     private void setupCharacteristicsPager() {
         if (characteristicPager != null) {
             characteristicAdapter = new CharacteristicTraitsAdapter(getSupportFragmentManager());
-            characteristicPager.setAdapter(characteristicAdapter);
             characteristicPager.setLoadMoreListener(this);
+            characteristicPager.setAdapter(characteristicAdapter);
+            onTraitsDownloaded(TraitsSet.FILE);
         }
     }
 
@@ -241,6 +244,8 @@ public class RandomCharactersActivity extends BaseActionBarActivity
 
     public boolean onTraitsDownloaded(String fileName) {
         File traitsFile = Storage.getStorageFile(this, fileName);
+        String filesize = FileUtils.byteCountToDisplaySize(traitsFile.length());
+        log.d("onTraitsDownloaded size %s ", filesize);
         try {
             RandomTraitsSetProvider rtsp = RandomTraitsSetProvider.getInstance(traitsFile);
             if (rtsp != null) {
