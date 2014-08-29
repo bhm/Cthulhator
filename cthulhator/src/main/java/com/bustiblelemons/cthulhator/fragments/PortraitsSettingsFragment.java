@@ -9,11 +9,10 @@ import android.widget.Spinner;
 
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.adapters.GenderSpinnerAdapter;
-import com.bustiblelemons.cthulhator.model.OnlinePhotoSearchQuery;
-import com.bustiblelemons.cthulhator.model.OnlinePhotoSearchQueryImpl;
+import com.bustiblelemons.cthulhator.model.CharacterSettings;
+import com.bustiblelemons.cthulhator.model.CharacterSettingsImpl;
 import com.bustiblelemons.cthulhator.model.brp.gimagesearch.BRPGimageQuery;
 import com.bustiblelemons.cthulhator.model.brp.gimagesearch.Gender;
-import com.bustiblelemons.cthulhator.settings.Settings;
 import com.bustiblelemons.google.apis.search.params.GoogleImageSearch;
 import com.bustiblelemons.views.TitledSeekBar;
 
@@ -43,7 +42,7 @@ public class PortraitsSettingsFragment extends AbsArgFragment<GoogleImageSearch.
     private BRPGimageQuery                  brpImageQuery;
     private OnOpenSearchSettings            onOpenSearchSettings;
     private OnBroadcastOnlineSearchSettings onBroadcastOnlineSearchSettings;
-    private OnlinePhotoSearchQuery          onlinePhotoSearchQuery;
+    private CharacterSettings               onlinePhotoSearchQuery;
     private Gender  mGender     = Gender.ANY;
     private boolean MFoldedOnly = false;
 
@@ -77,13 +76,14 @@ public class PortraitsSettingsFragment extends AbsArgFragment<GoogleImageSearch.
         }
         if (activity instanceof OnBroadcastOnlineSearchSettings) {
             onBroadcastOnlineSearchSettings = (OnBroadcastOnlineSearchSettings) activity;
-            onBroadcastOnlineSearchSettings.onBroadcastOnlineSearchSettings(onlinePhotoSearchQuery,
+            onBroadcastOnlineSearchSettings.onSettingsChanged(onlinePhotoSearchQuery,
                     true);
         }
     }
 
     public void readLastSettings() {
-        onlinePhotoSearchQuery = Settings.getLastPortratiSettings(getActivity());
+        onlinePhotoSearchQuery = com.bustiblelemons.cthulhator.settings.Settings.getLastPortratiSettings(
+                getActivity());
     }
 
     @Override
@@ -129,8 +129,8 @@ public class PortraitsSettingsFragment extends AbsArgFragment<GoogleImageSearch.
         }
         if (onOpenSearchSettings != null) {
             int year = yearSeekbar.getIntValue();
-            OnlinePhotoSearchQuery q = OnlinePhotoSearchQueryImpl.create(year, mGender);
-            onOpenSearchSettings.onOpenSearchSettings(q);
+            CharacterSettings q = CharacterSettingsImpl.create(year, mGender);
+            onOpenSearchSettings.onOpenSettings(q);
         }
     }
 

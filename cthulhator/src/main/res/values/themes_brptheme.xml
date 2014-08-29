@@ -55,4 +55,5 @@
     </style>
 
     <dimen name="actionbar_height">56dp</dimen>
+    <dimen name="twice_actionbar_height">112dp</dimen>
 </resources>

@@ -2,6 +2,7 @@ package com.bustiblelemons.cthulhator.model.brp;
 
 import com.bustiblelemons.cthulhator.model.CharacterProperty;
 import com.bustiblelemons.cthulhator.model.CthulhuCharacter;
+import com.bustiblelemons.cthulhator.model.CthulhuEdition;
 import com.bustiblelemons.cthulhator.model.ICharacter;
 import com.bustiblelemons.cthulhator.model.Skill;
 
@@ -10,13 +11,13 @@ import com.bustiblelemons.cthulhator.model.Skill;
  */
 public abstract class BRPCharacter extends CthulhuCharacter implements ICharacter {
 
-    private CoCEdition edition;
+    private CthulhuEdition edition;
 
-    public CoCEdition getEdition() {
+    public CthulhuEdition getEdition() {
         return edition;
     }
 
-    public void setEdition(CoCEdition edition) {
+    public void setEdition(CthulhuEdition edition) {
         this.edition = edition;
     }
 

@@ -3,6 +3,7 @@ package com.bustiblelemons.cthulhator.holders;
 import android.content.Context;
 import android.view.View;
 
+import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.model.brp.skills.BRPSkill;
 import com.bustiblelemons.holders.impl.AbsViewHolder;
 
@@ -23,5 +24,10 @@ public class BRPSkillHolder extends AbsViewHolder<BRPSkill> {
     @Override
     public void bindValues(BRPSkill item, int position) {
 
+    }
+
+    @Override
+    public int getLayoutId(int position) {
+        return  R.layout.single_brp_skill_item;
     }
 }

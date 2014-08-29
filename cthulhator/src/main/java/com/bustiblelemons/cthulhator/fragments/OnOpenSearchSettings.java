@@ -1,7 +1,7 @@
 package com.bustiblelemons.cthulhator.fragments;
 
-import com.bustiblelemons.cthulhator.model.OnlinePhotoSearchQuery;
+import com.bustiblelemons.cthulhator.model.CharacterSettings;
 
 public interface OnOpenSearchSettings {
-    void onOpenSearchSettings(OnlinePhotoSearchQuery search);
+    void onOpenSettings(CharacterSettings search);
 }

@@ -42,4 +42,5 @@
     <item name="dummy_photos_pager" type="id"/>
     <item name="year_spinner" type="id"/>
     <item name="tag_search_prev" type="id"/>
+    <item name="add_character" type="id"/>
 </resources>

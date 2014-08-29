@@ -31,4 +31,6 @@
     <item name="zipcode" type="id"/>
     <item name="street" type="id"/>
     <item name="city" type="id"/>
+    <item name="search" type="id"/>
+    <item name="search_container" type="id"/>
 </resources>

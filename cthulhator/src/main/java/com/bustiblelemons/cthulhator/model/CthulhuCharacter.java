@@ -4,7 +4,7 @@ import android.support.v4.util.LruCache;
 import android.util.Pair;
 
 import com.bustiblelemons.api.random.names.randomuserdotme.model.Location;
-import com.bustiblelemons.api.random.names.randomuserdotme.model.Name;
+import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
@@ -15,9 +15,7 @@ import java.util.List;
  * Created by bhm on 29.07.14.
  */
 @JsonIgnoreProperties({"cachedStats", "cachdSkills"})
-public class CthulhuCharacter {
-    private Name           name;
-    private Location       location;
+public class CthulhuCharacter extends SavedCharacter {
     private BirthData      birth;
     private long           presentDate;
     private List<Portrait> portraits;
@@ -157,24 +155,6 @@ public class CthulhuCharacter {
         }
         return null;
     }
-
-
-    public Name getName() {
-        return name;
-    }
-
-    public void setName(Name name) {
-        this.name = name;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
 
     public List<CharacterProperty> getProperties() {
         return properties;

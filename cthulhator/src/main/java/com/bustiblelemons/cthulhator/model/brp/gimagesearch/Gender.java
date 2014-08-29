@@ -11,6 +11,11 @@ public enum Gender {
         public int getTitleId() {
             return R.string.any;
         }
+
+        @Override
+        public String getSearchString() {
+            return "";
+        }
     },
     FEMALE {
         @Override
@@ -55,5 +60,9 @@ public enum Gender {
             default:
                 return false;
         }
+    }
+
+    public String getSearchString() {
+        return name();
     }
 }

@@ -1,11 +1,10 @@
 package com.bustiblelemons.cthulhator.settings;
 
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
 
 import com.bustiblelemons.cthulhator.fragments.dialog.RandomCharSettings;
-import com.bustiblelemons.cthulhator.model.OnlinePhotoSearchQuery;
-import com.bustiblelemons.cthulhator.model.OnlinePhotoSearchQueryImpl;
+import com.bustiblelemons.cthulhator.model.CharacterSettings;
+import com.bustiblelemons.cthulhator.model.CharacterSettingsImpl;
 import com.bustiblelemons.settings.BaseSettings;
 import com.bustiblelemons.storage.Storage;
 
@@ -25,22 +24,22 @@ public class Settings extends BaseSettings {
     private static String sRandomCharSettingsFilename = "random.char.settings";
 
 
-    public static OnlinePhotoSearchQuery getLastPortratiSettings(Context context) {
+    public static CharacterSettings getLastPortratiSettings(Context context) {
         ObjectMapper mapper = new ObjectMapper();
         try {
             File file = Storage.getStorageFile(context, sPortraitSettingsFilename);
-            return mapper.readValue(file, OnlinePhotoSearchQueryImpl.class);
+            return mapper.readValue(file, CharacterSettingsImpl.class);
         } catch (IOException e) {
             e.printStackTrace();
-            return OnlinePhotoSearchQueryImpl.defaults();
+            return CharacterSettingsImpl.defaults();
         }
     }
 
-    public static void saveLastOnlinePhotoSearchQuery(Context context, OnlinePhotoSearchQuery query) {
+    public static void saveLastOnlinePhotoSearchQuery(Context context, CharacterSettings query) {
         ObjectMapper m = new ObjectMapper();
         try {
             File file = Storage.getStorageFile(context, sPortraitSettingsFilename);
-            m.writeValue(file, (OnlinePhotoSearchQueryImpl) query);
+            m.writeValue(file, (CharacterSettingsImpl) query);
         } catch (IOException e) {
             e.printStackTrace();
         }

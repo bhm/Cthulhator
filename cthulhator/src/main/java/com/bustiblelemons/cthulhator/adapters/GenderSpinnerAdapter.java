@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.bustiblelemons.adapters.AbsSpinnerAdapter;
-import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.holders.GImageGenderHolder;
 import com.bustiblelemons.cthulhator.model.brp.gimagesearch.Gender;
 import com.bustiblelemons.holders.impl.ViewHolder;
@@ -31,18 +30,8 @@ public class GenderSpinnerAdapter extends AbsSpinnerAdapter<Gender>
     }
 
     @Override
-    public int getDropDownLayoutId(int position) {
-        return R.layout.single_drop_down_gender;
-    }
-
-    @Override
     protected ViewHolder<Gender> getViewHolder(int position) {
         return new GImageGenderHolder(getContext());
-    }
-
-    @Override
-    protected int getItemLayoutId(int position) {
-        return R.layout.single_drop_down_gender;
     }
 
     @Override

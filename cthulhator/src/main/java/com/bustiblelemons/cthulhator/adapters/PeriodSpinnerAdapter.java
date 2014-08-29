@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.bustiblelemons.adapters.AbsSpinnerAdapter;
-import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.model.time.CthulhuPeriod;
 import com.bustiblelemons.cthulhator.model.time.YearsPeriod;
 import com.bustiblelemons.holders.impl.ViewHolder;
@@ -34,18 +33,8 @@ public class PeriodSpinnerAdapter extends AbsSpinnerAdapter<YearsPeriod>
     }
 
     @Override
-    public int getDropDownLayoutId(int position) {
-        return R.layout.single_year_period_item;
-    }
-
-    @Override
     protected ViewHolder<YearsPeriod> getViewHolder(int position) {
         return new YearsPeriodHolder(getContext(), false);
-    }
-
-    @Override
-    protected int getItemLayoutId(int position) {
-        return R.layout.single_year_period_item;
     }
 
     @Override

@@ -24,14 +24,12 @@ public abstract class AbsSpinnerAdapter<T> extends AbsListAdapter<T, ViewHolder<
 
     public abstract ViewHolder<T> getDropDownHolder(int position);
 
-    public abstract int getDropDownLayoutId(int position);
-
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
         ViewHolder<T> holder;
         if (convertView == null) {
             holder = getDropDownHolder(position);
-            convertView = getInflater().inflate(getDropDownLayoutId(position), parent, false);
+            convertView = getInflater().inflate(holder.getLayoutId(position), parent, false);
             holder.create(convertView);
             convertView.setTag(R.id.tag_holder, holder);
         } else {

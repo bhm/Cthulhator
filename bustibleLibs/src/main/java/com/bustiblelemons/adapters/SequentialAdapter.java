@@ -49,14 +49,12 @@ public abstract class SequentialAdapter<T> extends BaseAdapter {
 
     protected abstract ViewHolder<T> getViewHolder(int position);
 
-    protected abstract int getItemLayoutId(int position);
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder<T> holder;
         if (convertView == null) {
             holder = getViewHolder(position);
-            convertView = inflater.inflate(getItemLayoutId(position), parent, false);
+            convertView = inflater.inflate(holder.getLayoutId(position), parent, false);
             holder.create(convertView);
             convertView.setTag(R.id.tag_holder, holder);
         } else {

@@ -18,4 +18,9 @@ public class RandomTraitsSetHolder extends AbsViewHolder<RandomTraitsSet> {
     public void bindValues(RandomTraitsSet item, int position) {
 
     }
+
+    @Override
+    public int getLayoutId(int position) {
+        return 0;
+    }
 }

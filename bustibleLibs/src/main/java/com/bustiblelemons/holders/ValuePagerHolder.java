@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bustiblelemons.bustiblelibs.R;
 import com.bustiblelemons.holders.impl.ViewHolder;
 
 /**
@@ -25,5 +26,10 @@ public class ValuePagerHolder implements ViewHolder<String> {
     @Override
     public void bindValues(String item, int position) {
         title.setText(item);
+    }
+
+    @Override
+    public int getLayoutId(int position) {
+        return R.layout.single_pager_item;
     }
 }

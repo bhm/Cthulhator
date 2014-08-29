@@ -50,14 +50,12 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
 
     protected abstract H getViewHolder(int position);
 
-    protected abstract int getItemLayoutId(int position);
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         H holder;
         if (convertView == null) {
             holder = getViewHolder(position);
-            convertView = inflater.inflate(getItemLayoutId(position), parent, false);
+            convertView = inflater.inflate(holder.getLayoutId(position), parent, false);
             holder.create(convertView);
             convertView.setTag(R.id.tag_holder, holder);
         } else {

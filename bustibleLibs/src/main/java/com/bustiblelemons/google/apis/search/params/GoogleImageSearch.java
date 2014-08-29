@@ -142,9 +142,9 @@ public class GoogleImageSearch extends AbsOnlineQuery implements GImageSearch {
         protected GImageSearch.safe        safe       = GImageSearch.safe.off;
         protected GImageSearch.as_filetype filetype   = null;
         protected GImageSearch.as_rights   rights     = null;
-        protected GImageSearch.imgtype     imagetype  = GImageSearch.imgtype.face;
-        protected GImageSearch.imgsz                    imagesize  = null;
-        protected GImageSearch.imgc                     imagecolor = null;
+        protected GImageSearch.imgtype     imagetype  = null;
+        protected GImageSearch.imgsz       imagesize  = null;
+        protected GImageSearch.imgc        imagecolor = null;
 
         protected int resultsPerPage = GImageSearch.rsz;
 

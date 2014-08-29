@@ -5,7 +5,7 @@ import com.bustiblelemons.cthulhator.model.brp.gimagesearch.Gender;
 /**
  * Created by bhm on 04.08.14.
  */
-public interface OnlinePhotoSearchQuery {
+public interface CharacterSettings {
     Gender getGender();
 
     int getYear();

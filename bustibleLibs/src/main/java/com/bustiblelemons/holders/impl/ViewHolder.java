@@ -7,7 +7,9 @@ import android.view.View;
  * @origin pl.foxcode.blumea.manager.statistics.holders
  */
 public interface ViewHolder<T> {
-    public void create(View convertView);
+    void create(View convertView);
 
-    public void bindValues(T item, int position);
+    void bindValues(T item, int position);
+
+    int getLayoutId(int position);
 }

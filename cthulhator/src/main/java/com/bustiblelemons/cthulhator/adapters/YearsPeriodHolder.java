@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.model.time.YearsPeriod;
 import com.bustiblelemons.holders.impl.AbsViewHolder;
 
@@ -45,5 +46,10 @@ public class YearsPeriodHolder extends AbsViewHolder<YearsPeriod> {
                 yearsView.setText(years);
             }
         }
+    }
+
+    @Override
+    public int getLayoutId(int position) {
+        return R.layout.single_year_period_item;
     }
 }

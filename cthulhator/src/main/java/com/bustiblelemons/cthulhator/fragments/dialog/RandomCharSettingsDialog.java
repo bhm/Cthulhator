@@ -14,8 +14,8 @@ import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.adapters.GenderSpinnerAdapter;
 import com.bustiblelemons.cthulhator.adapters.PeriodSpinnerAdapter;
 import com.bustiblelemons.cthulhator.fragments.OnBroadcastOnlineSearchSettings;
-import com.bustiblelemons.cthulhator.model.OnlinePhotoSearchQuery;
-import com.bustiblelemons.cthulhator.model.OnlinePhotoSearchQueryImpl;
+import com.bustiblelemons.cthulhator.model.CharacterSettings;
+import com.bustiblelemons.cthulhator.model.CharacterSettingsImpl;
 import com.bustiblelemons.cthulhator.model.brp.gimagesearch.Gender;
 import com.bustiblelemons.cthulhator.model.time.YearsPeriod;
 import com.bustiblelemons.cthulhator.settings.Settings;
@@ -38,9 +38,9 @@ public class RandomCharSettingsDialog extends AbsDialogFragment
     public static final  String TAG = RandomCharSettingsDialog.class.getSimpleName();
     private static final Logger log = new Logger(RandomCharSettingsDialog.class);
     @InjectView(R.id.gender_spinner)
-    Spinner genderSpinner;
+    Spinner       genderSpinner;
     @InjectView(R.id.year_spinner)
-    Spinner periodSpinner;
+    Spinner       periodSpinner;
     @InjectView(R.id.year_seekbar)
     TitledSeekBar yearSeekbar;
 
@@ -48,7 +48,7 @@ public class RandomCharSettingsDialog extends AbsDialogFragment
     private PeriodSpinnerAdapter            periodSpinnerAdapter;
     private OnBroadcastOnlineSearchSettings onBroadcastOnlineSearchSettings;
     private Gender                          mGender;
-    private OnlinePhotoSearchQuery          onlinePhotoSearchQuery;
+    private CharacterSettings               onlinePhotoSearchQuery;
     private RandomCharSettings              randomCharSettings;
 
     @Override
@@ -61,8 +61,10 @@ public class RandomCharSettingsDialog extends AbsDialogFragment
     }
 
     public void readLastSettings(Activity activity) {
-        onlinePhotoSearchQuery = Settings.getLastPortratiSettings(activity);
-        randomCharSettings = Settings.getLastRandomCharSettings(activity);
+        onlinePhotoSearchQuery = com.bustiblelemons.cthulhator.settings.Settings.getLastPortratiSettings(
+                activity);
+        randomCharSettings = com.bustiblelemons.cthulhator.settings.Settings.getLastRandomCharSettings(
+                activity);
         mGender = onlinePhotoSearchQuery.getGender();
     }
 
@@ -111,6 +113,7 @@ public class RandomCharSettingsDialog extends AbsDialogFragment
 
     @Override
     public boolean onGenderSelected(Gender gender) {
+        mGender = gender;
         return false;
     }
 
@@ -125,12 +128,12 @@ public class RandomCharSettingsDialog extends AbsDialogFragment
         boolean apply = v.getId() == android.R.id.button1;
         if (onBroadcastOnlineSearchSettings != null) {
             int year = yearSeekbar.getIntValue();
-            onlinePhotoSearchQuery = OnlinePhotoSearchQueryImpl.create(year, mGender);
+            onlinePhotoSearchQuery = CharacterSettingsImpl.create(year, mGender);
             if (apply) {
                 Settings.saveLastOnlinePhotoSearchQuery(getActivity(), onlinePhotoSearchQuery);
                 Settings.saveLastRandomCharSettings(getActivity(), randomCharSettings);
             }
-            onBroadcastOnlineSearchSettings.onBroadcastOnlineSearchSettings(onlinePhotoSearchQuery,
+            onBroadcastOnlineSearchSettings.onSettingsChanged(onlinePhotoSearchQuery,
                     apply);
         }
         dismiss();

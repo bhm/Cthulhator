@@ -12,17 +12,17 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
  * Created by bhm on 04.08.14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class OnlinePhotoSearchQueryImpl implements OnlinePhotoSearchQuery {
-    private static OnlinePhotoSearchQuery sDefaults;
-    private        boolean                modern;
-    private        int                    year;
-    private        Gender                 gender;
+public class CharacterSettingsImpl implements CharacterSettings {
+    private static CharacterSettings sDefaults;
+    private        boolean           modern;
+    private        int               year;
+    private        Gender            gender;
 
     public void setYear(int year) {
         this.year = year;
     }
 
-    public OnlinePhotoSearchQueryImpl() {
+    public CharacterSettingsImpl() {
         this.year = CthulhuPeriod.JAZZAGE.getDefaultYear();
         this.gender = Gender.ANY;
     }
@@ -46,21 +46,17 @@ public class OnlinePhotoSearchQueryImpl implements OnlinePhotoSearchQuery {
         this.modern = modern;
     }
 
-    private OnlinePhotoSearchQueryImpl(int year, Gender gender) {
+    private CharacterSettingsImpl(int year, Gender gender) {
         this.year = year;
         this.gender = gender;
     }
 
-    private static final LruCache<Integer, OnlinePhotoSearchQueryImpl> cache =
-            new LruCache<Integer, OnlinePhotoSearchQueryImpl>(3);
+    private static final LruCache<Integer, CharacterSettingsImpl> cache =
+            new LruCache<Integer, CharacterSettingsImpl>(3);
 
-    public static OnlinePhotoSearchQueryImpl create(int year, Gender gender) {
-        int code = year + gender.hashCode();
-        if (cache.get(code) == null) {
-            OnlinePhotoSearchQueryImpl search = new OnlinePhotoSearchQueryImpl(year, gender);
-            cache.put(code, search);
-        }
-        return cache.get(code);
+    public static CharacterSettingsImpl create(int year, Gender gender) {
+        CharacterSettingsImpl search = new CharacterSettingsImpl(year, gender);
+        return search;
     }
 
     @Override
@@ -70,10 +66,10 @@ public class OnlinePhotoSearchQueryImpl implements OnlinePhotoSearchQuery {
 
     @Override
     public String getQuery() {
-        return year + "+".concat(gender.name());
+        return year + "+".concat(gender.getSearchString());
     }
 
-    public static OnlinePhotoSearchQuery defaults() {
+    public static CharacterSettings defaults() {
         return sDefaults == null ? sDefaults = create(1920, Gender.ANY) : sDefaults;
     }
 
@@ -82,12 +78,21 @@ public class OnlinePhotoSearchQueryImpl implements OnlinePhotoSearchQuery {
         if (this == o) { return true; }
         if (o == null || getClass() != o.getClass()) { return false; }
 
-        OnlinePhotoSearchQueryImpl that = (OnlinePhotoSearchQueryImpl) o;
+        CharacterSettingsImpl that = (CharacterSettingsImpl) o;
 
         if (year != that.year) { return false; }
         if (gender != that.gender) { return false; }
 
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "CharacterSettingsImpl{" +
+                "modern=" + modern +
+                ", year=" + year +
+                ", gender=" + gender +
+                '}';
     }
 
     @Override
