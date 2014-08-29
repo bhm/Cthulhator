@@ -19,7 +19,7 @@ import com.bustiblelemons.cthulhator.model.CharacterSettingsImpl;
 import com.bustiblelemons.cthulhator.model.brp.gimagesearch.Gender;
 import com.bustiblelemons.cthulhator.model.time.YearsPeriod;
 import com.bustiblelemons.cthulhator.settings.Settings;
-import com.bustiblelemons.fragments.dialog.AbsDialogFragment;
+import com.bustiblelemons.fragments.dialog.AbsArgDialogFragment;
 import com.bustiblelemons.logging.Logger;
 import com.bustiblelemons.views.TitledSeekBar;
 
@@ -30,7 +30,7 @@ import butterknife.OnClick;
 /**
  * Created by bhm on 03.08.14.
  */
-public class RandomCharSettingsDialog extends AbsDialogFragment
+public class RandomCharSettingsDialog extends AbsArgDialogFragment<CharacterSettings>
         implements GenderSpinnerAdapter.GenderSelected,
                    PeriodSpinnerAdapter.OnYearsPeriodSelected,
                    View.OnClickListener {
@@ -48,7 +48,7 @@ public class RandomCharSettingsDialog extends AbsDialogFragment
     private PeriodSpinnerAdapter            periodSpinnerAdapter;
     private OnBroadcastOnlineSearchSettings onBroadcastOnlineSearchSettings;
     private Gender                          mGender;
-    private CharacterSettings               onlinePhotoSearchQuery;
+    private CharacterSettings               characterSettings;
     private RandomCharSettings              randomCharSettings;
 
     @Override
@@ -60,14 +60,6 @@ public class RandomCharSettingsDialog extends AbsDialogFragment
         readLastSettings(activity);
     }
 
-    public void readLastSettings(Activity activity) {
-        onlinePhotoSearchQuery = com.bustiblelemons.cthulhator.settings.Settings.getLastPortratiSettings(
-                activity);
-        randomCharSettings = com.bustiblelemons.cthulhator.settings.Settings.getLastRandomCharSettings(
-                activity);
-        mGender = onlinePhotoSearchQuery.getGender();
-    }
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
@@ -75,11 +67,22 @@ public class RandomCharSettingsDialog extends AbsDialogFragment
         return dialog;
     }
 
+    public void readLastSettings(Activity activity) {
+        randomCharSettings = Settings.getLastRandomCharSettings(activity);
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_character_settings, container, false);
         ButterKnife.inject(this, rootView);
         return rootView;
+    }
+
+    @Override
+    protected void onInstanceArgumentRead(CharacterSettings instanceArgument) {
+        this.characterSettings = instanceArgument;
+        mGender = characterSettings.getGender();
     }
 
     @Override
@@ -117,8 +120,9 @@ public class RandomCharSettingsDialog extends AbsDialogFragment
         return false;
     }
 
-    public static RandomCharSettingsDialog newInstance() {
+    public static RandomCharSettingsDialog newInstance(CharacterSettings settings) {
         RandomCharSettingsDialog r = new RandomCharSettingsDialog();
+        r.setNewInstanceArgument(settings);
         return r;
     }
 
@@ -128,12 +132,12 @@ public class RandomCharSettingsDialog extends AbsDialogFragment
         boolean apply = v.getId() == android.R.id.button1;
         if (onBroadcastOnlineSearchSettings != null) {
             int year = yearSeekbar.getIntValue();
-            onlinePhotoSearchQuery = CharacterSettingsImpl.create(year, mGender);
+            characterSettings = CharacterSettingsImpl.create(year, mGender);
             if (apply) {
-                Settings.saveLastOnlinePhotoSearchQuery(getActivity(), onlinePhotoSearchQuery);
+                Settings.saveLastOnlinePhotoSearchQuery(getActivity(), characterSettings);
                 Settings.saveLastRandomCharSettings(getActivity(), randomCharSettings);
             }
-            onBroadcastOnlineSearchSettings.onSettingsChanged(onlinePhotoSearchQuery,
+            onBroadcastOnlineSearchSettings.onSettingsChanged(characterSettings,
                     apply);
         }
         dismiss();

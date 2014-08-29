@@ -83,6 +83,7 @@ public class RandomCharactersActivity extends BaseActionBarActivity
     private CharacteristicTraitsAdapter      characteristicAdapter;
     private RandomCharSettingsDialog         randomCharSettingsDialog;
     private PortraitsSettingsFragment        portraitSettingsFragment;
+    private CharacterSettings                characterSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,8 +143,8 @@ public class RandomCharactersActivity extends BaseActionBarActivity
     private void setupPhotosPager() {
         photosPagerAdapter = new PhotosPagerAdapter(getSupportFragmentManager());
         photosPager.setLoadMoreListener(this);
-        CharacterSettings searchQuery = Settings.getLastPortratiSettings(this);
-        photosPager.setTag(R.id.tag_search, searchQuery);
+        characterSettings = Settings.getLastPortratiSettings(this);
+        photosPager.setTag(R.id.tag_search, characterSettings);
         photosPager.setAdapter(photosPagerAdapter);
     }
 
@@ -282,7 +283,7 @@ public class RandomCharactersActivity extends BaseActionBarActivity
 
     public void handleSettingsButton() {
         if (randomCharSettingsDialog == null) {
-            randomCharSettingsDialog = RandomCharSettingsDialog.newInstance();
+            randomCharSettingsDialog = RandomCharSettingsDialog.newInstance(characterSettings);
         }
         FragmentManager fm = getSupportFragmentManager();
         randomCharSettingsDialog.show(fm, randomCharSettingsDialog.TAG);

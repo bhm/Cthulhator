@@ -51,6 +51,7 @@ public class Settings extends BaseSettings {
             File file = Storage.getStorageFile(context, sRandomCharSettingsFilename);
             return m.readValue(file, RandomCharSettings.class);
         } catch (IOException e) {
+            e.printStackTrace();
             return RandomCharSettings.defaults();
         }
     }

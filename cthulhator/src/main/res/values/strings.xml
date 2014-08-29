@@ -41,6 +41,10 @@
     <string name="apply">Apply</string>
     <string name="jazzage">Jazz Age</string>
     <string name="jazzage_years">1920-1940</string>
+    <string name="add_character_info">Would you introduce me?</string>
+    <string name="add_character_statistics">How well will things go??</string>
+    <string name="add_character_history">What had happened in the past?</string>
+    <string name="add_character_equipment">What is amongst the belongings?</string>
 
 
 </resources>

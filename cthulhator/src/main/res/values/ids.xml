@@ -43,4 +43,8 @@
     <item name="year_spinner" type="id"/>
     <item name="tag_search_prev" type="id"/>
     <item name="add_character" type="id"/>
+    <item name="add_character_details" type="id"/>
+    <item name="add_character_statistics" type="id"/>
+    <item name="add_character_history" type="id"/>
+    <item name="add_character_equipement" type="id"/>
 </resources>
