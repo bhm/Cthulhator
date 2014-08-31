@@ -127,4 +127,26 @@ public class User implements OnlinePhotoUrl, Serializable {
     public String getUrl() {
         return getPicture();
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "sSN='" + sSN + '\'' +
+                ", cell='" + cell + '\'' +
+                ", dob='" + dob + '\'' +
+                ", email='" + email + '\'' +
+                ", gender='" + gender + '\'' +
+                ", location=" + location +
+                ", md5='" + md5 + '\'' +
+                ", name=" + name +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", picture='" + picture + '\'' +
+                ", registered='" + registered + '\'' +
+                ", salt='" + salt + '\'' +
+                ", sha1='" + sha1 + '\'' +
+                ", sha256='" + sha256 + '\'' +
+                ", username='" + username + '\'' +
+                '}';
+    }
 }

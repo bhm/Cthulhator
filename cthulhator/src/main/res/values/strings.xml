@@ -45,6 +45,23 @@
     <string name="add_character_statistics">How well will things go??</string>
     <string name="add_character_history">What had happened in the past?</string>
     <string name="add_character_equipment">What is amongst the belongings?</string>
+    <string name="points_available">Points Available 35</string>
+    <string name="strength">Strength</string>
+    <string name="size">Size</string>
+    <string name="damage_bonus">Damage Bonus</string>
+    <string name="constitution">Constitution</string>
+    <string name="power">Power</string>
+    <string name="luck">Luck</string>
+    <string name="magic_points">Magic Points</string>
+    <string name="sanity_points">Sanity Points</string>
+    <string name="dexterity">Dexterity</string>
+    <string name="dodge">Dodge</string>
+    <string name="intelligence">Intelligence</string>
+    <string name="education">Education</string>
+    <string name="age">Age</string>
+    <string name="affects">Affects</string>
+    <string name="career_skill_points">Career Skill Points</string>
+    <string name="hobby_skill_points">Hobby Skill Points</string>
 
 
 </resources>

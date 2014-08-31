@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@id/header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/twice_actionbar_height"
+        android:background="@color/main_background">
+
+        <TextView
+            android:id="@id/points_available"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:padding="@dimen/padding_16"
+            android:text="@string/points_available"
+            android:textAllCaps="true"
+            android:textColor="@color/grey_white_1000"
+            android:textSize="@dimen/font_22"
+            android:textStyle="bold"/>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@android:id/custom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fab_offset"
+        android:layout_below="@id/header"
+        android:background="@color/transparent">
+
+    </FrameLayout>
+
+    <ScrollView
+        android:id="@id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@android:id/custom"
+        android:paddingTop="@dimen/padding_20">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@id/edu_card"
+                style="@style/card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.bustiblelemons.views.SkillView
+                    android:id="@id/edu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:showModifiers="true"
+                    app:statTitle="@string/education"
+                    app:statValue="@string/placeholder_perc_val"
+                    app:titleSize="@dimen/font_16"
+                    app:valueBelow="true"
+                    app:valueSize="@dimen/font_18"/>
+
+                <TextView
+                    android:id="@id/knowledge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/edu"
+                    android:gravity="center|right"
+                    android:padding="@dimen/padding_16"
+                    android:text="@string/knowledge"/>
+
+                <TextView
+                    android:id="@id/career_skill_points"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/knowledge"
+                    android:gravity="center|right"
+                    android:padding="@dimen/padding_16"
+                    android:text="@string/career_skill_points"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@id/int_card"
+                style="@style/card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edu_card">
+
+                <com.bustiblelemons.views.SkillView
+                    android:id="@id/intelligence"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:showModifiers="true"
+                    app:statTitle="@string/intelligence"
+                    app:statValue="@string/placeholder_perc_val"
+                    app:titleSize="@dimen/font_16"
+                    app:valueBelow="true"
+                    app:valueSize="@dimen/font_18"/>
+
+                <TextView
+                    android:id="@id/idea"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/intelligence"
+                    android:gravity="center|right"
+                    android:padding="@dimen/padding_16"
+                    android:text="@string/idea"/>
+
+                <TextView
+                    android:id="@id/hobby_skill_points"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/idea"
+                    android:gravity="center|right"
+                    android:padding="@dimen/padding_16"
+                    android:text="@string/hobby_skill_points"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@id/power_card"
+                style="@style/card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/int_card"
+                tools:visibility="gone">
+
+                <com.bustiblelemons.views.SkillView
+                    android:id="@id/pow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:showModifiers="true"
+                    app:statTitle="@string/power"
+                    app:statValue="@string/placeholder_perc_val"
+                    app:titleSize="@dimen/font_16"
+                    app:valueBelow="true"
+                    app:valueSize="@dimen/font_18"/>
+
+                <TextView
+                    android:id="@id/sanity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/pow"
+                    android:gravity="center|right"
+                    android:padding="@dimen/padding_16"
+                    android:text="@string/sanity"/>
+
+                <TextView
+                    android:id="@id/sanity_points"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/sanity"
+                    android:gravity="center|right"
+                    android:padding="@dimen/padding_16"
+                    android:text="@string/sanity_points"/>
+
+                <TextView
+                    android:id="@id/luck"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/sanity_points"
+                    android:gravity="center|right"
+                    android:padding="@dimen/padding_16"
+                    android:text="@string/luck"/>
+
+                <TextView
+                    android:id="@id/magic_points"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/luck"
+                    android:gravity="center|right"
+                    android:padding="@dimen/padding_16"
+                    android:text="@string/magic_points"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@id/body_card"
+                style="@style/card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/power_card"
+                tools:visibility="gone">
+
+                <com.bustiblelemons.views.SkillView
+                    android:id="@id/str"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:showModifiers="true"
+                    app:statTitle="@string/strength"
+                    app:statValue="@string/placeholder_perc_val"
+                    app:titleSize="@dimen/font_16"
+                    app:valueBelow="true"
+                    app:valueSize="@dimen/font_18"/>
+
+                <TextView
+                    android:id="@id/damage_bonus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/str"
+                    android:gravity="center|right"
+                    android:padding="@dimen/padding_16"
+                    android:text="@string/damage_bonus"/>
+
+                <com.bustiblelemons.views.SkillView
+                    android:id="@id/con"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/damage_bonus"
+                    app:showModifiers="true"
+                    app:statTitle="@string/constitution"
+                    app:statValue="@string/placeholder_perc_val"
+                    app:titleSize="@dimen/font_16"
+                    app:valueBelow="true"
+                    app:valueSize="@dimen/font_18"/>
+
+                <TextView
+                    android:id="@id/hit_points"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/con"
+                    android:gravity="center|right"
+                    android:padding="@dimen/padding_16"
+                    android:text="@string/hit_points"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@id/dex_card"
+                style="@style/card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/body_card"
+                tools:visibility="gone">
+
+                <com.bustiblelemons.views.SkillView
+                    android:id="@id/dex"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:showModifiers="true"
+                    app:statTitle="@string/dexterity"
+                    app:statValue="@string/placeholder_perc_val"
+                    app:titleSize="@dimen/font_16"
+                    app:valueBelow="true"
+                    app:valueSize="@dimen/font_18"/>
+
+                <TextView
+                    android:id="@id/dodge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/dex"
+                    android:gravity="center|right"
+                    android:padding="@dimen/padding_16"
+                    android:text="@string/dodge"/>
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <at.markushi.ui.CircleButton
+        android:id="@id/reroll"
+        android:layout_width="@dimen/fab"
+        android:layout_height="@dimen/fab"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@android:id/custom"
+        android:layout_marginLeft="@dimen/padding_16"
+        android:layout_marginRight="@dimen/padding_16"
+        android:layout_marginTop="@dimen/fab_offset"
+        app:cb_color="@color/portraits_fab"/>
+
+</RelativeLayout>

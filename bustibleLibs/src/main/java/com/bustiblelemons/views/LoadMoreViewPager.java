@@ -21,15 +21,20 @@ public class LoadMoreViewPager extends ViewPager {
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+            if (mCachedPageListener != null) {
+                mCachedPageListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
         }
 
         @Override
         public void onPageSelected(int position) {
+            if (mCachedPageListener != null) {
+                mCachedPageListener.onPageSelected(position);
+            }
             if (getAdapter() != null) {
                 int count = getAdapter().getCount();
                 int currentItem = getCurrentItem();
-                if (currentItem <= (count - loadMoreThreshold)) {
+                if (currentItem >= (count - loadMoreThreshold)) {
                     if (loadMoreListener != null) {
                         loadMoreListener.onLoadMore(LoadMoreViewPager.this);
                     }
@@ -39,9 +44,21 @@ public class LoadMoreViewPager extends ViewPager {
 
         @Override
         public void onPageScrollStateChanged(int state) {
-
+            if (mCachedPageListener != null) {
+                mCachedPageListener.onPageScrollStateChanged(state);
+            }
         }
     };
+    private OnPageChangeListener mCachedPageListener;
+
+    @Override
+    public void setOnPageChangeListener(OnPageChangeListener listener) {
+        if (!listener.equals(mOnPageChangeListener)) {
+            this.mCachedPageListener = listener;
+        } else {
+            super.setOnPageChangeListener(listener);
+        }
+    }
 
     public void setLoadMoreThreshold(int loadMoreThreshold) {
         this.loadMoreThreshold = loadMoreThreshold;

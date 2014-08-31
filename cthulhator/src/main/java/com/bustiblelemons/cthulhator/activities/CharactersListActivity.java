@@ -1,11 +1,9 @@
 package com.bustiblelemons.cthulhator.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.View;
 
-import com.bustiblelemons.activities.BaseActionBarActivity;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.adapters.SavedCharactersAdapter;
 import com.bustiblelemons.cthulhator.async.SavedCharactersCallBack;
@@ -26,7 +24,7 @@ import io.github.scottmaclure.character.traits.network.api.asyn.AsyncInfo;
 /**
  * Created by bhm on 13.08.14.
  */
-public class CharactersListActivity extends BaseActionBarActivity
+public class CharactersListActivity extends AbsActivity
         implements View.OnClickListener,
                    SavedCharactersCallBack,
                    LoadMoreListView.OnLoadMoreListener,
@@ -88,15 +86,11 @@ public class CharactersListActivity extends BaseActionBarActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.add_character:
-                launchRandomCharacter();
+                launchStatisticsCreator();
                 break;
         }
     }
 
-    private void launchRandomCharacter() {
-        Intent i = new Intent(this, RandomCharactersActivity.class);
-        startActivity(i);
-    }
 
     @Override
     public void onAsynTaskProgress(AsyncInfo<Grouping, List<SavedCharacter>> info, Grouping param,

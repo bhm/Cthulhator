@@ -35,4 +35,5 @@
     <dimen name="name_pager_height">202dp</dimen>
     <dimen name="font_14">14sp</dimen>
     <dimen name="list_image">40dp</dimen>
+    <dimen name="font_28">28sp</dimen>
 </resources>

@@ -45,12 +45,12 @@ public abstract class AbsFragmentPagerAdapter<T, F extends Fragment>
         notifyDataSetChanged();
     }
 
-    public void addData(Iterable<T> data) {
-        for (T item : data) {
-            mData.add(item);
-            int pos = mData.size();
+    public void addData(List<T> data) {
+        for (int i = 0; i < data.size(); i++) {
+            T item = data.get(i);
             F f = newInstance(item);
-            mFragments.put(pos, f);
+            mData.add(item);
+            mFragments.put(i, f);
         }
         notifyDataSetChanged();
     }

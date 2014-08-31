@@ -47,4 +47,33 @@
     <item name="add_character_statistics" type="id"/>
     <item name="add_character_history" type="id"/>
     <item name="add_character_equipement" type="id"/>
+    <item name="points_available" type="id"/>
+    <item name="reroll" type="id"/>
+    <item name="header" type="id"/>
+    <item name="size" type="id"/>
+    <item name="damage_bonus" type="id"/>
+    <item name="con" type="id"/>
+    <item name="hit_points" type="id"/>
+    <item name="body" type="id"/>
+    <item name="mind" type="id"/>
+    <item name="pow" type="id"/>
+    <item name="sanity" type="id"/>
+    <item name="luck" type="id"/>
+    <item name="magic_points" type="id"/>
+    <item name="sanity_points" type="id"/>
+    <item name="power_card" type="id"/>
+    <item name="body_card" type="id"/>
+    <item name="dex_card" type="id"/>
+    <item name="dodge" type="id"/>
+    <item name="int_card" type="id"/>
+    <item name="intelligence" type="id"/>
+    <item name="idea" type="id"/>
+    <item name="edu" type="id"/>
+    <item name="knowledge" type="id"/>
+    <item name="age_card" type="id"/>
+    <item name="edu_card" type="id"/>
+    <item name="age" type="id"/>
+    <item name="career_skill_points" type="id"/>
+    <item name="hobby_skill_points" type="id"/>
+    <item name="scroll" type="id"/>
 </resources>
