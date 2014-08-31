@@ -17,4 +17,5 @@ public abstract class AbsActivity extends BaseActionBarActivity {
         Intent i = new Intent(this, RandomCharactersActivity.class);
         startActivity(i);
     }
+
 }

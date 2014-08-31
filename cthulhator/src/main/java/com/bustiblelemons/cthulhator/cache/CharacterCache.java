@@ -6,7 +6,7 @@ import com.bustiblelemons.cthulhator.async.SavedCharactersCallBack;
 import com.bustiblelemons.cthulhator.async.SavedCharactersLoadAsyn;
 import com.bustiblelemons.cthulhator.model.Grouping;
 import com.bustiblelemons.cthulhator.model.ToCCharacter;
-import com.bustiblelemons.cthulhator.model.brp.BRPCharacter;
+import com.bustiblelemons.cthulhator.model.brp.AbsBRPCharacter;
 import com.bustiblelemons.cthulhator.model.cache.SavedCharactersSet;
 import com.bustiblelemons.cthulhator.model.desc.CharacterDescription;
 import com.bustiblelemons.storage.Storage;
@@ -35,8 +35,8 @@ public class CharacterCache {
         return instance == null ? instance = new CharacterCache() : instance;
     }
 
-    public static List<BRPCharacter> getBRPCharacters() {
-        return new ArrayList<BRPCharacter>();
+    public static List<AbsBRPCharacter> getBRPCharacters() {
+        return new ArrayList<AbsBRPCharacter>();
     }
 
     public static List<ToCCharacter> getToCCharacters() {

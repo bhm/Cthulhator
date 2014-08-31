@@ -19,6 +19,18 @@ public class BaseActionBarActivity extends ActionBarActivity
 
     protected static Logger log;
 
+    public boolean hasExtra(String key) {
+        return hasExtras() && getIntent().getExtras().containsKey(key);
+    }
+
+    private boolean hasExtras() {
+        return getIntent() != null && getIntent().getExtras() != null;
+    }
+
+    public Bundle getExtras() {
+        return hasExtras() ? getIntent().getExtras() : Bundle.EMPTY;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

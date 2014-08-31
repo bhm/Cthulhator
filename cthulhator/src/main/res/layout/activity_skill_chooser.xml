@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@id/header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/twice_actionbar_height"
+        android:background="@color/main_background">
+
+        <TextView
+            android:id="@id/points_available"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:padding="@dimen/padding_16"
+            android:textAllCaps="true"
+            android:textColor="@color/grey_white_1000"
+            android:textSize="@dimen/font_22"
+            android:textStyle="bold"
+            tools:text="@string/points_available"/>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@android:id/custom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fab_offset"
+        android:layout_below="@id/header"
+        android:background="@color/transparent">
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@android:id/custom">
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/padding_20"/>
+    </FrameLayout>
+
+    <at.markushi.ui.CircleButton
+        android:id="@id/reroll"
+        android:layout_width="@dimen/fab"
+        android:layout_height="@dimen/fab"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@android:id/custom"
+        android:layout_marginLeft="@dimen/padding_16"
+        android:layout_marginRight="@dimen/padding_16"
+        android:layout_marginTop="@dimen/fab_offset"
+        app:cb_color="@color/portraits_fab"/>
+
+</RelativeLayout>

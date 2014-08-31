@@ -13,7 +13,7 @@ import com.bustiblelemons.fragments.BaseFragment;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.fragments.main.BRPCard;
 import com.bustiblelemons.cthulhator.model.BRPSKills;
-import com.bustiblelemons.cthulhator.model.brp.BRPCharacter;
+import com.bustiblelemons.cthulhator.model.brp.AbsBRPCharacter;
 import com.manuelpeinado.fadingactionbar.FadingActionBarHelperBase;
 import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarHelper;
 
@@ -23,9 +23,10 @@ import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarH
 public class BRPCharacterFragment extends BaseFragment implements View.OnClickListener {
 
     private LinearLayout              cardsContainer;
-    private BRPCharacter              character;
+    private AbsBRPCharacter           character;
     private FadingActionBarHelperBase mFadingHelper;
     private ImageButton               addPicture;
+
     public interface BRPCharacterListener {
         boolean onPickPicture(int characterId);
     }

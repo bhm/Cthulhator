@@ -6,8 +6,8 @@ import android.support.v4.view.ViewPager;
 import com.bustiblelemons.activities.BaseActionBarActivity;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.adapters.BRPCharacterPagerAdapter;
-import com.bustiblelemons.cthulhator.model.JazzAgeBRPChar;
-import com.bustiblelemons.cthulhator.model.brp.BRPCharacter;
+import com.bustiblelemons.cthulhator.model.CoCFiveCharacter;
+import com.bustiblelemons.cthulhator.model.brp.AbsBRPCharacter;
 import com.bustiblelemons.logging.Logger;
 
 import java.util.ArrayList;
@@ -28,16 +28,16 @@ public class TestActivity extends BaseActionBarActivity implements ViewPager.OnP
         setContentView(R.layout.statistic_pager_view);
         pager = (ViewPager) findViewById(android.R.id.custom);
         adapter = new BRPCharacterPagerAdapter(getSupportFragmentManager());
-        List<BRPCharacter> data = getDataList();
+        List<AbsBRPCharacter> data = getDataList();
         adapter.addData(data);
         pager.setAdapter(adapter);
         pager.setOnPageChangeListener(this);
     }
 
-    public List<BRPCharacter> getDataList() {
-        List<BRPCharacter> r = new ArrayList<BRPCharacter>();
+    public List<AbsBRPCharacter> getDataList() {
+        List<AbsBRPCharacter> r = new ArrayList<AbsBRPCharacter>();
         for (int i = 0; i < 100; i++) {
-            r.add(new JazzAgeBRPChar());
+            r.add(new CoCFiveCharacter());
         }
         return r;
     }

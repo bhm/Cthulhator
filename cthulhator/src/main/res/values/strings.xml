@@ -45,7 +45,7 @@
     <string name="add_character_statistics">How well will things go??</string>
     <string name="add_character_history">What had happened in the past?</string>
     <string name="add_character_equipment">What is amongst the belongings?</string>
-    <string name="points_available">Points Available 35</string>
+    <string name="points_available">Points Available</string>
     <string name="strength">Strength</string>
     <string name="size">Size</string>
     <string name="damage_bonus">Damage Bonus</string>

@@ -38,12 +38,13 @@
         android:id="@id/scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@android:id/custom"        >
+        android:layout_below="@android:id/custom"
+        android:layout_marginBottom="@dimen/padding_20">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/padding_20"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_20">
 
             <RelativeLayout
                 android:id="@id/edu_card"

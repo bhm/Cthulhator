@@ -42,6 +42,7 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
     private Drawable        incDrawable;
     private Drawable        decDrawable;
     private OnClickListener cachedOnClick;
+    private int             value = 0;
 
     public SkillView(Context context) {
         super(context);
@@ -112,6 +113,7 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         String title = skillArray.getString(R.styleable.SkillView_statTitle);
         setTitle(title);
     }
+
 
     private void setupModifiers(TypedArray skillArray) {
         showModifiers = skillArray.getBoolean(R.styleable.SkillView_showModifiers, false);
@@ -286,6 +288,25 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         if (titleView != null) {
             titleView.setText(title);
         }
+    }
+
+    public int getIntValue() {
+        return value;
+    }
+
+    public void setStringValue(String value) {
+        try {
+            int v = Integer.valueOf(value);
+            setIntValue(v);
+        } catch(NumberFormatException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void setIntValue(int v) {
+        this.value = v;
+        setValue(v + "");
     }
 
     public void setValue(CharSequence charSequence) {
