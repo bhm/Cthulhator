@@ -38,11 +38,11 @@
         android:id="@id/scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@android:id/custom"
-        android:paddingTop="@dimen/padding_20">
+        android:layout_below="@android:id/custom"        >
 
         <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/padding_20"
             android:layout_height="wrap_content">
 
             <RelativeLayout
