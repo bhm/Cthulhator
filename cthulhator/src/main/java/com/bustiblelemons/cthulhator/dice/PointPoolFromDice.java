@@ -3,7 +3,7 @@ package com.bustiblelemons.cthulhator.dice;
 /**
  * Created by bhm on 09.09.14.
  */
-public class PoolPointFromDice {
+public class PointPoolFromDice {
 
     private int min = 0;
 
@@ -39,7 +39,7 @@ public class PoolPointFromDice {
         min += mod;
     }
 
-    public PoolPoint build() {
-        return new PoolPoint.Builder().setMax(currentMax).setMin(min).build();
+    public PointPool build() {
+        return new PointPool.Builder().setMax(currentMax).setMin(min).build();
     }
 }

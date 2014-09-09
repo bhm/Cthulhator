@@ -1,5 +1,8 @@
 package com.bustiblelemons.cthulhator.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by bhm on 13.08.14.
  */
@@ -24,5 +27,9 @@ public enum CthulhuEdition {
         return 20;
     }
 
+    public List<CharacterProperty> getCharacteristics() {
+        List<CharacterProperty> r = new ArrayList<CharacterProperty>();
+        return r;
+    }
 
 }

@@ -3,7 +3,7 @@ package com.bustiblelemons.cthulhator.activities;
 import android.os.Bundle;
 
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.dice.PoolPoint;
+import com.bustiblelemons.cthulhator.dice.PointPool;
 import com.bustiblelemons.views.SkillView;
 
 import java.util.Observable;
@@ -24,7 +24,7 @@ public class StatisticsCreatorActivity extends AbsActivity implements Observer {
     @InjectView(R.id.intelligence)
     SkillView intView;
 
-    private PoolPoint poolPoint;
+    private PointPool pointPool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

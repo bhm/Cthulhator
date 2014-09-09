@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * Created by bhm on 09.09.14.
  */
-public class PoolPoint {
+public class PointPool {
     private final Random mRandom;
     private final int    mMax;
 
@@ -38,23 +38,23 @@ public class PoolPoint {
         return false;
     }
 
-    private PoolPoint(int max) {
+    private PointPool(int max) {
         this(0, max);
     }
 
-    private PoolPoint(int min, int max) {
+    private PointPool(int min, int max) {
         this(min, max, System.currentTimeMillis());
     }
 
-    private PoolPoint(int min, int max, long mSeed) {
+    private PointPool(int min, int max, long mSeed) {
         this.mMin = min;
         this.mMax = max;
         mRandom = new Random(mSeed);
         this.points = mRandom.nextInt(max);
     }
 
-    public static PoolPoint random(int max) {
-        PoolPoint r = new PoolPoint(max);
+    public static PointPool random(int max) {
+        PointPool r = new PointPool(max);
         return r;
     }
 
@@ -73,8 +73,8 @@ public class PoolPoint {
             return this;
         }
 
-        public PoolPoint build() {
-            return new PoolPoint(this.min, this.mMax, this.mSeed);
+        public PointPool build() {
+            return new PointPool(this.min, this.mMax, this.mSeed);
         }
 
         public Builder setMin(int min) {
