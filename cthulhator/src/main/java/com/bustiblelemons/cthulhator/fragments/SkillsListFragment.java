@@ -8,7 +8,6 @@ import android.widget.ListView;
 
 import com.bustiblelemons.fragments.BaseFragment;
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.adapters.BRPSkillsAdapter;
 
 /**
  * Created by bhm on 20.07.14.
@@ -19,15 +18,11 @@ public class SkillsListFragment extends BaseFragment {
     private static final String ORDER        = "order";
 
     private ListView         list;
-    private BRPSkillsAdapter listAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_skills_list, container, false);
         list = (ListView) rootView.findViewById(android.R.id.list);
-        listAdapter = new BRPSkillsAdapter(getContext());
-        list.setAdapter(listAdapter);
-        list.setOnItemClickListener(listAdapter);
         return rootView;
     }
 

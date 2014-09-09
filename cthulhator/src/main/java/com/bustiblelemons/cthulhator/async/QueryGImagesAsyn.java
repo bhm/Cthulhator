@@ -19,13 +19,14 @@ import io.github.scottmaclure.character.traits.network.api.asyn.AbsAsynTask;
 /**
  * Created by bhm on 18.07.14.
  */
-public class QueryGImagesAsyn extends AbsAsynTask<GImageSearch, List<GoogleImageObject>,
-        ReceiveGoogleImages> {
+public class QueryGImagesAsyn extends AbsAsynTask<GImageSearch, List<GoogleImageObject>>{
 
+    private final ReceiveGoogleImages listener;
     private Logger log = new Logger(QueryGImagesAsyn.class);
 
     public QueryGImagesAsyn(Context context, ReceiveGoogleImages listener) {
-        super(context, listener);
+        super(context);
+        this.listener = listener;
     }
 
     @Override
@@ -48,6 +49,13 @@ public class QueryGImagesAsyn extends AbsAsynTask<GImageSearch, List<GoogleImage
     @Override
     protected boolean onException(Exception e) {
         return false;
+    }
+
+    @Override
+    public void onProgressUpdate(GImageSearch param, List<GoogleImageObject> result) {
+        if (listener != null) {
+            listener.onGoogleImageObjectsDownloaded(param, result);
+        }
     }
 
 }

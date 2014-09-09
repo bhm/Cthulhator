@@ -19,7 +19,6 @@ import at.markushi.ui.CircleButton;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import io.github.scottmaclure.character.traits.network.api.asyn.AsyncInfo;
 
 /**
  * Created by bhm on 13.08.14.
@@ -93,20 +92,6 @@ public class CharactersListActivity extends AbsActivity
 
 
     @Override
-    public void onAsynTaskProgress(AsyncInfo<Grouping, List<SavedCharacter>> info, Grouping param,
-                                   List<SavedCharacter> result) {
-        if (result != null && listAdapter != null) {
-            listAdapter.addItems(result);
-        }
-    }
-
-    @Override
-    public void onAsynTaskFinish(AsyncInfo<Grouping, List<SavedCharacter>> info,
-                                 List<SavedCharacter> result) {
-
-    }
-
-    @Override
     public void onLoadMore() {
         CharacterCache.loadSavedCharactersAsync(this, grouping.next());
     }
@@ -119,5 +104,17 @@ public class CharactersListActivity extends AbsActivity
     @Override
     public boolean onQueryTextChange(String s) {
         return false;
+    }
+
+    @Override
+    public void onSavedCharactersLoaded(Grouping grouping, List<SavedCharacter> characters) {
+        if (characters != null) {
+            if (listAdapter == null) {
+                listAdapter = new SavedCharactersAdapter(this);
+                listView.setOnItemClickListener(listAdapter);
+                listView.setAdapter(listAdapter);
+            }
+            listAdapter.addItems(characters);
+        }
     }
 }

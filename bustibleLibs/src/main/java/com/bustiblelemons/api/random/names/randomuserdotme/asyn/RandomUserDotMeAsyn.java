@@ -8,7 +8,7 @@ import com.bustiblelemons.api.random.names.randomuserdotme.model.RandomUserDotMe
 import com.bustiblelemons.api.random.names.randomuserdotme.model.RandomUserMe;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.Results;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.User;
-import com.bustiblelemons.async.SimpleAsync;
+import com.bustiblelemons.async.AbsSimpleAsync;
 import com.bustiblelemons.logging.Logger;
 
 import java.io.IOException;
@@ -20,7 +20,7 @@ import java.util.List;
  * Created by bhm on 25.07.14.
  */
 public class RandomUserDotMeAsyn
-        extends SimpleAsync<RandomUserMEQuery, Pair<RandomUserMEQuery, List<User>>> {
+        extends AbsSimpleAsync<RandomUserMEQuery, Pair<RandomUserMEQuery, List<User>>> {
 
     private OnRandomUsersRetreived listener;
     private Logger       log      = new Logger(RandomUserDotMeAsyn.class);

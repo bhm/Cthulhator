@@ -264,6 +264,7 @@
         android:id="@id/reroll"
         android:layout_width="@dimen/fab"
         android:layout_height="@dimen/fab"
+        android:src="@drawable/ic_dice"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@android:id/custom"
         android:layout_marginLeft="@dimen/padding_16"

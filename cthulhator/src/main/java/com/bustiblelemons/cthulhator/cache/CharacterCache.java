@@ -45,7 +45,8 @@ public class CharacterCache {
 
     public static void loadSavedCharactersAsync(Context context, Grouping... groupings) {
         if (context instanceof SavedCharactersCallBack) {
-            SavedCharactersLoadAsyn load = new SavedCharactersLoadAsyn(context);
+            SavedCharactersLoadAsyn load = new SavedCharactersLoadAsyn(context,
+                    (SavedCharactersCallBack) context);
             load.executeCrossPlatform(groupings);
         } else {
             throw new IllegalArgumentException(

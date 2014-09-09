@@ -68,8 +68,12 @@ public class SkillsChooserActivity extends AbsActivity implements SkillChanged {
     }
 
     @Override
-    public void onSkillChanged(CharacterProperty name, int value, boolean up) {
-        total = up ? total++ : total--;
-        setPointsAvailable(total);
+    public boolean onSkillChanged(CharacterProperty name, int value, boolean up) {
+        int afterTotal = up ? total+1 : total-1;
+        if (afterTotal >= 0) {
+            setPointsAvailable(total);
+            return true;
+        }
+        return false;
     }
 }

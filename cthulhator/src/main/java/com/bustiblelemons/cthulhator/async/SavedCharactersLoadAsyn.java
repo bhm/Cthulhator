@@ -14,11 +14,13 @@ import io.github.scottmaclure.character.traits.network.api.asyn.AbsAsynTask;
 /**
  * Created by bhm on 13.08.14.
  */
-public class SavedCharactersLoadAsyn extends AbsAsynTask<Grouping, List<SavedCharacter>,
-        SavedCharactersCallBack> {
+public class SavedCharactersLoadAsyn extends AbsAsynTask<Grouping, List<SavedCharacter>> {
 
-    public SavedCharactersLoadAsyn(Context context) {
+    private final SavedCharactersCallBack callBack;
+
+    public SavedCharactersLoadAsyn(Context context, SavedCharactersCallBack callBack) {
         super(context);
+        this.callBack = callBack;
     }
 
     @Override
@@ -35,5 +37,17 @@ public class SavedCharactersLoadAsyn extends AbsAsynTask<Grouping, List<SavedCha
     @Override
     protected boolean onException(Exception e) {
         return false;
+    }
+
+    @Override
+    protected boolean onSuccess(List<SavedCharacter> result) {
+        return false;
+    }
+
+    @Override
+    public void onProgressUpdate(Grouping param, List<SavedCharacter> result) {
+        if (callBack != null) {
+            callBack.onSavedCharactersLoaded(param, result);
+        }
     }
 }

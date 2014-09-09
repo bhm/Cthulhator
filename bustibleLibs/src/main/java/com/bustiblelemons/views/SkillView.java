@@ -20,7 +20,44 @@ import com.bustiblelemons.logging.Logger;
  * Created by bhm on 20.07.14.
  */
 public class SkillView extends RelativeLayout implements View.OnClickListener {
-    private static final Logger log = new Logger(SkillView.class);
+    private static final Logger            log                = new Logger(SkillView.class);
+    private final        SkillViewListener mSkillViewListener = new SkillViewListener() {
+        @Override
+        public void onSkillValueClick(SkillView view) {
+            if (mChachedSkillViewListener != null) {
+                mChachedSkillViewListener.onSkillValueClick(view);
+            }
+        }
+
+        @Override
+        public void onSkillTitleClick(SkillView view) {
+            if (mChachedSkillViewListener != null) {
+                mChachedSkillViewListener.onSkillTitleClick(view);
+            }
+        }
+
+        @Override
+        public boolean onIncreaseClicked(SkillView view) {
+            boolean cached = false;
+            boolean thisRet = false;
+            if (mChachedSkillViewListener != null) {
+                cached = mChachedSkillViewListener.onIncreaseClicked(view);
+            }
+
+            return cached && thisRet;
+        }
+
+        @Override
+        public boolean onDecreaseClicked(SkillView view) {
+            boolean cached = false;
+            boolean thisRet = false;
+            if (mChachedSkillViewListener != null) {
+                cached = mChachedSkillViewListener.onDecreaseClicked(view);
+            }
+
+            return cached && thisRet;
+        }
+    };
 
     private boolean isPercentile   = false;
     private boolean valueLeft      = false;
@@ -42,21 +79,24 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
     private Drawable        incDrawable;
     private Drawable        decDrawable;
     private OnClickListener cachedOnClick;
-    private int             value = 0;
+    private int value = 0;
 
     public SkillView(Context context) {
         super(context);
+        setListener(mSkillViewListener);
         init(context, null);
     }
 
     public SkillView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
+        setListener(mSkillViewListener);
     }
 
     public SkillView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs);
+        setListener(mSkillViewListener);
     }
 
     private void init(Context context, AttributeSet attrs) {
@@ -331,31 +371,30 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         }
     }
 
-    private SkillViewListener listener;
+    private SkillViewListener mChachedSkillViewListener;
 
     public void setListener(SkillViewListener listener) {
-        this.listener = listener;
+        if (!listener.equals(mSkillViewListener)) {
+            this.mChachedSkillViewListener = listener;
+        }
     }
 
     @Override
     public void onClick(View view) {
+        if (cachedOnClick != null) {
+            cachedOnClick.onClick(view);
+        }
         log.d("onCLick %s", view);
-        if (listener != null) {
+        if (mSkillViewListener != null) {
             int id = view.getId();
             if (id == R.id.dec) {
-                listener.onDecreaseClicked(this);
+                mSkillViewListener.onDecreaseClicked(this);
             } else if (id == R.id.inc) {
-                listener.onIncreaseClicked(this);
+                mSkillViewListener.onIncreaseClicked(this);
             } else if (id == android.R.id.custom) {
-                listener.onSkillValueClick(this);
+                mSkillViewListener.onSkillValueClick(this);
             } else if (id == android.R.id.title) {
-                listener.onSkillTitleClick(this);
-            } else {
-                cachedOnClick.onClick(view);
-            }
-        } else {
-            if (cachedOnClick != null) {
-                cachedOnClick.onClick(view);
+                mSkillViewListener.onSkillTitleClick(this);
             }
         }
     }

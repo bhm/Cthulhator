@@ -10,13 +10,11 @@ import java.util.concurrent.Executor;
 import io.github.scottmaclure.character.traits.asyn.ExecutorsProvider;
 import io.github.scottmaclure.character.traits.logging.Logger;
 
-public abstract class AbsAsynTask<P, R, I extends AbsAsynTask.AsynCallback<P, R>> extends AsyncTask<P, Pair<P, R>, R> {
+public abstract class AbsAsynTask<P, R> extends AsyncTask<P, Pair<P, R>, R> {
     private Logger log = new Logger(AbsAsynTask.class);
     protected Context       context;
-    private   I             callback;
     private   Executor      executor;
     private   Exception     exception;
-    private   AsynException asynException;
 
     public AsyncInfo<P, R> getInfo() {
         return new AsyncInfo<P, R>()
@@ -29,25 +27,15 @@ public abstract class AbsAsynTask<P, R, I extends AbsAsynTask.AsynCallback<P, R>
         this.context = context;
     }
 
-    public AbsAsynTask(Context context, I callback) {
-        this.context = context;
-        this.callback = callback;
-    }
 
     protected abstract R call(P... params) throws Exception;
 
     protected abstract boolean onException(Exception e);
 
     protected boolean onSuccess(R result) {
-        if (callback != null) {
-            callback.onAsynTaskFinish(getInfo(), result);
-        }
-        return false;
+        return result != null;
     }
 
-    public void setCallback(I callback) {
-        this.callback = callback;
-    }
 
     public Context getContext() {
         return context;
@@ -86,11 +74,7 @@ public abstract class AbsAsynTask<P, R, I extends AbsAsynTask.AsynCallback<P, R>
         }
     }
 
-    public void onProgressUpdate(P param, R result) {
-        if (callback != null) {
-            callback.onAsynTaskProgress(getInfo(), param, result);
-        }
-    }
+    public abstract void onProgressUpdate(P param, R result);
 
     public AsyncTask<P, Pair<P, R>, R> executeCrossPlatform(P... params) {
         return executeCrossPlatform(getExecutor(), params);
@@ -108,11 +92,5 @@ public abstract class AbsAsynTask<P, R, I extends AbsAsynTask.AsynCallback<P, R>
 
     protected ExecutorsProvider.Type getExecutorType() {
         return ExecutorsProvider.Type.SINGLE;
-    }
-
-    public interface AsynCallback<P, R> {
-        void onAsynTaskProgress(AsyncInfo<P, R> info, P param, R result);
-
-        void onAsynTaskFinish(AsyncInfo<P, R> info, R result);
     }
 }

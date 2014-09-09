@@ -10,7 +10,7 @@ import java.util.concurrent.Executor;
 /**
  * Created 9 Dec 2013
  */
-public abstract class SimpleAsync<P, R extends Object> extends AsyncTask<P, R, R> {
+public abstract class AbsSimpleAsync<P, R extends Object> extends AsyncTask<P, R, R> {
 
     protected Context context;
 
@@ -20,7 +20,7 @@ public abstract class SimpleAsync<P, R extends Object> extends AsyncTask<P, R, R
 
     protected abstract boolean onSuccess(R result);
 
-    public SimpleAsync(Context context) {
+    public AbsSimpleAsync(Context context) {
         this.context = context;
     }
 

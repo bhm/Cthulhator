@@ -72,6 +72,9 @@
         <attr name="decreaseSrc"/>
         <attr name="titleGravity"/>
         <attr name="valueGravity"/>
+        <attr name="minValue"/>
+        <attr name="defaultValue"/>
+        <attr name="maxValue"/>
         <attr name="valueLeft" format="boolean"/>
     </declare-styleable>
     <declare-styleable name="FloatingActionButton">

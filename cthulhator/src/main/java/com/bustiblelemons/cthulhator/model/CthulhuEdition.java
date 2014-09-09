@@ -23,4 +23,6 @@ public enum CthulhuEdition {
     public int getCarrierSkillPointMultiplier() {
         return 20;
     }
+
+
 }

@@ -13,14 +13,17 @@ import io.github.scottmaclure.character.traits.storage.Storage;
 /**
  * Created by bhm on 02.08.14.
  */
-public class DownloadDefaultTraitsAsyn extends AbsAsynTask<String, TraitsSet, OnTraitsDownload> {
+public class DownloadDefaultTraitsAsyn extends AbsAsynTask<String, TraitsSet> {
+
+    private OnTraitsDownload callback;
 
     public DownloadDefaultTraitsAsyn(Context context) {
         super(context);
     }
 
     public DownloadDefaultTraitsAsyn(Context context, OnTraitsDownload callback) {
-        super(context, callback);
+        super(context);
+        this.callback = callback;
     }
 
     @Override
@@ -40,6 +43,13 @@ public class DownloadDefaultTraitsAsyn extends AbsAsynTask<String, TraitsSet, On
     @Override
     protected boolean onException(Exception e) {
         return false;
+    }
+
+    @Override
+    public void onProgressUpdate(String param, TraitsSet result) {
+        if (callback != null) {
+            callback.onTraitsDownlaoded(param, result);
+        }
     }
 
 }

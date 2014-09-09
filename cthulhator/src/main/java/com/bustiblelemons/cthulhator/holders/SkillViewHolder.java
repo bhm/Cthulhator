@@ -56,7 +56,8 @@ public class SkillViewHolder implements ViewHolder<CharacterProperty>,SkillView.
     @Override
     public boolean onIncreaseClicked(SkillView view) {
         if (skillChanged != null) {
-            skillChanged.onSkillChanged(this.skill, skill.getValue(), true);
+            int changed = skill.getValue() + 1;
+            skillChanged.onSkillChanged(this.skill, changed, true);
         }
         return false;
     }

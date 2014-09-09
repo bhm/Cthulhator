@@ -48,7 +48,6 @@ import butterknife.OnClick;
 import io.github.scottmaclure.character.traits.model.RandomTraitsSet;
 import io.github.scottmaclure.character.traits.model.TraitsSet;
 import io.github.scottmaclure.character.traits.model.providers.RandomTraitsSetProvider;
-import io.github.scottmaclure.character.traits.network.api.asyn.AsyncInfo;
 
 /**
  * Created by bhm on 25.07.14.
@@ -305,17 +304,12 @@ public class RandomCharactersActivity extends BaseActionBarActivity
         onLoadMore(photosPager);
     }
 
+
     @Override
-    public void onAsynTaskProgress(AsyncInfo<GImageSearch, List<GoogleImageObject>> info,
-                                   GImageSearch search, List<GoogleImageObject> results) {
+    public boolean onGoogleImageObjectsDownloaded(GImageSearch search, List<GoogleImageObject> results) {
         if (results != null && photosPagerAdapter != null) {
             photosPagerAdapter.addData(results);
         }
-    }
-
-    @Override
-    public void onAsynTaskFinish(AsyncInfo<GImageSearch, List<GoogleImageObject>> info,
-                                 List<GoogleImageObject> result) {
-
+        return false;
     }
 }

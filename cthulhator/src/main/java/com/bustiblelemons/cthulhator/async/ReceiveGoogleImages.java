@@ -5,8 +5,6 @@ import com.bustiblelemons.google.apis.search.params.GImageSearch;
 
 import java.util.List;
 
-import io.github.scottmaclure.character.traits.network.api.asyn.AbsAsynTask;
-
-public interface ReceiveGoogleImages
-        extends AbsAsynTask.AsynCallback<GImageSearch, List<GoogleImageObject>> {
+public interface ReceiveGoogleImages        {
+    boolean onGoogleImageObjectsDownloaded(GImageSearch search, List<GoogleImageObject> objects);
 }

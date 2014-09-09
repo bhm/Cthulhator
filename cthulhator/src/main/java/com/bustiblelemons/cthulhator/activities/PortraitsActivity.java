@@ -17,14 +17,13 @@ import com.bustiblelemons.views.LoadMoreViewPager;
 
 import java.util.List;
 
-import io.github.scottmaclure.character.traits.network.api.asyn.AsyncInfo;
-
 /**
  * Created by bhm on 18.07.14.
  */
 public class PortraitsActivity extends BaseActionBarActivity
         implements LoadMoreViewPager.LoadMore,
-                   PortraitsSettingsFragment.GoogleSearchOptsListener, ReceiveGoogleImages {
+                   PortraitsSettingsFragment.GoogleSearchOptsListener,
+                   ReceiveGoogleImages {
 
     private LoadMoreViewPager pager;
 
@@ -78,18 +77,13 @@ public class PortraitsActivity extends BaseActionBarActivity
     }
 
     @Override
-    public void onAsynTaskProgress(AsyncInfo<GImageSearch, List<GoogleImageObject>> info,
-                                   GImageSearch search, List<GoogleImageObject> results) {
+    public boolean onGoogleImageObjectsDownloaded(GImageSearch search, List<GoogleImageObject> objects) {
         if (mSearchToPublish != null && search.equals(mSearchToPublish)) {
             pagerAdapter.removeAll();
             mImageSearch = search;
             mSearchToPublish = null;
         }
-        pagerAdapter.addData(results);
-    }
-
-    @Override
-    public void onAsynTaskFinish(AsyncInfo<GImageSearch, List<GoogleImageObject>> info, List<GoogleImageObject> result) {
-
+        pagerAdapter.addData(objects);
+        return false;
     }
 }
