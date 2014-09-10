@@ -359,7 +359,6 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
     }
 
     public void setIntValue(int v) {
-        this.value = v;
         setValue(v + "");
     }
 
@@ -402,7 +401,6 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         if (cachedOnClick != null) {
             cachedOnClick.onClick(view);
         }
-        valueView.setText("DUPA");
         if (mSkillViewListener != null) {
             int id = view.getId();
             if (id == R.id.dec) {
