@@ -14,7 +14,7 @@
     </declare-styleable>
     <declare-styleable name="PropertyView">
         <attr name="hideTitle" format="boolean"/>
-        <attr name="statValue" format="reference"/>
+        <attr name="statValue" format="integer"/>
         <attr name="statTitle" format="reference"/>
         <attr name="titleSize" format="dimension"/>
         <attr name="valueSize" format="dimension"/>

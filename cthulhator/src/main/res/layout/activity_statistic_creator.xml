@@ -58,7 +58,6 @@
                     android:layout_height="wrap_content"
                     app:showModifiers="true"
                     app:statTitle="@string/education"
-                    app:statValue="@string/placeholder_perc_val"
                     app:titleSize="@dimen/font_16"
                     app:valueBelow="true"
                     app:valueSize="@dimen/font_18"/>
@@ -96,7 +95,7 @@
                     android:layout_height="wrap_content"
                     app:showModifiers="true"
                     app:statTitle="@string/intelligence"
-                    app:statValue="@string/placeholder_perc_val"
+                    app:statValue="@integer/placeholder_perc_val"
                     app:titleSize="@dimen/font_16"
                     app:valueBelow="true"
                     app:valueSize="@dimen/font_18"/>
@@ -135,7 +134,7 @@
                     android:layout_height="wrap_content"
                     app:showModifiers="true"
                     app:statTitle="@string/power"
-                    app:statValue="@string/placeholder_perc_val"
+                    app:statValue="@integer/placeholder_perc_val"
                     app:titleSize="@dimen/font_16"
                     app:valueBelow="true"
                     app:valueSize="@dimen/font_18"/>
@@ -179,11 +178,60 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@id/body_card"
+                android:id="@id/dex_card"
                 style="@style/card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/power_card"
+                tools:visibility="gone">
+
+                <com.bustiblelemons.views.SkillView
+                    android:id="@id/dex"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:showModifiers="true"
+                    app:statTitle="@string/dexterity"
+                    app:statValue="@integer/placeholder_perc_val"
+                    app:titleSize="@dimen/font_16"
+                    app:valueBelow="true"
+                    app:valueSize="@dimen/font_18"/>
+
+                <TextView
+                    android:id="@id/dodge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/dex"
+                    android:gravity="center|right"
+                    android:padding="@dimen/padding_16"
+                    android:text="@string/dodge"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@id/app_card"
+                style="@style/card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dex_card"
+                tools:visibility="gone">
+
+                <com.bustiblelemons.views.SkillView
+                    android:id="@id/app"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:showModifiers="true"
+                    app:statTitle="@string/appearance"
+                    app:statValue="@integer/placeholder_perc_val"
+                    app:titleSize="@dimen/font_16"
+                    app:valueBelow="true"
+                    app:valueSize="@dimen/font_18"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@id/body_card"
+                style="@style/card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/app_card"
                 tools:visibility="gone">
 
                 <com.bustiblelemons.views.SkillView
@@ -192,7 +240,7 @@
                     android:layout_height="wrap_content"
                     app:showModifiers="true"
                     app:statTitle="@string/strength"
-                    app:statValue="@string/placeholder_perc_val"
+                    app:statValue="@integer/placeholder_perc_val"
                     app:titleSize="@dimen/font_16"
                     app:valueBelow="true"
                     app:valueSize="@dimen/font_18"/>
@@ -213,7 +261,7 @@
                     android:layout_below="@id/damage_bonus"
                     app:showModifiers="true"
                     app:statTitle="@string/constitution"
-                    app:statValue="@string/placeholder_perc_val"
+                    app:statValue="@integer/placeholder_perc_val"
                     app:titleSize="@dimen/font_16"
                     app:valueBelow="true"
                     app:valueSize="@dimen/font_18"/>
@@ -228,35 +276,6 @@
                     android:text="@string/hit_points"/>
 
             </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@id/dex_card"
-                style="@style/card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/body_card"
-                tools:visibility="gone">
-
-                <com.bustiblelemons.views.SkillView
-                    android:id="@id/dex"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:showModifiers="true"
-                    app:statTitle="@string/dexterity"
-                    app:statValue="@string/placeholder_perc_val"
-                    app:titleSize="@dimen/font_16"
-                    app:valueBelow="true"
-                    app:valueSize="@dimen/font_18"/>
-
-                <TextView
-                    android:id="@id/dodge"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/dex"
-                    android:gravity="center|right"
-                    android:padding="@dimen/padding_16"
-                    android:text="@string/dodge"/>
-            </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
 
@@ -264,12 +283,12 @@
         android:id="@id/reroll"
         android:layout_width="@dimen/fab"
         android:layout_height="@dimen/fab"
-        android:src="@drawable/ic_dice"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@android:id/custom"
         android:layout_marginLeft="@dimen/padding_16"
         android:layout_marginRight="@dimen/padding_16"
         android:layout_marginTop="@dimen/fab_offset"
+        android:src="@drawable/ic_dice"
         app:cb_color="@color/portraits_fab"/>
 
 </RelativeLayout>

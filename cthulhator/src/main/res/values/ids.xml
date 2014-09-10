@@ -76,4 +76,6 @@
     <item name="career_skill_points" type="id"/>
     <item name="hobby_skill_points" type="id"/>
     <item name="scroll" type="id"/>
+    <item name="app_card" type="id"/>
+    <item name="app" type="id"/>
 </resources>

@@ -17,17 +17,16 @@ import com.bustiblelemons.bustiblelibs.R;
  * Created by bhm on 20.07.14.
  */
 public class StatisticView extends RelativeLayout implements View.OnClickListener {
+    public static final int VALUE_TOP    = 1;
+    public static final int VALUE_RIGHT  = 2;
+    public static final int VALUE_BOTTOM = 3;
+    public static final int VALUE_LEFT   = 4;
     private View     rootView;
     private TextView titleView;
     private TextView valueView;
     private boolean isPercentile = false;
     private boolean valueBelow   = false;
     private boolean hideTitle    = false;
-
-    public static final int VALUE_TOP    = 1;
-    public static final int VALUE_RIGHT  = 2;
-    public static final int VALUE_BOTTOM = 3;
-    public static final int VALUE_LEFT   = 4;
     private int valuePosition;
     private boolean showModifiers = false;
     private ImageView       decView;
@@ -40,11 +39,7 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
     private Drawable        decDrawable;
     private OnClickListener cachedOnClick;
     private StatisticViewListener listener;
-
-    public void setValueBiggerIfTitleMissing(boolean valueBiggerIfTitleMissing) {
-        this.valueBiggerIfTitleMissing = valueBiggerIfTitleMissing;
-    }
-
+    private int defaultStatValue = 99;
     private boolean valueBiggerIfTitleMissing;
 
     public StatisticView(Context context) {
@@ -60,6 +55,10 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
     public StatisticView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs);
+    }
+
+    public void setValueBiggerIfTitleMissing(boolean valueBiggerIfTitleMissing) {
+        this.valueBiggerIfTitleMissing = valueBiggerIfTitleMissing;
     }
 
     private void init(Context context, AttributeSet attrs) {
@@ -83,8 +82,8 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
             if (hideTitle) {
                 hideTitle();
             }
-            String value = statArray.getString(R.styleable.StatisticView_statValue);
-            setValue(value);
+            int value = statArray.getInteger(R.styleable.StatisticView_statValue, defaultStatValue);
+            setValue(value + "");
             String title = statArray.getString(R.styleable.StatisticView_statTitle);
             setTtitle(title);
             statArray.recycle();
@@ -93,7 +92,7 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
 
     private void setOnClick(View... views) {
         if (views != null) {
-            for(View view : views) {
+            for (View view : views) {
                 if (view != null) {
                     view.setOnClickListener(this);
                 }
@@ -151,8 +150,10 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
     }
 
     private void setUpTextSize(TypedArray propArray) {
-        valueSize = propArray.getDimensionPixelSize(R.styleable.StatisticView_valueSize, defValSize);
-        titleSize = propArray.getDimensionPixelSize(R.styleable.StatisticView_titleSize, defTitleSize);
+        valueSize = propArray.getDimensionPixelSize(R.styleable.StatisticView_valueSize,
+                defValSize);
+        titleSize = propArray.getDimensionPixelSize(R.styleable.StatisticView_titleSize,
+                defTitleSize);
         setValueSize(valueSize);
         setTitleSize(titleSize);
     }
@@ -271,9 +272,6 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
         super.setOnClickListener(this);
     }
 
-    public interface StatisticViewListener extends PropertyViewListener<StatisticView> {
-    }
-
     @Override
     public void onClick(View view) {
         if (listener != null) {
@@ -294,5 +292,8 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
                 cachedOnClick.onClick(view);
             }
         }
+    }
+
+    public interface StatisticViewListener extends PropertyViewListener<StatisticView> {
     }
 }

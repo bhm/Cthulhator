@@ -18,25 +18,25 @@
         android:tag="@string/mythos">
 
         <com.bustiblelemons.views.StatisticView
-            app:valueSize="@dimen/font_24"
-            app:titleSize="@dimen/font_16"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="6"
             app:statTitle="@string/_int"
-            app:statValue="@string/placeholder_perc_val"/>
+            app:statValue="@integer/placeholder_perc_val"
+            app:titleSize="@dimen/font_16"
+            app:valueSize="@dimen/font_24"/>
 
         <com.bustiblelemons.views.StatisticView
-            app:valueSize="@dimen/font_24"
-            app:titleSize="@dimen/font_16"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="5"
             app:percentile="true"
             app:statTitle="@string/idea"
-            app:statValue="@string/placeholder_perc_val"/>
+            app:statValue="@integer/placeholder_perc_val"
+            app:titleSize="@dimen/font_16"
+            app:valueSize="@dimen/font_24"/>
 
     </LinearLayout>
 
@@ -52,27 +52,27 @@
         android:tag="@string/mythos">
 
         <com.bustiblelemons.views.StatisticView
-            app:valueSize="@dimen/font_24"
-            app:titleSize="@dimen/font_16"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="6"
             app:statTitle="@string/edu"
+            app:statValue="@integer/placeholder_perc_val"
+            app:titleSize="@dimen/font_16"
             app:valueBelow="true"
-            app:statValue="@string/placeholder_perc_val"            />
+            app:valueSize="@dimen/font_24"/>
 
         <com.bustiblelemons.views.StatisticView
-            app:valueSize="@dimen/font_24"
-            app:titleSize="@dimen/font_16"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="5"
             app:percentile="true"
             app:statTitle="@string/know"
-            app:statValue="@string/placeholder_perc_val"
+            app:statValue="@integer/placeholder_perc_val"
+            app:titleSize="@dimen/font_16"
             app:valueBelow="true"
+            app:valueSize="@dimen/font_24"
             />
 
     </LinearLayout>
@@ -87,15 +87,15 @@
         android:orientation="vertical">
 
         <com.bustiblelemons.views.SkillView
-            app:valueSize="@dimen/font_18"
-            app:titleSize="@dimen/font_16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:percentile="true"
             app:showModifiers="true"
             app:statTitle="@string/placeholder_title"
-            app:statValue="@string/placeholder_perc_val"
-            app:valueLeft="false"/>
+            app:statValue="@integer/placeholder_perc_val"
+            app:titleSize="@dimen/font_16"
+            app:valueLeft="false"
+            app:valueSize="@dimen/font_18"/>
     </LinearLayout>
 
 </LinearLayout>

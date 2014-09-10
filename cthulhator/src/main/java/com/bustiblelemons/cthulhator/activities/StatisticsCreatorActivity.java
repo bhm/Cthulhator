@@ -9,12 +9,14 @@ import com.bustiblelemons.cthulhator.model.dice.PointPool;
 import com.bustiblelemons.cthulhator.model.dice.PoitPoolFactory;
 import com.bustiblelemons.views.SkillView;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import at.markushi.ui.CircleButton;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.InjectViews;
 import butterknife.OnClick;
 
 /**
@@ -25,8 +27,8 @@ public class StatisticsCreatorActivity extends AbsActivity implements Observer {
     @InjectView(R.id.reroll)
     CircleButton rerollButton;
 
-    @InjectView(R.id.intelligence)
-    SkillView intView;
+    @InjectViews({R.id.edu, R.id.intelligence, R.id.pow, R.id.str, R.id.con, R.id.dex,})
+    List<SkillView> characteristicsViewList;
 
     @InjectView(R.id.points_available)
     TextView pointsAvailable;
@@ -40,6 +42,7 @@ public class StatisticsCreatorActivity extends AbsActivity implements Observer {
         onSetActionBarToClosable();
         setContentView(R.layout.activity_statistic_creator);
         ButterKnife.inject(this);
+        onReroll(rerollButton);
     }
 
     @OnClick(R.id.reroll)

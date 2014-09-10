@@ -12,15 +12,15 @@
     tools:context=".AppClass">
 
     <com.bustiblelemons.views.StatisticView
-        app:valueSize="@dimen/font_24"
-        app:titleSize="@dimen/font_16"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:tag="@string/hit_points"
         app:showModifiers="true"
         app:statTitle="@string/hit_points"
         app:statValue="@string/placholder_value"
-        app:valueBelow="true"/>
+        app:titleSize="@dimen/font_16"
+        app:valueBelow="true"
+        app:valueSize="@dimen/font_24"/>
 
     <View
         android:layout_width="match_parent"
@@ -34,24 +34,24 @@
         android:tag="@string/mythos">
 
         <com.bustiblelemons.views.StatisticView
-            app:valueSize="@dimen/font_24"
-            app:titleSize="@dimen/font_16"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="6"
             app:statTitle="@string/str"
-            app:statValue="@string/placeholder_perc_val"/>
+            app:statValue="@integer/placeholder_perc_val"
+            app:titleSize="@dimen/font_16"
+            app:valueSize="@dimen/font_24"/>
 
         <com.bustiblelemons.views.StatisticView
-            app:valueSize="@dimen/font_24"
-            app:titleSize="@dimen/font_16"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="5"
             app:statTitle="@string/siz"
-            app:statValue="@string/placeholder_perc_val"/>
+            app:statValue="@integer/placeholder_perc_val"
+            app:titleSize="@dimen/font_16"
+            app:valueSize="@dimen/font_24"/>
 
     </LinearLayout>
 
@@ -71,7 +71,7 @@
             android:layout_gravity="center"
             android:layout_weight="6"
             app:statTitle="@string/dex"
-            app:statValue="@string/placeholder_perc_val"
+            app:statValue="@integer/placeholder_perc_val"
             app:valueBelow="false"
             app:valueSize="@dimen/font_24"/>
 
@@ -81,7 +81,7 @@
             android:layout_gravity="center"
             android:layout_weight="5"
             app:statTitle="@string/kon"
-            app:statValue="@string/placeholder_perc_val"
+            app:statValue="@integer/placeholder_perc_val"
             app:titleSize="@dimen/font_16"
             app:valueBelow="false"
             app:valueSize="@dimen/font_24"/>

@@ -16,12 +16,38 @@ import android.widget.TextView;
 import com.bustiblelemons.bustiblelibs.R;
 import com.bustiblelemons.logging.Logger;
 
+import java.util.Locale;
+
 /**
  * Created by bhm on 20.07.14.
  */
 public class SkillView extends RelativeLayout implements View.OnClickListener {
-    private static final Logger            log                = new Logger(SkillView.class);
-    private final        SkillViewListener mSkillViewListener = new SkillViewListener() {
+    private static final Logger  log            = new Logger(SkillView.class);
+    private              boolean isPercentile   = false;
+    private              boolean valueLeft      = false;
+    private              boolean hideTitle      = false;
+    private              boolean showModifiers  = false;
+    private              int     titleSizeResId = R.dimen.font_16;
+    private              int     valueSizeResId = R.dimen.font_16;
+    private              int     titleGravity   = Gravity.RIGHT;
+    private              int     valueGravity   = Gravity.LEFT;
+    private View            rootView;
+    private TextView        titleView;
+    private TextView        valueView;
+    private ImageView       incView;
+    private ImageView       decView;
+    private int             valueSize;
+    private int             titleSize;
+    private int             defTitleSize;
+    private int             defValSize;
+    private Drawable        incDrawable;
+    private Drawable        decDrawable;
+    private OnClickListener cachedOnClick;
+    private int maxValue = 100;
+    private int value    = maxValue;
+    private int minValue = 0;
+    private SkillViewListener mChachedSkillViewListener;
+    private final SkillViewListener mSkillViewListener = new SkillViewListener() {
         @Override
         public void onSkillValueClick(SkillView view) {
             if (mChachedSkillViewListener != null) {
@@ -38,48 +64,28 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
 
         @Override
         public boolean onIncreaseClicked(SkillView view) {
-            boolean cached = false;
-            boolean thisRet = false;
             if (mChachedSkillViewListener != null) {
-                cached = mChachedSkillViewListener.onIncreaseClicked(view);
+                mChachedSkillViewListener.onIncreaseClicked(view);
             }
-
-            return cached && thisRet;
+            if (getIntValue() + 1 <= getMaxValue()) {
+                view.setIntValue(value++);
+                return true;
+            }
+            return false;
         }
 
         @Override
         public boolean onDecreaseClicked(SkillView view) {
-            boolean cached = false;
-            boolean thisRet = false;
             if (mChachedSkillViewListener != null) {
-                cached = mChachedSkillViewListener.onDecreaseClicked(view);
+                mChachedSkillViewListener.onDecreaseClicked(view);
             }
-
-            return cached && thisRet;
+            if (getIntValue() - 1 >= getMinValue()) {
+                view.setIntValue(value--);
+                return true;
+            }
+            return false;
         }
     };
-
-    private boolean isPercentile   = false;
-    private boolean valueLeft      = false;
-    private boolean hideTitle      = false;
-    private boolean showModifiers  = false;
-    private int     titleSizeResId = R.dimen.font_16;
-    private int     valueSizeResId = R.dimen.font_16;
-    private int     titleGravity   = Gravity.RIGHT;
-    private int     valueGravity   = Gravity.LEFT;
-    private View            rootView;
-    private TextView        titleView;
-    private TextView        valueView;
-    private ImageView       incView;
-    private ImageView       decView;
-    private int             valueSize;
-    private int             titleSize;
-    private int             defTitleSize;
-    private int             defValSize;
-    private Drawable        incDrawable;
-    private Drawable        decDrawable;
-    private OnClickListener cachedOnClick;
-    private int value = 0;
 
     public SkillView(Context context) {
         super(context);
@@ -114,17 +120,37 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
             int defValGravity = valueLeft ? Gravity.LEFT : Gravity.RIGHT;
             int defTitlteGravity = valueLeft ? Gravity.RIGHT : Gravity.LEFT;
             valueGravity = skillArray.getInteger(R.styleable.SkillView_titleGravity, defValGravity);
-            titleGravity = skillArray.getInteger(R.styleable.SkillView_titleGravity, defTitlteGravity);
+            titleGravity = skillArray.getInteger(R.styleable.SkillView_titleGravity,
+                    defTitlteGravity);
             positionValue();
             isPercentile = skillArray.getBoolean(R.styleable.SkillView_percentile, false);
             hideTitle = skillArray.getBoolean(R.styleable.SkillView_hideTitle, hideTitle);
             setUpTextSize(skillArray);
+            maxValue = skillArray.getInteger(R.styleable.SkillView_maxValue, maxValue);
+            minValue = skillArray.getInteger(R.styleable.SkillView_maxValue, minValue);
             if (hideTitle) {
                 hideTitle();
             }
             setTexts(skillArray);
             skillArray.recycle();
+            skillArray.recycle();
         }
+    }
+
+    public int getMaxValue() {
+        return maxValue;
+    }
+
+    public void setMaxValue(int maxValue) {
+        this.maxValue = maxValue;
+    }
+
+    public int getMinValue() {
+        return minValue;
+    }
+
+    public void setMinValue(int minValue) {
+        this.minValue = minValue;
     }
 
     private void setOnClicks() {
@@ -148,12 +174,11 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
     }
 
     private void setTexts(TypedArray skillArray) {
-        String value = skillArray.getString(R.styleable.SkillView_statValue);
-        setValue(value);
+        int val = skillArray.getInteger(R.styleable.SkillView_statValue, this.value);
+        setIntValue(val);
         String title = skillArray.getString(R.styleable.SkillView_statTitle);
         setTitle(title);
     }
-
 
     private void setupModifiers(TypedArray skillArray) {
         showModifiers = skillArray.getBoolean(R.styleable.SkillView_showModifiers, false);
@@ -255,7 +280,6 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         view.setLayoutParams(baseParams);
     }
 
-
     public void showModifers() {
         showDecreaser();
         showIncreaser();
@@ -334,28 +358,24 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         return value;
     }
 
-    public void setStringValue(String value) {
-        try {
-            int v = Integer.valueOf(value);
-            setIntValue(v);
-        } catch(NumberFormatException e) {
-            e.printStackTrace();
-        }
-    }
-
-
     public void setIntValue(int v) {
         this.value = v;
         setValue(v + "");
     }
 
-    public void setValue(CharSequence charSequence) {
+    public void setStringValue(String value) {
+        try {
+            int v = Integer.valueOf(value);
+            setIntValue(v);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setValue(CharSequence s) {
         if (valueView != null) {
-            if (isPercentile) {
-                valueView.setText(String.format("%s%%", charSequence));
-            } else {
-                valueView.setText(charSequence);
-            }
+            String val = isPercentile ? String.format(Locale.ENGLISH, "%s%%", s) : s.toString();
+            valueView.setText(val);
         }
     }
 
@@ -371,8 +391,6 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         }
     }
 
-    private SkillViewListener mChachedSkillViewListener;
-
     public void setListener(SkillViewListener listener) {
         if (!listener.equals(mSkillViewListener)) {
             this.mChachedSkillViewListener = listener;
@@ -384,7 +402,7 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         if (cachedOnClick != null) {
             cachedOnClick.onClick(view);
         }
-        log.d("onCLick %s", view);
+        valueView.setText("DUPA");
         if (mSkillViewListener != null) {
             int id = view.getId();
             if (id == R.id.dec) {

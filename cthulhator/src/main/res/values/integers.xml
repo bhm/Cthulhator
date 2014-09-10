@@ -2,4 +2,5 @@
 <resources>
     <integer name="jazz_age_max">1940</integer>
     <integer name="jazz_age_min">1910</integer>
+    <integer name="placeholder_perc_val">99</integer>
 </resources>
