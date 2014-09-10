@@ -46,6 +46,7 @@
     <string name="add_character_history">What had happened in the past?</string>
     <string name="add_character_equipment">What is amongst the belongings?</string>
     <string name="points_available">Points Available</string>
+    <string name="points_available_format">Points Available %1$s</string>
     <string name="strength">Strength</string>
     <string name="size">Size</string>
     <string name="damage_bonus">Damage Bonus</string>
@@ -62,6 +63,11 @@
     <string name="affects">Affects</string>
     <string name="career_skill_points">Career Skill Points</string>
     <string name="hobby_skill_points">Hobby Skill Points</string>
+    <string name="con">CON</string>
+    <string name="app">APP</string>
+    <string name="appearance">Appearance</string>
+    <string name="pow">POW</string>
+    <string name="san">SAN</string>
 
 
 </resources>

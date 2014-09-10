@@ -1,9 +1,9 @@
-package com.bustiblelemons.cthulhator.dice;
+package com.bustiblelemons.cthulhator.model.dice;
 
 /**
  * Created by bhm on 09.09.14.
  */
-public class PointPoolFromDice {
+public class PointPoolFromDiceFactory {
 
     private int min = 0;
 
@@ -13,26 +13,26 @@ public class PointPoolFromDice {
         return currentMax = min + 1;
     }
 
-    public int addDicePool(int count, PolyHedralDice dice) {
+    public PointPoolFromDiceFactory addDicePool(int count, PolyHedralDice dice) {
         for (int i = 0; i < count; i++) {
             addDice(dice);
         }
-        return currentMax;
+        return this;
     }
 
-    public int addDice(PolyHedralDice... dice) {
+    public PointPoolFromDiceFactory addDice(PolyHedralDice... dice) {
         for (PolyHedralDice d : dice) {
             addModifier(d.getMin());
             currentMax += d.getMax();
         }
-        return currentMax;
+        return this;
     }
 
-    public int addModifiers(int... modifiers) {
+    public PointPoolFromDiceFactory addModifiers(int... modifiers) {
         for (int mod : modifiers) {
             addModifier(mod);
         }
-        return min;
+        return this;
     }
 
     private void addModifier(int mod) {

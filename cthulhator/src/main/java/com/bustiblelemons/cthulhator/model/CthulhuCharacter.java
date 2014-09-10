@@ -64,7 +64,7 @@ public class CthulhuCharacter extends SavedCharacter {
             cachedStats = new ArrayList<CharacterProperty>();
             if (dest != null) {
                 for (CharacterProperty prop : properties) {
-                    if (type != null && type.equals(PropertyType.statistic)) {
+                    if (type != null && type.equals(PropertyType.STATISTIC)) {
                         dest.add(prop);
                     }
                 }
@@ -75,7 +75,7 @@ public class CthulhuCharacter extends SavedCharacter {
 
 
     public List<CharacterProperty> getStatistics() {
-        return fillProperties(cachedStats, PropertyType.statistic);
+        return fillProperties(cachedStats, PropertyType.STATISTIC);
     }
 
     public List<CharacterProperty> getSkills() {

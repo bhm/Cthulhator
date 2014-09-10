@@ -1,10 +1,19 @@
 package com.bustiblelemons.cthulhator.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+import java.util.Random;
+
 /**
  * Created by bhm on 20.07.14.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CharacterProperty {
+
+    @JsonIgnore
     public static final CharacterProperty EMPTY = new CharacterProperty();
+
     private String         name;
     private int            value;
     private int            maxValue;
@@ -12,6 +21,21 @@ public class CharacterProperty {
     private int            baseValue;
     private PropertyFormat format;
     private PropertyType   type;
+
+    @JsonIgnore
+    private int nameResId;
+    @JsonIgnore
+    private int shortNameResId;
+
+    @JsonIgnore
+    public int getNameResId() {
+        return nameResId;
+    }
+
+    @JsonIgnore
+    public void setNameResId(int nameResId) {
+        this.nameResId = nameResId;
+    }
 
     public int getMaxValue() {
         return maxValue;
@@ -67,5 +91,24 @@ public class CharacterProperty {
 
     public void setFormat(PropertyFormat format) {
         this.format = format;
+    }
+
+    @JsonIgnore
+    public void setShortNameResId(int shortNameResId) {
+        this.shortNameResId = shortNameResId;
+    }
+
+    @JsonIgnore
+    public int getShortNameResId() {
+        return shortNameResId;
+    }
+
+    @JsonIgnore
+    public int randomValue() {
+        Random r = new Random();
+        int n = getMaxValue() - getMinValue();
+        int roll = r.nextInt(n);
+        int ret = roll + getMinValue() + 1;
+        return ret;
     }
 }

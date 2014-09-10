@@ -7,7 +7,13 @@ import java.util.List;
  * Created by bhm on 13.08.14.
  */
 public enum CthulhuEdition {
-    ToC, CoC5, CoC6, CoC7, CthulhuLite {
+    ToC{
+        @Override
+        public List<CharacterProperty> getCharacteristics() {
+            List<CharacterProperty> r = new ArrayList<CharacterProperty>();
+            return r;
+        }
+    }, CoC5 , CoC6, CoC7, CthulhuLite {
         @Override
         public int getHobbySkillPointMultiplier() {
             return 5;
@@ -29,7 +35,15 @@ public enum CthulhuEdition {
 
     public List<CharacterProperty> getCharacteristics() {
         List<CharacterProperty> r = new ArrayList<CharacterProperty>();
+        r.add(CharacterProperties.CON);
+        r.add(CharacterProperties.STR);
+        r.add(CharacterProperties.DEX);
+        r.add(CharacterProperties.APP);
+
+        r.add(CharacterProperties.INT);
+        r.add(CharacterProperties.SIZ);
+
+        r.add(CharacterProperties.EDU);
         return r;
     }
-
 }

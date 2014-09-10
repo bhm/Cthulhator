@@ -31,4 +31,5 @@ public class DicePool implements DiceRoll {
         }
         return r;
     }
+
 }

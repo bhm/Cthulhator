@@ -1,4 +1,4 @@
-package com.bustiblelemons.cthulhator.dice;
+package com.bustiblelemons.cthulhator.model.dice;
 
 /**
  * Created by bhm on 09.09.14.

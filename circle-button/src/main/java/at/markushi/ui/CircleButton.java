@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -33,8 +34,11 @@ public class CircleButton extends ImageView implements View.OnLongClickListener 
 
     private int pressedRingWidth;
     private int defaultColor = Color.BLACK;
-    private int            pressedColor;
-    private ObjectAnimator pressedAnimator;
+    private int             pressedColor;
+    private ObjectAnimator  pressedAnimator;
+    private RotateAnimation rotateAnimation;
+    private int             pivotX;
+    private int             pivotY;
 
     public CircleButton(Context context) {
         super(context);
@@ -80,6 +84,10 @@ public class CircleButton extends ImageView implements View.OnLongClickListener 
         centerY = h / 2;
         outerRadius = Math.min(w, h) / 2;
         pressedRingRadius = outerRadius - pressedRingWidth - pressedRingWidth / 2;
+        pivotX = w / 2;
+        pivotY = h / 2;
+        rotateAnimation = new RotateAnimation(0f, 360f, pivotX, pivotY);
+        rotateAnimation.setDuration(666l);
     }
 
     public float getAnimationProgress() {
@@ -110,6 +118,9 @@ public class CircleButton extends ImageView implements View.OnLongClickListener 
     private void showPressedRing() {
         pressedAnimator.setFloatValues(animationProgress, pressedRingWidth);
         pressedAnimator.start();
+        if (rotateAnimation != null) {
+            startAnimation(rotateAnimation);
+        }
     }
 
     private void init(Context context, AttributeSet attrs) {
@@ -145,7 +156,9 @@ public class CircleButton extends ImageView implements View.OnLongClickListener 
         final int pressedAnimationTime = getResources().getInteger(ANIMATION_TIME_ID);
         pressedAnimator = ObjectAnimator.ofFloat(this, "animationProgress", 0f, 0f);
         pressedAnimator.setDuration(pressedAnimationTime);
+
     }
+
 
     private int getHighlightColor(int color, int amount) {
         return Color.argb(Math.min(255, Color.alpha(color)),
