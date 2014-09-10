@@ -8,10 +8,9 @@ import java.util.Random;
  */
 public class PointPool extends Observable {
     private Random mRandom;
-    private int        mMax         = Integer.MAX_VALUE;
-    private int        points       = mMax;
-    private int        mMin         = 0;
-    private Observable mObservalble = new Observable();
+    private int mMax   = Integer.MAX_VALUE;
+    private int points = mMax;
+    private int mMin   = 0;
 
     private PointPool(int max) {
         this(0, max);
@@ -89,7 +88,6 @@ public class PointPool extends Observable {
                 ", mMax=" + mMax +
                 ", points=" + points +
                 ", mMin=" + mMin +
-                ", mObservalble=" + mObservalble +
                 '}';
     }
 
