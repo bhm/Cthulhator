@@ -69,6 +69,19 @@ public class PointPool extends Observable {
         return false;
     }
 
+    public synchronized int decreaseByRandom() {
+        return decreaseByRandom(getPoints());
+    }
+
+    public synchronized int decreaseByRandom(int byMax) {
+        int mod = 0;
+        if (points > 0) {
+            mod = mRandom.nextInt(byMax) + 1;
+            points -= mod;
+        }
+        return mod;
+    }
+
     @Override
     public String toString() {
         return "PointPool{" +
