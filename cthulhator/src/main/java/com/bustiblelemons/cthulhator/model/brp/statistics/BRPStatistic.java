@@ -59,7 +59,17 @@ public enum BRPStatistic {
             return r;
         }
     }, SIZ {
-    }, SAN {
+    }, SAN {public Relation powRelation = new Relation()
+            .setPropertyName(POW.name())
+            .setModifier(5)
+            .setModifierType(ModifierType.MULTIPLY);
+
+        @Override
+        public List<Relation> getRelations() {
+            List<Relation> r = new ArrayList<Relation>();
+            r.add(powRelation);
+            return r;
+        }
     }, EDU {
         public Relation knowledgeRelation = new Relation()
                 .setPropertyName(KNOW.name())
@@ -73,9 +83,41 @@ public enum BRPStatistic {
             return r;
         }
     }, IDEA {
-    }, KNOW {
-    }, LUCK {
+        public Relation intRelation = new Relation()
+                .setPropertyName(INT.name())
+                .setModifier(5)
+                .setModifierType(ModifierType.MULTIPLY);
 
+        @Override
+        public List<Relation> getRelations() {
+            List<Relation> r = new ArrayList<Relation>();
+            r.add(intRelation);
+            return r;
+        }
+    }, KNOW {
+        public Relation eduRelation = new Relation()
+                .setPropertyName(EDU.name())
+                .setModifier(5)
+                .setModifierType(ModifierType.MULTIPLY);
+
+        @Override
+        public List<Relation> getRelations() {
+            List<Relation> r = new ArrayList<Relation>();
+            r.add(eduRelation);
+            return r;
+        }
+    }, LUCK {
+        public Relation powRelation = new Relation()
+                .setPropertyName(POW.name())
+                .setModifier(5)
+                .setModifierType(ModifierType.MULTIPLY);
+
+        @Override
+        public List<Relation> getRelations() {
+            List<Relation> r = new ArrayList<Relation>();
+            r.add(powRelation);
+            return r;
+        }
     };
 
     public List<Relation> getRelations() {

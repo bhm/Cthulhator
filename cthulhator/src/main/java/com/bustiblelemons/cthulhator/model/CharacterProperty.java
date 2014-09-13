@@ -3,6 +3,7 @@ package com.bustiblelemons.cthulhator.model;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -22,10 +23,19 @@ public class CharacterProperty {
     private PropertyFormat format;
     private PropertyType   type;
 
+    private List<Relation> relations;
     @JsonIgnore
-    private int nameResId;
+    private int            nameResId;
     @JsonIgnore
-    private int shortNameResId;
+    private int            shortNameResId;
+
+    public List<Relation> getRelations() {
+        return relations;
+    }
+
+    public void setRelations(List<Relation> relations) {
+        this.relations = relations;
+    }
 
     @JsonIgnore
     public int getNameResId() {
@@ -94,13 +104,13 @@ public class CharacterProperty {
     }
 
     @JsonIgnore
-    public void setShortNameResId(int shortNameResId) {
-        this.shortNameResId = shortNameResId;
+    public int getShortNameResId() {
+        return shortNameResId;
     }
 
     @JsonIgnore
-    public int getShortNameResId() {
-        return shortNameResId;
+    public void setShortNameResId(int shortNameResId) {
+        this.shortNameResId = shortNameResId;
     }
 
     @JsonIgnore
