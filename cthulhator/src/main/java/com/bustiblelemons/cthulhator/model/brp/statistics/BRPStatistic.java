@@ -106,6 +106,13 @@ public enum BRPStatistic {
             r.add(eduRelation);
             return r;
         }
+
+        @Override
+        public CharacterProperty asCharacterProperty() {
+            CharacterProperty r = super.asCharacterProperty();
+            r.setMaxValue(99);
+            return r;
+        }
     }, LUCK {
         public Relation powRelation = new Relation()
                 .setPropertyName(POW.name())

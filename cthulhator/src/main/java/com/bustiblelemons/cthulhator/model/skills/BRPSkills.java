@@ -2,7 +2,14 @@ package com.bustiblelemons.cthulhator.model.skills;
 
 import com.bustiblelemons.cthulhator.model.CharacterProperty;
 import com.bustiblelemons.cthulhator.model.CthulhuEdition;
+import com.bustiblelemons.cthulhator.model.ModifierType;
 import com.bustiblelemons.cthulhator.model.PropertyFormat;
+import com.bustiblelemons.cthulhator.model.Relation;
+import com.bustiblelemons.cthulhator.model.brp.statistics.BRPStatistic;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by bhm on 13.09.14.
@@ -51,7 +58,19 @@ public enum BRPSkills {
         }
     },
     CthulhuMythos,
-    Dodge,
+    Dodge {
+        public final Relation dexRelation = new Relation()
+                .setPropertyName(BRPStatistic.DEX.name())
+                .setModifier(2)
+                .setModifierType(ModifierType.MULTIPLY);
+
+        @Override
+        public List<Relation> getRelations() {
+            List<Relation> r = new ArrayList<Relation>();
+            r.add(dexRelation);
+            return r;
+        }
+    },
     DriveAuto {
         @Override
         public int getBaseValue(CthulhuEdition edition) {
@@ -145,7 +164,19 @@ public enum BRPSkills {
             return 5;
         }
     },
-    OwnLanguage,
+    OwnLanguage {
+        public final Relation eduRelation = new Relation()
+                .setPropertyName(BRPStatistic.EDU.name())
+                .setModifier(5)
+                .setModifierType(ModifierType.MULTIPLY);
+
+        @Override
+        public List<Relation> getRelations() {
+            List<Relation> r = new ArrayList<Relation>();
+            r.add(eduRelation);
+            return r;
+        }
+    },
     Persuade {
         @Override
         public int getBaseValue(CthulhuEdition edition) {
@@ -267,6 +298,9 @@ public enum BRPSkills {
         }
     };
 
+    public List<Relation> getRelations() {
+        return Collections.emptyList();
+    }
 
     public CharacterProperty asCharacterProperty(CthulhuEdition edition) {
         CharacterProperty r = new CharacterProperty();
