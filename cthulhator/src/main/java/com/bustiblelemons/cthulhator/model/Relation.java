@@ -5,7 +5,7 @@ package com.bustiblelemons.cthulhator.model;
  */
 public class Relation {
     private String propertyName;
-    private int modifier;
+    private int    modifier;
 
     private ModifierType modifierType;
 
@@ -13,24 +13,27 @@ public class Relation {
         return modifierType;
     }
 
-    public void setModifierType(ModifierType modifierType) {
+    public Relation setModifierType(ModifierType modifierType) {
         this.modifierType = modifierType;
+        return this;
     }
 
     public int getModifier() {
         return modifier;
     }
 
-    public void setModifier(int modifier) {
+    public Relation setModifier(int modifier) {
         this.modifier = modifier;
+        return this;
     }
 
     public String getPropertyName() {
         return propertyName;
     }
 
-    public void setPropertyName(String propertyName) {
+    public Relation setPropertyName(String propertyName) {
         this.propertyName = propertyName;
+        return this;
     }
 
     @Override

@@ -79,7 +79,7 @@ public class CthulhuCharacter extends SavedCharacter {
     }
 
     public List<CharacterProperty> getSkills() {
-        return fillProperties(cachedSkills, PropertyType.skill);
+        return fillProperties(cachedSkills, PropertyType.SKILL);
     }
 
     public List<Possesion> getPossesions(CharacterProperty affectedBy) {

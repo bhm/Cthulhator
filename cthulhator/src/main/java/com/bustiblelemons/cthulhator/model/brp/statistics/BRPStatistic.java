@@ -1,124 +1,88 @@
 package com.bustiblelemons.cthulhator.model.brp.statistics;
 
-import com.bustiblelemons.cthulhator.R;
+import com.bustiblelemons.cthulhator.model.BRPStatCharacterProperty;
+import com.bustiblelemons.cthulhator.model.CharacterProperty;
+import com.bustiblelemons.cthulhator.model.ModifierType;
+import com.bustiblelemons.cthulhator.model.Relation;
+import com.bustiblelemons.cthulhator.model.skills.BRPSkills;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by bhm on 20.07.14.
  */
 public enum BRPStatistic {
     STR {
-        @Override
-        public int getNameResId() {
-            return R.string.strength;
-        }
-
-        @Override
-        public int getShortResId() {
-            return R.string.str;
-        }
     }, DEX {
-        @Override
-        public int getNameResId() {
-            return R.string.dexterity;
-        }
+        public final Relation DodgeRelation = new Relation()
+                .setPropertyName(BRPSkills.Dodge.name())
+                .setModifier(2)
+                .setModifierType(ModifierType.MULTIPLY);
 
         @Override
-        public int getShortResId() {
-            return R.string.dex;
+        public List<Relation> getRelations() {
+            List<Relation> r = new ArrayList<Relation>();
+            r.add(DodgeRelation);
+            return r;
         }
     }, INT {
-        @Override
-        public int getNameResId() {
-            return R.string._int;
-        }
+        public Relation ideaReloation = new Relation()
+                .setPropertyName(IDEA.name())
+                .setModifier(5)
+                .setModifierType(ModifierType.MULTIPLY);
 
         @Override
-        public int getShortResId() {
-            return R.string.intelligence;
+        public List<Relation> getRelations() {
+            List<Relation> r = new ArrayList<Relation>();
+            r.add(ideaReloation);
+            return r;
         }
     }, CON {
-        @Override
-        public int getNameResId() {
-            return R.string.constitution;
-        }
-
-        @Override
-        public int getShortResId() {
-            return R.string.con;
-        }
     }, APP {
-        @Override
-        public int getNameResId() {
-            return R.string.appearance;
-        }
-
-        @Override
-        public int getShortResId() {
-            return R.string.app;
-        }
     }, POW {
-        @Override
-        public int getNameResId() {
-            return R.string.power;
-        }
+        public final Relation sanityRelation = new Relation()
+                .setPropertyName(SAN.name())
+                .setModifier(5)
+                .setModifierType(ModifierType.MULTIPLY);
+        public final Relation luckRelation = new Relation()
+                .setPropertyName(LUCK.name())
+                .setModifier(5)
+                .setModifierType(ModifierType.MULTIPLY);
 
         @Override
-        public int getShortResId() {
-            return R.string.pow;
+        public List<Relation> getRelations() {
+            List<Relation> r = new ArrayList<Relation>();
+            r.add(sanityRelation);
+            r.add(luckRelation);
+            return r;
         }
     }, SIZ {
-        @Override
-        public int getNameResId() {
-            return R.string.size;
-        }
-
-        @Override
-        public int getShortResId() {
-            return R.string.siz;
-        }
     }, SAN {
-        @Override
-        public int getNameResId() {
-            return R.string.sanity;
-        }
-
-        @Override
-        public int getShortResId() {
-            return R.string.san;
-        }
     }, EDU {
-        @Override
-        public int getNameResId() {
-            return R.string.education;
-        }
+        public Relation knowledgeRelation = new Relation()
+                .setPropertyName(KNOW.name())
+                .setModifier(5)
+                .setModifierType(ModifierType.MULTIPLY);
 
         @Override
-        public int getShortResId() {
-            return R.string.edu;
+        public List<Relation> getRelations() {
+            List<Relation> r = new ArrayList<Relation>();
+            r.add(knowledgeRelation);
+            return r;
         }
     }, IDEA {
-        @Override
-        public int getNameResId() {
-            return R.string.idea;
-        }
-
-        @Override
-        public int getShortResId() {
-            return R.string.idea;
-        }
     }, KNOW {
-        @Override
-        public int getNameResId() {
-            return R.string.knowledge;
-        }
+    }, LUCK {
 
-        @Override
-        public int getShortResId() {
-            return R.string.know;
-        }
     };
 
-    public abstract int getNameResId();
+    public List<Relation> getRelations() {
+        return Collections.emptyList();
+    }
 
-    public abstract int getShortResId();
+    public CharacterProperty asCharacterProperty() {
+        return BRPStatCharacterProperty.fromStatistic(this);
+    }
 }
