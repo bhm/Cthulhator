@@ -9,11 +9,9 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bustiblelemons.fragments.BaseFragment;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.fragments.main.BRPCard;
-import com.bustiblelemons.cthulhator.model.BRPSKills;
-import com.bustiblelemons.cthulhator.model.brp.AbsBRPCharacter;
+import com.bustiblelemons.fragments.BaseFragment;
 import com.manuelpeinado.fadingactionbar.FadingActionBarHelperBase;
 import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarHelper;
 
@@ -23,15 +21,16 @@ import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarH
 public class BRPCharacterFragment extends BaseFragment implements View.OnClickListener {
 
     private LinearLayout              cardsContainer;
-    private AbsBRPCharacter           character;
     private FadingActionBarHelperBase mFadingHelper;
     private ImageButton               addPicture;
-
-    public interface BRPCharacterListener {
-        boolean onPickPicture(int characterId);
-    }
-
     private BRPCharacterListener characterListener;
+
+    public static BRPCharacterFragment newInstance(Bundle extras) {
+        BRPCharacterFragment r = new BRPCharacterFragment();
+        extras = extras == null ? new Bundle() : extras;
+        r.setArguments(extras);
+        return r;
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -97,16 +96,7 @@ public class BRPCharacterFragment extends BaseFragment implements View.OnClickLi
 
     private void fillMythosCard(View view) {
         TextView mythosValue = (TextView) view.findViewById(R.id.mythos_value);
-        mythosValue.setText(character.getSkillValue(BRPSKills.mythos));
         TextView sanityValue = (TextView) view.findViewById(R.id.sanity_value);
-        sanityValue.setText(character.getCurrentSanity());
-    }
-
-    public static BRPCharacterFragment newInstance(Bundle extras) {
-        BRPCharacterFragment r = new BRPCharacterFragment();
-        extras = extras == null ? new Bundle() : extras;
-        r.setArguments(extras);
-        return r;
     }
 
     @Override
@@ -118,5 +108,9 @@ public class BRPCharacterFragment extends BaseFragment implements View.OnClickLi
                 }
                 break;
         }
+    }
+
+    public interface BRPCharacterListener {
+        boolean onPickPicture(int characterId);
     }
 }

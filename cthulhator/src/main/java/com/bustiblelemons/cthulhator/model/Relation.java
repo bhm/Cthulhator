@@ -7,6 +7,16 @@ public class Relation {
     private String propertyName;
     private int modifier;
 
+    private ModifierType modifierType;
+
+    public ModifierType getModifierType() {
+        return modifierType;
+    }
+
+    public void setModifierType(ModifierType modifierType) {
+        this.modifierType = modifierType;
+    }
+
     public int getModifier() {
         return modifier;
     }

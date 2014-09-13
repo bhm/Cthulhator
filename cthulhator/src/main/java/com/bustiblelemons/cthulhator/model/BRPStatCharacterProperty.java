@@ -17,7 +17,6 @@ public class BRPStatCharacterProperty extends CharacterProperty {
         setType(b.getType());
     }
 
-
     public static CharacterProperty fromStatistic(BRPStatistic statistic) {
         PointPoolFromDiceFactory fromDice = new PointPoolFromDiceFactory();
         CharacterProperty r = fillValues(statistic, fromDice);
@@ -59,9 +58,9 @@ public class BRPStatCharacterProperty extends CharacterProperty {
     public static class Builder {
         private int            max       = 100;
         private int            min       = 0;
-        private PropertyType   type      = PropertyType.STATISTIC;
-        private PropertyFormat format    = PropertyFormat.NUMBER;
         private int            baseValue = min;
+        private PropertyType   type   = PropertyType.STATISTIC;
+        private PropertyFormat format = PropertyFormat.NUMBER;
 
         public int getBaseValue() {
             return baseValue;

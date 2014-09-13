@@ -8,7 +8,6 @@ import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.adapters.SkillChanged;
 import com.bustiblelemons.cthulhator.adapters.SkillsAdapter;
 import com.bustiblelemons.cthulhator.model.CharacterProperty;
-import com.bustiblelemons.cthulhator.model.brp.AbsBRPCharacter;
 
 import java.util.Locale;
 
@@ -24,11 +23,9 @@ public class SkillsChooserActivity extends AbsActivity implements SkillChanged {
 
     @InjectView(android.R.id.list)
     ListView listView;
-    private SkillsAdapter   skillsAdapter;
-    private AbsBRPCharacter character;
-
     @InjectView(R.id.points_available)
     TextView pointsAvailable;
+    private SkillsAdapter skillsAdapter;
     private int    total;
     private String pointsAvailablePrefix;
 
@@ -39,17 +36,12 @@ public class SkillsChooserActivity extends AbsActivity implements SkillChanged {
         setContentView(R.layout.activity_skill_chooser);
         ButterKnife.inject(this);
         if (hasExtra(CHARACTER)) {
-            character = (AbsBRPCharacter) getExtras().getSerializable(CHARACTER);
         }
         setupSkillsList();
         setupPoints();
     }
 
     private void setupPoints() {
-        if (character != null && pointsAvailable != null) {
-            total = character.getTotalSkillPoints();
-            setPointsAvailable(total);
-        }
     }
 
     private void setPointsAvailable(int points) {
@@ -59,17 +51,14 @@ public class SkillsChooserActivity extends AbsActivity implements SkillChanged {
     }
 
     private void setupSkillsList() {
-        if (character != null && listView != null) {
-            skillsAdapter = new SkillsAdapter(this, this);
-            skillsAdapter.addItems(character.getSkills());
-            listView.setAdapter(skillsAdapter);
-            listView.setClickable(false);
-        }
+        skillsAdapter = new SkillsAdapter(this, this);
+        listView.setAdapter(skillsAdapter);
+        listView.setClickable(false);
     }
 
     @Override
     public boolean onSkillChanged(CharacterProperty name, int value, boolean up) {
-        int afterTotal = up ? total+1 : total-1;
+        int afterTotal = up ? total + 1 : total - 1;
         if (afterTotal >= 0) {
             setPointsAvailable(total);
             return true;

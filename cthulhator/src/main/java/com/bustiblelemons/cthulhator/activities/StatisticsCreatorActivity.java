@@ -27,7 +27,7 @@ public class StatisticsCreatorActivity extends AbsActivity implements Observer {
     @InjectView(R.id.reroll)
     CircleButton rerollButton;
 
-    @InjectViews({R.id.edu, R.id.intelligence, R.id.pow, R.id.str, R.id.con, R.id.dex,})
+    @InjectViews({R.id.edu, R.id.intelligence, R.id.pow, R.id.str, R.id.con, R.id.dex})
     List<SkillView> characteristicsViewList;
 
     @InjectView(R.id.points_available)
