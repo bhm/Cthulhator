@@ -44,7 +44,7 @@
     <string name="add_character_info">Would you introduce me?</string>
     <string name="add_character_statistics">How well will things go??</string>
     <string name="add_character_history">What had happened in the past?</string>
-    <string name="add_character_equipment">What is amongst the belongings?</string>
+    <string name="add_character_equipment">What\'s in the box?</string>
     <string name="points_available">Points Available</string>
     <string name="points_available_format">Points Available %1$s</string>
     <string name="strength">Strength</string>
@@ -68,6 +68,7 @@
     <string name="appearance">Appearance</string>
     <string name="pow">POW</string>
     <string name="san">SAN</string>
+    <string name="creation_workflow">Workflow</string>
 
 
 </resources>

@@ -1,5 +1,6 @@
-package com.bustiblelemons.cthulhator.model.skills;
+package com.bustiblelemons.cthulhator.model.brp.skills;
 
+import com.bustiblelemons.cthulhator.model.ActionGroup;
 import com.bustiblelemons.cthulhator.model.CharacterProperty;
 import com.bustiblelemons.cthulhator.model.CthulhuEdition;
 import com.bustiblelemons.cthulhator.model.ModifierType;
@@ -59,16 +60,20 @@ public enum BRPSkills {
     },
     CthulhuMythos,
     Dodge {
-        public final Relation dexRelation = new Relation()
-                .setPropertyName(BRPStatistic.DEX.name())
-                .setModifier(2)
-                .setModifierType(ModifierType.MULTIPLY);
+        public Relation dexRelation;
+        public List<Relation> relations;
 
         @Override
         public List<Relation> getRelations() {
-            List<Relation> r = new ArrayList<Relation>();
-            r.add(dexRelation);
-            return r;
+            if (relations == null) {
+                relations = new ArrayList<Relation>();
+                dexRelation = new Relation()
+                        .setPropertyName(BRPStatistic.DEX.name())
+                        .setModifier(2)
+                        .setModifierType(ModifierType.MULTIPLY);
+                relations.add(dexRelation);
+            }
+            return relations;
         }
     },
     DriveAuto {
@@ -165,16 +170,19 @@ public enum BRPSkills {
         }
     },
     OwnLanguage {
-        public final Relation eduRelation = new Relation()
-                .setPropertyName(BRPStatistic.EDU.name())
-                .setModifier(5)
-                .setModifierType(ModifierType.MULTIPLY);
+        public Relation eduRelation;
+        public List<Relation> relations;
 
         @Override
         public List<Relation> getRelations() {
-            List<Relation> r = new ArrayList<Relation>();
-            r.add(eduRelation);
-            return r;
+            if (relations == null) {
+                eduRelation = new Relation()
+                        .setPropertyName(BRPStatistic.EDU.name())
+                        .setModifier(5)
+                        .setModifierType(ModifierType.MULTIPLY);
+                relations.add(eduRelation);
+            }
+            return relations;
         }
     },
     Persuade {
@@ -307,6 +315,8 @@ public enum BRPSkills {
         r.setFormat(PropertyFormat.PERCENTILE);
         r.setMaxValue(100);
         r.setMinValue(0);
+        r.setRelations(getRelations());
+        r.setActionGroup(getActionGroups());
         r.setBaseValue(getBaseValue(edition));
         return r;
     }
@@ -317,5 +327,9 @@ public enum BRPSkills {
         } else {
             return 0;
         }
+    }
+
+    public List<ActionGroup> getActionGroups() {
+        return Collections.emptyList();
     }
 }

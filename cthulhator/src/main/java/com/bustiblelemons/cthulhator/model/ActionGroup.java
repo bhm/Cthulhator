@@ -1,8 +1,8 @@
-package com.bustiblelemons.cthulhator.model.brp.skills;
+package com.bustiblelemons.cthulhator.model;
 
 /**
  * Created by bhm on 20.07.14.
  */
-public enum SkillGroup {
+public enum ActionGroup {
     COMBAT, MAGIC, SOCIAL, INVESTIGATION
 }

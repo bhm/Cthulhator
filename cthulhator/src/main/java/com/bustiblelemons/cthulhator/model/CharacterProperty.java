@@ -15,19 +15,27 @@ public class CharacterProperty {
     @JsonIgnore
     public static final CharacterProperty EMPTY = new CharacterProperty();
 
-    private String         name;
-    private int            value;
-    private int            maxValue;
-    private int            minValue;
-    private int            baseValue;
-    private PropertyFormat format;
-    private PropertyType   type;
+    private String            name;
+    private int               value;
+    private int               maxValue;
+    private int               minValue;
+    private int               baseValue;
+    private PropertyFormat    format;
+    private PropertyType      type;
+    private List<ActionGroup> actionGroup;
+    private List<Relation>    relations;
+    @JsonIgnore
+    private int               nameResId;
+    @JsonIgnore
+    private int               shortNameResId;
 
-    private List<Relation> relations;
-    @JsonIgnore
-    private int            nameResId;
-    @JsonIgnore
-    private int            shortNameResId;
+    public List<ActionGroup> getActionGroup() {
+        return actionGroup;
+    }
+
+    public void setActionGroup(List<ActionGroup> actionGroup) {
+        this.actionGroup = actionGroup;
+    }
 
     public List<Relation> getRelations() {
         return relations;

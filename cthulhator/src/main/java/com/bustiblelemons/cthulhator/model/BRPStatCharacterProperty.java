@@ -5,6 +5,8 @@ import com.bustiblelemons.cthulhator.model.dice.PointPool;
 import com.bustiblelemons.cthulhator.model.dice.PointPoolFromDiceFactory;
 import com.bustiblelemons.cthulhator.model.dice.PolyHedralDice;
 
+import org.codehaus.jackson.annotate.JsonIgnoreType;
+
 /**
  * Created by bhm on 10.09.14.
  */
@@ -56,6 +58,7 @@ public class BRPStatCharacterProperty extends CharacterProperty {
     }
 
 
+    @JsonIgnoreType
     public static class Builder {
         private int            max       = 100;
         private int            min       = 0;

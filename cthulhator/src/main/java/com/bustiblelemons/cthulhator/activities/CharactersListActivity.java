@@ -31,20 +31,19 @@ public class CharactersListActivity extends AbsActivity
 
     @InjectView(android.R.id.list)
     LoadMoreListView listView;
-    private SavedCharactersAdapter listAdapter;
-
     @InjectView(R.id.search)
     SearchView searchView;
-
     @InjectView(R.id.add_character)
     CircleButton addFab;
-
-    private Grouping grouping;
+    private SavedCharactersAdapter listAdapter;
+    private Grouping               grouping;
+    private FadingActionBarHelper  fadingbarHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupFadingBar();
+        fadingbarHelper = setupFadingBar();
+        setContentView(fadingbarHelper.createView(this));
         ButterKnife.inject(this);
         if (listView != null) {
             listAdapter = new SavedCharactersAdapter(this);
@@ -70,7 +69,6 @@ public class CharactersListActivity extends AbsActivity
                 .headerOverlayLayout(R.layout.header_characters_list_overlay)
                 .contentLayout(R.layout.activity_characters_list)
                 .lightActionBar(true);
-        setContentView(helper.createView(this));
         return helper;
     }
 
@@ -85,7 +83,7 @@ public class CharactersListActivity extends AbsActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.add_character:
-                launchStatisticsCreator();
+                launchCreationWorkflow();
                 break;
         }
     }

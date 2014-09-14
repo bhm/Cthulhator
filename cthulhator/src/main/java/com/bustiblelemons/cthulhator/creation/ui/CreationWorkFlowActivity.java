@@ -1,10 +1,12 @@
-package com.bustiblelemons.cthulhator.activities;
+package com.bustiblelemons.cthulhator.creation.ui;
 
 import android.os.Bundle;
 import android.view.View;
 
 import com.bustiblelemons.cthulhator.R;
+import com.bustiblelemons.cthulhator.activities.AbsActivity;
 
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -17,6 +19,8 @@ public class CreationWorkFlowActivity extends AbsActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creation_workflow);
+        ButterKnife.inject(this);
+        onSetActionBarToClosable();
     }
 
 

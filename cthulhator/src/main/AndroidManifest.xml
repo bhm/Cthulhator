@@ -29,6 +29,10 @@
         <activity
             android:name=".activities.StatisticsCreatorActivity"
             android:label="@string/activity_test"/>
+
+        <activity
+            android:name=".creation.ui.CreationWorkFlowActivity"
+            android:label="@string/creation_workflow"/>
         <activity
             android:name=".activities.CharactersListActivity"
             android:label="@string/app_name">
