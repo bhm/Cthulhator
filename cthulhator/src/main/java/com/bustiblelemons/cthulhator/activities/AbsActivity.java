@@ -3,6 +3,7 @@ package com.bustiblelemons.cthulhator.activities;
 import android.content.Intent;
 
 import com.bustiblelemons.activities.BaseActionBarActivity;
+import com.bustiblelemons.cthulhator.creation.characteristics.ui.StatisticsCreatorActivity;
 import com.bustiblelemons.cthulhator.creation.ui.CreationWorkFlowActivity;
 
 /**

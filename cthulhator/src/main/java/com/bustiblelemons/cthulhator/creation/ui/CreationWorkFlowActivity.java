@@ -23,7 +23,6 @@ public class CreationWorkFlowActivity extends AbsActivity
         onSetActionBarToClosable();
     }
 
-
     @OnClick({R.id.add_character_details,
             R.id.add_character_history,
             R.id.add_character_statistics,
@@ -32,6 +31,7 @@ public class CreationWorkFlowActivity extends AbsActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.add_character_details:
+                launchRandomCharacter();
                 break;
             case R.id.add_character_history:
                 break;

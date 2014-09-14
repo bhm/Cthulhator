@@ -22,6 +22,7 @@ public class BRPStatCharacterProperty extends CharacterProperty {
     public static CharacterProperty fromStatistic(BRPStatistic statistic) {
         PointPoolFromDiceFactory fromDice = new PointPoolFromDiceFactory();
         CharacterProperty r = fillValues(statistic, fromDice);
+        r.setName(statistic.name());
         //TODO Retreive title id once for a given name propertyTyp_propertyName
         r.setNameResId(0);
         r.setShortNameResId(0);

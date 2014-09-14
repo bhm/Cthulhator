@@ -1,12 +1,15 @@
 package com.bustiblelemons.cthulhator.model.dice;
 
-import java.util.Observable;
+import com.bustiblelemons.patterns.ObservedObjectImpl;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import java.util.Random;
 
 /**
  * Created by bhm on 09.09.14.
  */
-public class PointPool extends Observable {
+public class PointPool extends ObservedObjectImpl<Integer> {
     private Random mRandom;
     private int mMax   = Integer.MAX_VALUE;
     private int points = mMax;
@@ -72,10 +75,16 @@ public class PointPool extends Observable {
         return decreaseByRandom(getPoints());
     }
 
-    public synchronized int decreaseByRandom(int byMax) {
-        int mod = 0;
+    public synchronized int decreaseByRandom(int max) {
+        int r = decreaseByRandom(1, max);
+        notifyObservers(r);
+        return r;
+    }
+
+    public int decreaseByRandom(int min, int max) {
+        int mod = min;
         if (points > 0) {
-            mod = mRandom.nextInt(byMax) + 1;
+            mod = mRandom.nextInt(max) + 1;
             points -= mod;
         }
         return mod;
@@ -89,6 +98,11 @@ public class PointPool extends Observable {
                 ", points=" + points +
                 ", mMin=" + mMin +
                 '}';
+    }
+
+    @JsonIgnore
+    public boolean hasPoints() {
+        return getPoints() > getMin();
     }
 
     public static class Builder {

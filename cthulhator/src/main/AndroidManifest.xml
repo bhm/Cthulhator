@@ -27,7 +27,7 @@
             android:name=".activities.TestActivity"
             android:label="@string/activity_test"/>
         <activity
-            android:name=".activities.StatisticsCreatorActivity"
+            android:name=".creation.characteristics.ui.StatisticsCreatorActivity"
             android:label="@string/activity_test"/>
 
         <activity
