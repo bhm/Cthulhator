@@ -1,5 +1,7 @@
 package com.bustiblelemons.cthulhator.model.brp.skills;
 
+import android.support.v4.util.LruCache;
+
 import com.bustiblelemons.cthulhator.model.ActionGroup;
 import com.bustiblelemons.cthulhator.model.CharacterProperty;
 import com.bustiblelemons.cthulhator.model.CthulhuEdition;
@@ -305,6 +307,22 @@ public enum BRPSkills {
             return 15;
         }
     };
+    static LruCache<CthulhuEdition, List<BRPSkills>> skillsCache =
+            new LruCache<CthulhuEdition, List<BRPSkills>>(3);
+    private List<CthulhuEdition> editions;
+
+    public static List<BRPSkills> getListByEdition(CthulhuEdition edition) {
+        if (skillsCache.get(edition) == null) {
+            List<BRPSkills> r = new ArrayList<BRPSkills>();
+            for (BRPSkills s : values()) {
+                if (s.getEditions().contains(edition)) {
+                    r.add(s);
+                }
+            }
+            skillsCache.put(edition, r);
+        }
+        return skillsCache.get(edition);
+    }
 
     public List<Relation> getRelations() {
         return Collections.emptyList();
@@ -327,6 +345,13 @@ public enum BRPSkills {
         } else {
             return 0;
         }
+    }
+
+    public List<CthulhuEdition> getEditions() {
+        if (editions == null) {
+            editions.add(CthulhuEdition.CoC5);
+        }
+        return editions;
     }
 
     public List<ActionGroup> getActionGroups() {

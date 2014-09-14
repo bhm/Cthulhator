@@ -12,6 +12,7 @@ import com.bustiblelemons.cthulhator.model.Portrait;
 import com.bustiblelemons.cthulhator.model.Possesion;
 import com.bustiblelemons.cthulhator.model.PropertyType;
 import com.bustiblelemons.cthulhator.model.Relation;
+import com.bustiblelemons.cthulhator.model.brp.skills.BRPSkills;
 import com.bustiblelemons.cthulhator.model.brp.statistics.BRPStatistic;
 import com.bustiblelemons.cthulhator.model.desc.CharacterDescription;
 
@@ -49,6 +50,37 @@ public class SavedCharacter {
 
     public void setEdition(CthulhuEdition edition) {
         this.edition = edition;
+        fillSkillsList(edition);
+    }
+
+    @JsonIgnore
+    public boolean addCharacterProperty(CharacterProperty property) {
+        return properties != null && properties.add(property);
+    }
+
+    @JsonIgnore
+    private void fillSkillsList(CthulhuEdition edition) {
+        for (BRPSkills skill : BRPSkills.getListByEdition(edition)) {
+            if (skill != null) {
+                addCharacterProperty(skill.asCharacterProperty(edition));
+            }
+        }
+    }
+
+    public int updateSkills() {
+        int modified = 0;
+        for (CharacterProperty skill : getSkills()) {
+            if (skill != null) {
+                for (Relation r : skill.getRelations()) {
+                    if (r != null) {
+                        int newBaseValue = r.getBaseValueByRelation(skill.getValue());
+                        skill.setBaseValue(newBaseValue);
+                        modified++;
+                    }
+                }
+            }
+        }
+        return modified;
     }
 
     public CharacterDescription getDescription() {
@@ -80,7 +112,7 @@ public class SavedCharacter {
     @JsonIgnore
     public int getStatisticValue(String soughtStatistic) {
         CharacterProperty stat = getStatistic(soughtStatistic);
-        return stat != null ? stat.getValue() : -1;
+        return stat != null ? stat.getValue() : 1;
     }
 
     @JsonIgnore
@@ -102,6 +134,17 @@ public class SavedCharacter {
 
     public int getMaxSanity() {
         return 0;
+    }
+
+    @JsonIgnore
+    public int setStatistics(List<CharacterProperty> statistics) {
+        int r = 0;
+        for (CharacterProperty s : statistics) {
+            if (s != null) {
+                setPropertyValue(s.getName(), s.getValue());
+            }
+        }
+        return r;
     }
 
     @JsonIgnore

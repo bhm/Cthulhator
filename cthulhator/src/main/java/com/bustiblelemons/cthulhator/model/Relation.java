@@ -53,4 +53,19 @@ public class Relation {
     public int hashCode() {
         return propertyName != null ? propertyName.hashCode() : 0;
     }
+
+    public int getBaseValueByRelation(int value) {
+        switch (modifierType) {
+            case MULTIPLY:
+                return value * modifier;
+            case ADDITION:
+                return value + modifier;
+            case DIVISION:
+                return value / modifier;
+            case SUBSTRACT:
+                return value - modifier;
+            default:
+                return value;
+        }
+    }
 }
