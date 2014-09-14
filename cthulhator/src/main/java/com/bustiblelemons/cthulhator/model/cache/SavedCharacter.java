@@ -142,8 +142,10 @@ public class SavedCharacter {
         for (CharacterProperty s : statistics) {
             if (s != null) {
                 setPropertyValue(s.getName(), s.getValue());
+                r++;
             }
         }
+        updateSkills();
         return r;
     }
 
