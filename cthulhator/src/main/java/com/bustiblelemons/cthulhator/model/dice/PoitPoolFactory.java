@@ -3,8 +3,8 @@ package com.bustiblelemons.cthulhator.model.dice;
 import com.bustiblelemons.cthulhator.model.CharacterProperty;
 import com.bustiblelemons.cthulhator.model.CthulhuEdition;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 /**
  * Created by bhm on 10.09.14.
@@ -12,14 +12,14 @@ import java.util.List;
 public class PoitPoolFactory {
 
     public static PointPool characteristicPoolFromEdition(CthulhuEdition edition) {
-        List<CharacterProperty> list = Collections.emptyList();
+        Collection<CharacterProperty> list = Collections.emptyList();
         if (edition != null) {
             list = edition.getCharacteristics();
         }
         return fromCharacterProperties(list);
     }
 
-    public static PointPool fromCharacterProperties(List<CharacterProperty> characteristics) {
+    public static PointPool fromCharacterProperties(Collection<CharacterProperty> characteristics) {
         int min = 0;
         int max = 0;
         for (CharacterProperty prop : characteristics) {
@@ -36,14 +36,14 @@ public class PoitPoolFactory {
     }
 
     public static PointPool randomPoolFromEdition(CthulhuEdition edition) {
-        List<CharacterProperty> list = Collections.emptyList();
+        Collection<CharacterProperty> list = Collections.emptyList();
         if (edition != null) {
             list = edition.getCharacteristics();
         }
         return randomPoolFromCharacterPropertyList(list);
     }
 
-    public static PointPool randomPoolFromCharacterPropertyList(List<CharacterProperty> list) {
+    public static PointPool randomPoolFromCharacterPropertyList(Collection<CharacterProperty> list) {
         int min = 0;
         int max = 0;
         for (CharacterProperty prop : list) {

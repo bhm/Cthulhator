@@ -13,6 +13,7 @@ import com.bustiblelemons.cthulhator.model.dice.PoitPoolFactory;
 import com.bustiblelemons.views.SkillView;
 
 import java.util.List;
+import java.util.Set;
 
 import at.markushi.ui.CircleButton;
 import butterknife.ButterKnife;
@@ -28,15 +29,15 @@ public class StatisticsCreatorActivity extends AbsActivity implements PointPoolO
     @InjectView(R.id.reroll)
     CircleButton rerollButton;
 
-    @InjectViews({R.id.edu, R.id.intelligence, R.id.pow, R.id.str, R.id.con, R.id.dex})
+    @InjectViews({R.id.edu, R.id.intelligence, R.id.pow, R.id.str, R.id.con, R.id.dex, R.id.app})
     List<SkillView> characteristicsViewList;
 
     @InjectView(R.id.points_available)
     TextView pointsAvailable;
 
     private PointPool pointPool;
-    private CthulhuEdition          edition             = CthulhuEdition.CoC5;
-    private List<CharacterProperty> characterProperties = edition.getCharacteristics();
+    private CthulhuEdition         edition             = CthulhuEdition.CoC5;
+    private Set<CharacterProperty> characterProperties = edition.getCharacteristics();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,20 +70,15 @@ public class StatisticsCreatorActivity extends AbsActivity implements PointPoolO
         if (characteristicsViewList == null) {
             return;
         }
-        while (pointPool.hasPoints()) {
-            for (SkillView view : characteristicsViewList) {
-                if (view != null && view.getTag() != null) {
-                    String tag = (String) view.getTag();
-                    CharacterProperty property = getProperty(tag);
-                    int randValue = pointPool.decreaseByRandom();
-                    if (property != null) {
-                        randValue = property.randomValue();
-//                        int min = property.getMinValue();
-//                        int max = property.getMaxValue();
-//                        randValue = pointPool.decreaseByRandom(min, max);
-//                    } else {
-//                        randValue = pointPool.decreaseByRandom();
-                    }
+        int pass = 0;
+        for (SkillView view : characteristicsViewList) {
+            if (view != null && view.getTag() != null) {
+                String tag = (String) view.getTag();
+                CharacterProperty property = getProperty(tag);
+                log.d("property %s\npass %s\nTag %s", property, pass, tag);
+                if (property != null) {
+                    int randValue = property.randomValue();
+                    pointPool.decreaseBy(randValue);
                     view.setIntValue(randValue);
                 }
             }
@@ -91,8 +87,8 @@ public class StatisticsCreatorActivity extends AbsActivity implements PointPoolO
 
     private CharacterProperty getProperty(String name) {
         for (CharacterProperty property : characterProperties) {
-            log.d("Property %s", property);
             if (property.getName() != null && property.getName().equals(name)) {
+                log.d("%s vs %s", name, property.getName());
                 return property;
             }
         }

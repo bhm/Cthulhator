@@ -19,11 +19,6 @@ public class CthulhuCharacter extends SavedCharacter {
     private BirthData      birth;
     private long           presentDate;
     private List<Portrait> portraits;
-    private List<CharacterProperty> properties  = new ArrayList<CharacterProperty>();
-    private List<Possesion>         possesions  = new ArrayList<Possesion>();
-    private List<HistoryEvent>      fullHistory = new ArrayList<HistoryEvent>();
-    private List<CharacterProperty> cachedStats;
-    private List<CharacterProperty> cachedSkills;
     private LruCache<CharacterProperty, List<Possesion>> cachedAffectedPossessions =
             new LruCache<CharacterProperty, List<Possesion>>(20);
     private Pair<Long, List<HistoryEvent>> historyForCurrentAge;
@@ -59,29 +54,6 @@ public class CthulhuCharacter extends SavedCharacter {
         return r;
     }
 
-    private List<CharacterProperty> fillProperties(List<CharacterProperty> dest, PropertyType type) {
-        if (cachedStats == null) {
-            cachedStats = new ArrayList<CharacterProperty>();
-            if (dest != null) {
-                for (CharacterProperty prop : properties) {
-                    if (type != null && type.equals(PropertyType.STATISTIC)) {
-                        dest.add(prop);
-                    }
-                }
-            }
-        }
-        return dest;
-    }
-
-
-    public List<CharacterProperty> getStatistics() {
-        return fillProperties(cachedStats, PropertyType.STATISTIC);
-    }
-
-    public List<CharacterProperty> getSkills() {
-        return fillProperties(cachedSkills, PropertyType.SKILL);
-    }
-
     public List<Possesion> getPossesions(CharacterProperty affectedBy) {
         List<Possesion> _prop = cachedAffectedPossessions.get(affectedBy);
         if (_prop == null) {
@@ -93,7 +65,7 @@ public class CthulhuCharacter extends SavedCharacter {
 
     public List<Possesion> extractPoseesions(CharacterProperty characterProperty) {
         List<Possesion> _prop = new ArrayList<Possesion>();
-        if (possesions != null) {
+        if (this.possesions != null) {
             for (Possesion possesion : possesions) {
                 if (possesion != null) {
                     List<Relation> relations = possesion.getRelations();
@@ -120,7 +92,7 @@ public class CthulhuCharacter extends SavedCharacter {
 
     public List<HistoryEvent> getHistoryEvents(long tillDate) {
         List<HistoryEvent> events = new ArrayList<HistoryEvent>();
-        if (fullHistory != null) {
+        if (this.fullHistory != null) {
             for (HistoryEvent event : fullHistory) {
                 if (event != null && event.isBefore(tillDate)) {
                     events.add(event);
@@ -156,27 +128,4 @@ public class CthulhuCharacter extends SavedCharacter {
         return null;
     }
 
-    public List<CharacterProperty> getProperties() {
-        return properties;
-    }
-
-    public void setProperties(List<CharacterProperty> properties) {
-        this.properties = properties;
-    }
-
-    public List<Possesion> getPossesions() {
-        return possesions;
-    }
-
-    public void setPossesions(List<Possesion> possesions) {
-        this.possesions = possesions;
-    }
-
-    public List<HistoryEvent> getFullHistory() {
-        return fullHistory;
-    }
-
-    public void setFullHistory(List<HistoryEvent> fullHistory) {
-        this.fullHistory = fullHistory;
-    }
 }

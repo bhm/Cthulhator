@@ -19,25 +19,27 @@ import com.bustiblelemons.cthulhator.model.desc.CharacterDescription;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by bhm on 12.08.14.
  */
 public class SavedCharacter {
 
-    private CthulhuEdition edition;
-    private CharacterDescription description;
-    private BirthData            birth;
-    private long                 presentDate;
-    private List<Portrait>       portraits;
-    private List<CharacterProperty> properties  = new ArrayList<CharacterProperty>();
-    private List<Possesion>         possesions  = new ArrayList<Possesion>();
-    private List<HistoryEvent>      fullHistory = new ArrayList<HistoryEvent>();
+    protected Set<CharacterProperty> properties  = new HashSet<CharacterProperty>();
+    protected List<Possesion>        possesions  = new ArrayList<Possesion>();
+    protected Set<HistoryEvent>      fullHistory = new HashSet<HistoryEvent>();
+    private CthulhuEdition         edition;
+    private CharacterDescription   description;
+    private BirthData              birth;
+    private long                   presentDate;
+    private List<Portrait>         portraits;
     @JsonIgnore
-    private List<CharacterProperty> cachedStats;
+    private Set<CharacterProperty> cachedStats;
     @JsonIgnore
-    private List<CharacterProperty> cachedSkills;
+    private Set<CharacterProperty> cachedSkills;
     @JsonIgnore
     private LruCache<CharacterProperty, List<Possesion>> cachedAffectedPossessions =
             new LruCache<CharacterProperty, List<Possesion>>(20);
@@ -221,9 +223,9 @@ public class SavedCharacter {
     }
 
     @JsonIgnore
-    private List<CharacterProperty> fillProperties(List<CharacterProperty> dest, PropertyType type) {
+    private Set<CharacterProperty> fillProperties(Set<CharacterProperty> dest, PropertyType type) {
         if (cachedStats == null) {
-            cachedStats = new ArrayList<CharacterProperty>();
+            cachedStats = new HashSet<CharacterProperty>();
             if (dest != null) {
                 for (CharacterProperty prop : properties) {
                     if (type != null && type.equals(PropertyType.STATISTIC)) {
@@ -236,12 +238,12 @@ public class SavedCharacter {
     }
 
     @JsonIgnore
-    public List<CharacterProperty> getStatistics() {
+    public Set<CharacterProperty> getStatistics() {
         return fillProperties(cachedStats, PropertyType.STATISTIC);
     }
 
     @JsonIgnore
-    public List<CharacterProperty> getSkills() {
+    public Set<CharacterProperty> getSkills() {
         return fillProperties(cachedSkills, PropertyType.SKILL);
     }
 
@@ -326,11 +328,11 @@ public class SavedCharacter {
         return null;
     }
 
-    public List<CharacterProperty> getProperties() {
+    public Set<CharacterProperty> getProperties() {
         return properties;
     }
 
-    public void setProperties(List<CharacterProperty> properties) {
+    public void setProperties(Set<CharacterProperty> properties) {
         this.properties = properties;
     }
 
@@ -342,11 +344,11 @@ public class SavedCharacter {
         this.possesions = possesions;
     }
 
-    public List<HistoryEvent> getFullHistory() {
+    public Set<HistoryEvent> getFullHistory() {
         return fullHistory;
     }
 
-    public void setFullHistory(List<HistoryEvent> fullHistory) {
+    public void setFullHistory(Set<HistoryEvent> fullHistory) {
         this.fullHistory = fullHistory;
     }
 }

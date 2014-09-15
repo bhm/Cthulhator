@@ -83,11 +83,23 @@ public class PointPool extends ObservedObjectImpl<Integer> {
 
     public int decreaseByRandom(int min, int max) {
         int mod = min;
+        int _max = max;
         if (points > 0) {
-            mod = mRandom.nextInt(max) + 1;
-            points -= mod;
+            if (_max > points) {
+                _max = points;
+            }
+            mod = mRandom.nextInt(_max - min) + min;
+            decreaseBy(mod);
         }
         return mod;
+    }
+
+    public synchronized int decreaseBy(int value) {
+        if (points - value >= mMin) {
+            points -= value;
+            notifyObservers(points);
+        }
+        return points;
     }
 
     @Override

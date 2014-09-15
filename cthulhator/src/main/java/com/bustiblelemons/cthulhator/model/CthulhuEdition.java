@@ -1,19 +1,19 @@
 package com.bustiblelemons.cthulhator.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by bhm on 13.08.14.
  */
 public enum CthulhuEdition {
-    ToC{
+    ToC {
         @Override
-        public List<CharacterProperty> getCharacteristics() {
-            List<CharacterProperty> r = new ArrayList<CharacterProperty>();
-            return r;
+        public Set<CharacterProperty> getCharacteristics() {
+            return Collections.emptySet();
         }
-    }, CoC5 , CoC6, CoC7, CthulhuLite {
+    }, CoC5, CoC6, CoC7, CthulhuLite {
         @Override
         public int getHobbySkillPointMultiplier() {
             return 5;
@@ -33,8 +33,8 @@ public enum CthulhuEdition {
         return 20;
     }
 
-    public List<CharacterProperty> getCharacteristics() {
-        List<CharacterProperty> r = new ArrayList<CharacterProperty>();
+    public Set<CharacterProperty> getCharacteristics() {
+        Set<CharacterProperty> r = new HashSet<CharacterProperty>();
         r.add(CharacterProperties.CON);
         r.add(CharacterProperties.STR);
         r.add(CharacterProperties.DEX);
