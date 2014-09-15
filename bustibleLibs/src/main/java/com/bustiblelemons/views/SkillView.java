@@ -44,7 +44,7 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
     private Drawable        decDrawable;
     private OnClickListener cachedOnClick;
     private int maxValue = 100;
-    private int value    = maxValue;
+    private int mValue   = maxValue;
     private int minValue = 0;
     private SkillViewListener mChachedSkillViewListener;
     private final SkillViewListener mSkillViewListener = new SkillViewListener() {
@@ -64,11 +64,13 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
 
         @Override
         public boolean onIncreaseClicked(SkillView view) {
-            if (mChachedSkillViewListener != null) {
-                mChachedSkillViewListener.onIncreaseClicked(view);
+            if (mChachedSkillViewListener != null &&
+                    mChachedSkillViewListener.onIncreaseClicked(view)) {
+                return true;
             }
-            if (getIntValue() + 1 <= getMaxValue()) {
-                view.setIntValue(value++);
+            if (view.canIncrease()) {
+                int nVal = getIntValue() + 1;
+                view.setIntValue(nVal);
                 return true;
             }
             return false;
@@ -76,11 +78,13 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
 
         @Override
         public boolean onDecreaseClicked(SkillView view) {
-            if (mChachedSkillViewListener != null) {
-                mChachedSkillViewListener.onDecreaseClicked(view);
+            if (mChachedSkillViewListener != null &&
+                    mChachedSkillViewListener.onDecreaseClicked(view)) {
+                return true;
             }
-            if (getIntValue() - 1 >= getMinValue()) {
-                view.setIntValue(value--);
+            if (canDecrease()) {
+                int nVal = view.getIntValue() - 1;
+                view.setIntValue(nVal);
                 return true;
             }
             return false;
@@ -103,6 +107,14 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         super(context, attrs, defStyle);
         init(context, attrs);
         setListener(mSkillViewListener);
+    }
+
+    private boolean canDecrease() {
+        return getIntValue() - 1 >= getMinValue();
+    }
+
+    private boolean canIncrease() {
+        return getIntValue() + 1 <= getMaxValue();
     }
 
     private void init(Context context, AttributeSet attrs) {
@@ -174,7 +186,7 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
     }
 
     private void setTexts(TypedArray skillArray) {
-        int val = skillArray.getInteger(R.styleable.SkillView_statValue, this.value);
+        int val = skillArray.getInteger(R.styleable.SkillView_statValue, this.mValue);
         setIntValue(val);
         String title = skillArray.getString(R.styleable.SkillView_statTitle);
         setTitle(title);
@@ -355,10 +367,11 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
     }
 
     public int getIntValue() {
-        return value;
+        return mValue;
     }
 
     public void setIntValue(int v) {
+        this.mValue = v;
         setValue(v + "");
     }
 

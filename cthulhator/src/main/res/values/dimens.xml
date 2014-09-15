@@ -36,4 +36,7 @@
     <dimen name="font_14">14sp</dimen>
     <dimen name="list_image">40dp</dimen>
     <dimen name="font_28">28sp</dimen>
+    <dimen name="padding_48">48dp</dimen>
+    <dimen name="font_21">21sp</dimen>
+    <dimen name="font_20">20sp</dimen>
 </resources>

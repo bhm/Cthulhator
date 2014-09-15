@@ -129,4 +129,21 @@ public class CharacterProperty {
         int ret = roll + getMinValue() + 1;
         return ret;
     }
+
+    @Override
+    public String toString() {
+        return "CharacterProperty{" +
+                "name='" + name + '\'' +
+                ", value=" + value +
+                ", maxValue=" + maxValue +
+                ", minValue=" + minValue +
+                ", baseValue=" + baseValue +
+                ", format=" + format +
+                ", type=" + type +
+                ", actionGroup=" + actionGroup +
+                ", relations=" + relations +
+                ", nameResId=" + nameResId +
+                ", shortNameResId=" + shortNameResId +
+                '}';
+    }
 }

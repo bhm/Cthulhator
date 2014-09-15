@@ -2,7 +2,6 @@
 
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -30,21 +29,23 @@
 
     <ImageButton
         android:id="@id/inc"
-        android:background="@null"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onClick"
         android:layout_alignParentRight="true"
+        android:background="@null"
+        android:onClick="onClick"
+        android:padding="@dimen/padding_8"
         android:src="@drawable/increase_selector"
         tools:visibility="visible"/>
 
     <ImageButton
         android:id="@id/dec"
-        android:background="@null"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onClick"
         android:layout_alignParentLeft="true"
+        android:background="@null"
+        android:onClick="onClick"
+        android:padding="@dimen/padding_8"
         android:src="@drawable/decrease_selector"
         tools:visibility="visible"/>
 

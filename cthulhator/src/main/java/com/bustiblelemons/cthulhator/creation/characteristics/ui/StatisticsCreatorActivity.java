@@ -74,13 +74,14 @@ public class StatisticsCreatorActivity extends AbsActivity implements PointPoolO
                 if (view != null && view.getTag() != null) {
                     String tag = (String) view.getTag();
                     CharacterProperty property = getProperty(tag);
-                    int randValue = 1;
+                    int randValue = pointPool.decreaseByRandom();
                     if (property != null) {
-                        int min = property.getMinValue();
-                        int max = property.getMaxValue();
-                        randValue = pointPool.decreaseByRandom(min, max);
-                    } else {
-                        randValue = pointPool.decreaseByRandom();
+                        randValue = property.randomValue();
+//                        int min = property.getMinValue();
+//                        int max = property.getMaxValue();
+//                        randValue = pointPool.decreaseByRandom(min, max);
+//                    } else {
+//                        randValue = pointPool.decreaseByRandom();
                     }
                     view.setIntValue(randValue);
                 }
@@ -90,6 +91,7 @@ public class StatisticsCreatorActivity extends AbsActivity implements PointPoolO
 
     private CharacterProperty getProperty(String name) {
         for (CharacterProperty property : characterProperties) {
+            log.d("Property %s", property);
             if (property.getName() != null && property.getName().equals(name)) {
                 return property;
             }

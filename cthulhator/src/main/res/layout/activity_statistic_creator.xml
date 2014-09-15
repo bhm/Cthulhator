@@ -17,11 +17,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:padding="@dimen/padding_16"
+            android:paddingBottom="@dimen/padding_16"
+            android:paddingLeft="@dimen/padding_48"
+            android:paddingRight="@dimen/padding_16"
+            android:paddingTop="@dimen/padding_16"
             android:text="@string/points_available"
             android:textAllCaps="true"
             android:textColor="@color/grey_white_1000"
-            android:textSize="@dimen/font_22"
+            android:textSize="@dimen/font_20"
             android:textStyle="bold"/>
     </RelativeLayout>
 
