@@ -30,7 +30,7 @@ public enum CthulhuEdition {
     };
     private static LruCache<CthulhuEdition, Set<CharacterProperty>> skillsCache =
             new LruCache<CthulhuEdition, Set<CharacterProperty>>(3);
-    private        LruCache<CthulhuEdition, Set<CharacterProperty>> cache       =
+    private static LruCache<CthulhuEdition, Set<CharacterProperty>> cache =
             new LruCache<CthulhuEdition, Set<CharacterProperty>>(3);
 
     public int getHobbySkillPointMultiplier() {

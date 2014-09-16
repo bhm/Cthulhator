@@ -31,6 +31,10 @@ public class PointPool extends ObservedObjectImpl<Integer> {
         mRandom = new Random(mSeed);
     }
 
+    public PointPool() {
+
+    }
+
     public static PointPool random(int max) {
         PointPool r = new PointPool(max);
         return r;

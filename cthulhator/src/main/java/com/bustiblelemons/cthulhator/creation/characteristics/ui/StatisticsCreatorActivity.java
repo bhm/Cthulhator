@@ -53,6 +53,7 @@ public class StatisticsCreatorActivity extends AbsActivity
         onSetActionBarToClosable();
         setContentView(R.layout.activity_statistic_creator);
         ButterKnife.inject(this);
+        pointPool = new PointPool();
         pointPool.register(this);
         onReroll(rerollButton);
     }
