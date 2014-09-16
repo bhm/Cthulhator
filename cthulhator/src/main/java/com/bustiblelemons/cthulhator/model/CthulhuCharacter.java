@@ -25,8 +25,8 @@ public class CthulhuCharacter extends SavedCharacter {
 
     private CthulhuCharacter(CthulhuEdition edition) {
         setEdition(edition);
-        fillSkillsList(edition);
         fillStatistics(edition);
+        fillSkillsList(edition);
     }
 
     public static CthulhuCharacter forEdition(CthulhuEdition edition) {

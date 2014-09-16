@@ -30,7 +30,12 @@ public class StatisticsCreatorActivity extends AbsActivity
     @InjectView(R.id.reroll)
     CircleButton rerollButton;
 
-    @InjectViews({R.id.edu, R.id.intelligence, R.id.pow, R.id.str, R.id.con, R.id.dex, R.id.app})
+    @InjectViews({R.id.edu,
+            R.id.intelligence,
+            R.id.pow,
+            R.id.dex,
+            R.id.app,
+            R.id.str, R.id.con, R.id.siz})
     List<SkillView> characteristicsViewList;
 
     @InjectView(R.id.points_available)

@@ -291,6 +291,19 @@
                     android:padding="@dimen/padding_16"
                     android:text="@string/hit_points"/>
 
+                <com.bustiblelemons.views.SkillView
+                    android:id="@id/siz"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/hit_points"
+                    android:tag="@string/siz"
+                    app:showModifiers="true"
+                    app:statTitle="@string/size"
+                    app:statValue="@integer/placeholder_perc_val"
+                    app:titleSize="@dimen/font_16"
+                    app:valueBelow="true"
+                    app:valueSize="@dimen/font_18"/>
+
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
