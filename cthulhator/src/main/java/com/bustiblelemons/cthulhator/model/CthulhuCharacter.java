@@ -23,6 +23,16 @@ public class CthulhuCharacter extends SavedCharacter {
             new LruCache<CharacterProperty, List<Possesion>>(20);
     private Pair<Long, List<HistoryEvent>> historyForCurrentAge;
 
+    private CthulhuCharacter(CthulhuEdition edition) {
+        setEdition(edition);
+        fillSkillsList(edition);
+        fillStatistics(edition);
+    }
+
+    public static CthulhuCharacter forEdition(CthulhuEdition edition) {
+        return new CthulhuCharacter(edition);
+    }
+
     public BirthData getBirth() {
         return birth;
     }
@@ -127,5 +137,4 @@ public class CthulhuCharacter extends SavedCharacter {
         }
         return null;
     }
-
 }

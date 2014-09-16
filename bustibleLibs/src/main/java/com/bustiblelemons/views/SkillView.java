@@ -2,6 +2,7 @@ package com.bustiblelemons.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.database.DataSetObserver;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -90,31 +92,68 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
             return false;
         }
     };
+    private ViewGroup   listContainer;
+    private ListAdapter listAdapter;
+    private DataSetObserver mObserver = new DataSetObserver() {
+        @Override
+        public void onChanged() {
+            super.onChanged();
+            rPopulateViews();
+        }
+
+        @Override
+        public void onInvalidated() {
+            super.onInvalidated();
+            rPopulateViews();
+        }
+    };
+    private int             mJump     = 1;
 
     public SkillView(Context context) {
         super(context);
-        setListener(mSkillViewListener);
+        setSkillViewListener(mSkillViewListener);
         init(context, null);
     }
 
     public SkillView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
-        setListener(mSkillViewListener);
+        setSkillViewListener(mSkillViewListener);
     }
+
 
     public SkillView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs);
-        setListener(mSkillViewListener);
+        setSkillViewListener(mSkillViewListener);
     }
 
-    private boolean canDecrease() {
-        return getIntValue() - 1 >= getMinValue();
+    public void setAdapter(ListAdapter listAdapter) {
+        this.listAdapter.unregisterDataSetObserver(mObserver);
+        this.listAdapter = listAdapter;
+        listAdapter.registerDataSetObserver(mObserver);
+        rPopulateViews();
     }
 
-    private boolean canIncrease() {
-        return getIntValue() + 1 <= getMaxValue();
+    private void rPopulateViews() {
+        listAdapter.registerDataSetObserver(mObserver);
+        if (listAdapter != null && listContainer != null) {
+            listContainer.removeAllViews();
+            for (int i = 0; i < listAdapter.getCount(); i++) {
+                View child = listAdapter.getView(i, null, listContainer);
+                if (child != null && child.getParent() == null) {
+                    listContainer.addView(child);
+                }
+            }
+        }
+    }
+
+    public boolean canDecrease() {
+        return getIntValue() - mJump >= getMinValue();
+    }
+
+    public boolean canIncrease() {
+        return getIntValue() + mJump <= getMaxValue();
     }
 
     private void init(Context context, AttributeSet attrs) {
@@ -124,6 +163,7 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         setupDefaultTextSize(context);
         incView = (ImageView) rootView.findViewById(R.id.inc);
         decView = (ImageView) rootView.findViewById(R.id.dec);
+        listContainer = (ViewGroup) rootView.findViewById(android.R.id.list);
         setOnClicks();
         if (attrs != null) {
             TypedArray skillArray = context.obtainStyledAttributes(attrs, R.styleable.SkillView);
@@ -403,7 +443,7 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         }
     }
 
-    public void setListener(SkillViewListener listener) {
+    public void setSkillViewListener(SkillViewListener listener) {
         if (!listener.equals(mSkillViewListener)) {
             this.mChachedSkillViewListener = listener;
         }

@@ -12,7 +12,7 @@ import com.bustiblelemons.views.SkillView;
 /**
  * Created by bhm on 31.08.14.
  */
-public class SkillViewHolder implements ViewHolder<CharacterProperty>,SkillView.SkillViewListener {
+public class SkillViewHolder implements ViewHolder<CharacterProperty>, SkillView.SkillViewListener {
     private final Context           context;
     private       SkillChanged      skillChanged;
     private       SkillView         skillView;
@@ -34,7 +34,7 @@ public class SkillViewHolder implements ViewHolder<CharacterProperty>,SkillView.
         if (skillView != null) {
             skillView.setTitle(item.getName());
             skillView.setValue(item.getValue() + "");
-            skillView.setListener(this);
+            skillView.setSkillViewListener(this);
         }
     }
 

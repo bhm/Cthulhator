@@ -127,6 +127,7 @@ public class CharacterProperty {
         int n = getMaxValue() - getMinValue();
         int roll = r.nextInt(n);
         int ret = roll + getMinValue() + 1;
+        setValue(ret);
         return ret;
     }
 

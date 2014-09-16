@@ -7,10 +7,12 @@ import com.bustiblelemons.cthulhator.model.brp.statistics.BRPStatistic;
  */
 public class CharacterProperties {
 
-    public static final CharacterProperty CON =
-            BRPStatCharacterProperty.fromStatistic(BRPStatistic.EDU);
     public static final CharacterProperty STR =
             BRPStatCharacterProperty.fromStatistic(BRPStatistic.STR);
+    public static final CharacterProperty CON =
+            BRPStatCharacterProperty.fromStatistic(BRPStatistic.CON);
+    public static final CharacterProperty POW =
+            BRPStatCharacterProperty.fromStatistic(BRPStatistic.POW);
     public static final CharacterProperty DEX =
             BRPStatCharacterProperty.fromStatistic(BRPStatistic.DEX);
     public static final CharacterProperty APP =

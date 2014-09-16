@@ -8,6 +8,10 @@ public class Relation {
     private int    modifier;
 
     private ModifierType modifierType;
+    private int          max;
+    private int          min;
+    private boolean      modifiesMaximum;
+    private boolean      modifiesMinimum;
 
     public ModifierType getModifierType() {
         return modifierType;
@@ -16,6 +20,38 @@ public class Relation {
     public Relation setModifierType(ModifierType modifierType) {
         this.modifierType = modifierType;
         return this;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
+    }
+
+    public boolean isModifiesMaximum() {
+        return modifiesMaximum;
+    }
+
+    public void setModifiesMaximum(boolean modifiesMaximum) {
+        this.modifiesMaximum = modifiesMaximum;
+    }
+
+    public boolean isModifiesMinimum() {
+        return modifiesMinimum;
+    }
+
+    public void setModifiesMinimum(boolean modifiesMinimum) {
+        this.modifiesMinimum = modifiesMinimum;
     }
 
     public int getModifier() {
@@ -54,18 +90,18 @@ public class Relation {
         return propertyName != null ? propertyName.hashCode() : 0;
     }
 
-    public int getBaseValueByRelation(int value) {
+    public int getBaseValueByRelation(int relatedPropertyValue) {
         switch (modifierType) {
             case MULTIPLY:
-                return value * modifier;
+                return relatedPropertyValue * modifier;
             case ADDITION:
-                return value + modifier;
+                return relatedPropertyValue + modifier;
             case DIVISION:
-                return value / modifier;
+                return relatedPropertyValue / modifier;
             case SUBSTRACT:
-                return value - modifier;
+                return relatedPropertyValue - modifier;
             default:
-                return value;
+                return relatedPropertyValue;
         }
     }
 }

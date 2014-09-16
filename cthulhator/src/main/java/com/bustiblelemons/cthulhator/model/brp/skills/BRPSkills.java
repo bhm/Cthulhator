@@ -1,7 +1,5 @@
 package com.bustiblelemons.cthulhator.model.brp.skills;
 
-import android.support.v4.util.LruCache;
-
 import com.bustiblelemons.cthulhator.model.ActionGroup;
 import com.bustiblelemons.cthulhator.model.CharacterProperty;
 import com.bustiblelemons.cthulhator.model.CthulhuEdition;
@@ -12,7 +10,9 @@ import com.bustiblelemons.cthulhator.model.brp.statistics.BRPStatistic;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by bhm on 13.09.14.
@@ -178,6 +178,7 @@ public enum BRPSkills {
         @Override
         public List<Relation> getRelations() {
             if (relations == null) {
+                relations = new ArrayList<Relation>();
                 eduRelation = new Relation()
                         .setPropertyName(BRPStatistic.EDU.name())
                         .setModifier(5)
@@ -307,22 +308,7 @@ public enum BRPSkills {
             return 15;
         }
     };
-    static LruCache<CthulhuEdition, List<BRPSkills>> skillsCache =
-            new LruCache<CthulhuEdition, List<BRPSkills>>(3);
-    private List<CthulhuEdition> editions;
-
-    public static List<BRPSkills> getListByEdition(CthulhuEdition edition) {
-        if (skillsCache.get(edition) == null) {
-            List<BRPSkills> r = new ArrayList<BRPSkills>();
-            for (BRPSkills s : values()) {
-                if (s.getEditions().contains(edition)) {
-                    r.add(s);
-                }
-            }
-            skillsCache.put(edition, r);
-        }
-        return skillsCache.get(edition);
-    }
+    private Set<CthulhuEdition> editions;
 
     public List<Relation> getRelations() {
         return Collections.emptyList();
@@ -347,8 +333,9 @@ public enum BRPSkills {
         }
     }
 
-    public List<CthulhuEdition> getEditions() {
+    public Set<CthulhuEdition> getEditions() {
         if (editions == null) {
+            editions = new HashSet<CthulhuEdition>();
             editions.add(CthulhuEdition.CoC5);
         }
         return editions;

@@ -6,47 +6,60 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@android:id/custom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:onClick="onClick"
-        android:paddingBottom="@dimen/padding_16"
-        android:paddingTop="@dimen/padding_16"
-        tools:text="@string/placeholder_perc_val"/>
+    <RelativeLayout
+        android:id="@android:id/primary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@android:id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center|left"
-        android:onClick="onClick"
-        android:paddingBottom="@dimen/padding_16"
-        android:paddingTop="@dimen/padding_16"
-        android:textStyle="bold"
-        tools:text="@string/placeholder_title"/>
+        <TextView
+            android:id="@android:id/custom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:paddingBottom="@dimen/padding_16"
+            android:paddingTop="@dimen/padding_16"
+            tools:text="@string/placeholder_perc_val"/>
 
-    <ImageButton
-        android:id="@id/inc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:background="@null"
-        android:onClick="onClick"
-        android:padding="@dimen/padding_8"
-        android:src="@drawable/increase_selector"
-        tools:visibility="visible"/>
+        <TextView
+            android:id="@android:id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|left"
+            android:onClick="onClick"
+            android:paddingBottom="@dimen/padding_16"
+            android:paddingTop="@dimen/padding_16"
+            android:textStyle="bold"
+            tools:text="@string/placeholder_title"/>
 
-    <ImageButton
-        android:id="@id/dec"
-        android:layout_width="wrap_content"
+        <ImageButton
+            android:id="@id/inc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:onClick="onClick"
+            android:padding="@dimen/padding_8"
+            android:src="@drawable/increase_selector"
+            tools:visibility="visible"/>
+
+        <ImageButton
+            android:id="@id/dec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:background="@null"
+            android:onClick="onClick"
+            android:padding="@dimen/padding_8"
+            android:src="@drawable/decrease_selector"
+            tools:visibility="visible"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:background="@null"
-        android:onClick="onClick"
-        android:padding="@dimen/padding_8"
-        android:src="@drawable/decrease_selector"
-        tools:visibility="visible"/>
+        android:layout_below="@android:id/primary"
+        android:orientation="vertical"/>
 
 </RelativeLayout>

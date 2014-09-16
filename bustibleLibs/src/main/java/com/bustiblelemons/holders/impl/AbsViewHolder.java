@@ -4,8 +4,6 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-import com.bustiblelemons.holders.ViewNotFountException;
-
 
 public abstract class AbsViewHolder<T> implements ViewHolder<T> {
 
@@ -30,9 +28,10 @@ public abstract class AbsViewHolder<T> implements ViewHolder<T> {
     @Override
     public void create(View convertView) {
         this.titleView = (TextView) convertView.findViewById(android.R.id.title);
-        if (titleView == null) {
-            throw new ViewNotFountException();
-        }
+    }
+
+    public boolean hasTitle() {
+        return this.titleView != null;
     }
 
     public int bindPosition(int position) {

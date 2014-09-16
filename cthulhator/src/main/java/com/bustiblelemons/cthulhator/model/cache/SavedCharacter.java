@@ -12,13 +12,13 @@ import com.bustiblelemons.cthulhator.model.Portrait;
 import com.bustiblelemons.cthulhator.model.Possesion;
 import com.bustiblelemons.cthulhator.model.PropertyType;
 import com.bustiblelemons.cthulhator.model.Relation;
-import com.bustiblelemons.cthulhator.model.brp.skills.BRPSkills;
 import com.bustiblelemons.cthulhator.model.brp.statistics.BRPStatistic;
 import com.bustiblelemons.cthulhator.model.desc.CharacterDescription;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,15 +31,11 @@ public class SavedCharacter {
     protected Set<CharacterProperty> properties  = new HashSet<CharacterProperty>();
     protected List<Possesion>        possesions  = new ArrayList<Possesion>();
     protected Set<HistoryEvent>      fullHistory = new HashSet<HistoryEvent>();
-    private CthulhuEdition         edition;
-    private CharacterDescription   description;
-    private BirthData              birth;
-    private long                   presentDate;
-    private List<Portrait>         portraits;
-    @JsonIgnore
-    private Set<CharacterProperty> cachedStats;
-    @JsonIgnore
-    private Set<CharacterProperty> cachedSkills;
+    private CthulhuEdition       edition;
+    private CharacterDescription description;
+    private BirthData            birth;
+    private long                 presentDate;
+    private List<Portrait>       portraits;
     @JsonIgnore
     private LruCache<CharacterProperty, List<Possesion>> cachedAffectedPossessions =
             new LruCache<CharacterProperty, List<Possesion>>(20);
@@ -56,19 +52,52 @@ public class SavedCharacter {
     }
 
     @JsonIgnore
+    public Collection<CharacterProperty> getPropertiesByRelations(Collection<Relation> relations) {
+        Set<CharacterProperty> r = new HashSet<CharacterProperty>();
+        for (Relation relation : relations) {
+            if (relation == null) {
+                continue;
+            }
+            CharacterProperty relatedProperty = getPropertyByName(relation.getPropertyName());
+            if (relatedProperty != null) {
+                int value = relation.getBaseValueByRelation(relatedProperty.getValue());
+                relatedProperty.setValue(value);
+                r.add(relatedProperty);
+            }
+        }
+        return r;
+    }
+
+    private CharacterProperty getPropertyByName(String propertyName) {
+        for (CharacterProperty prop : properties) {
+            if (prop != null) {
+                if (prop.getName() != null) {
+                    if (prop.getName().equalsIgnoreCase(propertyName)) {
+                        return prop;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    @JsonIgnore
     public boolean addCharacterProperty(CharacterProperty property) {
         return properties != null && properties.add(property);
     }
 
     @JsonIgnore
-    private void fillSkillsList(CthulhuEdition edition) {
-        for (BRPSkills skill : BRPSkills.getListByEdition(edition)) {
-            if (skill != null) {
-                addCharacterProperty(skill.asCharacterProperty(edition));
-            }
-        }
+    public void fillSkillsList(CthulhuEdition edition) {
+        addPropertiesList(edition.getSkills());
+        updateSkills();
     }
 
+    @JsonIgnore
+    public void fillStatistics(CthulhuEdition edition) {
+        addPropertiesList(edition.getCharacteristics());
+    }
+
+    @JsonIgnore
     public int updateSkills() {
         int modified = 0;
         for (CharacterProperty skill : getSkills()) {
@@ -129,6 +158,7 @@ public class SavedCharacter {
         }
         return false;
     }
+
 
     public int getCurrentSanity() {
         return 0;
@@ -222,29 +252,39 @@ public class SavedCharacter {
         return r;
     }
 
-    @JsonIgnore
-    private Set<CharacterProperty> fillProperties(Set<CharacterProperty> dest, PropertyType type) {
-        if (cachedStats == null) {
-            cachedStats = new HashSet<CharacterProperty>();
-            if (dest != null) {
-                for (CharacterProperty prop : properties) {
-                    if (type != null && type.equals(PropertyType.STATISTIC)) {
-                        dest.add(prop);
-                    }
-                }
+    public void addPropertiesList(Set<CharacterProperty> characterProperties) {
+        if (properties == null) {
+            properties = new HashSet<CharacterProperty>();
+        }
+        for (CharacterProperty property : characterProperties) {
+            if (property != null) {
+                properties.add(property);
             }
         }
-        return dest;
+        updateSkills();
     }
 
     @JsonIgnore
     public Set<CharacterProperty> getStatistics() {
-        return fillProperties(cachedStats, PropertyType.STATISTIC);
+        return getPropertiesOfType(PropertyType.STATISTIC);
     }
 
     @JsonIgnore
     public Set<CharacterProperty> getSkills() {
-        return fillProperties(cachedSkills, PropertyType.SKILL);
+        return getPropertiesOfType(PropertyType.SKILL);
+    }
+
+    @JsonIgnore
+    public Set<CharacterProperty> getPropertiesOfType(PropertyType type) {
+        Set<CharacterProperty> ret = new HashSet<CharacterProperty>();
+        for (CharacterProperty prop : properties) {
+            if (type != null && type.equals(PropertyType.STATISTIC)) {
+                if (prop != null) {
+                    ret.add(prop);
+                }
+            }
+        }
+        return ret;
     }
 
     @JsonIgnore
@@ -351,4 +391,6 @@ public class SavedCharacter {
     public void setFullHistory(Set<HistoryEvent> fullHistory) {
         this.fullHistory = fullHistory;
     }
+
+
 }

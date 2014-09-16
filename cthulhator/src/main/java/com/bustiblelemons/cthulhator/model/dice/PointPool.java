@@ -10,6 +10,7 @@ import java.util.Random;
  * Created by bhm on 09.09.14.
  */
 public class PointPool extends ObservedObjectImpl<Integer> {
+    public static final PointPool EMPTY = new PointPool(Integer.MAX_VALUE);
     private Random mRandom;
     private int mMax   = Integer.MAX_VALUE;
     private int points = mMax;
@@ -39,6 +40,10 @@ public class PointPool extends ObservedObjectImpl<Integer> {
         return mMax;
     }
 
+    public void setMax(int mMax) {
+        this.mMax = mMax;
+    }
+
     public int getMin() {
         return mMin;
     }
@@ -53,6 +58,7 @@ public class PointPool extends ObservedObjectImpl<Integer> {
 
     public void setPoints(int points) {
         this.points = points;
+        notifyObservers(this.points);
     }
 
     public synchronized boolean increase() {
@@ -81,7 +87,7 @@ public class PointPool extends ObservedObjectImpl<Integer> {
         return r;
     }
 
-    public int decreaseByRandom(int min, int max) {
+    public synchronized int decreaseByRandom(int min, int max) {
         int mod = min;
         int _max = max;
         if (points > 0) {
@@ -94,12 +100,40 @@ public class PointPool extends ObservedObjectImpl<Integer> {
         return mod;
     }
 
+    public synchronized int increaseBy(int value) {
+        if (points + value <= mMax) {
+            points += value;
+        } else {
+            points = mMax;
+        }
+        notifyObservers(points);
+        return points;
+    }
+
     public synchronized int decreaseBy(int value) {
         if (points - value >= mMin) {
             points -= value;
-            notifyObservers(points);
+        } else {
+            points = mMin;
         }
+        notifyObservers(points);
         return points;
+    }
+
+    public synchronized boolean canIncrease() {
+        return canIncrease(1);
+    }
+
+    public synchronized boolean canIncrease(int by) {
+        return getPoints() + by <= getMax();
+    }
+
+    public synchronized boolean canDecrease() {
+        return canDecrease(1);
+    }
+
+    public synchronized boolean canDecrease(int by) {
+        return getPoints() - by >= getMax();
     }
 
     @Override
