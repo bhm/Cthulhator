@@ -20,8 +20,7 @@ public class BRPStatCharacterProperty extends CharacterProperty {
     }
 
     public static CharacterProperty fromStatistic(BRPStatistic statistic) {
-        PointPoolFromDiceFactory fromDice = new PointPoolFromDiceFactory();
-        CharacterProperty r = fillValues(statistic, fromDice);
+        CharacterProperty r = fromBRPStatistic(statistic);
         r.setName(statistic.name());
         //TODO Retreive title id once for a given name propertyTyp_propertyName
         r.setNameResId(0);
@@ -29,23 +28,28 @@ public class BRPStatCharacterProperty extends CharacterProperty {
         return r;
     }
 
-    private static CharacterProperty fillValues(BRPStatistic statistic, PointPoolFromDiceFactory fromDice) {
+    private static CharacterProperty fromBRPStatistic(BRPStatistic statistic) {
+        PointPoolFromDiceFactory fromDice;
         switch (statistic) {
             case CON:
             case DEX:
             case STR:
             case APP:
             case POW:
+                fromDice = new PointPoolFromDiceFactory();
                 fromDice.addDicePool(3, PolyHedralDice.D6);
                 return fromPointPool(fromDice.build());
             case INT:
             case SIZ:
+                fromDice = new PointPoolFromDiceFactory();
                 fromDice.addDicePool(2, PolyHedralDice.D6).addModifiers(6);
                 return fromPointPool(fromDice.build());
             case EDU:
+                fromDice = new PointPoolFromDiceFactory();
                 fromDice.addDicePool(3, PolyHedralDice.D6).addModifiers(3);
                 return fromPointPool(fromDice.build());
             default:
+                fromDice = new PointPoolFromDiceFactory();
                 return fromPointPool(fromDice.build());
         }
     }

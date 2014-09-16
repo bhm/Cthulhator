@@ -7,36 +7,22 @@ public class PointPoolFromDiceFactory {
 
     private int min = 0;
 
-    private int currentMax = min + 1;
-
-    public int getCurrentMax() {
-        return currentMax = min + 1;
-    }
+    private int currentMax = 0;
 
     public PointPoolFromDiceFactory addDicePool(int count, PolyHedralDice dice) {
         for (int i = 0; i < count; i++) {
-            addDice(dice);
-        }
-        return this;
-    }
-
-    public PointPoolFromDiceFactory addDice(PolyHedralDice... dice) {
-        for (PolyHedralDice d : dice) {
-            addModifier(d.getMin());
-            currentMax += d.getMax();
+            min++;
+            currentMax += dice.getMax();
         }
         return this;
     }
 
     public PointPoolFromDiceFactory addModifiers(int... modifiers) {
         for (int mod : modifiers) {
-            addModifier(mod);
+            min += mod;
+            currentMax += mod;
         }
         return this;
-    }
-
-    private void addModifier(int mod) {
-        min += mod;
     }
 
     public PointPool build() {
