@@ -172,7 +172,7 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        rootView = LayoutInflater.from(context).inflate(R.layout.skill_view, this, true);
+        rootView = LayoutInflater.from(context).inflate(R.layout.skill_view, this, false);
         valueView = (TextView) rootView.findViewById(R.id.skillview_value);
         titleView = (TextView) rootView.findViewById(R.id.skillview_title);
         setupDefaultTextSize(context);
@@ -202,6 +202,7 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
             skillArray.recycle();
             skillArray.recycle();
         }
+        addView(rootView);
     }
 
     public int getMaxValue() {
@@ -436,14 +437,6 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         setValue(v + "");
     }
 
-    public void setStringValue(String value) {
-        try {
-            int v = Integer.valueOf(value);
-            setIntValue(v);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void setValue(CharSequence s) {
         if (valueView != null) {
@@ -487,6 +480,10 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
                 mSkillViewListener.onSkillTitleClick(this);
             }
         }
+    }
+
+    public void setIsPercentile(boolean percentile) {
+        this.isPercentile = percentile;
     }
 
     public interface SkillViewListener extends PropertyViewListener<SkillView> {

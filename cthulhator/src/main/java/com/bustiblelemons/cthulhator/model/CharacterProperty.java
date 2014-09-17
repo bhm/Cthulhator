@@ -172,11 +172,36 @@ public class CharacterProperty {
         return name != null ? name.hashCode() : 0;
     }
 
+    @JsonIgnore
     public boolean hasRelations() {
         return getRelations() != null && getRelations().size() > 0;
     }
 
+    @JsonIgnore
     public boolean hasResNameId() {
         return nameResId > 0;
+    }
+
+    @JsonIgnore
+    public boolean increaseValue() {
+        if (getValue() + 1 <= getMaxValue()) {
+            setValue(getValue() + 1);
+            return false;
+        }
+        return false;
+    }
+
+    @JsonIgnore
+    public boolean decreaseValue() {
+        if (getValue() - 1 <= getMaxValue()) {
+            setValue(getValue() - 1);
+            return false;
+        }
+        return false;
+    }
+
+    @JsonIgnore
+    public boolean isPercentile() {
+        return PropertyFormat.PERCENTILE.equals(getFormat());
     }
 }

@@ -96,7 +96,6 @@ public class StatisticsCreatorActivity extends AbsActivity
                     int randValue = property.randomValue();
                     points += randValue;
                     view.setIntValue(randValue);
-                    log.d("Property has relations %s", property.hasRelations());
                     if (property.hasRelations()) {
                         CharacterPropertyAdapter adapter = new CharacterPropertyAdapter(this);
                         adapter.refreshData(savedCharacter.getRelatedProperties(property));
@@ -109,6 +108,7 @@ public class StatisticsCreatorActivity extends AbsActivity
         pointPool.setMax(points);
         pointPool.setPoints(points);
         pointPool.notifyObservers(points);
+        updatePointsAvailable(points);
         log.d("Point pool %s", pointPool);
     }
 
@@ -147,6 +147,7 @@ public class StatisticsCreatorActivity extends AbsActivity
     @Override
     public boolean onIncreaseClicked(SkillView view) {
         if (pointPool.canIncrease() && view.canIncrease()) {
+            increasePropertyAndUpdateView(view);
             pointPool.increase();
             return true;
         }
@@ -156,16 +157,30 @@ public class StatisticsCreatorActivity extends AbsActivity
     @Override
     public boolean onDecreaseClicked(SkillView view) {
         if (pointPool.canDecrease() && view.canDecrease()) {
-            updateSkillViewAdapter(view);
+            decreasePropertyAndUpdateView(view);
             pointPool.decrease();
             return true;
         }
         return false;
     }
 
-    private void updateSkillViewAdapter(SkillView view) {
+    private void increasePropertyAndUpdateView(SkillView view) {
         int id = view.getId();
         CharacterProperty property = idsToProperty.get(id);
+        if (property != null && property.decreaseValue()) {
+            updateView(view, id, property);
+        }
+    }
+
+    private void decreasePropertyAndUpdateView(SkillView view) {
+        int id = view.getId();
+        CharacterProperty property = idsToProperty.get(id);
+        if (property != null && property.increaseValue()) {
+            updateView(view, id, property);
+        }
+    }
+
+    private void updateView(SkillView view, int id, CharacterProperty property) {
         CharacterPropertyAdapter adapter = idsToAdapters.get(id);
         if (property != null) {
             if (adapter == null) {
