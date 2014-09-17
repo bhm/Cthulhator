@@ -52,17 +52,16 @@ public class SavedCharacter {
     }
 
     @JsonIgnore
-    public Collection<CharacterProperty> getPropertiesByRelations(Collection<Relation> relations) {
+    public Set<CharacterProperty> getPropertiesByRelations(Collection<Relation> relations) {
         Set<CharacterProperty> r = new HashSet<CharacterProperty>();
         for (Relation relation : relations) {
-            if (relation == null) {
-                continue;
-            }
-            CharacterProperty relatedProperty = getPropertyByName(relation.getPropertyName());
-            if (relatedProperty != null) {
-                int value = relation.getBaseValueByRelation(relatedProperty.getValue());
-                relatedProperty.setValue(value);
-                r.add(relatedProperty);
+            if (relation != null) {
+                CharacterProperty relatedProperty = getPropertyByName(relation.getPropertyName());
+                if (relatedProperty != null) {
+                    int value = relation.getBaseValueByRelation(relatedProperty.getValue());
+                    relatedProperty.setValue(value);
+                    r.add(relatedProperty);
+                }
             }
         }
         return r;

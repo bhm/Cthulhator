@@ -22,6 +22,8 @@ public class BRPStatCharacterProperty extends CharacterProperty {
     public static CharacterProperty fromStatistic(BRPStatistic statistic) {
         CharacterProperty r = fromBRPStatistic(statistic);
         r.setName(statistic.name());
+        r.setRelations(statistic.getRelations());
+        r.setActionGroup(statistic.getActionGroups());
         //TODO Retreive title id once for a given name propertyTyp_propertyName
         r.setNameResId(0);
         r.setShortNameResId(0);
@@ -68,8 +70,8 @@ public class BRPStatCharacterProperty extends CharacterProperty {
         private int            max       = 100;
         private int            min       = 0;
         private int            baseValue = min;
-        private PropertyType   type   = PropertyType.STATISTIC;
-        private PropertyFormat format = PropertyFormat.NUMBER;
+        private PropertyType   type      = PropertyType.STATISTIC;
+        private PropertyFormat format    = PropertyFormat.NUMBER;
 
         public int getBaseValue() {
             return baseValue;

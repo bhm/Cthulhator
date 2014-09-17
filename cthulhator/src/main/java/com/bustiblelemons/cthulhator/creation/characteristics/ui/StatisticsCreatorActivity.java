@@ -1,14 +1,17 @@
 package com.bustiblelemons.cthulhator.creation.characteristics.ui;
 
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.widget.TextView;
 
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.activities.AbsActivity;
+import com.bustiblelemons.cthulhator.creation.characteristics.logic.CharacterPropertyAdapter;
 import com.bustiblelemons.cthulhator.creation.characteristics.logic.PointPoolObserver;
 import com.bustiblelemons.cthulhator.model.CharacterProperty;
 import com.bustiblelemons.cthulhator.model.CthulhuCharacter;
 import com.bustiblelemons.cthulhator.model.CthulhuEdition;
+import com.bustiblelemons.cthulhator.model.Relation;
 import com.bustiblelemons.cthulhator.model.dice.PointPool;
 import com.bustiblelemons.views.SkillView;
 
@@ -40,6 +43,11 @@ public class StatisticsCreatorActivity extends AbsActivity
 
     @InjectView(R.id.points_available)
     TextView pointsAvailable;
+
+    private SparseArray<CharacterProperty>        idsToProperty = new SparseArray<CharacterProperty>();
+    private SparseArray<CharacterPropertyAdapter> idsToAdapters =
+            new SparseArray<CharacterPropertyAdapter>();
+
 
     private PointPool              pointPool           = PointPool.EMPTY;
     private CthulhuEdition         edition             = CthulhuEdition.CoC5;
@@ -79,6 +87,8 @@ public class StatisticsCreatorActivity extends AbsActivity
             if (view != null && view.getTag() != null) {
                 String tag = (String) view.getTag();
                 CharacterProperty property = getProperty(tag);
+                int id = view.getId();
+                idsToProperty.put(id, property);
                 property.getRelations();
                 if (property != null) {
                     view.setSkillViewListener(this);
@@ -87,6 +97,14 @@ public class StatisticsCreatorActivity extends AbsActivity
                     int randValue = property.randomValue();
                     points += randValue;
                     view.setIntValue(randValue);
+                    log.d("Property has relations %s", property.hasRelations());
+                    if (property.hasRelations()) {
+                        Set<Relation> relations = property.getRelations();
+                        CharacterPropertyAdapter adapter = new CharacterPropertyAdapter(this);
+                        adapter.refreshData(savedCharacter.getPropertiesByRelations(relations));
+                        view.setAdapter(adapter);
+                        idsToAdapters.put(id, adapter);
+                    }
                 }
             }
         }
@@ -140,9 +158,27 @@ public class StatisticsCreatorActivity extends AbsActivity
     @Override
     public boolean onDecreaseClicked(SkillView view) {
         if (pointPool.canDecrease() && view.canDecrease()) {
+            updateSkillViewAdapter(view);
             pointPool.decrease();
             return true;
         }
         return false;
+    }
+
+    private void updateSkillViewAdapter(SkillView view) {
+        int id = view.getId();
+        CharacterProperty property = idsToProperty.get(id);
+        CharacterPropertyAdapter adapter = idsToAdapters.get(id);
+        if (property != null) {
+            if (adapter == null) {
+                adapter = new CharacterPropertyAdapter(this);
+            }
+            Set<Relation> relations = property.getRelations();
+            Set<CharacterProperty> data = savedCharacter.getPropertiesByRelations(relations);
+            adapter.refreshData(data);
+            view.setAdapter(adapter);
+            idsToProperty.put(id, property);
+            idsToAdapters.put(id, adapter);
+        }
     }
 }

@@ -58,6 +58,7 @@ public enum BRPStatistic {
         @Override
         public List<Relation> getRelations() {
             if (relations == null) {
+                relations = new ArrayList<Relation>();
                 sanityRelation = new Relation()
                         .setPropertyName(SAN.name())
                         .setModifier(5)

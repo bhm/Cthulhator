@@ -33,4 +33,7 @@
     <item name="city" type="id"/>
     <item name="search" type="id"/>
     <item name="search_container" type="id"/>
+    <item name="list_container" type="id"/>
+    <item name="skillview_title" type="id"/>
+    <item name="skillview_value" type="id"/>
 </resources>

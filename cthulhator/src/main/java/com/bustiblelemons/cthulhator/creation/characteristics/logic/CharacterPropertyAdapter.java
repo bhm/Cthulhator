@@ -17,6 +17,6 @@ public class CharacterPropertyAdapter
 
     @Override
     protected ViewHolder<CharacterProperty> getViewHolder(int position) {
-        return new CharacterPropertyHolder();
+        return new CharacterPropertyHolder(getContext());
     }
 }

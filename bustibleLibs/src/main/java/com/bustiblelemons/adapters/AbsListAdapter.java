@@ -12,6 +12,7 @@ import com.bustiblelemons.holders.impl.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -91,13 +92,13 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
         return ret;
     }
 
-    public boolean addItems(List<T> items) {
+    public boolean addItems(Collection<T> items) {
         boolean ret = this.data.addAll(items);
         notifyDataSetChanged();
         return ret;
     }
 
-    public boolean addItems(T...items) {
+    public boolean addItems(T... items) {
         return addItems(Arrays.asList(items));
     }
 
@@ -111,7 +112,7 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
         return ret;
     }
 
-    public boolean removeItems(List<T> items) {
+    public boolean removeItems(Collection<T> items) {
         boolean r = this.data.removeAll(items);
         notifyDataSetChanged();
         return r;
@@ -134,7 +135,7 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
         return false;
     }
 
-    public boolean refreshData(List<T> data) {
+    public boolean refreshData(Collection<T> data) {
         setData(data);
         notifyDataSetChanged();
         return false;
@@ -144,7 +145,7 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
         return this.data;
     }
 
-    protected void setData(List<T> data) {
+    protected void setData(Collection<T> data) {
         this.data = new LinkedList<T>(data);
     }
 

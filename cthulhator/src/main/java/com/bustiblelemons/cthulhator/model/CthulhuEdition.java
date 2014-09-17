@@ -3,6 +3,7 @@ package com.bustiblelemons.cthulhator.model;
 import android.support.v4.util.LruCache;
 
 import com.bustiblelemons.cthulhator.model.brp.skills.BRPSkills;
+import com.bustiblelemons.cthulhator.model.brp.statistics.BRPStatistic;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -30,7 +31,7 @@ public enum CthulhuEdition {
     };
     private static LruCache<CthulhuEdition, Set<CharacterProperty>> skillsCache =
             new LruCache<CthulhuEdition, Set<CharacterProperty>>(3);
-    private static LruCache<CthulhuEdition, Set<CharacterProperty>> cache =
+    private static LruCache<CthulhuEdition, Set<CharacterProperty>> cache       =
             new LruCache<CthulhuEdition, Set<CharacterProperty>>(3);
 
     public int getHobbySkillPointMultiplier() {
@@ -54,6 +55,11 @@ public enum CthulhuEdition {
             r.add(CharacterProperties.SIZ);
 
             r.add(CharacterProperties.EDU);
+
+            r.add(BRPStatistic.SAN.asCharacterProperty());
+            r.add(BRPStatistic.LUCK.asCharacterProperty());
+            r.add(BRPStatistic.IDEA.asCharacterProperty());
+            r.add(BRPStatistic.KNOW.asCharacterProperty());
             cache.put(this, r);
         }
         return cache.get(this);

@@ -8,7 +8,6 @@ import com.bustiblelemons.cthulhator.model.PropertyFormat;
 import com.bustiblelemons.cthulhator.model.Relation;
 import com.bustiblelemons.cthulhator.model.brp.statistics.BRPStatistic;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -63,12 +62,12 @@ public enum BRPSkills {
     CthulhuMythos,
     Dodge {
         public Relation dexRelation;
-        public List<Relation> relations;
+        public Set<Relation> relations;
 
         @Override
-        public List<Relation> getRelations() {
+        public Set<Relation> getRelations() {
             if (relations == null) {
-                relations = new ArrayList<Relation>();
+                relations = new HashSet<Relation>();
                 dexRelation = new Relation()
                         .setPropertyName(BRPStatistic.DEX.name())
                         .setModifier(2)
@@ -173,12 +172,12 @@ public enum BRPSkills {
     },
     OwnLanguage {
         public Relation eduRelation;
-        public List<Relation> relations;
+        public Set<Relation> relations;
 
         @Override
-        public List<Relation> getRelations() {
+        public Set<Relation> getRelations() {
             if (relations == null) {
-                relations = new ArrayList<Relation>();
+                relations = new HashSet<Relation>();
                 eduRelation = new Relation()
                         .setPropertyName(BRPStatistic.EDU.name())
                         .setModifier(5)
@@ -310,8 +309,8 @@ public enum BRPSkills {
     };
     private Set<CthulhuEdition> editions;
 
-    public List<Relation> getRelations() {
-        return Collections.emptyList();
+    public Set<Relation> getRelations() {
+        return Collections.emptySet();
     }
 
     public CharacterProperty asCharacterProperty(CthulhuEdition edition) {

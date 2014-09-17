@@ -93,7 +93,7 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         }
     };
     private ViewGroup   listContainer;
-    private ListAdapter listAdapter;
+    private ListAdapter mListAdapter;
     private DataSetObserver mObserver = new DataSetObserver() {
         @Override
         public void onChanged() {
@@ -129,22 +129,27 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
     }
 
     public void setAdapter(ListAdapter listAdapter) {
-        this.listAdapter.unregisterDataSetObserver(mObserver);
-        this.listAdapter = listAdapter;
+        if (isInEditMode()) {
+            return;
+        }
+        if (mListAdapter != null) {
+            mListAdapter.unregisterDataSetObserver(mObserver);
+        }
+        mListAdapter = listAdapter;
         listAdapter.registerDataSetObserver(mObserver);
         rPopulateViews();
     }
 
     private void rPopulateViews() {
-        listAdapter.registerDataSetObserver(mObserver);
-        if (listAdapter != null && listContainer != null) {
+        if (mListAdapter != null && listContainer != null) {
             listContainer.removeAllViews();
-            for (int i = 0; i < listAdapter.getCount(); i++) {
-                View child = listAdapter.getView(i, null, listContainer);
-                if (child != null && child.getParent() == null) {
+            for (int i = 0; i < mListAdapter.getCount(); i++) {
+                View child = mListAdapter.getView(i, null, listContainer);
+                if (child != null) {
                     listContainer.addView(child);
                 }
             }
+            requestLayout();
         }
     }
 
@@ -158,12 +163,12 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
 
     private void init(Context context, AttributeSet attrs) {
         rootView = LayoutInflater.from(context).inflate(R.layout.skill_view, this, true);
-        valueView = (TextView) rootView.findViewById(android.R.id.custom);
-        titleView = (TextView) rootView.findViewById(android.R.id.title);
+        valueView = (TextView) rootView.findViewById(R.id.skillview_value);
+        titleView = (TextView) rootView.findViewById(R.id.skillview_title);
         setupDefaultTextSize(context);
         incView = (ImageView) rootView.findViewById(R.id.inc);
         decView = (ImageView) rootView.findViewById(R.id.dec);
-        listContainer = (ViewGroup) rootView.findViewById(android.R.id.list);
+        listContainer = (ViewGroup) rootView.findViewById(R.id.list_container);
         setOnClicks();
         if (attrs != null) {
             TypedArray skillArray = context.obtainStyledAttributes(attrs, R.styleable.SkillView);
@@ -400,9 +405,15 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         titleView.setGravity(Gravity.CENTER | Gravity.LEFT);
     }
 
-    public void setTitle(String title) {
+    public void setTitle(CharSequence title) {
         if (titleView != null) {
             titleView.setText(title);
+        }
+    }
+
+    public void setTitle(int titleResId) {
+        if (titleView != null) {
+            titleView.setText(titleResId);
         }
     }
 

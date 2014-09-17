@@ -3,8 +3,11 @@ package com.bustiblelemons.cthulhator.model;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * Created by bhm on 20.07.14.
@@ -23,11 +26,11 @@ public class CharacterProperty {
     private PropertyFormat    format;
     private PropertyType      type;
     private List<ActionGroup> actionGroup;
-    private List<Relation>    relations;
+    private Set<Relation>     relations;
     @JsonIgnore
-    private int               nameResId;
+    private int nameResId = -1;
     @JsonIgnore
-    private int               shortNameResId;
+    private int shortNameResId;
 
     public List<ActionGroup> getActionGroup() {
         return actionGroup;
@@ -37,12 +40,12 @@ public class CharacterProperty {
         this.actionGroup = actionGroup;
     }
 
-    public List<Relation> getRelations() {
+    public Set<Relation> getRelations() {
         return relations;
     }
 
-    public void setRelations(List<Relation> relations) {
-        this.relations = relations;
+    public void setRelations(Collection<Relation> relations) {
+        this.relations = new HashSet<Relation>(relations);
     }
 
     @JsonIgnore
@@ -163,5 +166,13 @@ public class CharacterProperty {
     @Override
     public int hashCode() {
         return name != null ? name.hashCode() : 0;
+    }
+
+    public boolean hasRelations() {
+        return getRelations() != null && getRelations().size() > 0;
+    }
+
+    public boolean hasResNameId() {
+        return nameResId > 0;
     }
 }
