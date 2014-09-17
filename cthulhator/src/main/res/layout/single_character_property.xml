@@ -9,8 +9,7 @@
         android:id="@android:id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:showModifiers="true"
-        app:titleSize="@dimen/font_16"
+        app:titleSize="@dimen/font_12"
         app:valueBelow="true"
-        app:valueSize="@dimen/font_18"/>
+        app:valueSize="@dimen/font_14"/>
 </RelativeLayout>

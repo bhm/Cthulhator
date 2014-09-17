@@ -103,7 +103,11 @@ public class CharacterProperty {
     }
 
     public void setValue(int value) {
-        this.value = value;
+        if (value <= getMaxValue()) {
+            this.value = value;
+        } else {
+            this.value = getMaxValue();
+        }
     }
 
     public PropertyFormat getFormat() {

@@ -11,7 +11,6 @@ import com.bustiblelemons.cthulhator.creation.characteristics.logic.PointPoolObs
 import com.bustiblelemons.cthulhator.model.CharacterProperty;
 import com.bustiblelemons.cthulhator.model.CthulhuCharacter;
 import com.bustiblelemons.cthulhator.model.CthulhuEdition;
-import com.bustiblelemons.cthulhator.model.Relation;
 import com.bustiblelemons.cthulhator.model.dice.PointPool;
 import com.bustiblelemons.views.SkillView;
 
@@ -99,9 +98,8 @@ public class StatisticsCreatorActivity extends AbsActivity
                     view.setIntValue(randValue);
                     log.d("Property has relations %s", property.hasRelations());
                     if (property.hasRelations()) {
-                        Set<Relation> relations = property.getRelations();
                         CharacterPropertyAdapter adapter = new CharacterPropertyAdapter(this);
-                        adapter.refreshData(savedCharacter.getPropertiesByRelations(relations));
+                        adapter.refreshData(savedCharacter.getRelatedProperties(property));
                         view.setAdapter(adapter);
                         idsToAdapters.put(id, adapter);
                     }
@@ -173,8 +171,7 @@ public class StatisticsCreatorActivity extends AbsActivity
             if (adapter == null) {
                 adapter = new CharacterPropertyAdapter(this);
             }
-            Set<Relation> relations = property.getRelations();
-            Set<CharacterProperty> data = savedCharacter.getPropertiesByRelations(relations);
+            Set<CharacterProperty> data = savedCharacter.getRelatedProperties(property);
             adapter.refreshData(data);
             view.setAdapter(adapter);
             idsToProperty.put(id, property);

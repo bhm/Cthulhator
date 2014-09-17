@@ -98,13 +98,13 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         @Override
         public void onChanged() {
             super.onChanged();
-            rPopulateViews();
+            SkillView.this.rPopulateViews();
         }
 
         @Override
         public void onInvalidated() {
             super.onInvalidated();
-            rPopulateViews();
+            SkillView.this.rPopulateViews();
         }
     };
     private int             mJump     = 1;
@@ -140,16 +140,26 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         rPopulateViews();
     }
 
+    private void rRefreshViews() {
+        if (mListAdapter != null && listContainer != null && listContainer.getChildCount() > 0) {
+            for (int i = 0; i < listContainer.getChildCount(); i++) {
+                View child = listContainer.getChildAt(i);
+//                if (child != null)
+            }
+        }
+    }
+
     private void rPopulateViews() {
         if (mListAdapter != null && listContainer != null) {
-            listContainer.removeAllViews();
             for (int i = 0; i < mListAdapter.getCount(); i++) {
-                View child = mListAdapter.getView(i, null, listContainer);
+                View convertView = listContainer.getChildAt(i);
+                View child = mListAdapter.getView(i, convertView, listContainer);
                 if (child != null) {
-                    listContainer.addView(child);
+                    if (child.getParent() == null) {
+                        listContainer.addView(child);
+                    }
                 }
             }
-            requestLayout();
         }
     }
 

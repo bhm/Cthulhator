@@ -48,17 +48,19 @@ public class SavedCharacter {
 
     public void setEdition(CthulhuEdition edition) {
         this.edition = edition;
+        fillStatistics(edition);
         fillSkillsList(edition);
     }
 
     @JsonIgnore
-    public Set<CharacterProperty> getPropertiesByRelations(Collection<Relation> relations) {
+    public Set<CharacterProperty> getRelatedProperties(CharacterProperty toProperty) {
+        Collection<Relation> relations = toProperty.getRelations();
         Set<CharacterProperty> r = new HashSet<CharacterProperty>();
         for (Relation relation : relations) {
             if (relation != null) {
                 CharacterProperty relatedProperty = getPropertyByName(relation.getPropertyName());
                 if (relatedProperty != null) {
-                    int value = relation.getBaseValueByRelation(relatedProperty.getValue());
+                    int value = relation.getBaseValueByRelation(toProperty.getValue());
                     relatedProperty.setValue(value);
                     r.add(relatedProperty);
                 }
