@@ -12,6 +12,7 @@ import com.bustiblelemons.cthulhator.model.Portrait;
 import com.bustiblelemons.cthulhator.model.Possesion;
 import com.bustiblelemons.cthulhator.model.PropertyType;
 import com.bustiblelemons.cthulhator.model.Relation;
+import com.bustiblelemons.cthulhator.model.brp.skills.BRPSkillPointPools;
 import com.bustiblelemons.cthulhator.model.brp.statistics.BRPStatistic;
 import com.bustiblelemons.cthulhator.model.desc.CharacterDescription;
 
@@ -50,6 +51,30 @@ public class SavedCharacter {
         this.edition = edition;
         fillStatistics(edition);
         fillSkillsList(edition);
+        updateSkillPointPools();
+    }
+
+    private void updateSkillPointPools() {
+        if (edition != null) {
+            fillSkillPointPools(this.edition);
+        }
+    }
+
+    private void fillSkillPointPools(CthulhuEdition edition) {
+        fillCareerPoints(edition);
+        CharacterProperty edu = getPropertyByName(BRPStatistic.EDU.name());
+        CharacterProperty pointsProperty = BRPSkillPointPools.CAREER.asProperty();
+        int hobbyPointsValue = edu.getValue() * edition.getCareerSkillPointMultiplier();
+        pointsProperty.setValue(hobbyPointsValue);
+        addCharacterProperty(pointsProperty);
+    }
+
+    private void fillCareerPoints(CthulhuEdition edition) {
+        CharacterProperty __int = getPropertyByName(BRPStatistic.INT.name());
+        CharacterProperty pointsProperty = BRPSkillPointPools.HOBBY.asProperty();
+        int hobbyPointsValue = __int.getValue() * edition.getCareerSkillPointMultiplier();
+        pointsProperty.setValue(hobbyPointsValue);
+        addCharacterProperty(pointsProperty);
     }
 
     @JsonIgnore
@@ -84,6 +109,9 @@ public class SavedCharacter {
 
     @JsonIgnore
     public boolean addCharacterProperty(CharacterProperty property) {
+        if (properties != null && properties.contains(property)) {
+            properties.remove(property);
+        }
         return properties != null && properties.add(property);
     }
 

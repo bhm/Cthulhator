@@ -25,7 +25,7 @@ public enum CthulhuEdition {
         }
 
         @Override
-        public int getCarrierSkillPointMultiplier() {
+        public int getCareerSkillPointMultiplier() {
             return 10;
         }
     };
@@ -38,7 +38,7 @@ public enum CthulhuEdition {
         return 10;
     }
 
-    public int getCarrierSkillPointMultiplier() {
+    public int getCareerSkillPointMultiplier() {
         return 20;
     }
 

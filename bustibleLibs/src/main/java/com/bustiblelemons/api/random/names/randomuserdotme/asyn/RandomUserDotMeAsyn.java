@@ -14,13 +14,13 @@ import com.bustiblelemons.logging.Logger;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by bhm on 25.07.14.
  */
-public class RandomUserDotMeAsyn
-        extends AbsSimpleAsync<RandomUserMEQuery, Pair<RandomUserMEQuery, List<User>>> {
+public class RandomUserDotMeAsyn extends AbsSimpleAsync<RandomUserMEQuery, List<User>> {
 
     private OnRandomUsersRetreived listener;
     private Logger       log      = new Logger(RandomUserDotMeAsyn.class);
@@ -32,26 +32,30 @@ public class RandomUserDotMeAsyn
     }
 
     @Override
-    protected Pair<RandomUserMEQuery, List<User>> call(RandomUserMEQuery... queries) throws
-                                                                                     Exception {
-        Pair<RandomUserMEQuery, List<User>> r = Pair.create(null, null);
+    protected List<User> call(RandomUserMEQuery... queries) throws Exception {
+        List<User> r = Collections.emptyList();
         if (queries != null) {
             for (RandomUserMEQuery query : queries) {
-                log.d("Random query %s", query);
                 List<User> users = getRandomUsers(query);
-                Pair<RandomUserMEQuery, List<User>> pair = Pair.create(query, users);
-                publishProgress(pair);
+                publishProgress(query, users);
             }
         }
         return r;
     }
 
-    private List<User> getRandomUsers(RandomUserMEQuery rudmQuery) throws IOException,
-                                                                          URISyntaxException {
+
+    private List<User> getRandomUsers(RandomUserMEQuery rudmQuery) {
         List<User> r = new ArrayList<User>();
         if (rudmQuery != null) {
-            RandomUserDotMe randomUser = rudmQuery.getObject(RandomUserDotMe.class);
-            log.d("random user %s", randomUser.getResults().size());
+            RandomUserDotMe randomUser = null;
+            try {
+                randomUser = rudmQuery.getObject(RandomUserDotMe.class);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+            log.d("random user %s", randomUser);
             for (Results result : randomUser.getResults()) {
                 User u = result.getUser();
                 if (u != null) {
@@ -98,7 +102,7 @@ public class RandomUserDotMeAsyn
     }
 
     @Override
-    protected boolean onSuccess(Pair<RandomUserMEQuery, List<User>> result) {
+    protected boolean onSuccess(List<User> result) {
         return false;
     }
 

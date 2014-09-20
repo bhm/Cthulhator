@@ -20,10 +20,10 @@ public class RandomUserMEQuery extends AbsJacksonQuery<RandomUserDotMe> {
     public static final String RESULTS = "results";
     public static final String SEED    = "seed";
     public static final String GENDER  = "gender";
+    public static final String METHOD = "0.4.1";
     private Gender gender;
     private String seed;
     private int    results;
-
 
     protected RandomUserMEQuery(Options o) {
         this.gender = o.gender;
@@ -57,7 +57,7 @@ public class RandomUserMEQuery extends AbsJacksonQuery<RandomUserDotMe> {
 
     @Override
     public String getMethod() {
-        return null;
+        return METHOD;
     }
 
     public static class Options {

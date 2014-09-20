@@ -17,14 +17,19 @@ import butterknife.InjectView;
  * Created by bhm on 26.07.14.
  */
 public class RandomUserFragment extends AbsArgFragment<User> {
-    private FadingActionBarHelperBase mFadingHelper;
-
     @InjectView(R.id.name)
     NameWidget     nameWidget;
     @InjectView(R.id.location)
     LocationWidget locationWidget;
     @InjectView(R.id.image_header)
     LoadingImage   pictureView;
+    private FadingActionBarHelperBase mFadingHelper;
+
+    public static RandomUserFragment newInstane(User user) {
+        RandomUserFragment r = new RandomUserFragment();
+        r.setNewInstanceArgument(user);
+        return r;
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -41,7 +46,7 @@ public class RandomUserFragment extends AbsArgFragment<User> {
 
     @Override
     protected void onInstanceArgumentRead(User instanceArgument) {
-       loadUserInfo(instanceArgument);
+        loadUserInfo(instanceArgument);
     }
 
     public void loadUserInfo(User user) {
@@ -55,14 +60,8 @@ public class RandomUserFragment extends AbsArgFragment<User> {
             nameWidget.setTitle(name.getTitle());
         }
         if (pictureView != null) {
-            String picUrl = user.getPicture();
+            String picUrl = user.getPicture().getMedium();
             pictureView.loadFrom(picUrl);
         }
-    }
-
-    public static RandomUserFragment newInstane(User user) {
-        RandomUserFragment r = new RandomUserFragment();
-        r.setNewInstanceArgument(user);
-        return r;
     }
 }

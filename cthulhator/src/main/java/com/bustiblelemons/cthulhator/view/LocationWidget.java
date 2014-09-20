@@ -21,7 +21,6 @@ import butterknife.InjectView;
  */
 public class LocationWidget extends RelativeLayout {
 
-    private View rootView;
     @InjectView(R.id.street)
     FloatLabelEditText streetInput;
     @InjectView(R.id.city)
@@ -31,7 +30,8 @@ public class LocationWidget extends RelativeLayout {
     @InjectView(R.id.state)
     FloatLabelEditText stateInput;
     @InjectView(R.id.pick_location)
-    ImageButton  pickLocationButton;
+    ImageButton        pickLocationButton;
+    private View         rootView;
     private LocationInfo mInfo;
     private String       mStreet;
     private String       mState;
@@ -150,10 +150,10 @@ public class LocationWidget extends RelativeLayout {
         setStreet(info.getStreet());
         setState(info.getState());
         setCity(info.getCity());
-        setZipcode(info.getZipCode());
+        setZipcode(info.getZip());
     }
 
     public String getZipCode() {
-        return mZipcode != null ? mZipcode : mInfo != null ? mInfo.getZipCode() : null;
+        return mZipcode != null ? mZipcode : mInfo != null ? mInfo.getZip() : null;
     }
 }

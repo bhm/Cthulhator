@@ -10,5 +10,5 @@ public interface LocationInfo {
 
     String getStreet();
 
-    String getZipCode();
+    String getZip();
 }
