@@ -9,7 +9,7 @@ import io.github.scottmaclure.character.traits.model.providers.StringTraitProvid
 /**
  * Created by bhm on 02.08.14.
  */
-public class RandomTraitsSet implements Serializable{
+public class RandomTraitsSet implements Serializable {
 
     private String hair;
     private String facial;
@@ -23,6 +23,33 @@ public class RandomTraitsSet implements Serializable{
         this.characteristic = b.characteristic;
         this.personality = b.personality;
         this.speech = b.speech;
+    }
+
+    public static RandomTraitsSet from(TraitsSet set) {
+        if (set != null) {
+            RandomTraitsSet.Builder builder = new RandomTraitsSet.Builder();
+            StringTraitProvider stp = StringTraitProvider.getInstance();
+            String facial = stp.getRandomTrait(set.getFacialFeatures());
+            String speech = stp.getRandomTrait(set.getSpeech());
+            String hair = stp.getRandomTrait(set.getHair());
+            String personality = stp.getRandomTrait(set.getPersonality());
+            builder.setFacial(facial)
+                    .setSpeech(speech)
+                    .setHair(hair)
+                    .setPersonality(personality);
+            CharacteristicProvider cp = new CharacteristicProvider();
+            Characteristic characteristic = cp.getRandomTrait(set.getCharacteristics());
+            String charName = characteristic.getText();
+            if (characteristic.hasLocation()) {
+                String location = stp.getRandomTrait(set.getBodyLocations());
+                String formated = String.format(Locale.ENGLISH, "%s (%s)", charName, location);
+                builder.setCharacteristic(formated);
+            } else {
+                builder.setCharacteristic(charName);
+            }
+            return builder.build();
+        }
+        return null;
     }
 
     public String getHair() {
@@ -63,30 +90,6 @@ public class RandomTraitsSet implements Serializable{
 
     public void setSpeech(String speech) {
         this.speech = speech;
-    }
-
-    public static RandomTraitsSet from(TraitsSet set) {
-        RandomTraitsSet.Builder builder = new RandomTraitsSet.Builder();
-        StringTraitProvider stp = StringTraitProvider.getInstance();
-        String facial = stp.getRandomTrait(set.getFacialFeatures());
-        String speech = stp.getRandomTrait(set.getSpeech());
-        String hair = stp.getRandomTrait(set.getHair());
-        String personality = stp.getRandomTrait(set.getPersonality());
-        builder.setFacial(facial)
-                .setSpeech(speech)
-                .setHair(hair)
-                .setPersonality(personality);
-        CharacteristicProvider cp = new CharacteristicProvider();
-        Characteristic characteristic = cp.getRandomTrait(set.getCharacteristics());
-        String charName = characteristic.getText();
-        if (characteristic.hasLocation()) {
-            String location = stp.getRandomTrait(set.getBodyLocations());
-            String formated = String.format(Locale.ENGLISH, "%s (%s)", charName, location);
-            builder.setCharacteristic(formated);
-        } else {
-            builder.setCharacteristic(charName);
-        }
-        return builder.build();
     }
 
     public static class Builder {
