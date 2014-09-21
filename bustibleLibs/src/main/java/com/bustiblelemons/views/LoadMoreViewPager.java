@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.View;
 
 import com.bustiblelemons.bustiblelibs.R;
 
@@ -16,7 +17,7 @@ public class LoadMoreViewPager extends ViewPager {
 
     private int loadMoreThreshold = LOAD_MORE_THRESHOLD;
     private LoadMore loadMoreListener;
-
+    private OnPageChangeListener mCachedPageListener;
     OnPageChangeListener mOnPageChangeListener = new OnPageChangeListener() {
 
         @Override
@@ -49,7 +50,17 @@ public class LoadMoreViewPager extends ViewPager {
             }
         }
     };
-    private OnPageChangeListener mCachedPageListener;
+
+    public LoadMoreViewPager(Context context) {
+        super(context);
+        setOnPageChangeListener(mOnPageChangeListener);
+    }
+
+    public LoadMoreViewPager(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(context, attrs);
+        setOnPageChangeListener(mOnPageChangeListener);
+    }
 
     @Override
     public void setOnPageChangeListener(OnPageChangeListener listener) {
@@ -64,17 +75,6 @@ public class LoadMoreViewPager extends ViewPager {
         this.loadMoreThreshold = loadMoreThreshold;
     }
 
-    public LoadMoreViewPager(Context context) {
-        super(context);
-        setOnPageChangeListener(mOnPageChangeListener);
-    }
-
-    public LoadMoreViewPager(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context, attrs);
-        setOnPageChangeListener(mOnPageChangeListener);
-    }
-
     private void init(Context context, AttributeSet attrs) {
         if (attrs != null) {
             TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.LoadMoreViewPager);
@@ -86,6 +86,24 @@ public class LoadMoreViewPager extends ViewPager {
 
     public void setLoadMoreListener(LoadMore loadMoreListener) {
         this.loadMoreListener = loadMoreListener;
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        if (getLayoutParams().height > 0) {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        } else {
+            int height = 0;
+            for (int i = 0; i < getChildCount(); i++) {
+                View child = getChildAt(i);
+                child.measure(widthMeasureSpec,
+                        MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+                int h = child.getMeasuredHeight();
+                if (h > height) { height = h; }
+            }
+            heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        }
     }
 
     public interface LoadMore {
