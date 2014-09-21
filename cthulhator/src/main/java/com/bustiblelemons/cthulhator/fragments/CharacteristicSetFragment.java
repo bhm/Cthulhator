@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.views.SkillView;
+import com.micromobs.android.floatlabel.FloatLabelEditText;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -19,15 +19,21 @@ import io.github.scottmaclure.character.traits.model.RandomTraitsSet;
 public class CharacteristicSetFragment extends AbsArgFragment<RandomTraitsSet> {
 
     @InjectView(R.id.hair)
-    SkillView hair;
+    FloatLabelEditText hair;
     @InjectView(R.id.facial)
-    SkillView facial;
+    FloatLabelEditText facial;
     @InjectView(R.id.characteristic)
-    SkillView characteristic;
+    FloatLabelEditText characteristic;
     @InjectView(R.id.personality)
-    SkillView personality;
+    FloatLabelEditText personality;
     @InjectView(R.id.speech)
-    SkillView speech;
+    FloatLabelEditText speech;
+
+    public static CharacteristicSetFragment newInstance(RandomTraitsSet set) {
+        CharacteristicSetFragment r = new CharacteristicSetFragment();
+        r.setNewInstanceArgument(set);
+        return r;
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -46,20 +52,13 @@ public class CharacteristicSetFragment extends AbsArgFragment<RandomTraitsSet> {
         loadTraitSet(instanceArgument);
     }
 
-
     private void loadTraitSet(RandomTraitsSet traitsSet) {
         if (traitsSet != null) {
-            hair.setValue(traitsSet.getHair());
-            facial.setValue(traitsSet.getFacial());
-            characteristic.setValue(traitsSet.getCharacteristic());
-            personality.setValue(traitsSet.getPersonality());
-            speech.setValue(traitsSet.getSpeech());
+            hair.setText(traitsSet.getHair());
+            facial.setText(traitsSet.getFacial());
+            characteristic.setText(traitsSet.getCharacteristic());
+            personality.setText(traitsSet.getPersonality());
+            speech.setText(traitsSet.getSpeech());
         }
-    }
-
-    public static CharacteristicSetFragment newInstance(RandomTraitsSet set) {
-        CharacteristicSetFragment r = new CharacteristicSetFragment();
-        r.setNewInstanceArgument(set);
-        return r;
     }
 }
