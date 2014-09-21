@@ -7,15 +7,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 
-import com.bustiblelemons.fragments.BaseFragment;
 import com.bustiblelemons.bustiblelibs.R;
+import com.bustiblelemons.fragments.AbsFragment;
 import com.bustiblelemons.logging.Logger;
 
 /**
  * Created by bhm on 19.07.14.
  */
 public class BaseActionBarActivity extends ActionBarActivity
-        implements BaseFragment.ActionBarInterface {
+        implements AbsFragment.ActionBarInterface {
 
     protected static Logger log;
 

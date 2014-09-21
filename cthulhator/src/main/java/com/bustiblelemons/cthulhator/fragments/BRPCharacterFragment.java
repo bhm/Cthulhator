@@ -11,19 +11,19 @@ import android.widget.TextView;
 
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.fragments.main.BRPCard;
-import com.bustiblelemons.fragments.BaseFragment;
+import com.bustiblelemons.fragments.AbsFragment;
 import com.manuelpeinado.fadingactionbar.FadingActionBarHelperBase;
 import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarHelper;
 
 /**
  * Created by bhm on 20.07.14.
  */
-public class BRPCharacterFragment extends BaseFragment implements View.OnClickListener {
+public class BRPCharacterFragment extends AbsFragment implements View.OnClickListener {
 
     private LinearLayout              cardsContainer;
     private FadingActionBarHelperBase mFadingHelper;
     private ImageButton               addPicture;
-    private BRPCharacterListener characterListener;
+    private BRPCharacterListener      characterListener;
 
     public static BRPCharacterFragment newInstance(Bundle extras) {
         BRPCharacterFragment r = new BRPCharacterFragment();

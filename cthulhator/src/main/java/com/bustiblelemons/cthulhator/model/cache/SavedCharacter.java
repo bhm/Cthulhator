@@ -18,6 +18,7 @@ import com.bustiblelemons.cthulhator.model.desc.CharacterDescription;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -27,7 +28,7 @@ import java.util.Set;
 /**
  * Created by bhm on 12.08.14.
  */
-public class SavedCharacter {
+public class SavedCharacter implements Serializable {
 
     protected Set<CharacterProperty> properties  = new HashSet<CharacterProperty>();
     protected List<Possesion>        possesions  = new ArrayList<Possesion>();

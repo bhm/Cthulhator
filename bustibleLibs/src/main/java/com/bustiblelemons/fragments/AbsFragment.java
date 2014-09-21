@@ -2,10 +2,8 @@ package com.bustiblelemons.fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import com.bustiblelemons.google.apis.search.params.GoogleImageSearch;
 import com.bustiblelemons.logging.Logger;
 
 import butterknife.ButterKnife;
@@ -13,7 +11,7 @@ import butterknife.ButterKnife;
 /**
  * Created by bhm on 18.07.14.
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class AbsFragment extends Fragment {
 
     protected static Logger log;
 
@@ -22,11 +20,6 @@ public abstract class BaseFragment extends Fragment {
 
     public Context getContext() {
         return context;
-    }
-
-
-    public interface ActionBarInterface {
-        boolean onSetActionBarToClosable();
     }
 
     @Override
@@ -57,5 +50,9 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
+    }
+
+    public interface ActionBarInterface {
+        boolean onSetActionBarToClosable();
     }
 }

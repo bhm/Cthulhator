@@ -5,16 +5,23 @@
             android:layout_height="match_parent"
             android:background="@color/main_background">
 
+
     <RelativeLayout
+        android:id="@id/questionare"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="@dimen/padding_128">
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@id/preview_card"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/preview_card_height"/>
 
         <RelativeLayout
             android:id="@id/add_character_details"
             style="@style/card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/preview_card"
             android:padding="@dimen/padding_16">
 
             <TextView

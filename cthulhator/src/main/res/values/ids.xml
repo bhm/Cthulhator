@@ -78,4 +78,6 @@
     <item name="scroll" type="id"/>
     <item name="app_card" type="id"/>
     <item name="app" type="id"/>
+    <item name="questionare" type="id"/>
+    <item name="preview_card" type="id"/>
 </resources>

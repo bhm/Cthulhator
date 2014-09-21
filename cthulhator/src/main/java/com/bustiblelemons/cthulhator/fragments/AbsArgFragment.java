@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bustiblelemons.fragments.BaseFragment;
+import com.bustiblelemons.fragments.AbsFragment;
 import com.bustiblelemons.fragments.PagerTitle;
 import com.bustiblelemons.utils.BundleTools;
 
@@ -14,7 +14,8 @@ import java.io.Serializable;
 /**
  * Created by bhm on 02.08.14.
  */
-public abstract class AbsArgFragment<A extends Serializable> extends BaseFragment implements PagerTitle {
+public abstract class AbsArgFragment<A extends Serializable> extends AbsFragment
+        implements PagerTitle {
 
     private static final String NEW_INSTANCE_ARG = "new_instance_arg";
     private A instanceArgument;

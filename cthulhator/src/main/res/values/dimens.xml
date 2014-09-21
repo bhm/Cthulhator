@@ -39,4 +39,6 @@
     <dimen name="padding_48">48dp</dimen>
     <dimen name="font_21">21sp</dimen>
     <dimen name="font_20">20sp</dimen>
+    <dimen name="preview_card_height">250dp</dimen>
+    <dimen name="padding_12">12dp</dimen>
 </resources>
