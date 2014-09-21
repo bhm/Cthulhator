@@ -73,14 +73,20 @@ public class FloatLabelEditText
         return "";
     }
 
-    public void setText(CharSequence title) {
+    public void setText(int resId) {
         if (mEditTextView != null) {
-            mEditTextView.setText(title);
+            mEditTextView.setText(resId);
         }
     }
 
     // -----------------------------------------------------------------------
     // private helpers
+
+    public void setText(CharSequence title) {
+        if (mEditTextView != null) {
+            mEditTextView.setText(title);
+        }
+    }
 
     public void setHint(String hintText) {
         mHintText = hintText;
@@ -276,12 +282,6 @@ public class FloatLabelEditText
                 return (int) Math.round(screenWidth * 0.5);
             default:
                 return Math.round(screenWidth);
-        }
-    }
-
-    public void setText(int resId) {
-        if (mEditTextView != null) {
-            mEditTextView.setText(resId);
         }
     }
 
