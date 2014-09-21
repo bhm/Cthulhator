@@ -14,12 +14,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import io.github.scottmaclure.character.traits.network.api.asyn.AbsAsynTask;
+import io.github.scottmaclure.character.traits.asyn.AbsAsynTask;
 
 /**
  * Created by bhm on 18.07.14.
  */
-public class QueryGImagesAsyn extends AbsAsynTask<GImageSearch, List<GoogleImageObject>>{
+public class QueryGImagesAsyn extends AbsAsynTask<GImageSearch, List<GoogleImageObject>> {
 
     private final ReceiveGoogleImages listener;
     private Logger log = new Logger(QueryGImagesAsyn.class);

@@ -1,4 +1,4 @@
-package io.github.scottmaclure.character.traits.network.api.asyn;
+package io.github.scottmaclure.character.traits.asyn;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -6,21 +6,20 @@ import android.os.Build;
 
 import java.util.concurrent.Executor;
 
-import io.github.scottmaclure.character.traits.asyn.ExecutorsProvider;
-
 public abstract class AbsSimpleAsync<P, R extends Object> extends AsyncTask<P, R, R> {
 
-    protected Context context;
+    protected Context  context;
+    private   Executor executor;
+
+    public AbsSimpleAsync(Context context) {
+        this.context = context;
+    }
 
     protected abstract R call(P... params) throws Exception;
 
     protected abstract boolean onException(Exception e);
 
     protected abstract boolean onSuccess(R result);
-
-    public AbsSimpleAsync(Context context) {
-        this.context = context;
-    }
 
     @Override
     protected R doInBackground(P... arg0) {
@@ -45,8 +44,6 @@ public abstract class AbsSimpleAsync<P, R extends Object> extends AsyncTask<P, R
         return Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB ?
                 this.executeOnExecutor(executor, params) : this.execute(params);
     }
-
-    private Executor executor;
 
     private Executor getExecutor() {
         return executor == null ?

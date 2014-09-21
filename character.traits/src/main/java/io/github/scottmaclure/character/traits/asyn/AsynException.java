@@ -1,4 +1,4 @@
-package io.github.scottmaclure.character.traits.network.api.asyn;
+package io.github.scottmaclure.character.traits.asyn;
 
 import java.io.IOException;
 import java.net.ConnectException;

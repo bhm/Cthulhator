@@ -15,19 +15,19 @@
         <com.bustiblelemons.views.LoadMoreViewPager
             android:id="@id/names_pager"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/name_pager_height"
+            android:layout_height="wrap_content"
             tools:background="@color/main_background"/>
 
         <com.bustiblelemons.views.LoadMoreViewPager
             android:id="@id/characteristic_pager"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/characteristic_pager_height"
+            android:layout_height="wrap_content"
             tools:background="@color/orange_100"/>
 
         <com.bustiblelemons.views.LoadMoreViewPager
             android:id="@id/location_pager"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/location_pager_height"
+            android:layout_height="wrap_content"
             tools:background="@color/red_500"/>
     </LinearLayout>
 </ScrollView>

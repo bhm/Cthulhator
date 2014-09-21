@@ -240,7 +240,7 @@ public class RandomCharactersActivity extends BaseActionBarActivity
         String filesize = FileUtils.byteCountToDisplaySize(traitsFile.length());
         log.d("onTraitsDownloaded size %s ", filesize);
         try {
-            RandomTraitsSetProvider rtsp = RandomTraitsSetProvider.getInstance(traitsFile);
+            RandomTraitsSetProvider rtsp = RandomTraitsSetProvider.from(this);
             if (rtsp != null) {
                 List<RandomTraitsSet> data = rtsp.getRandomTraitSets(4);
                 characteristicAdapter.addData(data);

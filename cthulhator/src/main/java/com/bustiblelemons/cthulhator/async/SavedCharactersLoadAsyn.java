@@ -9,7 +9,7 @@ import com.bustiblelemons.cthulhator.model.cache.SavedCharactersSet;
 
 import java.util.List;
 
-import io.github.scottmaclure.character.traits.network.api.asyn.AbsAsynTask;
+import io.github.scottmaclure.character.traits.asyn.AbsAsynTask;
 
 /**
  * Created by bhm on 13.08.14.

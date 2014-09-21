@@ -1,4 +1,4 @@
-package io.github.scottmaclure.character.traits.network.api.asyn;
+package io.github.scottmaclure.character.traits.asyn;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -7,14 +7,17 @@ import android.util.Pair;
 
 import java.util.concurrent.Executor;
 
-import io.github.scottmaclure.character.traits.asyn.ExecutorsProvider;
 import io.github.scottmaclure.character.traits.logging.Logger;
 
 public abstract class AbsAsynTask<P, R> extends AsyncTask<P, Pair<P, R>, R> {
+    protected Context context;
     private Logger log = new Logger(AbsAsynTask.class);
-    protected Context       context;
-    private   Executor      executor;
-    private   Exception     exception;
+    private Executor  executor;
+    private Exception exception;
+
+    public AbsAsynTask(Context context) {
+        this.context = context;
+    }
 
     public AsyncInfo<P, R> getInfo() {
         return new AsyncInfo<P, R>()
@@ -22,11 +25,6 @@ public abstract class AbsAsynTask<P, R> extends AsyncTask<P, Pair<P, R>, R> {
                 .setExecutor(getExecutor())
                 .setExectutorType(getExecutorType());
     }
-
-    public AbsAsynTask(Context context) {
-        this.context = context;
-    }
-
 
     protected abstract R call(P... params) throws Exception;
 
