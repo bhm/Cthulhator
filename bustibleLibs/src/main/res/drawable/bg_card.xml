@@ -22,11 +22,7 @@
 
             <solid android:color="@color/grey_white_1000"/>
 
-            <padding
-                android:bottom="8dp"
-                android:left="8dp"
-                android:right="8dp"
-                android:top="8dp"/>
+
         </shape>
     </item>
 </layer-list>
