@@ -31,7 +31,6 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
     private boolean     showProgress;
     private int noImageRes = R.drawable.lemons;
     private Animation animationIn;
-    private Animation animationOut;
     private boolean   useAnimations;
 
     public LoadingImage(Context context) {
@@ -61,6 +60,7 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
                 progress.setVisibility(View.VISIBLE);
             }
             setupAnimations(array);
+            array.recycle();
         }
     }
 
@@ -69,13 +69,9 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
         if (useAnimations) {
             int _in = array.getResourceId(R.styleable.LoadingImage_animationIn, R.anim.abc_fade_in);
             setAnimationIn(_in);
-            int _out = array.getResourceId(R.styleable.LoadingImage_animationOut, R.anim.abc_fade_out);
-            setAnimationOut(_out);
+            int _out = array.getResourceId(R.styleable.LoadingImage_animationOut,
+                    R.anim.abc_fade_out);
         }
-    }
-
-    private void setAnimationOut(int resId) {
-        this.animationOut = getAnimation(resId);
     }
 
     private void setAnimationIn(int resId) {
@@ -96,22 +92,6 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
         if (!isSameUrl(addresToLoad)) {
             rLoadUrl(addresToLoad);
         }
-    }
-
-    public void loadFrom(String url, boolean useAnimations) {
-        this.useAnimations = useAnimations;
-        loadFrom(url, null);
-    }
-
-    public void loadFrom(String url, String fallbackUrl, boolean useAnimations) {
-        this.useAnimations = useAnimations;
-        loadFrom(url, fallbackUrl);
-    }
-
-    public void loadFrom(String url, String fallbackUrl, int animIn, int animOut) {
-        setAnimationIn(animIn);
-        setAnimationOut(animOut);
-        loadFrom(url, fallbackUrl);
     }
 
     private void rLoadUrl(String url) {
@@ -162,9 +142,6 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
             image.startAnimation(animationIn);
         }
         image.setImageBitmap(loadedImage);
-        if (useAnimations && animationOut != null) {
-            image.startAnimation(animationOut);
-        }
     }
 
     @Override
