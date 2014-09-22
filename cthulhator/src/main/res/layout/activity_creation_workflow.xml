@@ -11,10 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <FrameLayout
+        <com.bustiblelemons.cthulhator.view.charactercard.CharacterCard
             android:id="@id/preview_card"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/preview_card_height"/>
+            android:layout_height="wrap_content"/>
 
         <RelativeLayout
             android:id="@id/add_character_details"
