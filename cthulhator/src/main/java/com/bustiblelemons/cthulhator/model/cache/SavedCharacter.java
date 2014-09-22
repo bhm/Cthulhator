@@ -212,13 +212,15 @@ public class SavedCharacter implements Serializable {
     }
 
     public String getName() {
-        return description.getName().getFullName();
+        return description != null && description.getName() != null ? description.getName().getFullName() : null;
     }
 
     public String getPhotoUrl() {
-        List<Portrait> portraitList = description.getPortraitList();
-        if (portraitList != null && portraitList.size() > 0) {
-            return portraitList.get(0) != null ? portraitList.get(0).getUrl() : null;
+        if (description != null) {
+            List<Portrait> portraitList = description.getPortraitList();
+            if (portraitList != null && portraitList.size() > 0) {
+                return portraitList.get(0) != null ? portraitList.get(0).getUrl() : null;
+            }
         }
         return null;
     }
@@ -487,5 +489,20 @@ public class SavedCharacter implements Serializable {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    @JsonIgnore
+    public void addPortrait(String url) {
+        addPortrait(url, false);
+    }
+
+    @JsonIgnore
+    public void addPortrait(String url, boolean asMain) {
+        if (portraits == null) {
+            portraits = new ArrayList<Portrait>();
+            Portrait p = new Portrait();
+            p.setMain(asMain);
+            p.setUrl(url);
+        }
     }
 }

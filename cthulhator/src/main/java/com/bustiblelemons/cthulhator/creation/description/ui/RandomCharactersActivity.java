@@ -1,4 +1,4 @@
-package com.bustiblelemons.cthulhator.activities;
+package com.bustiblelemons.cthulhator.creation.description.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -31,6 +31,7 @@ import com.bustiblelemons.cthulhator.settings.Settings;
 import com.bustiblelemons.google.apis.model.GoogleImageObject;
 import com.bustiblelemons.google.apis.search.params.GImageSearch;
 import com.bustiblelemons.google.apis.search.params.GoogleImageSearch;
+import com.bustiblelemons.model.OnlinePhotoUrl;
 import com.bustiblelemons.storage.Storage;
 import com.bustiblelemons.views.LoadMoreViewPager;
 import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarHelper;
@@ -282,6 +283,9 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
         if (mSavedCharacter == null) {
             mSavedCharacter = new SavedCharacter();
         }
+        position = photosPager.getCurrentItem();
+        OnlinePhotoUrl o = photosPagerAdapter.getItem(position).getInstanceArgument();
+        mSavedCharacter.addPortrait(o.getUrl());
         mSavedCharacter.setDescription(description);
         setResult(RESULT_OK, mSavedCharacter);
     }

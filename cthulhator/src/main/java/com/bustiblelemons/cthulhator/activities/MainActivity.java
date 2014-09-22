@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import com.bustiblelemons.activities.AbsActionBarActivity;
 import com.bustiblelemons.cthulhator.R;
+import com.bustiblelemons.cthulhator.creation.description.ui.RandomCharactersActivity;
 
 public class MainActivity extends AbsActionBarActivity {
 

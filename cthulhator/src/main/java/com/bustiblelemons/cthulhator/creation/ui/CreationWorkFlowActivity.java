@@ -56,11 +56,13 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Bundle e = data.getExtras();
-        if (e != null && e.containsKey(INSTANCE_ARGUMENT)) {
-            SavedCharacter passedBack = (SavedCharacter) e.getSerializable(INSTANCE_ARGUMENT);
-            if (passedBack != null) {
-                onInstanceArgumentRead(passedBack);
+        if (data != null) {
+            Bundle e = data.getExtras();
+            if (e != null && e.containsKey(INSTANCE_ARGUMENT)) {
+                SavedCharacter passedBack = (SavedCharacter) e.getSerializable(INSTANCE_ARGUMENT);
+                if (passedBack != null) {
+                    onInstanceArgumentRead(passedBack);
+                }
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

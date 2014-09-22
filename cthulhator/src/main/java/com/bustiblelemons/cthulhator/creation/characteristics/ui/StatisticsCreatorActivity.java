@@ -63,11 +63,14 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         ButterKnife.inject(this);
         pointPool = new PointPool();
         pointPool.register(this);
+        mSavedCharacter = getInstanceArgument();
         if (mSavedCharacter == null) {
             mSavedCharacter = CthulhuCharacter.forEdition(CthulhuEdition.CoC5);
+            characterProperties = mSavedCharacter.getProperties();
             onReroll(rerollButton);
         } else {
             characterProperties = mSavedCharacter.getProperties();
+            fillPropertyViews();
         }
     }
 
@@ -89,7 +92,7 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         }
     }
 
-    private void setPoints() {
+    private void fillPropertyViews() {
         if (characteristicsViewList == null) {
             return;
         }
@@ -100,7 +103,6 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
                 CharacterProperty property = getProperty(tag);
                 int id = view.getId();
                 idsToProperty.put(id, property);
-                property.getRelations();
                 if (property != null) {
                     view.setSkillViewListener(this);
                     view.setMinValue(property.getMinValue());
@@ -135,7 +137,6 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
                 CharacterProperty property = getProperty(tag);
                 int id = view.getId();
                 idsToProperty.put(id, property);
-                property.getRelations();
                 if (property != null) {
                     view.setSkillViewListener(this);
                     view.setMinValue(property.getMinValue());

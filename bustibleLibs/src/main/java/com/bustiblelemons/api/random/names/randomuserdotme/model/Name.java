@@ -1,6 +1,8 @@
 
 package com.bustiblelemons.api.random.names.randomuserdotme.model;
 
+import org.apache.commons.lang.WordUtils;
+
 import java.io.Serializable;
 
 public class Name implements Serializable {
@@ -9,7 +11,7 @@ public class Name implements Serializable {
     private String title;
 
     public String getFirst() {
-        return this.first;
+        return WordUtils.capitalizeFully(this.first);
     }
 
     public void setFirst(String first) {
@@ -17,7 +19,7 @@ public class Name implements Serializable {
     }
 
     public String getLast() {
-        return this.last;
+        return WordUtils.capitalizeFully(this.last);
     }
 
     public void setLast(String last) {
@@ -25,7 +27,7 @@ public class Name implements Serializable {
     }
 
     public String getTitle() {
-        return this.title;
+        return WordUtils.capitalizeFully(this.title);
     }
 
     public void setTitle(String title) {

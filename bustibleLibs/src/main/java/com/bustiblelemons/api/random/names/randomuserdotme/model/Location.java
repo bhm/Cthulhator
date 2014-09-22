@@ -3,6 +3,8 @@ package com.bustiblelemons.api.random.names.randomuserdotme.model;
 
 import com.bustiblelemons.model.LocationInfo;
 
+import org.apache.commons.lang.WordUtils;
+
 import java.io.Serializable;
 
 public class Location implements Serializable, LocationInfo {
@@ -12,7 +14,7 @@ public class Location implements Serializable, LocationInfo {
     private String zip;
 
     public String getCity() {
-        return this.city;
+        return WordUtils.capitalizeFully(this.city);
     }
 
     public void setCity(String city) {
@@ -20,7 +22,7 @@ public class Location implements Serializable, LocationInfo {
     }
 
     public String getState() {
-        return this.state;
+        return WordUtils.capitalizeFully(this.state);
     }
 
     public void setState(String state) {
@@ -28,7 +30,7 @@ public class Location implements Serializable, LocationInfo {
     }
 
     public String getStreet() {
-        return this.street;
+        return WordUtils.capitalizeFully(this.street);
     }
 
     public void setStreet(String street) {
@@ -36,7 +38,7 @@ public class Location implements Serializable, LocationInfo {
     }
 
     public String getZip() {
-        return this.zip;
+        return WordUtils.capitalizeFully(this.zip);
     }
 
     public void setZip(String zip) {

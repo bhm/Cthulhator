@@ -55,6 +55,7 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
         if (attrs != null) {
             TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.LoadingImage);
             noImageRes = array.getResourceId(R.styleable.LoadingImage_no_image, R.drawable.lemons);
+            image.setImageResource(noImageRes);
             showProgress = array.getBoolean(R.styleable.LoadingImage_show_progressbar, false);
             if (showProgress) {
                 progress.setVisibility(View.VISIBLE);

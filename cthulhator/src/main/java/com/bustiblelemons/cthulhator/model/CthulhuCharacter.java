@@ -19,7 +19,8 @@ public class CthulhuCharacter extends SavedCharacter {
     private BirthData      birth;
     private long           presentDate;
     private List<Portrait> portraits;
-    private LruCache<CharacterProperty, List<Possesion>> cachedAffectedPossessions =
+
+    private transient LruCache<CharacterProperty, List<Possesion>> cachedAffectedPossessions =
             new LruCache<CharacterProperty, List<Possesion>>(20);
     private Pair<Long, List<HistoryEvent>> historyForCurrentAge;
 

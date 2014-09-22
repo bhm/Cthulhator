@@ -14,7 +14,7 @@ import java.util.Set;
  * Created by bhm on 20.07.14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CharacterProperty implements Serializable {
+public class CharacterProperty implements Serializable, Comparable<CharacterProperty> {
 
     @JsonIgnore
     public static final CharacterProperty EMPTY = new CharacterProperty();
@@ -204,5 +204,18 @@ public class CharacterProperty implements Serializable {
     @JsonIgnore
     public boolean isPercentile() {
         return PropertyFormat.PERCENTILE.equals(getFormat());
+    }
+
+    @Override
+    public int compareTo(CharacterProperty another) {
+        if (another == null) {
+            return 1;
+        }
+        if (getValue() > another.getValue()) {
+            return 1;
+        } else if (getValue() < another.getValue()) {
+            return -1;
+        }
+        return 0;
     }
 }

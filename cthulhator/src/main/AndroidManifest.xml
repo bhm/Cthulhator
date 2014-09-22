@@ -21,7 +21,7 @@
             android:name=".activities.CharcterViewerActivity"
             android:label="@string/activity_character"/>
         <activity
-            android:name=".activities.RandomCharactersActivity"
+            android:name=".creation.description.ui.RandomCharactersActivity"
             android:label="@string/activity_random_user"/>
         <activity
             android:name=".activities.TestActivity"
