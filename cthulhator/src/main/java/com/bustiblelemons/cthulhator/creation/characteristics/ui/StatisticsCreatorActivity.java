@@ -5,12 +5,13 @@ import android.util.SparseArray;
 import android.widget.TextView;
 
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.activities.AbsActivity;
 import com.bustiblelemons.cthulhator.creation.characteristics.logic.CharacterPropertyAdapter;
 import com.bustiblelemons.cthulhator.creation.characteristics.logic.PointPoolObserver;
+import com.bustiblelemons.cthulhator.creation.ui.AbsCharacterCreationActivity;
 import com.bustiblelemons.cthulhator.model.CharacterProperty;
 import com.bustiblelemons.cthulhator.model.CthulhuCharacter;
 import com.bustiblelemons.cthulhator.model.CthulhuEdition;
+import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
 import com.bustiblelemons.cthulhator.model.dice.PointPool;
 import com.bustiblelemons.views.SkillView;
 
@@ -26,9 +27,10 @@ import butterknife.OnClick;
 /**
  * Created by bhm on 31.08.14.
  */
-public class StatisticsCreatorActivity extends AbsActivity
+public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         implements PointPoolObserver, SkillView.SkillViewListener {
 
+    public static final int REQUEST_CODE = 4;
     @InjectView(R.id.reroll)
     CircleButton rerollButton;
 
@@ -48,10 +50,9 @@ public class StatisticsCreatorActivity extends AbsActivity
             new SparseArray<CharacterPropertyAdapter>();
 
 
-    private PointPool              pointPool           = PointPool.EMPTY;
-    private CthulhuEdition         edition             = CthulhuEdition.CoC5;
-    private CthulhuCharacter       savedCharacter      = CthulhuCharacter.forEdition(edition);
-    private Set<CharacterProperty> characterProperties = savedCharacter.getStatistics();
+    private PointPool pointPool = PointPool.EMPTY;
+    private Set<CharacterProperty> characterProperties;
+    private SavedCharacter         mSavedCharacter;
 
 
     @Override
@@ -62,7 +63,18 @@ public class StatisticsCreatorActivity extends AbsActivity
         ButterKnife.inject(this);
         pointPool = new PointPool();
         pointPool.register(this);
-        onReroll(rerollButton);
+        if (mSavedCharacter == null) {
+            mSavedCharacter = CthulhuCharacter.forEdition(CthulhuEdition.CoC5);
+            onReroll(rerollButton);
+        } else {
+            characterProperties = mSavedCharacter.getProperties();
+        }
+    }
+
+
+    @Override
+    protected void onInstanceArgumentRead(SavedCharacter arg) {
+        mSavedCharacter = arg;
     }
 
     @OnClick(R.id.reroll)
@@ -75,6 +87,41 @@ public class StatisticsCreatorActivity extends AbsActivity
             String format = getString(R.string.points_available_format, available);
             pointsAvailable.setText(format);
         }
+    }
+
+    private void setPoints() {
+        if (characteristicsViewList == null) {
+            return;
+        }
+        int points = 0;
+        for (SkillView view : characteristicsViewList) {
+            if (view != null && view.getTag() != null) {
+                String tag = (String) view.getTag();
+                CharacterProperty property = getProperty(tag);
+                int id = view.getId();
+                idsToProperty.put(id, property);
+                property.getRelations();
+                if (property != null) {
+                    view.setSkillViewListener(this);
+                    view.setMinValue(property.getMinValue());
+                    view.setMaxValue(property.getMaxValue());
+                    int randValue = property.getValue();
+                    points += randValue;
+                    view.setIntValue(randValue);
+                    if (property.hasRelations()) {
+                        CharacterPropertyAdapter adapter = new CharacterPropertyAdapter(this);
+                        adapter.refreshData(mSavedCharacter.getRelatedProperties(property));
+                        view.setAdapter(adapter);
+                        idsToAdapters.put(id, adapter);
+                    }
+                }
+            }
+        }
+        pointPool.setMax(points);
+        pointPool.setPoints(points);
+        pointPool.notifyObservers(points);
+        updatePointsAvailable(points);
+        log.d("Point pool %s", pointPool);
     }
 
     private void distributePoints() {
@@ -98,7 +145,7 @@ public class StatisticsCreatorActivity extends AbsActivity
                     view.setIntValue(randValue);
                     if (property.hasRelations()) {
                         CharacterPropertyAdapter adapter = new CharacterPropertyAdapter(this);
-                        adapter.refreshData(savedCharacter.getRelatedProperties(property));
+                        adapter.refreshData(mSavedCharacter.getRelatedProperties(property));
                         view.setAdapter(adapter);
                         idsToAdapters.put(id, adapter);
                     }
@@ -186,11 +233,17 @@ public class StatisticsCreatorActivity extends AbsActivity
             if (adapter == null) {
                 adapter = new CharacterPropertyAdapter(this);
             }
-            Set<CharacterProperty> data = savedCharacter.getRelatedProperties(property);
+            Set<CharacterProperty> data = mSavedCharacter.getRelatedProperties(property);
             adapter.refreshData(data);
             view.setAdapter(adapter);
             idsToProperty.put(id, property);
             idsToAdapters.put(id, adapter);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_OK, mSavedCharacter);
+        super.onBackPressed();
     }
 }
