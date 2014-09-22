@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <attr name="disableInput" format="boolean" />
+    <attr name="disableInput" format="boolean"/>
     <declare-styleable name="LocationWidget">
-        <attr name="enableMapPicker" format="boolean" />
-        <attr name="pickerDrawable" format="reference" />
-        <attr name="disableInput" />
+        <attr name="enableMapPicker" format="boolean"/>
+        <attr name="pickerDrawable" format="reference"/>
+        <attr name="disableInput"/>
     </declare-styleable>
     <declare-styleable name="NameWidget">
-        <attr name="hideTitle" />
-        <attr name="disableInput" />
+        <attr name="hideTitle"/>
+        <attr name="disableInput"/>
     </declare-styleable>
+    <declare-styleable name="CharacterCard"></declare-styleable>
 </resources>

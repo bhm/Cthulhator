@@ -41,4 +41,5 @@
     <dimen name="font_20">20sp</dimen>
     <dimen name="preview_card_height">250dp</dimen>
     <dimen name="padding_12">12dp</dimen>
+    <dimen name="chracter_card">260dp</dimen>
 </resources>

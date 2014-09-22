@@ -10,6 +10,8 @@
     <color name="flat_button_selected">@color/blue_grey_50</color>
     <color name="hint_focused">@color/blue_grey_500</color>
     <color name="hint_unfocused">@color/blue_grey_400</color>
+    <color name="name_scream_end">#3378909c</color>
+    <color name="name_scream_start">#1d78909c</color>
     <color name="main_background">@color/blue_grey_500</color>
     <color name="flat_button_text">@color/main_color_active</color>
     <color name="flat_button_text_pressed">@color/main_color_selected</color>

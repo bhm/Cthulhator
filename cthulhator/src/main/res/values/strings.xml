@@ -69,6 +69,10 @@
     <string name="pow">POW</string>
     <string name="san">SAN</string>
     <string name="creation_workflow">Workflow</string>
+    <string name="placeholder_top_skills">Cthulhu Mythos\nLibrary Use\nCherry Popper</string>
+    <string name="placeholder_top_stats">Intelligence, Education, Dexterity, Cthulhu Mythos, Library, Use Cherry Popper</string>
+    <string name="placeholder_short_info">45, Boston</string>
+    <string name="delete">DELETE</string>
 
 
 </resources>
