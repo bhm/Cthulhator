@@ -1,13 +1,16 @@
 package com.bustiblelemons.cthulhator.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.View;
 
+import com.bustiblelemons.activities.AbsActionBarActivity;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.adapters.SavedCharactersAdapter;
 import com.bustiblelemons.cthulhator.async.SavedCharactersCallBack;
 import com.bustiblelemons.cthulhator.cache.CharacterCache;
+import com.bustiblelemons.cthulhator.creation.ui.CreationWorkFlowActivity;
 import com.bustiblelemons.cthulhator.model.Grouping;
 import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
 import com.bustiblelemons.views.LoadMoreListView;
@@ -23,7 +26,7 @@ import butterknife.OnClick;
 /**
  * Created by bhm on 13.08.14.
  */
-public class CharactersListActivity extends AbsActivity
+public class CharactersListActivity extends AbsActionBarActivity
         implements View.OnClickListener,
                    SavedCharactersCallBack,
                    LoadMoreListView.OnLoadMoreListener,
@@ -32,9 +35,9 @@ public class CharactersListActivity extends AbsActivity
     @InjectView(android.R.id.list)
     LoadMoreListView listView;
     @InjectView(R.id.search)
-    SearchView searchView;
+    SearchView       searchView;
     @InjectView(R.id.add_character)
-    CircleButton addFab;
+    CircleButton     addFab;
     private SavedCharactersAdapter listAdapter;
     private Grouping               grouping;
     private FadingActionBarHelper  fadingbarHelper;
@@ -88,6 +91,10 @@ public class CharactersListActivity extends AbsActivity
         }
     }
 
+    protected void launchCreationWorkflow() {
+        Intent i = new Intent(this, CreationWorkFlowActivity.class);
+        startActivity(i);
+    }
 
     @Override
     public void onLoadMore() {

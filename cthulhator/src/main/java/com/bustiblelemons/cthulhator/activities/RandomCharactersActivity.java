@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import com.bustiblelemons.activities.BaseActionBarActivity;
 import com.bustiblelemons.api.random.names.randomuserdotme.RandomUserMEQuery;
 import com.bustiblelemons.api.random.names.randomuserdotme.asyn.OnRandomUsersRetreived;
 import com.bustiblelemons.api.random.names.randomuserdotme.asyn.RandomUserDotMeAsyn;
@@ -20,12 +19,13 @@ import com.bustiblelemons.cthulhator.adapters.RandomUserMELocationPagerAdapter;
 import com.bustiblelemons.cthulhator.adapters.RandomUserMENamePagerAdapter;
 import com.bustiblelemons.cthulhator.async.QueryGImagesAsyn;
 import com.bustiblelemons.cthulhator.async.ReceiveGoogleImages;
-import com.bustiblelemons.cthulhator.cache.CharacterCache;
+import com.bustiblelemons.cthulhator.creation.ui.AbsCharacterCreationActivity;
 import com.bustiblelemons.cthulhator.fragments.OnBroadcastOnlineSearchSettings;
 import com.bustiblelemons.cthulhator.fragments.OnOpenSearchSettings;
 import com.bustiblelemons.cthulhator.fragments.PortraitsSettingsFragment;
 import com.bustiblelemons.cthulhator.fragments.dialog.RandomCharSettingsDialog;
 import com.bustiblelemons.cthulhator.model.CharacterSettings;
+import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
 import com.bustiblelemons.cthulhator.model.desc.CharacterDescription;
 import com.bustiblelemons.cthulhator.settings.Settings;
 import com.bustiblelemons.google.apis.model.GoogleImageObject;
@@ -52,7 +52,7 @@ import io.github.scottmaclure.character.traits.model.providers.RandomTraitsSetPr
 /**
  * Created by bhm on 25.07.14.
  */
-public class RandomCharactersActivity extends BaseActionBarActivity
+public class RandomCharactersActivity extends AbsCharacterCreationActivity
         implements
         LoadMoreViewPager.LoadMore,
         OnRandomUsersRetreived,
@@ -61,6 +61,7 @@ public class RandomCharactersActivity extends BaseActionBarActivity
         OnBroadcastOnlineSearchSettings,
         ReceiveGoogleImages {
 
+    public static final int REQUEST_CODE = 2;
     @InjectView(R.id.photos_pager)
     LoadMoreViewPager photosPager;
     @InjectView(R.id.names_pager)
@@ -83,6 +84,7 @@ public class RandomCharactersActivity extends BaseActionBarActivity
     private RandomCharSettingsDialog         randomCharSettingsDialog;
     private PortraitsSettingsFragment        portraitSettingsFragment;
     private CharacterSettings                characterSettings;
+    private SavedCharacter mSavedCharacter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -277,7 +279,11 @@ public class RandomCharactersActivity extends BaseActionBarActivity
         position = characteristicPager.getCurrentItem();
         RandomTraitsSet traits = characteristicAdapter.getItem(position).getInstanceArgument();
         description.setTraits(traits);
-        CharacterCache.saveDescription(this, description);
+        if (mSavedCharacter == null) {
+            mSavedCharacter = new SavedCharacter();
+        }
+        mSavedCharacter.setDescription(description);
+        setResult(RESULT_OK, mSavedCharacter);
     }
 
     public void handleSettingsButton() {
@@ -311,5 +317,10 @@ public class RandomCharactersActivity extends BaseActionBarActivity
             photosPagerAdapter.addData(results);
         }
         return false;
+    }
+
+    @Override
+    protected void onInstanceArgumentRead(SavedCharacter arg) {
+        mSavedCharacter = arg;
     }
 }

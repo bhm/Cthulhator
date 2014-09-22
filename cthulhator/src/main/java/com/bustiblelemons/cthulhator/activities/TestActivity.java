@@ -3,7 +3,7 @@ package com.bustiblelemons.cthulhator.activities;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
-import com.bustiblelemons.activities.BaseActionBarActivity;
+import com.bustiblelemons.activities.AbsActionBarActivity;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.adapters.BRPCharacterPagerAdapter;
 import com.bustiblelemons.logging.Logger;
@@ -11,7 +11,7 @@ import com.bustiblelemons.logging.Logger;
 /**
  * Created by bhm on 21.07.14.
  */
-public class TestActivity extends BaseActionBarActivity implements ViewPager.OnPageChangeListener {
+public class TestActivity extends AbsActionBarActivity implements ViewPager.OnPageChangeListener {
 
     private static final Logger log = new Logger(TestActivity.class);
     private ViewPager                pager;

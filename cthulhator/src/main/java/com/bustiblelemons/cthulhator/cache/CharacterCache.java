@@ -27,9 +27,8 @@ public class CharacterCache {
     }
 
     public static CharacterCache getInstance() {
-        return instance == null ? instance = new CharacterCache() : instance;
+        return LazyHolder.INSTANCE;
     }
-
 
     public static void loadSavedCharactersAsync(Context context, Grouping... groupings) {
         if (context instanceof SavedCharactersCallBack) {
@@ -61,6 +60,7 @@ public class CharacterCache {
             }
         }
     }
+
     public synchronized static SavedCharactersSet getCharacterSet(Context context) {
         if (sSavedCharacterSet == null) {
             ObjectMapper m = new ObjectMapper();
@@ -75,10 +75,7 @@ public class CharacterCache {
         return sSavedCharacterSet;
     }
 
-    public synchronized static void saveDescription(Context context, CharacterDescription description) {
-        if (sSavedCharacterSet == null) {
-            sSavedCharacterSet = getCharacterSet(context);
-        }
-        sSavedCharacterSet.addDescription();
+    private static final class LazyHolder {
+        private static final CharacterCache INSTANCE = new CharacterCache();
     }
 }

@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 
-import com.bustiblelemons.activities.BaseActionBarActivity;
+import com.bustiblelemons.activities.AbsActionBarActivity;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.fragments.BRPCharacterFragment;
 import com.kbeanie.imagechooser.api.ChosenImage;
@@ -13,7 +13,7 @@ import com.kbeanie.imagechooser.api.ImageChooserListener;
 /**
  * Created by bhm on 20.07.14.
  */
-public class CharcterViewerActivity extends BaseActionBarActivity
+public class CharcterViewerActivity extends AbsActionBarActivity
         implements BRPCharacterFragment.BRPCharacterListener,
                    ImageChooserListener {
 

@@ -3,7 +3,7 @@ package com.bustiblelemons.cthulhator.activities;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
-import com.bustiblelemons.activities.BaseActionBarActivity;
+import com.bustiblelemons.activities.AbsActionBarActivity;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.adapters.PortraitsPagerAdapter;
 import com.bustiblelemons.cthulhator.async.QueryGImagesAsyn;
@@ -20,15 +20,14 @@ import java.util.List;
 /**
  * Created by bhm on 18.07.14.
  */
-public class PortraitsActivity extends BaseActionBarActivity
+public class PortraitsActivity extends AbsActionBarActivity
         implements LoadMoreViewPager.LoadMore,
                    PortraitsSettingsFragment.GoogleSearchOptsListener,
                    ReceiveGoogleImages {
 
-    private LoadMoreViewPager pager;
-
-    private PortraitsPagerAdapter pagerAdapter;
     private static final Logger log = new Logger(PortraitsActivity.class);
+    private LoadMoreViewPager         pager;
+    private PortraitsPagerAdapter     pagerAdapter;
     private GoogleImageSearch.Options searchOptions;
     private GImageSearch              mImageSearch;
     private PortraitsSettingsFragment settingsFragment;

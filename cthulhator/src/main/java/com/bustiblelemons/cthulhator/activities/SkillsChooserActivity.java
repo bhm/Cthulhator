@@ -7,7 +7,9 @@ import android.widget.TextView;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.adapters.SkillChanged;
 import com.bustiblelemons.cthulhator.adapters.SkillsAdapter;
+import com.bustiblelemons.cthulhator.creation.ui.AbsCharacterCreationActivity;
 import com.bustiblelemons.cthulhator.model.CharacterProperty;
+import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
 
 import java.util.Locale;
 
@@ -17,7 +19,7 @@ import butterknife.InjectView;
 /**
  * Created by bhm on 31.08.14.
  */
-public class SkillsChooserActivity extends AbsActivity implements SkillChanged {
+public class SkillsChooserActivity extends AbsCharacterCreationActivity implements SkillChanged {
 
     public static final String CHARACTER = "character";
 
@@ -25,9 +27,10 @@ public class SkillsChooserActivity extends AbsActivity implements SkillChanged {
     ListView listView;
     @InjectView(R.id.points_available)
     TextView pointsAvailable;
-    private SkillsAdapter skillsAdapter;
-    private int    total;
-    private String pointsAvailablePrefix;
+    private SkillsAdapter  skillsAdapter;
+    private int            total;
+    private String         pointsAvailablePrefix;
+    private SavedCharacter mSavedCharacter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +38,13 @@ public class SkillsChooserActivity extends AbsActivity implements SkillChanged {
         onSetActionBarToClosable();
         setContentView(R.layout.activity_skill_chooser);
         ButterKnife.inject(this);
-        if (hasExtra(CHARACTER)) {
-        }
         setupSkillsList();
         setupPoints();
+    }
+
+    @Override
+    protected void onInstanceArgumentRead(SavedCharacter arg) {
+        mSavedCharacter = arg;
     }
 
     private void setupPoints() {
@@ -52,6 +58,7 @@ public class SkillsChooserActivity extends AbsActivity implements SkillChanged {
 
     private void setupSkillsList() {
         skillsAdapter = new SkillsAdapter(this, this);
+        skillsAdapter.addItems(mSavedCharacter.getTopSkills());
         listView.setAdapter(skillsAdapter);
         listView.setClickable(false);
     }

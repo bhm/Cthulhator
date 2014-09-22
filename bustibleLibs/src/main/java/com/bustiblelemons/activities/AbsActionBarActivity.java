@@ -14,7 +14,7 @@ import com.bustiblelemons.logging.Logger;
 /**
  * Created by bhm on 19.07.14.
  */
-public class BaseActionBarActivity extends ActionBarActivity
+public class AbsActionBarActivity extends ActionBarActivity
         implements AbsFragment.ActionBarInterface {
 
     protected static Logger log;
@@ -47,7 +47,6 @@ public class BaseActionBarActivity extends ActionBarActivity
         actionBar.setHomeAsUpIndicator(R.drawable.ic_action_navigation_back_dark);
         return false;
     }
-
 
     protected int addFragment(int containerId, Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
