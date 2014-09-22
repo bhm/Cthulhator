@@ -2,10 +2,12 @@ package com.bustiblelemons.cthulhator.model;
 
 import com.bustiblelemons.api.random.names.randomuserdotme.model.Location;
 
+import java.io.Serializable;
+
 /**
  * Created by bhm on 29.07.14.
  */
-public class BirthData {
+public class BirthData implements Serializable {
     private Location location;
     private String   description;
     private long     date;

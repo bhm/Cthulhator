@@ -1,9 +1,13 @@
 package com.bustiblelemons.cthulhator.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
+import java.io.Serializable;
+
 /**
  * Created by bhm on 29.07.14.
  */
-public class Relation {
+public class Relation implements Serializable {
     private String propertyName;
     private int    modifier;
 
@@ -90,6 +94,7 @@ public class Relation {
         return propertyName != null ? propertyName.hashCode() : 0;
     }
 
+    @JsonIgnore
     public int getBaseValueByRelation(int relatedPropertyValue) {
         switch (modifierType) {
             case MULTIPLY:

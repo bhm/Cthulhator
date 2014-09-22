@@ -1,12 +1,14 @@
 package com.bustiblelemons.cthulhator.model;
 
+import java.io.Serializable;
+
 /**
  * Created by bhm on 29.07.14.
  */
-public class Portrait {
-    private String name;
-    private String url;
-    private byte[] data;
+public class Portrait implements Serializable {
+    private String  name;
+    private String  url;
+    private byte[]  data;
     private boolean isMain;
 
     public String getName() {

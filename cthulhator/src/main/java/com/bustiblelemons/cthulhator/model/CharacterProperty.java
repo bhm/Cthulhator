@@ -3,6 +3,7 @@ package com.bustiblelemons.cthulhator.model;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.Set;
  * Created by bhm on 20.07.14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CharacterProperty {
+public class CharacterProperty implements Serializable {
 
     @JsonIgnore
     public static final CharacterProperty EMPTY = new CharacterProperty();

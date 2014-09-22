@@ -2,17 +2,19 @@ package com.bustiblelemons.cthulhator.model;
 
 import com.bustiblelemons.api.random.names.randomuserdotme.model.Location;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by bhm on 29.07.14.
  */
-public class HistoryEvent {
+public class HistoryEvent implements Serializable {
     private String   name;
     private String   description;
     private long     date;
     private Location location;
+    private List<Relation> affected = new ArrayList<Relation>();
 
     public long getDate() {
         return date;
@@ -29,8 +31,6 @@ public class HistoryEvent {
     public void setLocation(Location location) {
         this.location = location;
     }
-
-    private List<Relation> affected = new ArrayList<Relation>();
 
     public String getName() {
         return name;

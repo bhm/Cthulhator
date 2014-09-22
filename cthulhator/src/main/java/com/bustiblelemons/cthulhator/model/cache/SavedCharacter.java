@@ -21,9 +21,11 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Created by bhm on 12.08.14.
@@ -39,10 +41,25 @@ public class SavedCharacter implements Serializable {
     private long                 presentDate;
     private List<Portrait>       portraits;
     @JsonIgnore
-    private LruCache<CharacterProperty, List<Possesion>> cachedAffectedPossessions =
+    private transient LruCache<CharacterProperty, List<Possesion>> cachedAffectedPossessions =
             new LruCache<CharacterProperty, List<Possesion>>(20);
 
     private Pair<Long, List<HistoryEvent>> historyForCurrentAge;
+    @JsonIgnore
+    private transient Comparator<CharacterProperty> sPropertyComparator = new Comparator<CharacterProperty>() {
+        @Override
+        public int compare(CharacterProperty lhs, CharacterProperty rhs) {
+            int lhsv = lhs.getValue();
+            int rhsv = rhs.getValue();
+            if (lhsv > rhsv) {
+                return 1;
+            } else if (lhsv < rhsv) {
+                return -1;
+            }
+            return 0;
+        }
+    };
+    private int age;
 
     public CthulhuEdition getEdition() {
         return edition;
@@ -53,6 +70,48 @@ public class SavedCharacter implements Serializable {
         fillStatistics(edition);
         fillSkillsList(edition);
         updateSkillPointPools();
+    }
+
+    @JsonIgnore
+    public Set<CharacterProperty> getTopCharacteristics() {
+        Set<CharacterProperty> r = new TreeSet<CharacterProperty>(sPropertyComparator);
+        r.addAll(getStatistics());
+        return r;
+    }
+
+    @JsonIgnore
+    public Set<CharacterProperty> getTopCharacteristics(int max) {
+        Set<CharacterProperty> r = new TreeSet<CharacterProperty>(sPropertyComparator);
+        int i = 0;
+        for (CharacterProperty property : getStatistics()) {
+            r.add(property);
+            i++;
+            if (i == max) {
+                return r;
+            }
+        }
+        return r;
+    }
+
+    @JsonIgnore
+    public Set<CharacterProperty> getTopSkills() {
+        Set<CharacterProperty> r = new TreeSet<CharacterProperty>(sPropertyComparator);
+        r.addAll(getSkills());
+        return r;
+    }
+
+    @JsonIgnore
+    public Set<CharacterProperty> getTopSkills(int max) {
+        Set<CharacterProperty> r = new TreeSet<CharacterProperty>(sPropertyComparator);
+        int i = 0;
+        for (CharacterProperty property : getSkills()) {
+            r.add(property);
+            i++;
+            if (i == max) {
+                return r;
+            }
+        }
+        return r;
     }
 
     private void updateSkillPointPools() {
@@ -422,5 +481,11 @@ public class SavedCharacter implements Serializable {
         this.fullHistory = fullHistory;
     }
 
+    public int getAge() {
+        return age;
+    }
 
+    public void setAge(int age) {
+        this.age = age;
+    }
 }

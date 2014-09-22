@@ -6,6 +6,7 @@ import com.bustiblelemons.cthulhator.model.Portrait;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+import java.io.Serializable;
 import java.util.List;
 
 import io.github.scottmaclure.character.traits.model.RandomTraitsSet;
@@ -14,10 +15,11 @@ import io.github.scottmaclure.character.traits.model.RandomTraitsSet;
  * Created by bhm on 12.08.14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CharacterDescription {
+public class CharacterDescription implements Serializable {
     private Name            name;
     private Location        location;
     private RandomTraitsSet traits;
+    private List<Portrait>  portraitList;
 
     public RandomTraitsSet getTraits() {
         return traits;
@@ -26,8 +28,6 @@ public class CharacterDescription {
     public void setTraits(RandomTraitsSet traits) {
         this.traits = traits;
     }
-
-    private List<Portrait> portraitList;
 
     public Name getName() {
         return name;

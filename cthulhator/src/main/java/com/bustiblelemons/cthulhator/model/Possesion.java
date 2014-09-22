@@ -1,12 +1,13 @@
 package com.bustiblelemons.cthulhator.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by bhm on 29.07.14.
  */
-public class Possesion {
+public class Possesion implements Serializable {
     private long   size;
     private String unit;
 
