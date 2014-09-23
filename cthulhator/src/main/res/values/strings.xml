@@ -73,6 +73,7 @@
     <string name="placeholder_top_stats">Intelligence, Education, Dexterity, Cthulhu Mythos, Library, Use Cherry Popper</string>
     <string name="placeholder_short_info">45, Boston</string>
     <string name="delete">DELETE</string>
+    <string name="history">History</string>
 
 
 </resources>

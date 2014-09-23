@@ -4,9 +4,11 @@ import com.bustiblelemons.api.random.names.randomuserdotme.model.Location;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.Name;
 import com.bustiblelemons.cthulhator.model.Portrait;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import io.github.scottmaclure.character.traits.model.RandomTraitsSet;
@@ -51,5 +53,24 @@ public class CharacterDescription implements Serializable {
 
     public void setPortraitList(List<Portrait> portraitList) {
         this.portraitList = portraitList;
+    }
+
+    @JsonIgnore
+    public void addPortrait(String url) {
+        addPortrait(url, false);
+    }
+
+    @JsonIgnore
+    public void addPortrait(String url, boolean asMain) {
+        if (portraitList == null) {
+            portraitList = new ArrayList<Portrait>();
+        }
+        Portrait p = new Portrait();
+        p.setMain(asMain);
+        p.setUrl(url);
+        if (portraitList != null && portraitList.contains(p)) {
+            portraitList.remove(p);
+        }
+        portraitList.add(p);
     }
 }

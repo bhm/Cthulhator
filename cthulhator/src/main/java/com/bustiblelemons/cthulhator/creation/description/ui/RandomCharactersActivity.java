@@ -25,6 +25,7 @@ import com.bustiblelemons.cthulhator.fragments.OnOpenSearchSettings;
 import com.bustiblelemons.cthulhator.fragments.PortraitsSettingsFragment;
 import com.bustiblelemons.cthulhator.fragments.dialog.RandomCharSettingsDialog;
 import com.bustiblelemons.cthulhator.model.CharacterSettings;
+import com.bustiblelemons.cthulhator.model.Portrait;
 import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
 import com.bustiblelemons.cthulhator.model.desc.CharacterDescription;
 import com.bustiblelemons.cthulhator.settings.Settings;
@@ -32,6 +33,7 @@ import com.bustiblelemons.google.apis.model.GoogleImageObject;
 import com.bustiblelemons.google.apis.search.params.GImageSearch;
 import com.bustiblelemons.google.apis.search.params.GoogleImageSearch;
 import com.bustiblelemons.model.OnlinePhotoUrl;
+import com.bustiblelemons.model.OnlinePhotoUrlImpl;
 import com.bustiblelemons.storage.Storage;
 import com.bustiblelemons.views.LoadMoreViewPager;
 import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarHelper;
@@ -40,6 +42,8 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import at.markushi.ui.CircleButton;
@@ -95,6 +99,11 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
         onSetActionBarToClosable();
         helper.initActionBar(this);
         ButterKnife.inject(this);
+        mSavedCharacter = getInstanceArgument();
+        setupView();
+    }
+
+    private void setupView() {
         setupPhotosPager();
         setupNamesPager();
         setupLocationsPager();
@@ -128,6 +137,12 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
         if (locationsPager != null) {
             locationPagerAdapter = new RandomUserMELocationPagerAdapter(
                     getSupportFragmentManager());
+            if (mSavedCharacter != null && mSavedCharacter.getDescription().getLocation() != null) {
+                Location location = mSavedCharacter.getDescription().getLocation();
+                User user = new User();
+                user.setLocation(location);
+                locationPagerAdapter.addData(user);
+            }
             locationsPager.setAdapter(locationPagerAdapter);
             locationsPager.setLoadMoreListener(this);
         }
@@ -136,6 +151,12 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
     private void setupCharacteristicsPager() {
         if (characteristicPager != null) {
             characteristicAdapter = new CharacteristicTraitsAdapter(getSupportFragmentManager());
+            if (mSavedCharacter != null && mSavedCharacter.getDescription() != null) {
+                RandomTraitsSet set = mSavedCharacter.getDescription().getTraits();
+                if (set != null) {
+                    characteristicAdapter.addData(set);
+                }
+            }
             characteristicPager.setLoadMoreListener(this);
             characteristicPager.setAdapter(characteristicAdapter);
             onTraitsDownloaded(TraitsSet.FILE);
@@ -144,10 +165,30 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
 
     private void setupPhotosPager() {
         photosPagerAdapter = new PhotosPagerAdapter(getSupportFragmentManager());
+        if (photosPagerAdapter != null) {
+            photosPagerAdapter.addData(getExisitngPortrats());
+        }
         photosPager.setLoadMoreListener(this);
         characterSettings = Settings.getLastPortratiSettings(this);
         photosPager.setTag(R.id.tag_search, characterSettings);
         photosPager.setAdapter(photosPagerAdapter);
+    }
+
+    private List<OnlinePhotoUrl> getExisitngPortrats() {
+        if (mSavedCharacter != null) {
+            List<Portrait> portraits = mSavedCharacter.getPortraits();
+            if (portraits != null && portraits.size() > 0) {
+                List<OnlinePhotoUrl> list = new ArrayList<OnlinePhotoUrl>();
+                for (Portrait portrait : mSavedCharacter.getPortraits()) {
+                    if (portrait != null && portrait.getUrl() != null) {
+                        OnlinePhotoUrlImpl opul = new OnlinePhotoUrlImpl(portrait.getUrl());
+                        list.add(opul);
+                    }
+                }
+                return list;
+            }
+        }
+        return Collections.emptyList();
     }
 
     private void setupRandomUserMEQuery() {
@@ -158,6 +199,14 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
 
     private void setupNamesPager() {
         namesPagerAdapter = new RandomUserMENamePagerAdapter(getSupportFragmentManager());
+        if (mSavedCharacter != null && mSavedCharacter.getName() != null) {
+            User user = new User();
+            Name name = mSavedCharacter.getNameObject();
+            if (user != null && name != null) {
+                user.setName(name);
+                namesPagerAdapter.addData(user);
+            }
+        }
         namesPager.setLoadMoreListener(this);
         namesPager.setAdapter(namesPagerAdapter);
     }
@@ -264,7 +313,7 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
             case R.id.fab:
                 //TODO Save the set as a character properties set
                 saveCharacter();
-                this.finish();
+                onBackPressed();
                 break;
         }
     }
@@ -285,7 +334,7 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
         }
         position = photosPager.getCurrentItem();
         OnlinePhotoUrl o = photosPagerAdapter.getItem(position).getInstanceArgument();
-        mSavedCharacter.addPortrait(o.getUrl());
+        description.addPortrait(o.getUrl());
         mSavedCharacter.setDescription(description);
         setResult(RESULT_OK, mSavedCharacter);
     }

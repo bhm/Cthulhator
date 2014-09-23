@@ -42,4 +42,21 @@ public class Portrait implements Serializable {
     public void setMain(boolean isMain) {
         this.isMain = isMain;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; }
+        if (o == null || getClass() != o.getClass()) { return false; }
+
+        Portrait portrait = (Portrait) o;
+
+        if (url != null ? !url.equals(portrait.url) : portrait.url != null) { return false; }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return url != null ? url.hashCode() : 0;
+    }
 }

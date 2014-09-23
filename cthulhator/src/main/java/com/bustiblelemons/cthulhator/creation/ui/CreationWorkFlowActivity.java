@@ -26,8 +26,8 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mSavedCharacter = getInstanceArgument();
         super.onCreate(savedInstanceState);
+        mSavedCharacter = getInstanceArgument();
         setContentView(R.layout.activity_creation_workflow);
         ButterKnife.inject(this);
         onSetActionBarToClosable();
@@ -56,23 +56,25 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (data != null) {
             Bundle e = data.getExtras();
             if (e != null && e.containsKey(INSTANCE_ARGUMENT)) {
                 SavedCharacter passedBack = (SavedCharacter) e.getSerializable(INSTANCE_ARGUMENT);
+                log.d("passedback %s", passedBack);
                 if (passedBack != null) {
                     onInstanceArgumentRead(passedBack);
                 }
             }
         }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     protected void onInstanceArgumentRead(SavedCharacter arg) {
         mSavedCharacter = arg;
         if (mSavedCharacter != null && characterCard != null) {
-            CharacterInfo characterInfo = SavedCharacterTransformer.transform(mSavedCharacter);
+            CharacterInfo characterInfo = SavedCharacterTransformer.getInstance().transform(
+                    mSavedCharacter);
             characterCard.setCardInfo(characterInfo);
         }
     }

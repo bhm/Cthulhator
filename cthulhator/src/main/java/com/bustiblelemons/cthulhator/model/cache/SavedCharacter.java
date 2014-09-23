@@ -4,6 +4,7 @@ import android.util.LruCache;
 import android.util.Pair;
 
 import com.bustiblelemons.api.random.names.randomuserdotme.model.Location;
+import com.bustiblelemons.api.random.names.randomuserdotme.model.Name;
 import com.bustiblelemons.cthulhator.model.BirthData;
 import com.bustiblelemons.cthulhator.model.CharacterProperty;
 import com.bustiblelemons.cthulhator.model.CthulhuEdition;
@@ -39,7 +40,6 @@ public class SavedCharacter implements Serializable {
     private CharacterDescription description;
     private BirthData            birth;
     private long                 presentDate;
-    private List<Portrait>       portraits;
     @JsonIgnore
     private transient LruCache<CharacterProperty, List<Possesion>> cachedAffectedPossessions =
             new LruCache<CharacterProperty, List<Possesion>>(20);
@@ -215,11 +215,13 @@ public class SavedCharacter implements Serializable {
         return description != null && description.getName() != null ? description.getName().getFullName() : null;
     }
 
+    @JsonIgnore
     public String getPhotoUrl() {
-        if (description != null) {
-            List<Portrait> portraitList = description.getPortraitList();
-            if (portraitList != null && portraitList.size() > 0) {
-                return portraitList.get(0) != null ? portraitList.get(0).getUrl() : null;
+        if (description != null && description.getPortraitList() != null) {
+            for (Portrait portrait : description.getPortraitList()) {
+                if (portrait != null && portrait.getUrl() != null) {
+                    return portrait.getUrl();
+                }
             }
         }
         return null;
@@ -321,17 +323,20 @@ public class SavedCharacter implements Serializable {
     }
 
     public List<Portrait> getPortraits() {
-        return portraits;
+        return description != null ? description.getPortraitList() : new ArrayList<Portrait>();
     }
 
     public void setPortraits(List<Portrait> portraits) {
-        this.portraits = portraits;
+        if (description == null) {
+            description = new CharacterDescription();
+        }
+        description.setPortraitList(portraits);
     }
 
     public Portrait getMainPortrait() {
         Portrait r = null;
-        if (portraits != null) {
-            for (Portrait portrait : portraits) {
+        if (getPortraits() != null) {
+            for (Portrait portrait : getPortraits()) {
                 if (r == null && portrait != null) {
                     r = portrait;
                 }
@@ -491,18 +496,26 @@ public class SavedCharacter implements Serializable {
         this.age = age;
     }
 
-    @JsonIgnore
-    public void addPortrait(String url) {
-        addPortrait(url, false);
-    }
 
     @JsonIgnore
-    public void addPortrait(String url, boolean asMain) {
-        if (portraits == null) {
-            portraits = new ArrayList<Portrait>();
-            Portrait p = new Portrait();
-            p.setMain(asMain);
-            p.setUrl(url);
-        }
+    public Name getNameObject() {
+        return getDescription() != null ? getDescription().getName() : null;
+    }
+
+    @Override
+    public String toString() {
+        return "SavedCharacter{" +
+                "properties=" + properties +
+                ", possesions=" + possesions +
+                ", fullHistory=" + fullHistory +
+                ", edition=" + edition +
+                ", description=" + description +
+                ", birth=" + birth +
+                ", presentDate=" + presentDate +
+                ", cachedAffectedPossessions=" + cachedAffectedPossessions +
+                ", historyForCurrentAge=" + historyForCurrentAge +
+                ", sPropertyComparator=" + sPropertyComparator +
+                ", age=" + age +
+                '}';
     }
 }
