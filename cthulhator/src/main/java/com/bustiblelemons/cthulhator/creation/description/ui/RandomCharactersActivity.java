@@ -137,11 +137,13 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
         if (locationsPager != null) {
             locationPagerAdapter = new RandomUserMELocationPagerAdapter(
                     getSupportFragmentManager());
-            if (mSavedCharacter != null && mSavedCharacter.getDescription().getLocation() != null) {
+            if (mSavedCharacter != null && mSavedCharacter.getDescription() != null) {
                 Location location = mSavedCharacter.getDescription().getLocation();
-                User user = new User();
-                user.setLocation(location);
-                locationPagerAdapter.addData(user);
+                if (location != null) {
+                    User user = new User();
+                    user.setLocation(location);
+                    locationPagerAdapter.addData(user);
+                }
             }
             locationsPager.setAdapter(locationPagerAdapter);
             locationsPager.setLoadMoreListener(this);
