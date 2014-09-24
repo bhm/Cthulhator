@@ -5,11 +5,12 @@ import android.util.Pair;
 
 import com.bustiblelemons.api.random.names.randomuserdotme.RandomUserMEQuery;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.RandomUserDotMe;
-import com.bustiblelemons.api.random.names.randomuserdotme.model.RandomUserMe;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.Results;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.User;
 import com.bustiblelemons.async.AbsSimpleAsync;
 import com.bustiblelemons.logging.Logger;
+import com.bustiblelemons.model.OnlinePhotoUrl;
+import com.bustiblelemons.model.OnlinePhotoUrlImpl;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -18,34 +19,33 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by bhm on 25.07.14.
+ * Created by bhm on 24.09.14.
  */
-public class RandomUserDotMeAsyn extends AbsSimpleAsync<RandomUserMEQuery, List<User>> {
-
+public class RandomUserDotMePortraitsAsyn extends
+                                          AbsSimpleAsync<RandomUserMEQuery, List<OnlinePhotoUrl>> {
     private OnRandomUsersRetreived listener;
-    private Logger       log      = new Logger(RandomUserDotMeAsyn.class);
-    private RandomUserMe postPart = RandomUserMe.All;
+    private Logger log = new Logger(RandomUserDotMeAsyn.class);
 
-    public RandomUserDotMeAsyn(Context context, OnRandomUsersRetreived listener) {
+    public RandomUserDotMePortraitsAsyn(Context context, OnRandomUsersRetreived listener) {
         super(context);
         this.listener = listener;
     }
 
     @Override
-    protected List<User> call(RandomUserMEQuery... queries) throws Exception {
-        List<User> r = Collections.emptyList();
+    protected List<OnlinePhotoUrl> call(RandomUserMEQuery... queries) throws Exception {
+        List<OnlinePhotoUrl> r = Collections.emptyList();
         if (queries != null) {
             for (RandomUserMEQuery query : queries) {
-                List<User> users = getRandomUsers(query);
-                publishProgress(query, users);
+                List<OnlinePhotoUrl> photos = getRandomUserPictures(query);
+                publishProgress(query, photos);
             }
         }
         return r;
     }
 
 
-    private List<User> getRandomUsers(RandomUserMEQuery rudmQuery) {
-        List<User> r = new ArrayList<User>();
+    private List<OnlinePhotoUrl> getRandomUserPictures(RandomUserMEQuery rudmQuery) {
+        List<OnlinePhotoUrl> r = new ArrayList<OnlinePhotoUrl>();
         if (rudmQuery != null) {
             RandomUserDotMe randomUser = null;
             try {
@@ -58,8 +58,9 @@ public class RandomUserDotMeAsyn extends AbsSimpleAsync<RandomUserMEQuery, List<
             log.d("random user %s", randomUser);
             for (Results result : randomUser.getResults()) {
                 User u = result.getUser();
-                if (u != null) {
-                    r.add(u);
+                if (u != null && u.getPicture() != null) {
+                    OnlinePhotoUrl o = new OnlinePhotoUrlImpl(u.getPicture().getMedium());
+                    r.add(o);
                 }
             }
         }
@@ -67,29 +68,18 @@ public class RandomUserDotMeAsyn extends AbsSimpleAsync<RandomUserMEQuery, List<
     }
 
     @Override
-    protected void onProgressUpdate(Pair<RandomUserMEQuery, List<User>>... values) {
+    protected void onProgressUpdate(Pair<RandomUserMEQuery, List<OnlinePhotoUrl>>... values) {
         super.onProgressUpdate(values);
         if (values != null) {
-            for (Pair<RandomUserMEQuery, List<User>> pair : values) {
-                if (listener != null) {
-                    postData(pair);
-                }
+            for (Pair<RandomUserMEQuery, List<OnlinePhotoUrl>> pair : values) {
+                postData(pair);
             }
         }
     }
 
-    private void postData(Pair<RandomUserMEQuery, List<User>> pair) {
-        switch (postPart) {
-            default:
-            case All:
-                listener.onRandomUsersRetreived(pair.first, pair.second);
-                break;
-            case Names:
-                listener.onRandomUsersNames(pair.first, pair.second);
-                break;
-            case Location:
-                listener.onRandomUsersLocations(pair.first, pair.second);
-                break;
+    private void postData(Pair<RandomUserMEQuery, List<OnlinePhotoUrl>> pair) {
+        if (listener != null) {
+            listener.onRandomUsersPortraits(pair.first, pair.second);
         }
     }
 
@@ -99,11 +89,8 @@ public class RandomUserDotMeAsyn extends AbsSimpleAsync<RandomUserMEQuery, List<
     }
 
     @Override
-    protected boolean onSuccess(List<User> result) {
+    protected boolean onSuccess(List<OnlinePhotoUrl> result) {
         return false;
     }
 
-    public void postPart(RandomUserMe postPart) {
-        this.postPart = postPart;
-    }
 }

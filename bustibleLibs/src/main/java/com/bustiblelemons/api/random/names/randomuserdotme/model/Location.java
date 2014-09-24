@@ -1,17 +1,37 @@
 
 package com.bustiblelemons.api.random.names.randomuserdotme.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.bustiblelemons.model.LocationInfo;
 
 import org.apache.commons.lang.WordUtils;
 
-import java.io.Serializable;
+public class Location implements LocationInfo, Parcelable {
+    public static final Parcelable.Creator<Location> CREATOR = new Parcelable.Creator<Location>() {
+        public Location createFromParcel(Parcel source) {
+            return new Location(source);
+        }
 
-public class Location implements Serializable, LocationInfo {
+        public Location[] newArray(int size) {
+            return new Location[size];
+        }
+    };
     private String city;
     private String state;
     private String street;
     private String zip;
+
+    public Location() {
+    }
+
+    private Location(Parcel in) {
+        this.city = in.readString();
+        this.state = in.readString();
+        this.street = in.readString();
+        this.zip = in.readString();
+    }
 
     public String getCity() {
         return WordUtils.capitalizeFully(this.city);
@@ -43,5 +63,18 @@ public class Location implements Serializable, LocationInfo {
 
     public void setZip(String zip) {
         this.zip = zip;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.city);
+        dest.writeString(this.state);
+        dest.writeString(this.street);
+        dest.writeString(this.zip);
     }
 }

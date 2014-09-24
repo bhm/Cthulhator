@@ -35,7 +35,7 @@ public abstract class AbsFragmentPagerAdapter<T, F extends Fragment>
         return mFragments != null ? mFragments.get(atPos) != null : false;
     }
 
-    public void addData(T...data) {
+    public void addData(T... data) {
         for (T item : data) {
             mData.add(item);
             int pos = mData.size();
@@ -74,6 +74,10 @@ public abstract class AbsFragmentPagerAdapter<T, F extends Fragment>
             mFragments.put(position, f);
         }
         return mFragments.get(position);
+    }
+
+    public T getItemObject(int position) {
+        return mData != null ? mData.get(position) : null;
     }
 
 
