@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 
 import com.bustiblelemons.api.random.names.randomuserdotme.model.Location;
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.fragments.AbsArgFragment;
 import com.bustiblelemons.cthulhator.view.LocationWidget;
+import com.bustiblelemons.fragments.AbsParcelableArgFragment;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -16,10 +16,16 @@ import butterknife.InjectView;
 /**
  * Created by bhm on 02.08.14.
  */
-public class LocaitonFragment extends AbsArgFragment<Location> {
+public class LocaitonFragment extends AbsParcelableArgFragment<Location> {
 
     @InjectView(R.id.location)
     LocationWidget locationWidget;
+
+    public static LocaitonFragment newInstance(Location location) {
+        LocaitonFragment r = new LocaitonFragment();
+        r.setNewInstanceArgument(location);
+        return r;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,11 +43,5 @@ public class LocaitonFragment extends AbsArgFragment<Location> {
         if (locationWidget != null) {
             locationWidget.setLocation(location);
         }
-    }
-
-    public static LocaitonFragment newInstance(Location location) {
-        LocaitonFragment r = new LocaitonFragment();
-        r.setNewInstanceArgument(location);
-        return r;
     }
 }

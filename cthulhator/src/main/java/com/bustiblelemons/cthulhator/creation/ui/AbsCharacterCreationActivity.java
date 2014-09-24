@@ -31,7 +31,7 @@ public abstract class AbsCharacterCreationActivity extends AbsArgActivity<SavedC
 
     protected void launchCreationActivity(Intent intent, int code, SavedCharacter character) {
         Bundle opts = new Bundle();
-        opts.putSerializable(AbsArgActivity.INSTANCE_ARGUMENT, character);
+        opts.putParcelable(AbsArgActivity.INSTANCE_ARGUMENT, character);
         intent.putExtras(opts);
         startActivityForResult(intent, code);
     }

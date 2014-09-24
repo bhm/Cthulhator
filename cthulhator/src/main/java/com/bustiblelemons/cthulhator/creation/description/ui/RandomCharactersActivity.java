@@ -8,6 +8,7 @@ import android.view.View;
 import com.bustiblelemons.api.random.names.randomuserdotme.RandomUserMEQuery;
 import com.bustiblelemons.api.random.names.randomuserdotme.asyn.OnRandomUsersRetreived;
 import com.bustiblelemons.api.random.names.randomuserdotme.asyn.RandomUserDotMeAsyn;
+import com.bustiblelemons.api.random.names.randomuserdotme.asyn.RandomUserDotMePortraitsAsyn;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.Location;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.Name;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.RandomUserMe;
@@ -29,7 +30,6 @@ import com.bustiblelemons.cthulhator.model.Portrait;
 import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
 import com.bustiblelemons.cthulhator.model.desc.CharacterDescription;
 import com.bustiblelemons.cthulhator.settings.Settings;
-import com.bustiblelemons.google.apis.model.GoogleImageObject;
 import com.bustiblelemons.google.apis.search.params.GImageSearch;
 import com.bustiblelemons.google.apis.search.params.GoogleImageSearch;
 import com.bustiblelemons.model.OnlinePhotoUrl;
@@ -107,8 +107,8 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
         setupPhotosPager();
         setupNamesPager();
         setupLocationsPager();
-        setupRandomUserMEQuery();
         setupCharacteristicsPager();
+        setupRandomUserMEQuery();
     }
 
     private FadingActionBarHelper setupFadingBar() {
@@ -251,16 +251,18 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
     }
 
     public void executeRandomUserMeQuery(RandomUserMe postPart) {
-        RandomUserDotMeAsyn async = new RandomUserDotMeAsyn(this, this);
-        async.postPart(postPart);
-        async.executeCrossPlatform(query);
+        if (RandomUserMe.Portraits.equals(postPart)) {
+            RandomUserDotMePortraitsAsyn async = new RandomUserDotMePortraitsAsyn(this, this);
+            async.executeCrossPlatform(query);
+        } else {
+            RandomUserDotMeAsyn async = new RandomUserDotMeAsyn(this, this);
+            async.postPart(postPart);
+            async.executeCrossPlatform(query);
+        }
     }
 
     @Override
     public int onRandomUsersRetreived(RandomUserMEQuery query, List<User> users) {
-        if (isModernSearch()) {
-            photosPagerAdapter.addData(users);
-        }
         namesPagerAdapter.addData(users);
         locationPagerAdapter.addData(users);
         return 0;
@@ -279,8 +281,8 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
     }
 
     @Override
-    public int onRandomUsersPortraits(RandomUserMEQuery query, List<User> users) {
-        photosPagerAdapter.addData(users);
+    public int onRandomUsersPortraits(RandomUserMEQuery query, List<OnlinePhotoUrl> userPhotos) {
+        photosPagerAdapter.addData(userPhotos);
         return 0;
     }
 
@@ -335,8 +337,10 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
             mSavedCharacter = new SavedCharacter();
         }
         position = photosPager.getCurrentItem();
-        OnlinePhotoUrl o = photosPagerAdapter.getItem(position).getInstanceArgument();
-        description.addPortrait(o.getUrl());
+        OnlinePhotoUrl o = photosPagerAdapter.getItemObject(position);
+        if (o != null) {
+            description.addPortrait(o.getUrl());
+        }
         mSavedCharacter.setDescription(description);
         setResult(RESULT_OK, mSavedCharacter);
     }
@@ -367,7 +371,7 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
 
 
     @Override
-    public boolean onGoogleImageObjectsDownloaded(GImageSearch search, List<GoogleImageObject> results) {
+    public boolean onGoogleImageObjectsDownloaded(GImageSearch search, List<OnlinePhotoUrl> results) {
         if (results != null && photosPagerAdapter != null) {
             photosPagerAdapter.addData(results);
         }

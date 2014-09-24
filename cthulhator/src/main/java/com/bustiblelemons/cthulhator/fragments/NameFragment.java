@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.Name;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.view.NameWidget;
+import com.bustiblelemons.fragments.AbsParcelableArgFragment;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -15,9 +16,15 @@ import butterknife.InjectView;
 /**
  * Created by bhm on 02.08.14.
  */
-public class NameFragment extends AbsArgFragment<Name> {
+public class NameFragment extends AbsParcelableArgFragment<Name> {
     @InjectView(R.id.name)
     NameWidget nameWidget;
+
+    public static NameFragment newInstance(Name name) {
+        NameFragment r = new NameFragment();
+        r.setNewInstanceArgument(name);
+        return r;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,12 +46,6 @@ public class NameFragment extends AbsArgFragment<Name> {
             nameWidget.setName(fullName);
             nameWidget.setTitle(name.getTitle());
         }
-    }
-
-    public static NameFragment newInstance(Name name) {
-        NameFragment r = new NameFragment();
-        r.setNewInstanceArgument(name);
-        return r;
     }
 
 }

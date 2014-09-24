@@ -9,8 +9,8 @@ import com.bustiblelemons.model.OnlinePhotoUrl;
 /**
  * Created by bhm on 02.08.14.
  */
-public class PhotosPagerAdapter<T extends OnlinePhotoUrl>
-        extends AbsFragmentPagerAdapter<T, RandomUserPhotoFragment>{
+public class PhotosPagerAdapter
+        extends AbsFragmentPagerAdapter<OnlinePhotoUrl, RandomUserPhotoFragment> {
     public PhotosPagerAdapter(FragmentManager fm) {
         super(fm);
     }

@@ -1,15 +1,37 @@
 package com.bustiblelemons.cthulhator.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
 /**
  * Created by bhm on 29.07.14.
  */
-public class Portrait implements Serializable {
+public class Portrait implements Serializable, Parcelable {
+    public static final Parcelable.Creator<Portrait> CREATOR = new Parcelable.Creator<Portrait>() {
+        public Portrait createFromParcel(Parcel source) {
+            return new Portrait(source);
+        }
+
+        public Portrait[] newArray(int size) {
+            return new Portrait[size];
+        }
+    };
     private String  name;
     private String  url;
     private byte[]  data;
     private boolean isMain;
+
+    public Portrait() {
+    }
+
+    private Portrait(Parcel in) {
+        this.name = in.readString();
+        this.url = in.readString();
+        this.data = in.createByteArray();
+        this.isMain = in.readByte() != 0;
+    }
 
     public String getName() {
         return name;
@@ -58,5 +80,18 @@ public class Portrait implements Serializable {
     @Override
     public int hashCode() {
         return url != null ? url.hashCode() : 0;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeString(this.url);
+        dest.writeByteArray(this.data);
+        dest.writeByte(isMain ? (byte) 1 : (byte) 0);
     }
 }

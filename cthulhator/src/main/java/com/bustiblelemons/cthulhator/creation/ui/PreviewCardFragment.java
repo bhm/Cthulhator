@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.fragments.AbsArgFragment;
 import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
+import com.bustiblelemons.fragments.AbsParcelableArgFragment;
 import com.bustiblelemons.views.LoadingImage;
 
 import butterknife.ButterKnife;
@@ -16,7 +16,7 @@ import butterknife.InjectView;
 /**
  * Created by bhm on 21.09.14.
  */
-public class PreviewCardFragment extends AbsArgFragment<SavedCharacter> {
+public class PreviewCardFragment extends AbsParcelableArgFragment<SavedCharacter> {
 
     @InjectView(R.id.icon)
     LoadingImage imageView;

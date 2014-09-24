@@ -60,7 +60,7 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
         if (data != null) {
             Bundle e = data.getExtras();
             if (e != null && e.containsKey(INSTANCE_ARGUMENT)) {
-                SavedCharacter passedBack = (SavedCharacter) e.getSerializable(INSTANCE_ARGUMENT);
+                SavedCharacter passedBack = e.getParcelable(INSTANCE_ARGUMENT);
                 log.d("passedback %s", passedBack);
                 if (passedBack != null) {
                     onInstanceArgumentRead(passedBack);

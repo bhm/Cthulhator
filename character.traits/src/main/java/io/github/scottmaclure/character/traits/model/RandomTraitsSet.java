@@ -1,5 +1,8 @@
 package io.github.scottmaclure.character.traits.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.Locale;
 
@@ -9,8 +12,17 @@ import io.github.scottmaclure.character.traits.model.providers.StringTraitProvid
 /**
  * Created by bhm on 02.08.14.
  */
-public class RandomTraitsSet implements Serializable {
+public class RandomTraitsSet implements Serializable, Parcelable {
 
+    public static final Parcelable.Creator<RandomTraitsSet> CREATOR = new Parcelable.Creator<RandomTraitsSet>() {
+        public RandomTraitsSet createFromParcel(Parcel source) {
+            return new RandomTraitsSet(source);
+        }
+
+        public RandomTraitsSet[] newArray(int size) {
+            return new RandomTraitsSet[size];
+        }
+    };
     private String hair;
     private String facial;
     private String characteristic;
@@ -23,6 +35,14 @@ public class RandomTraitsSet implements Serializable {
         this.characteristic = b.characteristic;
         this.personality = b.personality;
         this.speech = b.speech;
+    }
+
+    private RandomTraitsSet(Parcel in) {
+        this.hair = in.readString();
+        this.facial = in.readString();
+        this.characteristic = in.readString();
+        this.personality = in.readString();
+        this.speech = in.readString();
     }
 
     public static RandomTraitsSet from(TraitsSet set) {
@@ -90,6 +110,20 @@ public class RandomTraitsSet implements Serializable {
 
     public void setSpeech(String speech) {
         this.speech = speech;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.hair);
+        dest.writeString(this.facial);
+        dest.writeString(this.characteristic);
+        dest.writeString(this.personality);
+        dest.writeString(this.speech);
     }
 
     public static class Builder {

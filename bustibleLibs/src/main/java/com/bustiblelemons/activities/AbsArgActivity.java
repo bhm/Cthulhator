@@ -2,19 +2,18 @@ package com.bustiblelemons.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import java.io.Serializable;
+import android.os.Parcelable;
 
 /**
  * Created by bhm on 22.09.14.
  */
-public abstract class AbsArgActivity<T extends Serializable> extends AbsActionBarActivity {
+public abstract class AbsArgActivity<T extends Parcelable> extends AbsActionBarActivity {
 
 
     public static final String INSTANCE_ARGUMENT = "instance_argument";
 
     public T getInstanceArgument() {
-        return (T) getExtras().getSerializable(INSTANCE_ARGUMENT);
+        return (T) getExtras().getParcelable(INSTANCE_ARGUMENT);
     }
 
     @Override
@@ -29,13 +28,13 @@ public abstract class AbsArgActivity<T extends Serializable> extends AbsActionBa
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(INSTANCE_ARGUMENT, getInstanceArgument());
+        outState.putParcelable(INSTANCE_ARGUMENT, getInstanceArgument());
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        T arg = (T) savedInstanceState.getSerializable(INSTANCE_ARGUMENT);
+        T arg = (T) savedInstanceState.getParcelable(INSTANCE_ARGUMENT);
         onInstanceArgumentRead(arg);
     }
 
@@ -46,5 +45,4 @@ public abstract class AbsArgActivity<T extends Serializable> extends AbsActionBa
         data.putExtra(INSTANCE_ARGUMENT, passBackdata);
         setResult(code, data);
     }
-
 }

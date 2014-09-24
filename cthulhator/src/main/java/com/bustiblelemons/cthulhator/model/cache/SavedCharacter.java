@@ -1,7 +1,8 @@
 package com.bustiblelemons.cthulhator.model.cache;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.LruCache;
-import android.util.Pair;
 
 import com.bustiblelemons.api.random.names.randomuserdotme.model.Location;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.Name;
@@ -19,9 +20,9 @@ import com.bustiblelemons.cthulhator.model.desc.CharacterDescription;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -31,11 +32,20 @@ import java.util.TreeSet;
 /**
  * Created by bhm on 12.08.14.
  */
-public class SavedCharacter implements Serializable {
+public class SavedCharacter implements Parcelable {
 
-    protected Set<CharacterProperty> properties  = new HashSet<CharacterProperty>();
-    protected List<Possesion>        possesions  = new ArrayList<Possesion>();
-    protected Set<HistoryEvent>      fullHistory = new HashSet<HistoryEvent>();
+    public static final Parcelable.Creator<SavedCharacter> CREATOR     = new Parcelable.Creator<SavedCharacter>() {
+        public SavedCharacter createFromParcel(Parcel source) {
+            return new SavedCharacter(source);
+        }
+
+        public SavedCharacter[] newArray(int size) {
+            return new SavedCharacter[size];
+        }
+    };
+    protected           Set<CharacterProperty>             properties  = new HashSet<CharacterProperty>();
+    protected           List<Possesion>                    possesions  = new ArrayList<Possesion>();
+    protected           Set<HistoryEvent>                  fullHistory = new HashSet<HistoryEvent>();
     private CthulhuEdition       edition;
     private CharacterDescription description;
     private BirthData            birth;
@@ -43,10 +53,8 @@ public class SavedCharacter implements Serializable {
     @JsonIgnore
     private transient LruCache<CharacterProperty, List<Possesion>> cachedAffectedPossessions =
             new LruCache<CharacterProperty, List<Possesion>>(20);
-
-    private Pair<Long, List<HistoryEvent>> historyForCurrentAge;
     @JsonIgnore
-    private transient Comparator<CharacterProperty> sPropertyComparator = new Comparator<CharacterProperty>() {
+    private transient Comparator<CharacterProperty>                sPropertyComparator       = new Comparator<CharacterProperty>() {
         @Override
         public int compare(CharacterProperty lhs, CharacterProperty rhs) {
             int lhsv = lhs.getValue();
@@ -60,6 +68,30 @@ public class SavedCharacter implements Serializable {
         }
     };
     private int age;
+
+    public SavedCharacter() {
+    }
+
+    private SavedCharacter(Parcel in) {
+        int propSize = in.readInt();
+        CharacterProperty[] props = new CharacterProperty[propSize];
+        in.readTypedArray(props, CharacterProperty.CREATOR);
+        this.properties = new HashSet<CharacterProperty>();
+        Collections.addAll(this.properties, props);
+        this.possesions = new ArrayList<Possesion>();
+        in.readList(this.possesions, List.class.getClassLoader());
+        int fullHistorySize = in.readInt();
+        HistoryEvent[] events = new HistoryEvent[fullHistorySize];
+        in.readTypedArray(events, HistoryEvent.CREATOR);
+        this.fullHistory = new HashSet<HistoryEvent>();
+        Collections.addAll(this.fullHistory, events);
+        int tmpEdition = in.readInt();
+        this.edition = tmpEdition == -1 ? null : CthulhuEdition.values()[tmpEdition];
+        this.description = in.readParcelable(CharacterDescription.class.getClassLoader());
+        this.birth = in.readParcelable(BirthData.class.getClassLoader());
+        this.presentDate = in.readLong();
+        this.age = in.readInt();
+    }
 
     public CthulhuEdition getEdition() {
         return edition;
@@ -252,7 +284,6 @@ public class SavedCharacter implements Serializable {
         return false;
     }
 
-
     public int getCurrentSanity() {
         return 0;
     }
@@ -414,15 +445,6 @@ public class SavedCharacter implements Serializable {
     }
 
     @JsonIgnore
-    public List<HistoryEvent> getHistory() {
-        if (historyForCurrentAge == null && historyForCurrentAge.first.longValue() != presentDate) {
-            List<HistoryEvent> events = getHistoryEvents(presentDate);
-            historyForCurrentAge = Pair.create(presentDate, events);
-        }
-        return historyForCurrentAge.second;
-    }
-
-    @JsonIgnore
     public List<HistoryEvent> getHistoryEvents(long tillDate) {
         List<HistoryEvent> events = new ArrayList<HistoryEvent>();
         if (fullHistory != null) {
@@ -496,7 +518,6 @@ public class SavedCharacter implements Serializable {
         this.age = age;
     }
 
-
     @JsonIgnore
     public Name getNameObject() {
         return getDescription() != null ? getDescription().getName() : null;
@@ -513,9 +534,37 @@ public class SavedCharacter implements Serializable {
                 ", birth=" + birth +
                 ", presentDate=" + presentDate +
                 ", cachedAffectedPossessions=" + cachedAffectedPossessions +
-                ", historyForCurrentAge=" + historyForCurrentAge +
                 ", sPropertyComparator=" + sPropertyComparator +
                 ", age=" + age +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        int propSize = this.properties != null ? this.properties.size() : 0;
+        dest.writeInt(propSize);
+        CharacterProperty[] props = new CharacterProperty[propSize];
+        if (this.properties != null) {
+            props = this.properties.toArray(new CharacterProperty[propSize]);
+        }
+        dest.writeTypedArray(props, flags);
+        dest.writeList(this.possesions);
+        int historySize = this.fullHistory != null ? this.fullHistory.size() : 0;
+        dest.writeInt(historySize);
+        HistoryEvent[] h = new HistoryEvent[historySize];
+        if (fullHistory != null) {
+            h = this.fullHistory.toArray(new HistoryEvent[historySize]);
+        }
+        dest.writeTypedArray(h, flags);
+        dest.writeInt(this.edition == null ? -1 : this.edition.ordinal());
+        dest.writeParcelable(this.description, flags);
+        dest.writeParcelable(this.birth, flags);
+        dest.writeLong(this.presentDate);
+        dest.writeInt(this.age);
     }
 }
