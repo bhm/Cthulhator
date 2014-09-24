@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.fragments.AbsFragment;
-import com.bustiblelemons.google.apis.model.GoogleImageObject;
+import com.bustiblelemons.model.OnlinePhotoUrl;
 import com.bustiblelemons.views.LoadingImage;
 
 /**
@@ -17,7 +17,7 @@ public class PortraitFragment extends AbsFragment {
     public static final String URL = "url";
     private LoadingImage image;
 
-    public static PortraitFragment newInstance(GoogleImageObject imageObject) {
+    public static PortraitFragment newInstance(OnlinePhotoUrl imageObject) {
         PortraitFragment r = new PortraitFragment();
         Bundle args = new Bundle();
         args.putString(URL, imageObject.getUrl());

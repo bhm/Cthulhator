@@ -9,10 +9,10 @@ import com.bustiblelemons.cthulhator.adapters.PortraitsPagerAdapter;
 import com.bustiblelemons.cthulhator.async.QueryGImagesAsyn;
 import com.bustiblelemons.cthulhator.async.ReceiveGoogleImages;
 import com.bustiblelemons.cthulhator.fragments.PortraitsSettingsFragment;
-import com.bustiblelemons.google.apis.model.GoogleImageObject;
 import com.bustiblelemons.google.apis.search.params.GImageSearch;
 import com.bustiblelemons.google.apis.search.params.GoogleImageSearch;
 import com.bustiblelemons.logging.Logger;
+import com.bustiblelemons.model.OnlinePhotoUrl;
 import com.bustiblelemons.views.LoadMoreViewPager;
 
 import java.util.List;
@@ -76,7 +76,7 @@ public class PortraitsActivity extends AbsActionBarActivity
     }
 
     @Override
-    public boolean onGoogleImageObjectsDownloaded(GImageSearch search, List<GoogleImageObject> objects) {
+    public boolean onGoogleImageObjectsDownloaded(GImageSearch search, List<OnlinePhotoUrl> objects) {
         if (mSearchToPublish != null && search.equals(mSearchToPublish)) {
             pagerAdapter.removeAll();
             mImageSearch = search;
