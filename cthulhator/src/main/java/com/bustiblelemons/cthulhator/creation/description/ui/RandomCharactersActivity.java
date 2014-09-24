@@ -325,13 +325,18 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
     private void saveCharacter() {
         CharacterDescription description = new CharacterDescription();
         int position = namesPager.getCurrentItem();
-        Name name = namesPagerAdapter.getItem(position).getInstanceArgument();
-        description.setName(name);
+        User user = namesPagerAdapter.getItemObject(position);
+        if (user != null && user.getName() != null) {
+            description.setName(user.getName());
+        }
         position = locationsPager.getCurrentItem();
-        Location location = locationPagerAdapter.getItem(position).getInstanceArgument();
-        description.setLocation(location);
+        user = locationPagerAdapter.getItemObject(position);
+        if (user != null) {
+            Location location = user.getLocation();
+            description.setLocation(location);
+        }
         position = characteristicPager.getCurrentItem();
-        RandomTraitsSet traits = characteristicAdapter.getItem(position).getInstanceArgument();
+        RandomTraitsSet traits = characteristicAdapter.getItemObject(position);
         description.setTraits(traits);
         if (mSavedCharacter == null) {
             mSavedCharacter = new SavedCharacter();

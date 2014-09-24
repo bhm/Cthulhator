@@ -77,7 +77,7 @@ public abstract class AbsFragmentPagerAdapter<T, F extends Fragment>
     }
 
     public T getItemObject(int position) {
-        return mData != null ? mData.get(position) : null;
+        return mData != null && mData.size() > 0 ? mData.get(position) : null;
     }
 
 
