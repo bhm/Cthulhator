@@ -12,7 +12,7 @@ import com.bustiblelemons.cthulhator.adapters.GenderSpinnerAdapter;
 import com.bustiblelemons.cthulhator.model.CharacterSettings;
 import com.bustiblelemons.cthulhator.model.CharacterSettingsImpl;
 import com.bustiblelemons.cthulhator.model.brp.gimagesearch.BRPGimageQuery;
-import com.bustiblelemons.cthulhator.model.brp.gimagesearch.Gender;
+import com.bustiblelemons.google.apis.GoogleSearchGender;
 import com.bustiblelemons.google.apis.search.params.GoogleImageSearch;
 import com.bustiblelemons.views.TitledSeekBar;
 
@@ -43,8 +43,8 @@ public class PortraitsSettingsFragment extends AbsArgFragment<GoogleImageSearch.
     private OnOpenSearchSettings            onOpenSearchSettings;
     private OnBroadcastOnlineSearchSettings onBroadcastOnlineSearchSettings;
     private CharacterSettings               onlinePhotoSearchQuery;
-    private Gender  mGender     = Gender.ANY;
-    private boolean MFoldedOnly = false;
+    private GoogleSearchGender mGoogleSearchGender = GoogleSearchGender.ANY;
+    private boolean            MFoldedOnly         = false;
 
     public static PortraitsSettingsFragment newInstance(GoogleImageSearch.Options searchOptions) {
         PortraitsSettingsFragment r = new PortraitsSettingsFragment();
@@ -96,7 +96,7 @@ public class PortraitsSettingsFragment extends AbsArgFragment<GoogleImageSearch.
             settingsButton.setOnClickListener(this);
         }
         brpImageQuery = new BRPGimageQuery();
-        brpImageQuery.gender(Gender.ANY);
+        brpImageQuery.gender(GoogleSearchGender.ANY);
         brpImageQuery.year(yearSeekbar.getValue());
         return rootView;
     }
@@ -129,7 +129,7 @@ public class PortraitsSettingsFragment extends AbsArgFragment<GoogleImageSearch.
         }
         if (onOpenSearchSettings != null) {
             int year = yearSeekbar.getIntValue();
-            CharacterSettings q = CharacterSettingsImpl.create(year, mGender);
+            CharacterSettings q = CharacterSettingsImpl.create(year, mGoogleSearchGender);
             onOpenSearchSettings.onOpenSettings(q);
         }
     }
@@ -141,10 +141,10 @@ public class PortraitsSettingsFragment extends AbsArgFragment<GoogleImageSearch.
     }
 
     @Override
-    public boolean onGenderSelected(Gender gender) {
+    public boolean onGenderSelected(GoogleSearchGender googleSearchGender) {
         if (searchOptions != null) {
-            mGender = gender;
-            searchOptions.setQuery(brpImageQuery.gender(gender));
+            mGoogleSearchGender = googleSearchGender;
+            searchOptions.setQuery(brpImageQuery.gender(googleSearchGender));
             publishNewOptions(searchOptions);
         }
         return false;

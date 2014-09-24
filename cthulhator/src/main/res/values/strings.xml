@@ -21,6 +21,7 @@
     <string name="placholder_value">14</string>
     <string name="know">Know</string>
     <string name="activity_character">Character</string>
+    <string name="any">Any</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="year">Year</string>
@@ -31,7 +32,6 @@
     <string name="men">Men</string>
     <string name="woman">Woman</string>
     <string name="none">None</string>
-    <string name="any">Any</string>
     <string name="hair">Hair</string>
     <string name="speech">Speech</string>
     <string name="personality">Personality</string>

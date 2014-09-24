@@ -20,7 +20,7 @@ public class RandomUserMEQuery extends AbsJacksonQuery<RandomUserDotMe> {
     public static final String RESULTS = "results";
     public static final String SEED    = "seed";
     public static final String GENDER  = "gender";
-    public static final String METHOD = "0.4.1";
+    public static final String METHOD  = "0.4.1";
     private Gender gender;
     private String seed;
     private int    results;
@@ -29,6 +29,10 @@ public class RandomUserMEQuery extends AbsJacksonQuery<RandomUserDotMe> {
         this.gender = o.gender;
         this.seed = o.seed;
         this.results = o.results;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     @Override
@@ -43,7 +47,7 @@ public class RandomUserMEQuery extends AbsJacksonQuery<RandomUserDotMe> {
         if (seed != null) {
             r.add(new BasicNameValuePair(SEED, this.seed));
         }
-        if (gender != null) {
+        if (Gender.ANY.equals(gender)) {
             String g = this.gender.name().toLowerCase(Locale.ENGLISH);
             r.add(new BasicNameValuePair(GENDER, g));
         }

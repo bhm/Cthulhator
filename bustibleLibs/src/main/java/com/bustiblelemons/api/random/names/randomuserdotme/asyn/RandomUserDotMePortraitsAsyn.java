@@ -1,9 +1,11 @@
 package com.bustiblelemons.api.random.names.randomuserdotme.asyn;
 
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.util.Pair;
 
 import com.bustiblelemons.api.random.names.randomuserdotme.RandomUserMEQuery;
+import com.bustiblelemons.api.random.names.randomuserdotme.model.Picture;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.RandomUserDotMe;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.Results;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.User;
@@ -23,12 +25,14 @@ import java.util.List;
  */
 public class RandomUserDotMePortraitsAsyn extends
                                           AbsSimpleAsync<RandomUserMEQuery, List<OnlinePhotoUrl>> {
-    private OnRandomUsersRetreived listener;
+    private final int                    mDensity;
+    private       OnRandomUsersRetreived listener;
     private Logger log = new Logger(RandomUserDotMeAsyn.class);
 
     public RandomUserDotMePortraitsAsyn(Context context, OnRandomUsersRetreived listener) {
         super(context);
         this.listener = listener;
+        mDensity = getContext().getResources().getDisplayMetrics().densityDpi;
     }
 
     @Override
@@ -59,12 +63,23 @@ public class RandomUserDotMePortraitsAsyn extends
             for (Results result : randomUser.getResults()) {
                 User u = result.getUser();
                 if (u != null && u.getPicture() != null) {
-                    OnlinePhotoUrl o = new OnlinePhotoUrlImpl(u.getPicture().getMedium());
+                    String properUrl = getDensityAdjustedUrl(u.getPicture());
+                    OnlinePhotoUrl o = new OnlinePhotoUrlImpl(properUrl);
                     r.add(o);
                 }
             }
         }
         return r;
+    }
+
+    private String getDensityAdjustedUrl(Picture pic) {
+        switch (mDensity) {
+            case DisplayMetrics.DENSITY_MEDIUM:
+            case DisplayMetrics.DENSITY_LOW:
+                return pic.getMedium();
+            default:
+                return pic.getLarge();
+        }
     }
 
     @Override

@@ -68,6 +68,9 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
             mSavedCharacter = CthulhuCharacter.forEdition(CthulhuEdition.CoC5);
             characterProperties = mSavedCharacter.getProperties();
             onReroll(rerollButton);
+        } else if (mSavedCharacter != null && mSavedCharacter.getProperties().isEmpty()) {
+            characterProperties = mSavedCharacter.getProperties();
+            onReroll(rerollButton);
         } else {
             characterProperties = mSavedCharacter.getProperties();
             fillPropertyViews();

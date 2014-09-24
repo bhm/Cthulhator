@@ -1,25 +1,27 @@
 package com.bustiblelemons.cthulhator.model.brp.gimagesearch;
 
+import com.bustiblelemons.google.apis.GoogleSearchGender;
+
 import java.util.Locale;
 
 /**
  * Created by bhm on 27.07.14.
  */
 public class BRPGimageQuery {
-    private static final String JAZZ_AGE_YEAR = "1920";
-    private static final String DEFAULT_YEAR  = JAZZ_AGE_YEAR;
-    private static final String GASLIGHT_YEAR = "1890";
-    private              String mYear         = DEFAULT_YEAR;
-    private              Gender mGender       = Gender.ANY;
-    private              String mType         = "portrait";
+    private static final String             JAZZ_AGE_YEAR       = "1920";
+    private static final String             DEFAULT_YEAR        = JAZZ_AGE_YEAR;
+    private              String             mYear               = DEFAULT_YEAR;
+    private static final String             GASLIGHT_YEAR       = "1890";
+    private              GoogleSearchGender mGoogleSearchGender = GoogleSearchGender.ANY;
+    private              String             mType               = "portrait";
 
     public String year(String year) {
         this.mYear = year;
         return getQuery();
     }
 
-    public String gender(Gender gender) {
-        this.mGender = gender;
+    public String gender(GoogleSearchGender googleSearchGender) {
+        this.mGoogleSearchGender = googleSearchGender;
         return getQuery();
     }
 
@@ -30,8 +32,8 @@ public class BRPGimageQuery {
 
     public String getQuery() {
         StringBuilder r = new StringBuilder(mYear);
-        if (!mGender.equals(Gender.ANY)) {
-            r.append("+").append(mGender.name().toLowerCase(Locale.ENGLISH));
+        if (!mGoogleSearchGender.equals(GoogleSearchGender.ANY)) {
+            r.append("+").append(mGoogleSearchGender.name().toLowerCase(Locale.ENGLISH));
         }
         if (mType != null) {
             r.append("+").append(mType);

@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.bustiblelemons.api.model.Gender;
 import com.bustiblelemons.api.random.names.randomuserdotme.RandomUserMEQuery;
 import com.bustiblelemons.api.random.names.randomuserdotme.asyn.OnRandomUsersRetreived;
 import com.bustiblelemons.api.random.names.randomuserdotme.asyn.RandomUserDotMeAsyn;
@@ -26,10 +27,13 @@ import com.bustiblelemons.cthulhator.fragments.OnOpenSearchSettings;
 import com.bustiblelemons.cthulhator.fragments.PortraitsSettingsFragment;
 import com.bustiblelemons.cthulhator.fragments.dialog.RandomCharSettingsDialog;
 import com.bustiblelemons.cthulhator.model.CharacterSettings;
+import com.bustiblelemons.cthulhator.model.CthulhuCharacter;
+import com.bustiblelemons.cthulhator.model.CthulhuEdition;
 import com.bustiblelemons.cthulhator.model.Portrait;
 import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
 import com.bustiblelemons.cthulhator.model.desc.CharacterDescription;
 import com.bustiblelemons.cthulhator.settings.Settings;
+import com.bustiblelemons.google.apis.GenderTransformer;
 import com.bustiblelemons.google.apis.search.params.GImageSearch;
 import com.bustiblelemons.google.apis.search.params.GoogleImageSearch;
 import com.bustiblelemons.model.OnlinePhotoUrl;
@@ -251,6 +255,8 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
     }
 
     public void executeRandomUserMeQuery(RandomUserMe postPart) {
+        Gender gender = GenderTransformer.toRandomUserMe(characterSettings.getGender());
+        query.setGender(gender);
         if (RandomUserMe.Portraits.equals(postPart)) {
             RandomUserDotMePortraitsAsyn async = new RandomUserDotMePortraitsAsyn(this, this);
             async.executeCrossPlatform(query);
@@ -324,30 +330,46 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
 
     private void saveCharacter() {
         CharacterDescription description = new CharacterDescription();
+        addName(description);
+        addLocation(description);
+        addTraits(description);
+        addPhoto(description);
+        mSavedCharacter.setDescription(description);
+        setResult(RESULT_OK, mSavedCharacter);
+    }
+
+    private void addName(CharacterDescription description) {
         int position = namesPager.getCurrentItem();
         User user = namesPagerAdapter.getItemObject(position);
         if (user != null && user.getName() != null) {
             description.setName(user.getName());
         }
-        position = locationsPager.getCurrentItem();
-        user = locationPagerAdapter.getItemObject(position);
-        if (user != null) {
-            Location location = user.getLocation();
-            description.setLocation(location);
-        }
-        position = characteristicPager.getCurrentItem();
-        RandomTraitsSet traits = characteristicAdapter.getItemObject(position);
-        description.setTraits(traits);
-        if (mSavedCharacter == null) {
-            mSavedCharacter = new SavedCharacter();
-        }
-        position = photosPager.getCurrentItem();
-        OnlinePhotoUrl o = photosPagerAdapter.getItemObject(position);
+    }
+
+    private void addPhoto(CharacterDescription description) {
+        int photoPosition = photosPager.getCurrentItem();
+        OnlinePhotoUrl o = photosPagerAdapter.getItemObject(photoPosition);
         if (o != null) {
             description.addPortrait(o.getUrl());
         }
-        mSavedCharacter.setDescription(description);
-        setResult(RESULT_OK, mSavedCharacter);
+    }
+
+    private void addTraits(CharacterDescription description) {
+        int traitSetPosition = characteristicPager.getCurrentItem();
+        RandomTraitsSet traits = characteristicAdapter.getItemObject(traitSetPosition);
+        description.setTraits(traits);
+        if (mSavedCharacter == null) {
+            mSavedCharacter = CthulhuCharacter.forEdition(CthulhuEdition.CoC5);
+        }
+    }
+
+    private void addLocation(CharacterDescription description) {
+        int locationPosition = locationsPager.getCurrentItem();
+        User userPosition = locationPagerAdapter.getItemObject(locationPosition);
+        if (userPosition != null) {
+            Location location = userPosition.getLocation();
+            description.setLocation(location);
+        }
     }
 
     public void handleSettingsButton() {

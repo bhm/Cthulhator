@@ -2,9 +2,9 @@ package com.bustiblelemons.cthulhator.model;
 
 import android.support.v4.util.LruCache;
 
-import com.bustiblelemons.cthulhator.model.brp.gimagesearch.Gender;
 import com.bustiblelemons.cthulhator.model.time.CthulhuPeriod;
 import com.bustiblelemons.cthulhator.model.time.YearsPeriod;
+import com.bustiblelemons.google.apis.GoogleSearchGender;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
@@ -13,27 +13,39 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CharacterSettingsImpl implements CharacterSettings {
-    private static CharacterSettings sDefaults;
-    private        boolean           modern;
-    private        int               year;
-    private        Gender            gender;
-
-    public void setYear(int year) {
-        this.year = year;
-    }
+    private static final LruCache<Integer, CharacterSettingsImpl> cache =
+            new LruCache<Integer, CharacterSettingsImpl>(3);
+    private static CharacterSettings  sDefaults;
+    private        boolean            modern;
+    private        int                year;
+    private        GoogleSearchGender googleSearchGender;
 
     public CharacterSettingsImpl() {
         this.year = CthulhuPeriod.JAZZAGE.getDefaultYear();
-        this.gender = Gender.ANY;
+        this.googleSearchGender = GoogleSearchGender.ANY;
     }
 
-    public void setGender(Gender gender) {
-        this.gender = gender;
+    private CharacterSettingsImpl(int year, GoogleSearchGender googleSearchGender) {
+        this.year = year;
+        this.googleSearchGender = googleSearchGender;
+    }
+
+    public static CharacterSettingsImpl create(int year, GoogleSearchGender googleSearchGender) {
+        CharacterSettingsImpl search = new CharacterSettingsImpl(year, googleSearchGender);
+        return search;
+    }
+
+    public static CharacterSettings defaults() {
+        return sDefaults == null ? sDefaults = create(1920, GoogleSearchGender.ANY) : sDefaults;
     }
 
     @Override
-    public Gender getGender() {
-        return gender;
+    public GoogleSearchGender getGender() {
+        return googleSearchGender;
+    }
+
+    public void setGender(GoogleSearchGender googleSearchGender) {
+        this.googleSearchGender = googleSearchGender;
     }
 
     @Override
@@ -41,22 +53,8 @@ public class CharacterSettingsImpl implements CharacterSettings {
         return year;
     }
 
-
-    public void setModern(boolean modern) {
-        this.modern = modern;
-    }
-
-    private CharacterSettingsImpl(int year, Gender gender) {
+    public void setYear(int year) {
         this.year = year;
-        this.gender = gender;
-    }
-
-    private static final LruCache<Integer, CharacterSettingsImpl> cache =
-            new LruCache<Integer, CharacterSettingsImpl>(3);
-
-    public static CharacterSettingsImpl create(int year, Gender gender) {
-        CharacterSettingsImpl search = new CharacterSettingsImpl(year, gender);
-        return search;
     }
 
     @Override
@@ -64,13 +62,13 @@ public class CharacterSettingsImpl implements CharacterSettings {
         return year == YearsPeriod.CURRENT_YEAR;
     }
 
-    @Override
-    public String getQuery() {
-        return year + "+".concat(gender.getSearchString());
+    public void setModern(boolean modern) {
+        this.modern = modern;
     }
 
-    public static CharacterSettings defaults() {
-        return sDefaults == null ? sDefaults = create(1920, Gender.ANY) : sDefaults;
+    @Override
+    public String getQuery() {
+        return year + "+".concat(googleSearchGender.getSearchString());
     }
 
     @Override
@@ -81,7 +79,7 @@ public class CharacterSettingsImpl implements CharacterSettings {
         CharacterSettingsImpl that = (CharacterSettingsImpl) o;
 
         if (year != that.year) { return false; }
-        if (gender != that.gender) { return false; }
+        if (googleSearchGender != that.googleSearchGender) { return false; }
 
         return true;
     }
@@ -91,14 +89,14 @@ public class CharacterSettingsImpl implements CharacterSettings {
         return "CharacterSettingsImpl{" +
                 "modern=" + modern +
                 ", year=" + year +
-                ", gender=" + gender +
+                ", gender=" + googleSearchGender +
                 '}';
     }
 
     @Override
     public int hashCode() {
         int result = year;
-        result = 31 * result + (gender != null ? gender.hashCode() : 0);
+        result = 31 * result + (googleSearchGender != null ? googleSearchGender.hashCode() : 0);
         return result;
     }
 }

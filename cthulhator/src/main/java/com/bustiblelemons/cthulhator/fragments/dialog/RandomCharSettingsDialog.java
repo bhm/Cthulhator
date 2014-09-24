@@ -16,10 +16,10 @@ import com.bustiblelemons.cthulhator.adapters.PeriodSpinnerAdapter;
 import com.bustiblelemons.cthulhator.fragments.OnBroadcastOnlineSearchSettings;
 import com.bustiblelemons.cthulhator.model.CharacterSettings;
 import com.bustiblelemons.cthulhator.model.CharacterSettingsImpl;
-import com.bustiblelemons.cthulhator.model.brp.gimagesearch.Gender;
 import com.bustiblelemons.cthulhator.model.time.YearsPeriod;
 import com.bustiblelemons.cthulhator.settings.Settings;
 import com.bustiblelemons.fragments.dialog.AbsArgDialogFragment;
+import com.bustiblelemons.google.apis.GoogleSearchGender;
 import com.bustiblelemons.logging.Logger;
 import com.bustiblelemons.views.TitledSeekBar;
 
@@ -47,9 +47,15 @@ public class RandomCharSettingsDialog extends AbsArgDialogFragment<CharacterSett
     private GenderSpinnerAdapter            genderAdapter;
     private PeriodSpinnerAdapter            periodSpinnerAdapter;
     private OnBroadcastOnlineSearchSettings onBroadcastOnlineSearchSettings;
-    private Gender                          mGender;
+    private GoogleSearchGender              mGoogleSearchGender;
     private CharacterSettings               characterSettings;
     private RandomCharSettings              randomCharSettings;
+
+    public static RandomCharSettingsDialog newInstance(CharacterSettings settings) {
+        RandomCharSettingsDialog r = new RandomCharSettingsDialog();
+        r.setNewInstanceArgument(settings);
+        return r;
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -71,7 +77,6 @@ public class RandomCharSettingsDialog extends AbsArgDialogFragment<CharacterSett
         randomCharSettings = Settings.getLastRandomCharSettings(activity);
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_character_settings, container, false);
@@ -82,7 +87,7 @@ public class RandomCharSettingsDialog extends AbsArgDialogFragment<CharacterSett
     @Override
     protected void onInstanceArgumentRead(CharacterSettings instanceArgument) {
         this.characterSettings = instanceArgument;
-        mGender = characterSettings.getGender();
+        mGoogleSearchGender = characterSettings.getGender();
     }
 
     @Override
@@ -106,7 +111,6 @@ public class RandomCharSettingsDialog extends AbsArgDialogFragment<CharacterSett
         periodSpinner.setSelection(randomCharSettings.getPeriodSpinnerPosition());
     }
 
-
     private void setupGenderSpinner(Context context) {
         genderAdapter = new GenderSpinnerAdapter(context, this);
         genderSpinner.setAdapter(genderAdapter);
@@ -115,15 +119,9 @@ public class RandomCharSettingsDialog extends AbsArgDialogFragment<CharacterSett
     }
 
     @Override
-    public boolean onGenderSelected(Gender gender) {
-        mGender = gender;
+    public boolean onGenderSelected(GoogleSearchGender googleSearchGender) {
+        mGoogleSearchGender = googleSearchGender;
         return false;
-    }
-
-    public static RandomCharSettingsDialog newInstance(CharacterSettings settings) {
-        RandomCharSettingsDialog r = new RandomCharSettingsDialog();
-        r.setNewInstanceArgument(settings);
-        return r;
     }
 
     @OnClick({android.R.id.button1, android.R.id.closeButton})
@@ -132,7 +130,7 @@ public class RandomCharSettingsDialog extends AbsArgDialogFragment<CharacterSett
         boolean apply = v.getId() == android.R.id.button1;
         if (onBroadcastOnlineSearchSettings != null) {
             int year = yearSeekbar.getIntValue();
-            characterSettings = CharacterSettingsImpl.create(year, mGender);
+            characterSettings = CharacterSettingsImpl.create(year, mGoogleSearchGender);
             if (apply) {
                 Settings.saveLastOnlinePhotoSearchQuery(getActivity(), characterSettings);
                 Settings.saveLastRandomCharSettings(getActivity(), randomCharSettings);

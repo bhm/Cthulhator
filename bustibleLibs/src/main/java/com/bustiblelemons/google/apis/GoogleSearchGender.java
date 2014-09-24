@@ -1,11 +1,12 @@
-package com.bustiblelemons.cthulhator.model.brp.gimagesearch;
+package com.bustiblelemons.google.apis;
 
-import com.bustiblelemons.cthulhator.R;
+
+import com.bustiblelemons.bustiblelibs.R;
 
 /**
  * Created by bhm on 27.07.14.
  */
-public enum Gender {
+public enum GoogleSearchGender {
     ANY {
         @Override
         public int getTitleId() {

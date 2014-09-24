@@ -1,6 +1,6 @@
 package com.bustiblelemons.cthulhator.model;
 
-import com.bustiblelemons.cthulhator.model.brp.gimagesearch.Gender;
+import com.bustiblelemons.google.apis.GoogleSearchGender;
 
 import java.io.Serializable;
 
@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by bhm on 04.08.14.
  */
 public interface CharacterSettings extends Serializable {
-    Gender getGender();
+    GoogleSearchGender getGender();
 
     int getYear();
 

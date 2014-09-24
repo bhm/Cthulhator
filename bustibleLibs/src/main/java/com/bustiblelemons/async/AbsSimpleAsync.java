@@ -22,6 +22,10 @@ public abstract class AbsSimpleAsync<P, R extends Object> extends AsyncTask<P, P
 
     protected abstract boolean onSuccess(R result);
 
+    public Context getContext() {
+        return context;
+    }
+
     @Override
     protected R doInBackground(P... arg0) {
         try {

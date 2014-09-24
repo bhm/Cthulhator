@@ -33,6 +33,7 @@ public class Settings extends BaseSettings {
             e.printStackTrace();
             return CharacterSettingsImpl.defaults();
         }
+//        return CharacterSettingsImpl.defaults();
     }
 
     public static void saveLastOnlinePhotoSearchQuery(Context context, CharacterSettings query) {

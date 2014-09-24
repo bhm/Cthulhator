@@ -2,10 +2,12 @@ package com.bustiblelemons.cthulhator.async;
 
 import android.content.Context;
 
+import com.bustiblelemons.google.apis.model.GoogleImageObject;
 import com.bustiblelemons.google.apis.model.GoogleImageResponse;
 import com.bustiblelemons.google.apis.search.params.GImageSearch;
 import com.bustiblelemons.logging.Logger;
 import com.bustiblelemons.model.OnlinePhotoUrl;
+import com.bustiblelemons.model.OnlinePhotoUrlImpl;
 
 import org.apache.http.HttpResponse;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -13,7 +15,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import io.github.scottmaclure.character.traits.asyn.AbsAsynTask;
@@ -41,7 +42,10 @@ public class QueryGImagesAsyn extends AbsAsynTask<GImageSearch, List<OnlinePhoto
                 GoogleImageResponse response = mapper.readValue(in, GoogleImageResponse.class);
                 log.d("Response \n%s", response.getResults().size());
                 List<OnlinePhotoUrl> photoUrls = new ArrayList<OnlinePhotoUrl>();
-                Collections.copy(photoUrls, response.getResults());
+                for (GoogleImageObject o : response.getResults()) {
+                    OnlinePhotoUrl opu = new OnlinePhotoUrlImpl(o.getUrl());
+                    photoUrls.add(opu);
+                }
                 publishProgress(search, photoUrls);
             } catch (IOException e) {
                 e.printStackTrace();
