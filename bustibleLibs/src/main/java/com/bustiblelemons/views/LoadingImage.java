@@ -55,7 +55,7 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
         if (attrs != null) {
             TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.LoadingImage);
             noImageRes = array.getResourceId(R.styleable.LoadingImage_no_image, R.drawable.lemons);
-            image.setImageResource(noImageRes);
+            loadDefault();
             showProgress = array.getBoolean(R.styleable.LoadingImage_show_progressbar, false);
             if (showProgress) {
                 progress.setVisibility(View.VISIBLE);
@@ -88,6 +88,9 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
     }
 
     public void loadFrom(String url, String fallbackUrl) {
+        if (url == null && fallbackUrl == null) {
+            loadDefault();
+        }
         this.failbackAddress = fallbackUrl;
         this.addresToLoad = !TextUtils.isEmpty(url) ? url : fallbackUrl;
         if (!isSameUrl(addresToLoad)) {
@@ -121,6 +124,8 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
     public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
         if (failbackAddress != null) {
             rLoadUrl(failbackAddress);
+        } else {
+            loadDefault();
         }
         hideProgressbar();
     }
@@ -148,6 +153,10 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
     @Override
     public void onLoadingCancelled(String imageUri, View view) {
         hideProgressbar();
+        loadDefault();
+    }
+
+    private void loadDefault() {
         image.setImageResource(noImageRes);
     }
 }
