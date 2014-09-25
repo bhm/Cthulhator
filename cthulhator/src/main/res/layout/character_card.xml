@@ -6,22 +6,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="@dimen/chracter_card">
 
 
     <com.bustiblelemons.views.LoadingImage
         android:id="@android:id/icon"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/chracter_card"
-        android:layout_alignParentLeft="true"
-        app:no_image="@drawable/no_face_concrete_wall"/>
+        android:layout_height="match_parent"
+        android:layout_above="@id/extra_info"
+        app:no_image="@drawable/no_face_loading"/>
 
 
     <RelativeLayout
         android:id="@id/main_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@android:id/icon"
+        android:layout_above="@id/extra_info"
         android:background="@drawable/character_card_name_scream">
 
         <TextView
@@ -33,6 +33,7 @@
             android:paddingLeft="@dimen/padding_16"
             android:paddingRight="@dimen/padding_16"
             android:paddingTop="@dimen/padding_16"
+            android:textColor="@color/grey_white_1000"
             android:textSize="@dimen/font_22"
             android:textStyle="bold"
             tools:text="@string/placeholder_name"/>
@@ -47,6 +48,7 @@
             android:paddingBottom="@dimen/padding_8"
             android:paddingLeft="@dimen/padding_16"
             android:paddingRight="@dimen/padding_16"
+            android:textColor="@color/grey_white_1000"
             android:textSize="@dimen/font_14"
             tools:text="@string/placeholder_short_info"/>
     </RelativeLayout>
@@ -56,8 +58,8 @@
         android:id="@id/extra_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/main_info"
-        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:visibility="visible"
         tools:visibility="visible">
 
         <TextView
@@ -72,6 +74,7 @@
             android:paddingLeft="@dimen/padding_16"
             android:paddingRight="@dimen/padding_16"
             android:paddingTop="@dimen/padding_8"
+            android:textColor="@color/grey_black_1000"
             android:textSize="@dimen/font_12"
             tools:text="@string/placeholder_top_stats"/>
 
@@ -91,6 +94,7 @@
         android:id="@id/expanded_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:background="@color/grey_white_1000"
         android:visibility="gone">
 

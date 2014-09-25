@@ -8,31 +8,47 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@id/search_container"
+        android:id="@id/header"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/actionbar_height"
-        android:background="@drawable/character_list_search">
+        android:layout_height="@dimen/twice_actionbar_height"
+        android:background="@color/main_background">
 
-        <android.support.v7.widget.SearchView
-            android:id="@id/search"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+
     </RelativeLayout>
+
+    <TextView
+        android:id="@id/proverb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/header"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/add_character"
+        android:paddingBottom="@dimen/padding_16"
+        android:paddingLeft="@dimen/padding_16"
+        android:paddingRight="@dimen/padding_16"
+        android:paddingTop="@dimen/padding_16"
+        android:textColor="@color/grey_white_1000"
+        android:textSize="@dimen/font_20"
+        android:textStyle="bold"
+        tools:text="@string/placeholder_proverb"/>
+
 
     <com.bustiblelemons.views.LoadMoreListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/search_container"
+        android:layout_below="@id/header"
+        android:layout_marginTop="@dimen/padding_20"
         tools:listitem="@layout/single_saved_character"/>
 
     <at.markushi.ui.CircleButton
         android:id="@id/add_character"
         android:layout_width="@dimen/fab"
         android:layout_height="@dimen/fab"
-        android:layout_alignParentBottom="true"
+        android:layout_alignBottom="@id/header"
         android:layout_alignParentRight="true"
-        android:layout_margin="@dimen/padding_16"
+        android:layout_marginBottom="@dimen/fab_offset"
+        android:layout_marginRight="@dimen/padding_16"
         android:src="@drawable/add_new_selector"
         app:cb_color="@color/portraits_fab"/>
 
