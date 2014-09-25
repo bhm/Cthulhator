@@ -233,6 +233,7 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
 
     private void loadMorePhotos(ViewPager pager) {
         CharacterSettings settings = (CharacterSettings) pager.getTag(R.id.tag_search);
+        characterSettings = settings;
         if (settings.isModern()) {
             executeRandomUserMeQuery(RandomUserMe.Portraits);
         } else {
@@ -394,6 +395,10 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
         photosPagerAdapter = new PhotosPagerAdapter(getSupportFragmentManager());
         photosPager.setAdapter(photosPagerAdapter);
         onLoadMore(photosPager);
+        namesPager.removeAllViews();
+        namesPagerAdapter = new RandomUserMENamePagerAdapter(getSupportFragmentManager());
+        namesPager.setAdapter(namesPagerAdapter);
+        onLoadMore(namesPager);
     }
 
 

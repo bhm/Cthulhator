@@ -55,7 +55,6 @@ public class RandomUserDotMeAsyn extends AbsSimpleAsync<RandomUserMEQuery, List<
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
-            log.d("random user %s", randomUser);
             for (Results result : randomUser.getResults()) {
                 User u = result.getUser();
                 if (u != null) {
