@@ -49,7 +49,7 @@ public class PortraitsSettingsFragment extends AbsArgFragment<CharacterSettings>
 
     private Context mContext;
 
-    private boolean MFoldedOnly = false;
+    private boolean mFoldedOnly = false;
     private GoogleSearchOptsListener        mSearchOptionsChanged;
     private OnBroadcastOnlineSearchSettings mBroadcastSearchSettings;
     private GenderSpinnerAdapter            genderAdapter;
@@ -72,7 +72,7 @@ public class PortraitsSettingsFragment extends AbsArgFragment<CharacterSettings>
     }
 
     public void setFoldedOnly(boolean foldedOnly) {
-        this.MFoldedOnly = foldedOnly;
+        this.mFoldedOnly = foldedOnly;
         if (content != null) {
             content.setVisibility(foldedOnly ? View.GONE : View.VISIBLE);
         }
@@ -165,9 +165,10 @@ public class PortraitsSettingsFragment extends AbsArgFragment<CharacterSettings>
     }
 
     public void handleSettingsButton(View view) {
-        if (!MFoldedOnly) {
+        if (!mFoldedOnly) {
             boolean expand = !view.isSelected();
             expandSettings(expand);
+            manageTitleVisibility(expand);
             view.setSelected(expand);
             if (!expand && mBroadcastSearchSettings != null) {
                 mBroadcastSearchSettings.onSettingsChanged(mCharacterSettings, true);
@@ -178,6 +179,12 @@ public class PortraitsSettingsFragment extends AbsArgFragment<CharacterSettings>
                 mCharacterSettings = CharacterSettingsImpl.create(year, mGoogleSearchGender);
                 onOpenSearchSettings.onOpenSettings(mCharacterSettings);
             }
+        }
+    }
+
+    private void manageTitleVisibility(boolean expand) {
+        if (titleView != null) {
+            titleView.setVisibility(!expand ? View.VISIBLE : View.INVISIBLE);
         }
     }
 
