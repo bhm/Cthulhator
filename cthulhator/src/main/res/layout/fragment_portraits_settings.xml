@@ -39,23 +39,38 @@
         android:visibility="gone"
         tools:visibility="visible">
 
-        <Spinner
-            android:id="@id/gender_spinner"
+        <RelativeLayout
+            android:id="@android:id/custom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding_16"/>
+            android:layout_below="@android:id/closeButton"
+            android:visibility="visible">
 
-        <com.bustiblelemons.views.TitledSeekBar
-            android:id="@id/year_seekbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/gender_spinner"
-            app:compact="false"
-            app:jumpValue="5"
-            app:maxValue="@integer/jazz_age_max"
-            app:minValue="@integer/jazz_age_min"
-            app:progress="2"
-            app:statTitle="@string/year"/>
+            <Spinner
+                android:id="@id/gender_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_16"/>
+
+            <Spinner
+                android:id="@id/year_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/gender_spinner"
+                android:padding="@dimen/padding_16"/>
+
+            <com.bustiblelemons.views.TitledSeekBar
+                android:id="@id/year_seekbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/year_spinner"
+                app:compact="false"
+                app:jumpValue="5"
+                app:maxValue="@integer/jazz_age_max"
+                app:minValue="@integer/jazz_age_min"
+                app:progress="2"
+                app:statTitle="@string/year"/>
+        </RelativeLayout>
     </RelativeLayout>
 
 </RelativeLayout>

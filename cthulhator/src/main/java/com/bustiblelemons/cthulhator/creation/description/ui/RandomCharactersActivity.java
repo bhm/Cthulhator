@@ -99,6 +99,7 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FadingActionBarHelper helper = setupFadingBar();
+        characterSettings = Settings.getLastPortratiSettings(this);
         attachPortraitSettings();
         onSetActionBarToClosable();
         helper.initActionBar(this);
@@ -175,7 +176,6 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
             photosPagerAdapter.addData(getExisitngPortrats());
         }
         photosPager.setLoadMoreListener(this);
-        characterSettings = Settings.getLastPortratiSettings(this);
         photosPager.setTag(R.id.tag_search, characterSettings);
         photosPager.setAdapter(photosPagerAdapter);
     }

@@ -1,6 +1,7 @@
 package com.bustiblelemons.cthulhator.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +10,13 @@ import android.widget.Spinner;
 
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.adapters.GenderSpinnerAdapter;
+import com.bustiblelemons.cthulhator.adapters.PeriodSpinnerAdapter;
+import com.bustiblelemons.cthulhator.fragments.dialog.RandomCharSettings;
 import com.bustiblelemons.cthulhator.model.CharacterSettings;
 import com.bustiblelemons.cthulhator.model.CharacterSettingsImpl;
 import com.bustiblelemons.cthulhator.model.brp.gimagesearch.BRPGimageQuery;
+import com.bustiblelemons.cthulhator.model.time.YearsPeriod;
+import com.bustiblelemons.cthulhator.settings.Settings;
 import com.bustiblelemons.google.apis.GoogleSearchGender;
 import com.bustiblelemons.google.apis.search.params.GoogleImageSearch;
 import com.bustiblelemons.views.TitledSeekBar;
@@ -25,12 +30,14 @@ import butterknife.InjectView;
 public class PortraitsSettingsFragment extends AbsArgFragment<GoogleImageSearch.Options>
         implements View.OnClickListener,
                    GenderSpinnerAdapter.GenderSelected,
-                   TitledSeekBar.onValueChanged {
+                   TitledSeekBar.onValueChanged, PeriodSpinnerAdapter.OnYearsPeriodSelected {
 
     @InjectView(R.id.action_settings)
     View          settingsButton;
     @InjectView(R.id.gender_spinner)
-    Spinner       spinner;
+    Spinner       genderSpinner;
+    @InjectView(R.id.year_spinner)
+    Spinner       periodSpinner;
     @InjectView(R.id.year_seekbar)
     TitledSeekBar yearSeekbar;
     @InjectView(android.R.id.custom)
@@ -42,9 +49,11 @@ public class PortraitsSettingsFragment extends AbsArgFragment<GoogleImageSearch.
     private BRPGimageQuery                  brpImageQuery;
     private OnOpenSearchSettings            onOpenSearchSettings;
     private OnBroadcastOnlineSearchSettings onBroadcastOnlineSearchSettings;
-    private CharacterSettings               onlinePhotoSearchQuery;
+    private CharacterSettings               characterSettings;
+    private RandomCharSettings              randomCharSettings;
     private GoogleSearchGender mGoogleSearchGender = GoogleSearchGender.ANY;
     private boolean            MFoldedOnly         = false;
+    private PeriodSpinnerAdapter periodSpinnerAdapter;
 
     public static PortraitsSettingsFragment newInstance(GoogleImageSearch.Options searchOptions) {
         PortraitsSettingsFragment r = new PortraitsSettingsFragment();
@@ -76,14 +85,13 @@ public class PortraitsSettingsFragment extends AbsArgFragment<GoogleImageSearch.
         }
         if (activity instanceof OnBroadcastOnlineSearchSettings) {
             onBroadcastOnlineSearchSettings = (OnBroadcastOnlineSearchSettings) activity;
-            onBroadcastOnlineSearchSettings.onSettingsChanged(onlinePhotoSearchQuery,
+            onBroadcastOnlineSearchSettings.onSettingsChanged(characterSettings,
                     true);
         }
     }
 
     public void readLastSettings() {
-        onlinePhotoSearchQuery = com.bustiblelemons.cthulhator.settings.Settings.getLastPortratiSettings(
-                getActivity());
+        characterSettings = Settings.getLastPortratiSettings(getActivity());
     }
 
     @Override
@@ -96,9 +104,31 @@ public class PortraitsSettingsFragment extends AbsArgFragment<GoogleImageSearch.
             settingsButton.setOnClickListener(this);
         }
         brpImageQuery = new BRPGimageQuery();
-        brpImageQuery.gender(GoogleSearchGender.ANY);
+        brpImageQuery.gender(GoogleSearchGender.FEMALE);
         brpImageQuery.year(yearSeekbar.getValue());
         return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        randomCharSettings = Settings.getLastRandomCharSettings(view.getContext());
+        if (genderSpinner != null) {
+            setupGenderSpinner();
+        }
+        if (periodSpinner != null) {
+            setupPeriodSpinner(view.getContext());
+        }
+        if (yearSeekbar != null) {
+            yearSeekbar.setProgress(randomCharSettings.getSeekbarPosition());
+        }
+    }
+
+    public void setupPeriodSpinner(Context context) {
+        periodSpinnerAdapter = new PeriodSpinnerAdapter(context, this);
+        periodSpinner.setOnItemSelectedListener(periodSpinnerAdapter);
+        periodSpinner.setAdapter(periodSpinnerAdapter);
+        periodSpinner.setSelection(randomCharSettings.getPeriodSpinnerPosition());
     }
 
     @Override
@@ -108,8 +138,8 @@ public class PortraitsSettingsFragment extends AbsArgFragment<GoogleImageSearch.
 
     private void setupGenderSpinner() {
         genderAdapter = new GenderSpinnerAdapter(getActivity(), this);
-        spinner.setAdapter(genderAdapter);
-        spinner.setOnItemSelectedListener(genderAdapter);
+        genderSpinner.setAdapter(genderAdapter);
+        genderSpinner.setOnItemSelectedListener(genderAdapter);
     }
 
     @Override
@@ -160,6 +190,11 @@ public class PortraitsSettingsFragment extends AbsArgFragment<GoogleImageSearch.
     public void onTitledSeekBarChanged(TitledSeekBar seekBar) {
         searchOptions.setQuery(brpImageQuery.year(seekBar.getValue()));
         publishNewOptions(searchOptions);
+    }
+
+    @Override
+    public void onYearsPeriodSelected(YearsPeriod period) {
+
     }
 
     public interface GoogleSearchOptsListener {

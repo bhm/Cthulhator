@@ -46,7 +46,7 @@ public class RandomCharSettingsDialog extends AbsArgDialogFragment<CharacterSett
 
     private GenderSpinnerAdapter            genderAdapter;
     private PeriodSpinnerAdapter            periodSpinnerAdapter;
-    private OnBroadcastOnlineSearchSettings onBroadcastOnlineSearchSettings;
+    private OnBroadcastOnlineSearchSettings mBroadcastCallback;
     private GoogleSearchGender              mGoogleSearchGender;
     private CharacterSettings               characterSettings;
     private RandomCharSettings              randomCharSettings;
@@ -61,9 +61,8 @@ public class RandomCharSettingsDialog extends AbsArgDialogFragment<CharacterSett
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         if (activity instanceof OnBroadcastOnlineSearchSettings) {
-            onBroadcastOnlineSearchSettings = (OnBroadcastOnlineSearchSettings) activity;
+            mBroadcastCallback = (OnBroadcastOnlineSearchSettings) activity;
         }
-        readLastSettings(activity);
     }
 
     @Override
@@ -73,9 +72,6 @@ public class RandomCharSettingsDialog extends AbsArgDialogFragment<CharacterSett
         return dialog;
     }
 
-    public void readLastSettings(Activity activity) {
-        randomCharSettings = Settings.getLastRandomCharSettings(activity);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -93,6 +89,7 @@ public class RandomCharSettingsDialog extends AbsArgDialogFragment<CharacterSett
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        randomCharSettings = Settings.getLastRandomCharSettings(view.getContext());
         if (genderSpinner != null) {
             setupGenderSpinner(view.getContext());
         }
@@ -128,15 +125,18 @@ public class RandomCharSettingsDialog extends AbsArgDialogFragment<CharacterSett
     @Override
     public void onClick(View v) {
         boolean apply = v.getId() == android.R.id.button1;
-        if (onBroadcastOnlineSearchSettings != null) {
+        if (mBroadcastCallback != null) {
+            randomCharSettings = new RandomCharSettings();
+            randomCharSettings.setGenderSpinnerPosition(genderSpinner.getSelectedItemPosition());
+            randomCharSettings.setPeriodSpinnerPosition(periodSpinner.getSelectedItemPosition());
+            randomCharSettings.setSeekbarPosition(yearSeekbar.getProgress());
             int year = yearSeekbar.getIntValue();
             characterSettings = CharacterSettingsImpl.create(year, mGoogleSearchGender);
             if (apply) {
                 Settings.saveLastOnlinePhotoSearchQuery(getActivity(), characterSettings);
                 Settings.saveLastRandomCharSettings(getActivity(), randomCharSettings);
             }
-            onBroadcastOnlineSearchSettings.onSettingsChanged(characterSettings,
-                    apply);
+            mBroadcastCallback.onSettingsChanged(characterSettings, apply);
         }
         dismiss();
     }
