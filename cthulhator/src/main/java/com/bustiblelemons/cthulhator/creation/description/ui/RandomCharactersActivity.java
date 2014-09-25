@@ -91,15 +91,15 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
     private RandomUserMEQuery.Options        queryOptions;
     private CharacteristicTraitsAdapter      characteristicAdapter;
     private RandomCharSettingsDialog         randomCharSettingsDialog;
-    private PortraitsSettingsFragment        portraitSettingsFragment;
-    private CharacterSettings                characterSettings;
+    private PortraitsSettingsFragment mPortraitSettingsFragment;
+    private CharacterSettings         mCharacterSettings;
     private SavedCharacter                   mSavedCharacter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FadingActionBarHelper helper = setupFadingBar();
-        characterSettings = Settings.getLastPortratiSettings(this);
+        mCharacterSettings = Settings.getLastPortratiSettings(this);
         attachPortraitSettings();
         onSetActionBarToClosable();
         helper.initActionBar(this);
@@ -128,12 +128,12 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
     }
 
     private void attachPortraitSettings() {
-        if (portraitSettingsFragment == null) {
-            portraitSettingsFragment = PortraitsSettingsFragment.newInstance(characterSettings);
-            portraitSettingsFragment.setFoldedOnly(true);
-            portraitSettingsFragment.setOnOpenSearchSettings(this);
+        if (mPortraitSettingsFragment == null) {
+            mPortraitSettingsFragment = PortraitsSettingsFragment.newInstance(mCharacterSettings);
+            mPortraitSettingsFragment.setFoldedOnly(true);
+            mPortraitSettingsFragment.setOnOpenSearchSettings(this);
         }
-        addFragment(R.id.bottom_card, portraitSettingsFragment);
+        addFragment(R.id.bottom_card, mPortraitSettingsFragment);
     }
 
 
@@ -175,7 +175,7 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
             photosPagerAdapter.addData(getExisitngPortrats());
         }
         photosPager.setLoadMoreListener(this);
-        photosPager.setTag(R.id.tag_search, characterSettings);
+        photosPager.setTag(R.id.tag_search, mCharacterSettings);
         photosPager.setAdapter(photosPagerAdapter);
     }
 
@@ -232,7 +232,7 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
 
     private void loadMorePhotos(ViewPager pager) {
         CharacterSettings settings = (CharacterSettings) pager.getTag(R.id.tag_search);
-        characterSettings = settings;
+        mCharacterSettings = settings;
         if (settings.isModern()) {
             executeRandomUserMeQuery(RandomUserMe.Portraits);
         } else {
@@ -255,7 +255,7 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
     }
 
     public void executeRandomUserMeQuery(RandomUserMe postPart) {
-        Gender gender = GenderTransformer.toRandomUserMe(characterSettings.getGender());
+        Gender gender = GenderTransformer.toRandomUserMe(mCharacterSettings.getGender());
         query.setGender(gender);
         if (RandomUserMe.Portraits.equals(postPart)) {
             RandomUserDotMePortraitsAsyn async = new RandomUserDotMePortraitsAsyn(this, this);
@@ -374,7 +374,7 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
 
     public void handleSettingsButton() {
         if (randomCharSettingsDialog == null) {
-            randomCharSettingsDialog = RandomCharSettingsDialog.newInstance(characterSettings);
+            randomCharSettingsDialog = RandomCharSettingsDialog.newInstance(mCharacterSettings);
         }
         FragmentManager fm = getSupportFragmentManager();
         randomCharSettingsDialog.show(fm, randomCharSettingsDialog.TAG);
@@ -388,11 +388,22 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
 
     @Override
     public void onSettingsChanged(CharacterSettings characterSettings, boolean apply) {
+        updatePhotos(characterSettings);
+        updateNames();
+        if (mPortraitSettingsFragment != null && mPortraitSettingsFragment.isVisible()) {
+            mPortraitSettingsFragment.updateInstanceArgument(characterSettings);
+        }
+    }
+
+    private void updatePhotos(CharacterSettings characterSettings) {
         photosPager.setTag(R.id.tag_search, characterSettings);
         photosPager.removeAllViews();
         photosPagerAdapter = new PhotosPagerAdapter(getSupportFragmentManager());
         photosPager.setAdapter(photosPagerAdapter);
         onLoadMore(photosPager);
+    }
+
+    private void updateNames() {
         namesPager.removeAllViews();
         namesPagerAdapter = new RandomUserMENamePagerAdapter(getSupportFragmentManager());
         namesPager.setAdapter(namesPagerAdapter);

@@ -41,6 +41,10 @@ public abstract class AbsArgFragment<A extends Serializable> extends AbsFragment
 
     protected abstract void onInstanceArgumentRead(A instanceArgument);
 
+    public void updateInstanceArgument(A newInstanceArgument) {
+        onInstanceArgumentRead(newInstanceArgument);
+    }
+
     @Override
     public void onViewStateRestored(Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
