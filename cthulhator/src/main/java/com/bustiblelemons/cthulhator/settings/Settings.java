@@ -2,7 +2,7 @@ package com.bustiblelemons.cthulhator.settings;
 
 import android.content.Context;
 
-import com.bustiblelemons.cthulhator.fragments.dialog.RandomCharSettings;
+import com.bustiblelemons.cthulhator.fragments.dialog.OnlineSearchUISettings;
 import com.bustiblelemons.cthulhator.model.CharacterSettings;
 import com.bustiblelemons.cthulhator.model.CharacterSettingsImpl;
 import com.bustiblelemons.settings.BaseSettings;
@@ -19,9 +19,9 @@ import java.io.IOException;
  */
 public class Settings extends BaseSettings {
 
-    public static final String CACHE_FOLDER = "cache_folder";
-    private static String sPortraitSettingsFilename = "portraits.settings";
-    private static String sRandomCharSettingsFilename = "random.char.settings";
+    public static final String CACHE_FOLDER                = "cache_folder";
+    private static      String sPortraitSettingsFilename   = "portraits.settings";
+    private static      String sRandomCharSettingsFilename = "random.char.settings";
 
 
     public static CharacterSettings getLastPortratiSettings(Context context) {
@@ -33,7 +33,6 @@ public class Settings extends BaseSettings {
             e.printStackTrace();
             return CharacterSettingsImpl.defaults();
         }
-//        return CharacterSettingsImpl.defaults();
     }
 
     public static void saveLastOnlinePhotoSearchQuery(Context context, CharacterSettings query) {
@@ -46,22 +45,22 @@ public class Settings extends BaseSettings {
         }
     }
 
-    public static RandomCharSettings getLastRandomCharSettings(Context context) {
+    public static OnlineSearchUISettings getLastKnownPhotoSearchUISettings(Context context) {
         ObjectMapper m = new ObjectMapper();
         try {
             File file = Storage.getStorageFile(context, sRandomCharSettingsFilename);
-            return m.readValue(file, RandomCharSettings.class);
+            return m.readValue(file, OnlineSearchUISettings.class);
         } catch (IOException e) {
             e.printStackTrace();
-            return RandomCharSettings.defaults();
+            return OnlineSearchUISettings.defaults();
         }
     }
 
-    public static void saveLastRandomCharSettings(Context context, RandomCharSettings randomCharSettings) {
+    public static void setLastKnownPhotoSearchUISettings(Context context, OnlineSearchUISettings onlineSearchUISettings) {
         ObjectMapper m = new ObjectMapper();
         try {
             File file = Storage.getStorageFile(context, sRandomCharSettingsFilename);
-            m.writeValue(file, randomCharSettings);
+            m.writeValue(file, onlineSearchUISettings);
         } catch (IOException e) {
             e.printStackTrace();
         }

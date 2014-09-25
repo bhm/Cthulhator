@@ -93,7 +93,7 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
     private RandomCharSettingsDialog         randomCharSettingsDialog;
     private PortraitsSettingsFragment        portraitSettingsFragment;
     private CharacterSettings                characterSettings;
-    private SavedCharacter mSavedCharacter;
+    private SavedCharacter                   mSavedCharacter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,8 +129,7 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
 
     private void attachPortraitSettings() {
         if (portraitSettingsFragment == null) {
-            GoogleImageSearch.Options opts = new GoogleImageSearch.Options();
-            portraitSettingsFragment = PortraitsSettingsFragment.newInstance(opts);
+            portraitSettingsFragment = PortraitsSettingsFragment.newInstance(characterSettings);
             portraitSettingsFragment.setFoldedOnly(true);
             portraitSettingsFragment.setOnOpenSearchSettings(this);
         }
@@ -389,7 +388,6 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
 
     @Override
     public void onSettingsChanged(CharacterSettings characterSettings, boolean apply) {
-        log.d("onSettingschanged %s", characterSettings);
         photosPager.setTag(R.id.tag_search, characterSettings);
         photosPager.removeAllViews();
         photosPagerAdapter = new PhotosPagerAdapter(getSupportFragmentManager());

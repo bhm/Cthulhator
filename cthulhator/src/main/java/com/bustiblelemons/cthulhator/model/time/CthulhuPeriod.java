@@ -63,6 +63,15 @@ public enum CthulhuPeriod implements YearsPeriod {
 
     };
 
+    public static CthulhuPeriod fromYear(int year) {
+        for (CthulhuPeriod p : values()) {
+            if (year <= p.getMaxYear() && year >= p.getMinYear()) {
+                return p;
+            }
+        }
+        return JAZZAGE;
+    }
+
     @Override
     public String toString() {
         return String.format(Locale.ENGLISH, "Period %s : [Min=%s; Jump=%s; Max=%s", name(),

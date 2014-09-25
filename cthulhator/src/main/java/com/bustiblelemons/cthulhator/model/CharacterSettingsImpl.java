@@ -6,7 +6,10 @@ import com.bustiblelemons.cthulhator.model.time.CthulhuPeriod;
 import com.bustiblelemons.cthulhator.model.time.YearsPeriod;
 import com.bustiblelemons.google.apis.GoogleSearchGender;
 
+import org.apache.commons.lang.WordUtils;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+import java.util.Locale;
 
 /**
  * Created by bhm on 04.08.14.
@@ -19,6 +22,7 @@ public class CharacterSettingsImpl implements CharacterSettings {
     private        boolean            modern;
     private        int                year;
     private        GoogleSearchGender googleSearchGender;
+    private CthulhuPeriod cthulhuPeriod = CthulhuPeriod.JAZZAGE;
 
     public CharacterSettingsImpl() {
         this.year = CthulhuPeriod.JAZZAGE.getDefaultYear();
@@ -27,6 +31,7 @@ public class CharacterSettingsImpl implements CharacterSettings {
 
     private CharacterSettingsImpl(int year, GoogleSearchGender googleSearchGender) {
         this.year = year;
+        setCthulhuPeriod(CthulhuPeriod.fromYear(this.year));
         this.googleSearchGender = googleSearchGender;
     }
 
@@ -72,6 +77,15 @@ public class CharacterSettingsImpl implements CharacterSettings {
     }
 
     @Override
+    public CthulhuPeriod getCthulhuPeriod() {
+        return cthulhuPeriod;
+    }
+
+    public void setCthulhuPeriod(CthulhuPeriod cthulhuPeriod) {
+        this.cthulhuPeriod = cthulhuPeriod;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) { return true; }
         if (o == null || getClass() != o.getClass()) { return false; }
@@ -86,11 +100,9 @@ public class CharacterSettingsImpl implements CharacterSettings {
 
     @Override
     public String toString() {
-        return "CharacterSettingsImpl{" +
-                "modern=" + modern +
-                ", year=" + year +
-                ", gender=" + googleSearchGender +
-                '}';
+        String period = WordUtils.capitalizeFully(cthulhuPeriod.getName());
+        String gender = WordUtils.capitalizeFully(googleSearchGender.getName());
+        return String.format(Locale.ENGLISH, "%s %s", period, gender);
     }
 
     @Override

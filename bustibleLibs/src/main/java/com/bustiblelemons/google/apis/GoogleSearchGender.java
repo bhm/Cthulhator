@@ -3,6 +3,8 @@ package com.bustiblelemons.google.apis;
 
 import com.bustiblelemons.bustiblelibs.R;
 
+import org.apache.commons.lang.WordUtils;
+
 /**
  * Created by bhm on 27.07.14.
  */
@@ -53,7 +55,7 @@ public enum GoogleSearchGender {
     public abstract int getTitleId();
 
     public boolean isMale() {
-        switch(this) {
+        switch (this) {
             case MALE:
             case BOY:
             case MEN:
@@ -65,5 +67,9 @@ public enum GoogleSearchGender {
 
     public String getSearchString() {
         return name();
+    }
+
+    public String getName() {
+        return WordUtils.capitalizeFully(name());
     }
 }

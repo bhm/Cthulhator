@@ -49,7 +49,7 @@ public class RandomCharSettingsDialog extends AbsArgDialogFragment<CharacterSett
     private OnBroadcastOnlineSearchSettings mBroadcastCallback;
     private GoogleSearchGender              mGoogleSearchGender;
     private CharacterSettings               characterSettings;
-    private RandomCharSettings              randomCharSettings;
+    private OnlineSearchUISettings onlineSearchUISettings;
 
     public static RandomCharSettingsDialog newInstance(CharacterSettings settings) {
         RandomCharSettingsDialog r = new RandomCharSettingsDialog();
@@ -89,7 +89,7 @@ public class RandomCharSettingsDialog extends AbsArgDialogFragment<CharacterSett
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        randomCharSettings = Settings.getLastRandomCharSettings(view.getContext());
+        onlineSearchUISettings = Settings.getLastKnownPhotoSearchUISettings(view.getContext());
         if (genderSpinner != null) {
             setupGenderSpinner(view.getContext());
         }
@@ -97,7 +97,7 @@ public class RandomCharSettingsDialog extends AbsArgDialogFragment<CharacterSett
             setupPeriodSpinner(view.getContext());
         }
         if (yearSeekbar != null) {
-            yearSeekbar.setProgress(randomCharSettings.getSeekbarPosition());
+            yearSeekbar.setProgress(onlineSearchUISettings.getSeekbarPosition());
         }
     }
 
@@ -105,14 +105,14 @@ public class RandomCharSettingsDialog extends AbsArgDialogFragment<CharacterSett
         periodSpinnerAdapter = new PeriodSpinnerAdapter(context, this);
         periodSpinner.setOnItemSelectedListener(periodSpinnerAdapter);
         periodSpinner.setAdapter(periodSpinnerAdapter);
-        periodSpinner.setSelection(randomCharSettings.getPeriodSpinnerPosition());
+        periodSpinner.setSelection(onlineSearchUISettings.getPeriodSpinnerPosition());
     }
 
     private void setupGenderSpinner(Context context) {
         genderAdapter = new GenderSpinnerAdapter(context, this);
         genderSpinner.setAdapter(genderAdapter);
         genderSpinner.setOnItemSelectedListener(genderAdapter);
-        genderSpinner.setSelection(randomCharSettings.getGenderSpinnerPosition());
+        genderSpinner.setSelection(onlineSearchUISettings.getGenderSpinnerPosition());
     }
 
     @Override
@@ -126,15 +126,17 @@ public class RandomCharSettingsDialog extends AbsArgDialogFragment<CharacterSett
     public void onClick(View v) {
         boolean apply = v.getId() == android.R.id.button1;
         if (mBroadcastCallback != null) {
-            randomCharSettings = new RandomCharSettings();
-            randomCharSettings.setGenderSpinnerPosition(genderSpinner.getSelectedItemPosition());
-            randomCharSettings.setPeriodSpinnerPosition(periodSpinner.getSelectedItemPosition());
-            randomCharSettings.setSeekbarPosition(yearSeekbar.getProgress());
+            onlineSearchUISettings = new OnlineSearchUISettings();
+            onlineSearchUISettings.setGenderSpinnerPosition(
+                    genderSpinner.getSelectedItemPosition());
+            onlineSearchUISettings.setPeriodSpinnerPosition(
+                    periodSpinner.getSelectedItemPosition());
+            onlineSearchUISettings.setSeekbarPosition(yearSeekbar.getProgress());
             int year = yearSeekbar.getIntValue();
             characterSettings = CharacterSettingsImpl.create(year, mGoogleSearchGender);
             if (apply) {
                 Settings.saveLastOnlinePhotoSearchQuery(getActivity(), characterSettings);
-                Settings.saveLastRandomCharSettings(getActivity(), randomCharSettings);
+                Settings.setLastKnownPhotoSearchUISettings(getActivity(), onlineSearchUISettings);
             }
             mBroadcastCallback.onSettingsChanged(characterSettings, apply);
         }
