@@ -42,8 +42,7 @@ public class SavedCharacterTransformer {
                     loc.getCity(),
                     loc.getState());
         }
-        int age = savedCharacter.getAge();
-        return String.format(Locale.ENGLISH, "%s, %s", age, location);
+        return String.format(Locale.ENGLISH, "%s", location);
     }
 
     private String getExtraInfo(SavedCharacter savedCharacter) {
