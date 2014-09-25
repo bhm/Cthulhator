@@ -17,12 +17,26 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    <style name="Animation"/>
+
+    <style name="Animation.SlideInAnimations">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_left</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_in_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_out_right</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+    </style>
+
     <style name="card">
         <item name="android:background">@drawable/card_selector</item>
         <item name="android:layout_margin">@dimen/padding_8</item>
     </style>
 
-    <style name="card_peeking" >
+    <style name="card.dark">
+        <item name="android:background">@drawable/dark_card_selector</item>
+        <item name="android:layout_margin">@dimen/padding_8</item>
+    </style>
+
+    <style name="card_peeking">
         <item name="android:background">@drawable/card_selector</item>
     </style>
 
@@ -34,6 +48,7 @@
         <item name="android:layout_height">@dimen/inset_divider</item>
         <item name="android:background">@drawable/inset_divider</item>
     </style>
+
     <style name="full_bleed_divider">
         <item name="android:padding">@dimen/padding_4</item>
         <item name="android:layout_height">@dimen/full_bleed_divider</item>

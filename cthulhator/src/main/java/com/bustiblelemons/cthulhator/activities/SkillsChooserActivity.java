@@ -21,7 +21,8 @@ import butterknife.InjectView;
  */
 public class SkillsChooserActivity extends AbsCharacterCreationActivity implements SkillChanged {
 
-    public static final String CHARACTER = "character";
+    public static final String CHARACTER    = "character";
+    public static final int    REQUEST_CODE = 6;
 
     @InjectView(android.R.id.list)
     ListView listView;

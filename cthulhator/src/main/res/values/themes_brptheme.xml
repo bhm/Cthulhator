@@ -6,6 +6,7 @@
     <style name="BRPTheme" parent="@style/_BRPTheme"/>
 
     <style name="_BRPTheme" parent="AppTheme.Light.TranslucentActionBar">
+        <item name="android:windowAnimationStyle">@style/Animation.SlideInAnimations</item>
 
         <item name="android:textColorHighlight">#99607d8b</item>
 
@@ -16,13 +17,14 @@
         <item name="android:imageButtonStyle">@style/ImageButtonBRPTheme</item>
 
     </style>
-    <style name="Widget" />
+
+    <style name="Widget"/>
 
     <style name="Widget.ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:actionBarSize">@dimen/actionbar_height</item>
     </style>
 
-    <style name="Widget.Light" />
+    <style name="Widget.Light"/>
 
     <style name="Widget.Light.ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
     </style>

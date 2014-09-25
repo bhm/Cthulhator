@@ -204,6 +204,21 @@
         </RelativeLayout>
     </ScrollView>
 
+    <Button
+        android:id="@id/assign_skills"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/padding_4"
+        android:layout_marginLeft="@dimen/padding_8"
+        android:layout_marginRight="@dimen/padding_8"
+        android:background="@drawable/main_button_selector"
+        android:text="@string/assign_skills"
+        android:textAllCaps="true"
+        android:textColor="@color/grey_white_1000"
+        android:textSize="@dimen/font_24"
+        android:textStyle="bold"/>
+
     <at.markushi.ui.CircleButton
         android:id="@id/reroll"
         android:layout_width="@dimen/fab"

@@ -29,7 +29,10 @@ public class CharacterCard extends RelativeLayout {
     TextView     extraInfoView;
     @InjectView(android.R.id.icon)
     LoadingImage loadingImage;
+    @InjectView(R.id.menu)
+    ImageButton  menuButton;
     private View rootView;
+    private boolean mShowMenu = true;
 
     public CharacterCard(Context context) {
         super(context);
@@ -52,8 +55,11 @@ public class CharacterCard extends RelativeLayout {
         mainInfoView = (TextView) rootView.findViewById(R.id.short_info);
         extraInfoView = (TextView) rootView.findViewById(R.id.top_characteristics);
         loadingImage = (LoadingImage) rootView.findViewById(android.R.id.icon);
+        menuButton = (ImageButton) rootView.findViewById(R.id.menu);
         if (attrs != null) {
             TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CharacterCard);
+            mShowMenu = array.getBoolean(R.styleable.CharacterCard_show_menu, mShowMenu);
+            menuButton.setVisibility(mShowMenu ? VISIBLE : INVISIBLE);
             array.recycle();
         }
         addView(rootView);

@@ -2,7 +2,9 @@
 <resources>
 
     <attr name="disableInput" format="boolean"/>
+    <attr name="_textSize" format="dimension"/>
     <declare-styleable name="LocationWidget">
+        <attr name="_textSize"/>
         <attr name="enableMapPicker" format="boolean"/>
         <attr name="pickerDrawable" format="reference"/>
         <attr name="disableInput"/>
@@ -11,5 +13,8 @@
         <attr name="hideTitle"/>
         <attr name="disableInput"/>
     </declare-styleable>
-    <declare-styleable name="CharacterCard"></declare-styleable>
+    <attr name="show_menu" format="boolean"/>
+    <declare-styleable name="CharacterCard">
+        <attr name="show_menu"/>
+    </declare-styleable>
 </resources>

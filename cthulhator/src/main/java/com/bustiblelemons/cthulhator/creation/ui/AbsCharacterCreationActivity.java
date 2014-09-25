@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.bustiblelemons.activities.AbsArgActivity;
+import com.bustiblelemons.cthulhator.activities.SkillsChooserActivity;
 import com.bustiblelemons.cthulhator.creation.characteristics.ui.StatisticsCreatorActivity;
 import com.bustiblelemons.cthulhator.creation.description.ui.RandomCharactersActivity;
 import com.bustiblelemons.cthulhator.creation.history.ui.HistoryEditorActivity;
@@ -29,12 +30,15 @@ public abstract class AbsCharacterCreationActivity extends AbsArgActivity<SavedC
         launchCreationActivity(i, RandomCharactersActivity.REQUEST_CODE, character);
     }
 
+    protected void launchSkillsetEditor(SavedCharacter character) {
+        Intent i = new Intent(this, SkillsChooserActivity.class);
+        launchCreationActivity(i, SkillsChooserActivity.REQUEST_CODE, character);
+    }
+
     protected void launchCreationActivity(Intent intent, int code, SavedCharacter character) {
         Bundle opts = new Bundle();
         opts.putParcelable(AbsArgActivity.INSTANCE_ARGUMENT, character);
         intent.putExtras(opts);
         startActivityForResult(intent, code);
     }
-
-
 }

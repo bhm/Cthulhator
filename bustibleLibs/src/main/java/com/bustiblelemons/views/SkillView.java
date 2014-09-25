@@ -200,7 +200,6 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
             }
             setTexts(skillArray);
             skillArray.recycle();
-            skillArray.recycle();
         }
         addView(rootView);
     }

@@ -14,7 +14,7 @@
         style="@style/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/font_16"
+        android:padding="@dimen/padding_16"
         app:text="@string/placeholder_name"
-        app:textSize="@dimen/font_16"/>
+        app:textSize="@dimen/text_size_normal"/>
 </RelativeLayout>

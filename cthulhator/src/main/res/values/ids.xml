@@ -89,4 +89,5 @@
     <item name="cancel" type="id"/>
     <item name="menu" type="id"/>
     <item name="proverb" type="id"/>
+    <item name="assign_skills" type="id"/>
 </resources>

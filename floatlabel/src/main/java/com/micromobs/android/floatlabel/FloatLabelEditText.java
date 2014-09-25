@@ -73,18 +73,18 @@ public class FloatLabelEditText
         return "";
     }
 
-    public void setText(int resId) {
+    public void setText(CharSequence title) {
         if (mEditTextView != null) {
-            mEditTextView.setText(resId);
+            mEditTextView.setText(title);
         }
     }
 
     // -----------------------------------------------------------------------
     // private helpers
 
-    public void setText(CharSequence title) {
+    public void setText(int resId) {
         if (mEditTextView != null) {
-            mEditTextView.setText(title);
+            mEditTextView.setText(resId);
         }
     }
 
@@ -125,9 +125,7 @@ public class FloatLabelEditText
                 Gravity.LEFT);
         mTextSizeInSp = getScaledFontSize(attributesFromXmlLayout.getDimensionPixelSize(
                 R.styleable.FloatLabelEditText_textSize,
-                (int) mEditTextView
-                        .getTextSize()
-        ));
+                (int) mEditTextView.getTextSize()));
         mFocusedColor = attributesFromXmlLayout.getColor(
                 R.styleable.FloatLabelEditText_textColorHintFocused,
                 android.R.color.black);
@@ -135,8 +133,7 @@ public class FloatLabelEditText
                 R.styleable.FloatLabelEditText_textColorHintUnFocused,
                 android.R.color.darker_gray);
         mFitScreenWidth = attributesFromXmlLayout.getInt(
-                R.styleable.FloatLabelEditText_fitScreenWidth,
-                0);
+                R.styleable.FloatLabelEditText_fitScreenWidth, 0);
         mIsPassword = (attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_inputType,
                 0) == 1);
         attributesFromXmlLayout.recycle();
@@ -197,6 +194,16 @@ public class FloatLabelEditText
                 }
             }
         };
+    }
+
+    public void setTextSize(int size) {
+        setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+    }
+
+    public void setTextSize(int unit, int size) {
+        if (mEditTextView != null) {
+            mEditTextView.setTextSize(unit, size);
+        }
     }
 
     private void showFloatingLabel() {

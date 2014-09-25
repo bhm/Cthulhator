@@ -43,4 +43,5 @@
     <dimen name="padding_12">12dp</dimen>
     <dimen name="chracter_card">260dp</dimen>
     <dimen name="small_character_card">160dp</dimen>
+    <dimen name="text_size_normal">@dimen/font_16</dimen>
 </resources>

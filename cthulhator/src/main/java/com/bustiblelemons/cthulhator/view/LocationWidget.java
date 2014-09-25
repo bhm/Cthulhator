@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -39,6 +40,7 @@ public class LocationWidget extends RelativeLayout {
     private String       mZipcode;
     private boolean enableMapPicker = true;
     private Drawable locationPickerDrawable;
+    private int      defaultTextSize;
 
     public LocationWidget(Context context) {
         super(context);
@@ -108,6 +110,8 @@ public class LocationWidget extends RelativeLayout {
         ButterKnife.inject(this, rootView);
         if (attrs != null) {
             TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.LocationWidget);
+            defaultTextSize = context.getResources().getDimensionPixelSize(R.dimen.font_16);
+            setTextSizes(array);
             enableMapPicker = array.getBoolean(R.styleable.LocationWidget_enableMapPicker,
                     enableMapPicker);
             enableMapPicker(enableMapPicker);
@@ -115,6 +119,26 @@ public class LocationWidget extends RelativeLayout {
             if (locationPickerDrawable != null) {
                 setLocationPicker(locationPickerDrawable);
             }
+        }
+    }
+
+    private void setTextSizes(TypedArray array) {
+        defaultTextSize = array.getDimensionPixelSize(R.styleable.LocationWidget__textSize,
+                defaultTextSize);
+        setTextSizes(defaultTextSize);
+    }
+
+    private void setTextSizes(int size) {
+        setTextSizeFor(streetInput, size);
+        setTextSizeFor(cityInput, size);
+        setTextSizeFor(stateInput, size);
+        setTextSizeFor(zipCodeInput, size);
+
+    }
+
+    private void setTextSizeFor(FloatLabelEditText view, int size) {
+        if (view != null) {
+            view.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
         }
     }
 

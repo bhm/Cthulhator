@@ -1,10 +1,13 @@
 package com.bustiblelemons.cthulhator.creation.characteristics.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.SparseArray;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.bustiblelemons.cthulhator.R;
+import com.bustiblelemons.cthulhator.activities.SkillsChooserActivity;
 import com.bustiblelemons.cthulhator.creation.characteristics.logic.CharacterPropertyAdapter;
 import com.bustiblelemons.cthulhator.creation.characteristics.logic.PointPoolObserver;
 import com.bustiblelemons.cthulhator.creation.ui.AbsCharacterCreationActivity;
@@ -75,6 +78,12 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
             characterProperties = mSavedCharacter.getProperties();
             fillPropertyViews();
         }
+    }
+
+    @OnClick(R.id.assign_skills)
+    public void onOpenSkillsetEditor(Button button) {
+        Intent i = new Intent(this, SkillsChooserActivity.class);
+        startActivity(i);
     }
 
 

@@ -3,7 +3,6 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,7 +10,7 @@
         android:id="@id/name_widget_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/font_12"
+        android:paddingBottom="@dimen/padding_16"
         app:hint="@string/placeholder_title"
         app:textColorHintFocused="@color/hint_focused"
         app:textColorHintUnFocused="@color/hint_unfocused"
@@ -22,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/name_widget_title"
-        android:padding="@dimen/font_16"
+        android:paddingTop="@dimen/padding_16"
         app:hint="@string/hint_name"
         app:textColorHintFocused="@color/hint_focused"
         app:textColorHintUnFocused="@color/hint_unfocused"
