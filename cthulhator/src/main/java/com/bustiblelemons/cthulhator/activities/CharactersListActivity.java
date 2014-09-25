@@ -34,8 +34,6 @@ public class CharactersListActivity extends AbsActionBarActivity
 
     @InjectView(android.R.id.list)
     LoadMoreListView listView;
-    @InjectView(R.id.search)
-    SearchView       searchView;
     @InjectView(R.id.add_character)
     CircleButton     addFab;
     private SavedCharactersAdapter listAdapter;
@@ -53,10 +51,6 @@ public class CharactersListActivity extends AbsActionBarActivity
             listView.setOnLoadMoreListener(this);
             listView.setAdapter(listAdapter);
             listView.setOnItemClickListener(listAdapter);
-        }
-
-        if (searchView != null) {
-            searchView.setOnQueryTextListener(this);
         }
     }
 
