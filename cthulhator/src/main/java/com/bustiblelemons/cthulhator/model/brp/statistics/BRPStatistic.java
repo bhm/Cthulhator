@@ -4,8 +4,9 @@ import com.bustiblelemons.cthulhator.model.ActionGroup;
 import com.bustiblelemons.cthulhator.model.BRPStatCharacterProperty;
 import com.bustiblelemons.cthulhator.model.CharacterProperty;
 import com.bustiblelemons.cthulhator.model.ModifierType;
+import com.bustiblelemons.cthulhator.model.PropertyFormat;
 import com.bustiblelemons.cthulhator.model.Relation;
-import com.bustiblelemons.cthulhator.model.brp.skills.BRPSkills;
+import com.bustiblelemons.cthulhator.model.brp.skills.BRPSkill;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,7 +26,7 @@ public enum BRPStatistic {
             if (relations == null) {
                 relations = new ArrayList<Relation>();
                 dodgeRelation = new Relation()
-                        .setPropertyName(BRPSkills.Dodge.name())
+                        .setPropertyName(BRPSkill.Dodge.name())
                         .setModifier(2)
                         .setModifierType(ModifierType.MULTIPLY);
                 relations.add(dodgeRelation);
@@ -121,6 +122,13 @@ public enum BRPStatistic {
             }
             return relations;
         }
+
+        @Override
+        public CharacterProperty asCharacterProperty() {
+            CharacterProperty r = super.asCharacterProperty();
+            r.setFormat(PropertyFormat.PERCENTILE);
+            return r;
+        }
     }, KNOW {
         public Relation eduRelation;
         public List<Relation> relations;
@@ -142,6 +150,7 @@ public enum BRPStatistic {
         public CharacterProperty asCharacterProperty() {
             CharacterProperty r = super.asCharacterProperty();
             r.setMaxValue(99);
+            r.setFormat(PropertyFormat.PERCENTILE);
             return r;
         }
     }, LUCK {
@@ -160,6 +169,13 @@ public enum BRPStatistic {
                 relations.add(powRelation);
             }
             return relations;
+        }
+
+        @Override
+        public CharacterProperty asCharacterProperty() {
+            CharacterProperty r = super.asCharacterProperty();
+            r.setFormat(PropertyFormat.PERCENTILE);
+            return r;
         }
     };
 

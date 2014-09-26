@@ -2,7 +2,7 @@ package com.bustiblelemons.cthulhator.model;
 
 import android.support.v4.util.LruCache;
 
-import com.bustiblelemons.cthulhator.model.brp.skills.BRPSkills;
+import com.bustiblelemons.cthulhator.model.brp.skills.BRPSkill;
 import com.bustiblelemons.cthulhator.model.brp.statistics.BRPStatistic;
 
 import java.util.Collections;
@@ -68,9 +68,11 @@ public enum CthulhuEdition {
     public Set<CharacterProperty> getSkills() {
         if (skillsCache.get(this) == null) {
             Set<CharacterProperty> r = new HashSet<CharacterProperty>();
-            for (BRPSkills s : BRPSkills.values()) {
-                if (s.getEditions().contains(this)) {
-                    r.add(s.asCharacterProperty(this));
+            for (BRPSkill s : BRPSkill.values()) {
+                for (CthulhuEdition edition : s.getEditions()) {
+                    if (this.equals(edition)) {
+                        r.add(s.asCharacterProperty(this));
+                    }
                 }
             }
             skillsCache.put(this, r);

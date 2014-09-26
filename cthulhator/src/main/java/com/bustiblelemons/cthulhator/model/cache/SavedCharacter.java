@@ -99,6 +99,7 @@ public class SavedCharacter implements Parcelable {
 
     public void setEdition(CthulhuEdition edition) {
         this.edition = edition;
+        this.properties.clear();
         fillStatistics(edition);
         fillSkillsList(edition);
         updateSkillPointPools();
@@ -188,11 +189,9 @@ public class SavedCharacter implements Parcelable {
 
     private CharacterProperty getPropertyByName(String propertyName) {
         for (CharacterProperty prop : properties) {
-            if (prop != null) {
-                if (prop.getName() != null) {
-                    if (prop.getName().equalsIgnoreCase(propertyName)) {
-                        return prop;
-                    }
+            if (prop != null && prop.getName() != null) {
+                if (prop.getName().equalsIgnoreCase(propertyName)) {
+                    return prop;
                 }
             }
         }
@@ -383,11 +382,7 @@ public class SavedCharacter implements Parcelable {
         if (properties == null) {
             properties = new HashSet<CharacterProperty>();
         }
-        for (CharacterProperty property : characterProperties) {
-            if (property != null) {
-                properties.add(property);
-            }
-        }
+        properties.addAll(characterProperties);
         updateSkills();
     }
 

@@ -16,7 +16,7 @@ import java.util.Set;
 /**
  * Created by bhm on 13.09.14.
  */
-public enum BRPSkills {
+public enum BRPSkill {
     Accounting {
         @Override
         public int getBaseValue(CthulhuEdition edition) {
@@ -307,7 +307,11 @@ public enum BRPSkills {
             return 15;
         }
     };
-    private Set<CthulhuEdition> editions;
+    private Set<CthulhuEdition> editions = new HashSet<CthulhuEdition>();
+
+    {
+        editions.add(CthulhuEdition.CoC5);
+    }
 
     public Set<Relation> getRelations() {
         return Collections.emptySet();
@@ -315,6 +319,7 @@ public enum BRPSkills {
 
     public CharacterProperty asCharacterProperty(CthulhuEdition edition) {
         CharacterProperty r = new CharacterProperty();
+        r.setName(name());
         r.setFormat(PropertyFormat.PERCENTILE);
         r.setMaxValue(100);
         r.setMinValue(0);

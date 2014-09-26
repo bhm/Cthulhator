@@ -51,16 +51,14 @@ public class BRPStatCharacterProperty extends CharacterProperty {
                 fromDice.addDicePool(3, PolyHedralDice.D6).addModifiers(3);
                 return fromPointPool(fromDice.build());
             default:
-                fromDice = new PointPoolFromDiceFactory();
-                return fromPointPool(fromDice.build());
+                return new Builder().build();
         }
     }
 
     private static CharacterProperty fromPointPool(PointPool p) {
-        Builder b = new Builder();
-        b.setBaseValue(p.getMin());
-        b.setMin(p.getMin());
-        b.setMax(p.getMax());
+        Builder b = new Builder().setMax(p.getMax())
+                .setBaseValue(p.getMin())
+                .setMin(p.getMin());
         return b.build();
     }
 
