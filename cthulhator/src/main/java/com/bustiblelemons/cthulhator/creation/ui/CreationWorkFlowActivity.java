@@ -10,7 +10,7 @@ import com.bustiblelemons.cthulhator.model.CthulhuEdition;
 import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
 import com.bustiblelemons.cthulhator.model.cache.SavedCharacterTransformer;
 import com.bustiblelemons.cthulhator.settings.Settings;
-import com.bustiblelemons.cthulhator.view.charactercard.CharacterCard;
+import com.bustiblelemons.cthulhator.view.charactercard.CharacterCardView;
 import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
 
 import butterknife.ButterKnife;
@@ -21,16 +21,18 @@ import butterknife.OnClick;
  * Created by bhm on 29.08.14.
  */
 public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
-        implements View.OnClickListener {
+        implements View.OnClickListener, CharacterCardView.OnCharacterCardViewClick {
 
     @InjectView(R.id.preview_card)
-    CharacterCard characterCard;
+    CharacterCardView characterCardView;
     private SavedCharacter mSavedCharacter;
     private CthulhuEdition mEdition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_creation_workflow);
+        ButterKnife.inject(this);
         mSavedCharacter = getInstanceArgument();
         if (mSavedCharacter == null) {
             mEdition = Settings.getEdition(this);
@@ -38,8 +40,9 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
         } else {
             mEdition = mSavedCharacter.getEdition();
         }
-        setContentView(R.layout.activity_creation_workflow);
-        ButterKnife.inject(this);
+        if (characterCardView != null) {
+            characterCardView.setOnCharacterCardViewClick(this);
+        }
         onSetActionBarToClosable();
     }
 
@@ -82,10 +85,30 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
     @Override
     protected void onInstanceArgumentRead(SavedCharacter arg) {
         mSavedCharacter = arg;
-        if (mSavedCharacter != null && characterCard != null) {
+        if (mSavedCharacter != null && characterCardView != null) {
             CharacterInfo characterInfo = SavedCharacterTransformer.getInstance().transform(
                     mSavedCharacter);
-            characterCard.setCardInfo(characterInfo);
+            characterCardView.setCardInfo(characterInfo);
         }
+    }
+
+    @Override
+    public void onImageClick(CharacterCardView view) {
+        launchRandomCharacter(mSavedCharacter);
+    }
+
+    @Override
+    public void onMainInfoClick(CharacterCardView view) {
+        launchRandomCharacter(mSavedCharacter);
+    }
+
+    @Override
+    public void onShortInfoClick(CharacterCardView view) {
+        launchRandomCharacter(mSavedCharacter);
+    }
+
+    @Override
+    public void onExtraInfoClick(CharacterCardView view) {
+        launchStatisticsCreator(mSavedCharacter);
     }
 }

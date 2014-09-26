@@ -15,7 +15,13 @@
             android:id="@id/preview_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:extraInfoColor="@color/black_54"
+            app:extraText="@string/placeholder_top_stats"
+            app:mainInfoColor="@color/white_87"
+            app:mainText="@string/placeholder_name"
             app:no_image="@drawable/no_face_poly"
+            app:shortInfoColor="@color/white_87"
+            app:shortText="@string/placeholder_short_info"
             app:show_menu="false"/>
 
         <RelativeLayout
