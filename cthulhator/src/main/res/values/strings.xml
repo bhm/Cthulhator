@@ -69,7 +69,6 @@
     <string name="pow">POW</string>
     <string name="san">SAN</string>
     <string name="creation_workflow">Workflow</string>
-    <string name="placeholder_top_skills">Cthulhu Mythos\nLibrary Use\nCherry Popper</string>
     <string name="placeholder_top_stats">Intelligence, Education, Dexterity, Cthulhu Mythos, Library, Use Cherry Popper</string>
     <string name="placeholder_short_info">Boston, Massachussets</string>
     <string name="delete">DELETE</string>
@@ -78,6 +77,5 @@
     <string name="assign_skills">Skillset</string>
     <string name="assign_skills_format">Skillset (%1$s)</string>
     <string name="choose_skillset">Skills</string>
-
 
 </resources>

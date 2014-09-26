@@ -42,6 +42,9 @@ public class CharacterCardView extends RelativeLayout implements View.OnClickLis
     private OnShortInfoClick          onShortInfoClick;
     private OnCharacterCardImageClick onCharacterCardImageClick;
     private OnCharacterCardViewClick  onCharacterCardViewClick;
+    private String mMainText;
+    private String mShortText;
+    private String mExtraText;
 
     public CharacterCardView(Context context) {
         super(context);
@@ -98,9 +101,21 @@ public class CharacterCardView extends RelativeLayout implements View.OnClickLis
             setNameColor(mMainInfoColor);
             setShortInfoColor(mShortInfoColor);
             setExtraInfoColor(mExtraInfoColor);
+            mMainText = array.getString(R.styleable.CharacterCardView_mainText);
+            setMainText(mMainText);
+            mShortText = array.getString(R.styleable.CharacterCardView_shortText);
+            setShortText(mShortText);
+            mExtraText = array.getString(R.styleable.CharacterCardView_extraText);
+            setExtraText(mExtraText);
             array.recycle();
         }
         addView(rootView);
+    }
+
+    public void setMainText(String text) {
+        if (mMainInfoView != null) {
+            mMainInfoView.setText(text);
+        }
     }
 
     private void setOnClickListeners(OnClickListener listener, View... views) {
@@ -142,17 +157,23 @@ public class CharacterCardView extends RelativeLayout implements View.OnClickLis
         if (provider == null) {
             return;
         }
-        if (mMainInfoView != null) {
-            mMainInfoView.setText(provider.getName());
-        }
-        if (mShortInfoView != null) {
-            mShortInfoView.setText(provider.getMainInfo());
-        }
-        if (mExtraInfoView != null) {
-            mExtraInfoView.setText(provider.getExtraInfo());
-        }
+        setMainText(provider.getName());
+        setShortText(provider.getMainInfo());
+        setExtraText(provider.getExtraInfo());
         if (loadingImage != null) {
             loadingImage.loadFrom(provider.getPortraitUrl());
+        }
+    }
+
+    private void setExtraText(String text) {
+        if (mExtraInfoView != null) {
+            mExtraInfoView.setText(text);
+        }
+    }
+
+    private void setShortText(String text) {
+        if (mShortInfoView != null) {
+            mShortInfoView.setText(text);
         }
     }
 

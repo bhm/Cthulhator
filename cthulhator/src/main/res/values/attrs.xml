@@ -17,11 +17,17 @@
     <attr name="mainInfoColor" format="color"/>
     <attr name="shortInfoColor" format="color"/>
     <attr name="extraInfoColor" format="color"/>
+    <attr name="mainText" format="string"/>
+    <attr name="extraText" format="string"/>
+    <attr name="shortText" format="string"/>
     <declare-styleable name="CharacterCardView">
         <attr name="no_image"/>
         <attr name="mainInfoColor"/>
         <attr name="shortInfoColor"/>
         <attr name="extraInfoColor"/>
         <attr name="show_menu"/>
+        <attr name="mainText"/>
+        <attr name="extraText"/>
+        <attr name="shortText"/>
     </declare-styleable>
 </resources>
