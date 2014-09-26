@@ -30,7 +30,7 @@
             android:paddingLeft="@dimen/padding_16"
             android:paddingRight="@dimen/padding_16"
             android:paddingTop="@dimen/padding_16"
-            android:textColor="@color/grey_white_1000"
+            android:textColor="@color/white_87"
             android:textSize="@dimen/font_22"
             android:textStyle="bold"
             tools:text="@string/placeholder_name"/>
@@ -45,7 +45,7 @@
             android:paddingBottom="@dimen/padding_16"
             android:paddingLeft="@dimen/padding_16"
             android:paddingRight="@dimen/padding_16"
-            android:textColor="@color/grey_white_1000"
+            android:textColor="@color/white_87"
             android:textSize="@dimen/font_14"
             tools:text="@string/placeholder_short_info"/>
     </RelativeLayout>
@@ -71,7 +71,7 @@
             android:paddingLeft="@dimen/padding_16"
             android:paddingRight="@dimen/padding_16"
             android:paddingTop="@dimen/padding_16"
-            android:textColor="@color/grey_black_1000"
+            android:textColor="@color/black_54"
             android:textSize="@dimen/font_12"
             tools:text="@string/placeholder_top_stats"/>
 
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:background="@drawable/flatt_button_selector"
+            android:background="@drawable/flat_button_selector"
             android:padding="@dimen/padding_8"
             android:src="@drawable/abc_ic_menu_moreoverflow_normal_holo_light"/>
 
@@ -91,9 +91,19 @@
         android:id="@id/expanded_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:layout_alignBottom="@id/extra_info"
+        android:layout_alignTop="@android:id/icon"
         android:background="@color/grey_white_1000"
         android:visibility="gone">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/flat_button_selector"
+            android:src="@drawable/ic_action_navigation_expand"/>
+
 
         <TextView
             android:id="@id/delete"
@@ -108,6 +118,7 @@
             android:paddingRight="@dimen/padding_16"
             android:paddingTop="@dimen/padding_8"
             android:text="@string/delete"
+            android:textColor="@color/black_54"
             android:textSize="@dimen/font_24"
             android:textStyle="bold"/>
 
@@ -124,6 +135,7 @@
             android:paddingLeft="@dimen/padding_16"
             android:paddingRight="@dimen/padding_16"
             android:paddingTop="@dimen/padding_8"
+            android:textColor="@color/black_54"
             android:textSize="@dimen/font_24"
             android:textStyle="bold"
             tools:text="@android:string/cancel"/>

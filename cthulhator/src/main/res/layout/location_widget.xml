@@ -60,7 +60,7 @@
         android:layout_height="@dimen/button_size"
         android:layout_alignParentRight="true"
         android:layout_below="@id/zipcode"
-        android:background="@drawable/flatt_button_selector"
+        android:background="@drawable/flat_button_selector"
         android:src="@drawable/pic_location_selector"/>
 
 </RelativeLayout>
