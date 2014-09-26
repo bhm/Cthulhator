@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.bustiblelemons.activities.AbsArgActivity;
+import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.creation.characteristics.ui.SkillsChooserActivity;
 import com.bustiblelemons.cthulhator.creation.characteristics.ui.StatisticsCreatorActivity;
 import com.bustiblelemons.cthulhator.creation.description.ui.RandomCharactersActivity;
@@ -33,6 +34,7 @@ public abstract class AbsCharacterCreationActivity extends AbsArgActivity<SavedC
     protected void launchSkillsetEditor(SavedCharacter character) {
         Intent i = new Intent(this, SkillsChooserActivity.class);
         launchCreationActivity(i, SkillsChooserActivity.REQUEST_CODE, character);
+        overridePendingTransition(R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom);
     }
 
     protected void launchCreationActivity(Intent intent, int code, SavedCharacter character) {
