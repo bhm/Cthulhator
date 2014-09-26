@@ -177,6 +177,7 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
         photosPager.setLoadMoreListener(this);
         photosPager.setTag(R.id.tag_search, mCharacterSettings);
         photosPager.setAdapter(photosPagerAdapter);
+        onLoadMore(photosPager);
     }
 
     private List<OnlinePhotoUrl> getExisitngPortrats() {
