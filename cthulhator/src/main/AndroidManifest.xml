@@ -32,6 +32,9 @@
         <activity
             android:name=".creation.history.ui.HistoryEditorActivity"
             android:label="@string/add_character_history"/>
+        <activity
+            android:name=".creation.characteristics.ui.SkillsChooserActivity"
+            android:label="@string/choose_skillset"/>
 
         <activity
             android:name=".creation.ui.CreationWorkFlowActivity"

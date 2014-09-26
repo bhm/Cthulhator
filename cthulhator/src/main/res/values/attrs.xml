@@ -15,6 +15,7 @@
     </declare-styleable>
     <attr name="show_menu" format="boolean"/>
     <declare-styleable name="CharacterCard">
+        <attr name="no_image"/>
         <attr name="show_menu"/>
     </declare-styleable>
 </resources>

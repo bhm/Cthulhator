@@ -3,7 +3,6 @@
 <RelativeLayout
     style="@style/card"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/chracter_card">
@@ -13,9 +12,7 @@
         android:id="@android:id/icon"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/extra_info"
-        app:no_image="@drawable/no_face_loading"/>
-
+        android:layout_above="@id/extra_info"/>
 
     <RelativeLayout
         android:id="@id/main_info"

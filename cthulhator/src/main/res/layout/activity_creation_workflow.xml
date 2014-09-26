@@ -15,6 +15,7 @@
             android:id="@id/preview_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:no_image="@drawable/no_face_poly"
             app:show_menu="false"/>
 
         <RelativeLayout

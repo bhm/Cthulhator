@@ -1,4 +1,4 @@
-package com.bustiblelemons.cthulhator.activities;
+package com.bustiblelemons.cthulhator.creation.characteristics.ui;
 
 import android.os.Bundle;
 import android.widget.ListView;
@@ -39,6 +39,7 @@ public class SkillsChooserActivity extends AbsCharacterCreationActivity implemen
         onSetActionBarToClosable();
         setContentView(R.layout.activity_skill_chooser);
         ButterKnife.inject(this);
+        mSavedCharacter = getInstanceArgument();
         setupSkillsList();
         setupPoints();
     }

@@ -105,6 +105,7 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
         helper.initActionBar(this);
         ButterKnife.inject(this);
         mSavedCharacter = getInstanceArgument();
+
         setupView();
     }
 
@@ -163,8 +164,8 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
                     characteristicAdapter.addData(set);
                 }
             }
-            characteristicPager.setLoadMoreListener(this);
             characteristicPager.setAdapter(characteristicAdapter);
+            characteristicPager.setLoadMoreListener(this);
             onTraitsDownloaded(TraitsSet.FILE);
         }
     }
@@ -331,46 +332,50 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
 
     private void saveCharacter() {
         CharacterDescription description = new CharacterDescription();
-        addName(description);
-        addLocation(description);
-        addTraits(description);
-        addPhoto(description);
+        if (mSavedCharacter == null) {
+            mSavedCharacter = CthulhuCharacter.forEdition(CthulhuEdition.CoC5);
+        }
+        description = addName(description);
+        description = addLocation(description);
+        description = addTraits(description);
+        description = addPhoto(description);
         mSavedCharacter.setDescription(description);
         setResult(RESULT_OK, mSavedCharacter);
     }
 
-    private void addName(CharacterDescription description) {
+    private CharacterDescription addName(CharacterDescription description) {
         int position = namesPager.getCurrentItem();
         User user = namesPagerAdapter.getItemObject(position);
         if (user != null && user.getName() != null) {
             description.setName(user.getName());
         }
+        return description;
     }
 
-    private void addPhoto(CharacterDescription description) {
+    private CharacterDescription addPhoto(CharacterDescription description) {
         int photoPosition = photosPager.getCurrentItem();
         OnlinePhotoUrl o = photosPagerAdapter.getItemObject(photoPosition);
         if (o != null) {
             description.addPortrait(o.getUrl());
         }
+        return description;
     }
 
-    private void addTraits(CharacterDescription description) {
+    private CharacterDescription addTraits(CharacterDescription description) {
         int traitSetPosition = characteristicPager.getCurrentItem();
         RandomTraitsSet traits = characteristicAdapter.getItemObject(traitSetPosition);
         description.setTraits(traits);
-        if (mSavedCharacter == null) {
-            mSavedCharacter = CthulhuCharacter.forEdition(CthulhuEdition.CoC5);
-        }
+        return description;
     }
 
-    private void addLocation(CharacterDescription description) {
+    private CharacterDescription addLocation(CharacterDescription description) {
         int locationPosition = locationsPager.getCurrentItem();
-        User userPosition = locationPagerAdapter.getItemObject(locationPosition);
-        if (userPosition != null) {
-            Location location = userPosition.getLocation();
+        User user = locationPagerAdapter.getItemObject(locationPosition);
+        if (user != null) {
+            Location location = user.getLocation();
             description.setLocation(location);
         }
+        return description;
     }
 
     public void handleSettingsButton() {

@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.bustiblelemons.activities.AbsArgActivity;
-import com.bustiblelemons.cthulhator.activities.SkillsChooserActivity;
+import com.bustiblelemons.cthulhator.creation.characteristics.ui.SkillsChooserActivity;
 import com.bustiblelemons.cthulhator.creation.characteristics.ui.StatisticsCreatorActivity;
 import com.bustiblelemons.cthulhator.creation.description.ui.RandomCharactersActivity;
 import com.bustiblelemons.cthulhator.creation.history.ui.HistoryEditorActivity;

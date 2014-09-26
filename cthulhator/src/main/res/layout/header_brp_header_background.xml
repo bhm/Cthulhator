@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:adjustViewBounds="true"
-    android:scaleType="centerCrop"
     android:background="@color/transparent"
-    android:visibility="invisible"
-    android:src="@drawable/no_face"/>
+    android:scaleType="centerCrop"
+    android:src="@drawable/no_face_poly"
+    android:visibility="invisible"/>

@@ -13,10 +13,10 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_32"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        android:layout_marginBottom="@dimen/padding_32"
-        android:src="@drawable/no_face"/>
+        android:src="@drawable/no_face_poly"/>
 
 
     <at.markushi.ui.CircleButton
@@ -30,8 +30,8 @@
         android:padding="@dimen/padding_8"
         android:src="@drawable/ic_content_new_picture"
         android:visibility="visible"
-        tools:visibility="visible"
-        app:cb_color="@color/portraits_fab"/>
+        app:cb_color="@color/portraits_fab"
+        tools:visibility="visible"/>
 
 
 </RelativeLayout>

@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.activities.SkillsChooserActivity;
 import com.bustiblelemons.cthulhator.creation.characteristics.logic.CharacterPropertyAdapter;
 import com.bustiblelemons.cthulhator.creation.characteristics.logic.PointPoolObserver;
 import com.bustiblelemons.cthulhator.creation.ui.AbsCharacterCreationActivity;

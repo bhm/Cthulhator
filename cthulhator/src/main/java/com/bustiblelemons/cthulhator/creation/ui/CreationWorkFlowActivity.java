@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.bustiblelemons.cthulhator.R;
+import com.bustiblelemons.cthulhator.model.CthulhuCharacter;
+import com.bustiblelemons.cthulhator.model.CthulhuEdition;
 import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
 import com.bustiblelemons.cthulhator.model.cache.SavedCharacterTransformer;
+import com.bustiblelemons.cthulhator.settings.Settings;
 import com.bustiblelemons.cthulhator.view.charactercard.CharacterCard;
 import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
 
@@ -23,11 +26,18 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
     @InjectView(R.id.preview_card)
     CharacterCard characterCard;
     private SavedCharacter mSavedCharacter;
+    private CthulhuEdition mEdition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSavedCharacter = getInstanceArgument();
+        if (mSavedCharacter == null) {
+            mEdition = Settings.getEdition(this);
+            mSavedCharacter = CthulhuCharacter.forEdition(mEdition);
+        } else {
+            mEdition = mSavedCharacter.getEdition();
+        }
         setContentView(R.layout.activity_creation_workflow);
         ButterKnife.inject(this);
         onSetActionBarToClosable();
