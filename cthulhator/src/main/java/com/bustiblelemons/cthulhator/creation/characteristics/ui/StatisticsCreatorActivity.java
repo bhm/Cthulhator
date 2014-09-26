@@ -1,6 +1,5 @@
 package com.bustiblelemons.cthulhator.creation.characteristics.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.widget.Button;
@@ -81,8 +80,7 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
 
     @OnClick(R.id.assign_skills)
     public void onOpenSkillsetEditor(Button button) {
-        Intent i = new Intent(this, SkillsChooserActivity.class);
-        startActivity(i);
+        launchSkillsetEditor(mSavedCharacter);
     }
 
 
@@ -113,8 +111,8 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
                 String tag = (String) view.getTag();
                 CharacterProperty property = getProperty(tag);
                 int id = view.getId();
-                idsToProperty.put(id, property);
                 if (property != null) {
+                    idsToProperty.put(id, property);
                     view.setSkillViewListener(this);
                     view.setMinValue(property.getMinValue());
                     view.setMaxValue(property.getMaxValue());
@@ -122,10 +120,15 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
                     points += randValue;
                     view.setIntValue(randValue);
                     if (property.hasRelations()) {
-                        CharacterPropertyAdapter adapter = new CharacterPropertyAdapter(this);
+                        CharacterPropertyAdapter adapter;
+                        if (idsToAdapters.get(id) != null) {
+                            adapter = idsToAdapters.get(id);
+                        } else {
+                            adapter = new CharacterPropertyAdapter(this);
+                            idsToAdapters.put(id, adapter);
+                        }
                         adapter.refreshData(mSavedCharacter.getRelatedProperties(property));
                         view.setAdapter(adapter);
-                        idsToAdapters.put(id, adapter);
                     }
                 }
             }
@@ -147,8 +150,8 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
                 String tag = (String) view.getTag();
                 CharacterProperty property = getProperty(tag);
                 int id = view.getId();
-                idsToProperty.put(id, property);
                 if (property != null) {
+                    idsToProperty.put(id, property);
                     view.setSkillViewListener(this);
                     view.setMinValue(property.getMinValue());
                     view.setMaxValue(property.getMaxValue());
@@ -156,7 +159,13 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
                     points += randValue;
                     view.setIntValue(randValue);
                     if (property.hasRelations()) {
-                        CharacterPropertyAdapter adapter = new CharacterPropertyAdapter(this);
+                        CharacterPropertyAdapter adapter;
+                        if (idsToAdapters.get(id) != null) {
+                            adapter = idsToAdapters.get(id);
+                        } else {
+                            adapter = new CharacterPropertyAdapter(this);
+                            idsToAdapters.put(id, adapter);
+                        }
                         adapter.refreshData(mSavedCharacter.getRelatedProperties(property));
                         view.setAdapter(adapter);
                         idsToAdapters.put(id, adapter);
