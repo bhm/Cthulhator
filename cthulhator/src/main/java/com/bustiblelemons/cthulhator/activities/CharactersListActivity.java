@@ -44,7 +44,7 @@ public class CharactersListActivity extends AbsActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fadingbarHelper = setupFadingBar();
-        setContentView(fadingbarHelper.createView(this));
+        setContentView(R.layout.activity_characters_list);
         ButterKnife.inject(this);
         if (listView != null) {
             listAdapter = new SavedCharactersAdapter(this);
