@@ -201,6 +201,10 @@ public class CharacterCardView extends RelativeLayout implements View.OnClickLis
         }
     }
 
+    public void setOnCharacterCardViewClick(OnCharacterCardViewClick onCharacterCardViewClick) {
+        this.onCharacterCardViewClick = onCharacterCardViewClick;
+    }
+
     public interface OnMenuItemSelected {
         void onMenuItemSelected(MenuItem item);
     }
@@ -227,5 +231,4 @@ public class CharacterCardView extends RelativeLayout implements View.OnClickLis
     public interface OnCharacterCardImageClick {
         void onImageClick(CharacterCardView view);
     }
-
 }
