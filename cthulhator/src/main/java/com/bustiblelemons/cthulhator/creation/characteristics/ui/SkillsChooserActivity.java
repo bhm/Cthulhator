@@ -66,6 +66,12 @@ public class SkillsChooserActivity extends AbsCharacterCreationActivity implemen
     }
 
     @Override
+    public void onBackPressed() {
+        overridePendingTransition(R.anim.abc_slide_in_top, R.anim.abc_slide_out_bottom);
+        super.onBackPressed();
+    }
+
+    @Override
     public boolean onSkillChanged(CharacterProperty name, int value, boolean up) {
         int afterTotal = up ? total + 1 : total - 1;
         if (afterTotal >= 0) {
@@ -73,5 +79,11 @@ public class SkillsChooserActivity extends AbsCharacterCreationActivity implemen
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom);
     }
 }
