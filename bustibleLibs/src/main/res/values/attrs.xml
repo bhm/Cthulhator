@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="LoadingImage">
+        <attr name="_textColor" format="color"/>
         <attr name="no_image" format="reference"/>
         <attr name="show_progressbar" format="boolean"/>
         <attr name="progress_style" format="reference"/>
@@ -13,6 +14,7 @@
         <attr name="threshold" format="integer"/>
     </declare-styleable>
     <declare-styleable name="PropertyView">
+        <attr name="_textColor"/>
         <attr name="hideTitle" format="boolean"/>
         <attr name="statValue" format="integer"/>
         <attr name="statTitle" format="reference"/>
@@ -48,6 +50,7 @@
     </attr>
     <declare-styleable name="StatisticView">
         <attr name="hideTitle"/>
+        <attr name="_textColor"/>
         <attr name="statValue"/>
         <attr name="statTitle"/>
         <attr name="titleSize"/>
@@ -60,7 +63,9 @@
         <attr name="valueBelow" format="boolean"/>
 
     </declare-styleable>
+
     <declare-styleable name="SkillView">
+        <attr name="_textColor"/>
         <attr name="hideTitle"/>
         <attr name="statValue"/>
         <attr name="statTitle"/>
@@ -84,6 +89,7 @@
     <declare-styleable name="TitledSeekbar">
         <attr name="progress" format="integer"/>
         <attr name="hideTitle"/>
+        <attr name="_textColor"/>
         <attr name="compact"/>
         <attr name="statTitle"/>
         <attr name="titleSize"/>
