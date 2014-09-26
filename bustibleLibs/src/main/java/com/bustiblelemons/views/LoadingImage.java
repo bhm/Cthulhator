@@ -159,4 +159,9 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
     private void loadDefault() {
         image.setImageResource(noImageRes);
     }
+
+    public void setImageDrawable(int noImageRes) {
+        this.noImageRes = noImageRes;
+        loadDefault();
+    }
 }
