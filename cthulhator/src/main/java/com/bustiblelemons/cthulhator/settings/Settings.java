@@ -5,6 +5,7 @@ import android.content.Context;
 import com.bustiblelemons.cthulhator.fragments.dialog.OnlineSearchUISettings;
 import com.bustiblelemons.cthulhator.model.CharacterSettings;
 import com.bustiblelemons.cthulhator.model.CharacterSettingsImpl;
+import com.bustiblelemons.cthulhator.model.CthulhuEdition;
 import com.bustiblelemons.settings.BaseSettings;
 import com.bustiblelemons.storage.Storage;
 
@@ -19,9 +20,10 @@ import java.io.IOException;
  */
 public class Settings extends BaseSettings {
 
-    public static final String CACHE_FOLDER                = "cache_folder";
-    private static      String sPortraitSettingsFilename   = "portraits.settings";
-    private static      String sRandomCharSettingsFilename = "random.char.settings";
+    public static final  String CACHE_FOLDER                = "cache_folder";
+    private static final String EDITION                     = "edition";
+    private static       String sPortraitSettingsFilename   = "portraits.settings";
+    private static       String sRandomCharSettingsFilename = "random.char.settings";
 
 
     public static CharacterSettings getLastPortratiSettings(Context context) {
@@ -64,5 +66,13 @@ public class Settings extends BaseSettings {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void setEdition(Context context, CthulhuEdition ed) {
+        setEnum(context, EDITION, ed);
+    }
+
+    public static CthulhuEdition getEdition(Context context) {
+        return getEnum(context, EDITION, CthulhuEdition.class, CthulhuEdition.CoC5.name());
     }
 }
