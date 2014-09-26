@@ -48,6 +48,7 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
     private int maxValue = 100;
     private int mValue   = maxValue;
     private int minValue = 0;
+    private int mTextColor = R.color.black_87;
     private SkillViewListener mChachedSkillViewListener;
     private final SkillViewListener mSkillViewListener = new SkillViewListener() {
         @Override
@@ -171,6 +172,7 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         if (attrs != null) {
             TypedArray skillArray = context.obtainStyledAttributes(attrs, R.styleable.SkillView);
             setupModifiers(skillArray);
+            mTextColor = skillArray.getColor(R.styleable.SkillView__textColor, R.color.black_87);
             valueLeft = skillArray.getBoolean(R.styleable.SkillView_valueLeft, valueLeft);
             int defValGravity = valueLeft ? Gravity.LEFT : Gravity.RIGHT;
             int defTitlteGravity = valueLeft ? Gravity.RIGHT : Gravity.LEFT;
@@ -187,9 +189,27 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
                 hideTitle();
             }
             setTexts(skillArray);
+            setColor(mTextColor);
             skillArray.recycle();
         }
         addView(rootView);
+    }
+
+    private void setColor(int textColor) {
+        setTitleColor(textColor);
+        setValueColor(textColor);
+    }
+
+    private void setValueColor(int textColor) {
+        if (valueView != null) {
+            valueView.setTextColor(textColor);
+        }
+    }
+
+    private void setTitleColor(int textColor) {
+        if (titleView != null) {
+            titleView.setTextColor(textColor);
+        }
     }
 
     public int getMaxValue() {
