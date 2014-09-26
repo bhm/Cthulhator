@@ -128,18 +128,6 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         setSkillViewListener(mSkillViewListener);
     }
 
-    public void setAdapter(ListAdapter listAdapter) {
-        if (isInEditMode()) {
-            return;
-        }
-        if (mListAdapter != null) {
-            mListAdapter.unregisterDataSetObserver(mObserver);
-        }
-        mListAdapter = listAdapter;
-        listAdapter.registerDataSetObserver(mObserver);
-        rPopulateViews();
-    }
-
     private void rRefreshViews() {
         if (mListAdapter != null && listContainer != null && listContainer.getChildCount() > 0) {
             for (int i = 0; i < listContainer.getChildCount(); i++) {
@@ -436,7 +424,6 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         setValue(v + "");
     }
 
-
     public void setValue(CharSequence s) {
         if (valueView != null) {
             String val = isPercentile ? String.format(Locale.ENGLISH, "%s%%", s) : s.toString();
@@ -483,6 +470,22 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
 
     public void setIsPercentile(boolean percentile) {
         this.isPercentile = percentile;
+    }
+
+    public ListAdapter getAdapter() {
+        return mListAdapter;
+    }
+
+    public void setAdapter(ListAdapter listAdapter) {
+        if (isInEditMode()) {
+            return;
+        }
+        if (mListAdapter != null) {
+            mListAdapter.unregisterDataSetObserver(mObserver);
+        }
+        mListAdapter = listAdapter;
+        mListAdapter.registerDataSetObserver(mObserver);
+        rPopulateViews();
     }
 
     public interface SkillViewListener extends PropertyViewListener<SkillView> {
