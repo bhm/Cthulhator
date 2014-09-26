@@ -15,10 +15,12 @@
     </declare-styleable>
     <attr name="show_menu" format="boolean"/>
     <attr name="mainInfoColor" format="color"/>
+    <attr name="shortInfoColor" format="color"/>
     <attr name="extraInfoColor" format="color"/>
     <declare-styleable name="CharacterCardView">
         <attr name="no_image"/>
         <attr name="mainInfoColor"/>
+        <attr name="shortInfoColor"/>
         <attr name="extraInfoColor"/>
         <attr name="show_menu"/>
     </declare-styleable>
