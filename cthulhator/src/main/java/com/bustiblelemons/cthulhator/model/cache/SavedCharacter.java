@@ -400,8 +400,8 @@ public class SavedCharacter implements Parcelable {
     public Set<CharacterProperty> getPropertiesOfType(PropertyType type) {
         Set<CharacterProperty> ret = new HashSet<CharacterProperty>();
         for (CharacterProperty prop : properties) {
-            if (type != null && type.equals(PropertyType.STATISTIC)) {
-                if (prop != null) {
+            if (prop != null && type != null) {
+                if (type.equals(prop.getType())) {
                     ret.add(prop);
                 }
             }
@@ -561,5 +561,23 @@ public class SavedCharacter implements Parcelable {
         dest.writeParcelable(this.birth, flags);
         dest.writeLong(this.presentDate);
         dest.writeInt(this.age);
+    }
+
+    public int getHobbyPoints() {
+        CharacterProperty _int = getPropertyByName(BRPStatistic.INT.name());
+        if (_int != null) {
+            int intVal = _int.getValue();
+            return edition.getHobbySkillPointMultiplier() * intVal;
+        }
+        return 0;
+    }
+
+    public int getCareerPoints() {
+        CharacterProperty _int = getPropertyByName(BRPStatistic.EDU.name());
+        if (_int != null) {
+            int intVal = _int.getValue();
+            return edition.getCareerSkillPointMultiplier() * intVal;
+        }
+        return 0;
     }
 }
