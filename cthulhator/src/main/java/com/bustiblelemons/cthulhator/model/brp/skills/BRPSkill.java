@@ -5,6 +5,7 @@ import com.bustiblelemons.cthulhator.model.CharacterProperty;
 import com.bustiblelemons.cthulhator.model.CthulhuEdition;
 import com.bustiblelemons.cthulhator.model.ModifierType;
 import com.bustiblelemons.cthulhator.model.PropertyFormat;
+import com.bustiblelemons.cthulhator.model.PropertyType;
 import com.bustiblelemons.cthulhator.model.Relation;
 import com.bustiblelemons.cthulhator.model.brp.statistics.BRPStatistic;
 
@@ -321,6 +322,7 @@ public enum BRPSkill {
         CharacterProperty r = new CharacterProperty();
         r.setName(name());
         r.setFormat(PropertyFormat.PERCENTILE);
+        r.setType(PropertyType.SKILL);
         r.setMaxValue(100);
         r.setMinValue(0);
         r.setRelations(getRelations());
