@@ -1,12 +1,26 @@
 
 package com.bustiblelemons.api.random.names.randomuserdotme.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import java.io.Serializable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class User implements Serializable {
+public class User implements Serializable, Parcelable {
+    @JsonIgnore
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+        public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
     private String   sSN;
     private String   cell;
     private String   dob;
@@ -24,6 +38,29 @@ public class User implements Serializable {
     private String   sha256;
     private String   username;
     private String   version;
+
+    public User() {
+    }
+
+    private User(Parcel in) {
+        this.sSN = in.readString();
+        this.cell = in.readString();
+        this.dob = in.readString();
+        this.email = in.readString();
+        this.gender = in.readString();
+        this.location = in.readParcelable(Location.class.getClassLoader());
+        this.md5 = in.readString();
+        this.name = in.readParcelable(Name.class.getClassLoader());
+        this.password = in.readString();
+        this.phone = in.readString();
+        this.picture = in.readParcelable(Picture.class.getClassLoader());
+        this.registered = in.readString();
+        this.salt = in.readString();
+        this.sha1 = in.readString();
+        this.sha256 = in.readString();
+        this.username = in.readString();
+        this.version = in.readString();
+    }
 
     public String getSSN() {
         return this.sSN;
@@ -159,5 +196,32 @@ public class User implements Serializable {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @JsonIgnore
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.sSN);
+        dest.writeString(this.cell);
+        dest.writeString(this.dob);
+        dest.writeString(this.email);
+        dest.writeString(this.gender);
+        dest.writeParcelable(this.location, 0);
+        dest.writeString(this.md5);
+        dest.writeParcelable(this.name, 0);
+        dest.writeString(this.password);
+        dest.writeString(this.phone);
+        dest.writeParcelable(this.picture, 0);
+        dest.writeString(this.registered);
+        dest.writeString(this.salt);
+        dest.writeString(this.sha1);
+        dest.writeString(this.sha256);
+        dest.writeString(this.username);
+        dest.writeString(this.version);
     }
 }

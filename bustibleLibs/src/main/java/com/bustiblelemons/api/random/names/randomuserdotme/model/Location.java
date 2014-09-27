@@ -7,8 +7,14 @@ import android.os.Parcelable;
 import com.bustiblelemons.model.LocationInfo;
 
 import org.apache.commons.lang.WordUtils;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
-public class Location implements LocationInfo, Parcelable {
+import java.io.Serializable;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Location implements LocationInfo, Parcelable, Serializable {
+    @JsonIgnore
     public static final Parcelable.Creator<Location> CREATOR = new Parcelable.Creator<Location>() {
         public Location createFromParcel(Parcel source) {
             return new Location(source);
@@ -65,11 +71,13 @@ public class Location implements LocationInfo, Parcelable {
         this.zip = zip;
     }
 
+    @JsonIgnore
     @Override
     public int describeContents() {
         return 0;
     }
 
+    @JsonIgnore
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.city);

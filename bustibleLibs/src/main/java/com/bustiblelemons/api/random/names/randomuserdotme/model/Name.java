@@ -5,10 +5,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import org.apache.commons.lang.WordUtils;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import java.io.Serializable;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Name implements Serializable, Parcelable {
+    @JsonIgnore
     public static final Parcelable.Creator<Name> CREATOR = new Parcelable.Creator<Name>() {
         public Name createFromParcel(Parcel source) {
             return new Name(source);
@@ -55,15 +59,18 @@ public class Name implements Serializable, Parcelable {
         this.title = title;
     }
 
+    @JsonIgnore
     public String getFullName() {
         return String.format("%s %s", getFirst(), getLast());
     }
 
+    @JsonIgnore
     @Override
     public int describeContents() {
         return 0;
     }
 
+    @JsonIgnore
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.first);
