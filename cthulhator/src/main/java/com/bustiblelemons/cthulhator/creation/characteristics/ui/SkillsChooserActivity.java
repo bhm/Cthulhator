@@ -7,11 +7,15 @@ import android.widget.TextView;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.adapters.SkillChanged;
 import com.bustiblelemons.cthulhator.adapters.SkillsAdapter;
+import com.bustiblelemons.cthulhator.creation.characteristics.logic.CharacterPropertyComparators;
+import com.bustiblelemons.cthulhator.creation.characteristics.logic.CharacterPropertySortAsyn;
 import com.bustiblelemons.cthulhator.creation.ui.AbsCharacterCreationActivity;
 import com.bustiblelemons.cthulhator.model.CharacterProperty;
 import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
 
+import java.util.Comparator;
 import java.util.Locale;
+import java.util.Set;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -19,7 +23,8 @@ import butterknife.InjectView;
 /**
  * Created by bhm on 31.08.14.
  */
-public class SkillsChooserActivity extends AbsCharacterCreationActivity implements SkillChanged {
+public class SkillsChooserActivity extends AbsCharacterCreationActivity
+        implements SkillChanged, CharacterPropertySortAsyn.OnPropertiesSorted {
 
     public static final String CHARACTER    = "character";
     public static final int    REQUEST_CODE = 6;
@@ -28,10 +33,14 @@ public class SkillsChooserActivity extends AbsCharacterCreationActivity implemen
     ListView listView;
     @InjectView(R.id.points_available)
     TextView pointsAvailable;
-    private SkillsAdapter  skillsAdapter;
+    private SkillsAdapter mSkillsAdapter;
     private int            total;
     private String         pointsAvailablePrefix;
     private SavedCharacter mSavedCharacter;
+    private int mCareerPoints = 0;
+    private int mHobbyPoints  = 0;
+    private Set<CharacterProperty> mSkills;
+    private Comparator<CharacterProperty> mComparator = CharacterPropertyComparators.ALPHABETICAL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +59,8 @@ public class SkillsChooserActivity extends AbsCharacterCreationActivity implemen
     }
 
     private void setupPoints() {
+        mCareerPoints = mSavedCharacter.getCareerPoints();
+        mHobbyPoints = mSavedCharacter.getHobbyPoints();
     }
 
     private void setPointsAvailable(int points) {
@@ -59,9 +70,11 @@ public class SkillsChooserActivity extends AbsCharacterCreationActivity implemen
     }
 
     private void setupSkillsList() {
-        skillsAdapter = new SkillsAdapter(this, this);
-        skillsAdapter.addItems(mSavedCharacter.getTopSkills());
-        listView.setAdapter(skillsAdapter);
+        mSkills = mSavedCharacter.getSkills();
+        CharacterPropertySortAsyn sortAsyn = new CharacterPropertySortAsyn(this, this, mSkills);
+        sortAsyn.executeCrossPlatform(mComparator);
+        mSkillsAdapter = new SkillsAdapter(this, this);
+        listView.setAdapter(mSkillsAdapter);
         listView.setClickable(false);
     }
 
@@ -85,5 +98,14 @@ public class SkillsChooserActivity extends AbsCharacterCreationActivity implemen
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom);
+    }
+
+    @Override
+    public void onCharacterPropertiesSorted(Comparator<CharacterProperty> comparator,
+                                            Set<CharacterProperty> sortedSet) {
+
+        if (mSkillsAdapter != null) {
+            mSkillsAdapter.refreshData(sortedSet);
+        }
     }
 }
