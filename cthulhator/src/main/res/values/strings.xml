@@ -62,6 +62,8 @@
     <string name="age">Age</string>
     <string name="affects">Affects</string>
     <string name="career_skill_points">Career Skill Points</string>
+    <string name="career">CAREER</string>
+    <string name="hobby">HOBBY</string>
     <string name="hobby_skill_points">Hobby Skill Points</string>
     <string name="con">CON</string>
     <string name="app">APP</string>

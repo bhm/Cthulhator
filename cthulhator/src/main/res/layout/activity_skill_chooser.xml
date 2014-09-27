@@ -12,17 +12,19 @@
         android:layout_height="@dimen/twice_actionbar_height"
         android:background="@color/main_background">
 
-        <TextView
+        <Switch
             android:id="@id/points_available"
+            android:thumb="@color/main_button_color"
+            android:textOn="@string/hobby"
+            android:textOff="@string/career"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:padding="@dimen/padding_16"
             android:textAllCaps="true"
-            android:textColor="@color/grey_white_1000"
+            android:textColor="@color/career_hobby_text_selector"
             android:textSize="@dimen/font_22"
-            android:textStyle="bold"
-            tools:text="@string/points_available"/>
+            android:textStyle="bold"/>
     </RelativeLayout>
 
     <FrameLayout
@@ -55,6 +57,7 @@
         android:layout_marginLeft="@dimen/padding_16"
         android:layout_marginRight="@dimen/padding_16"
         android:layout_marginTop="@dimen/fab_offset"
+        android:src="@drawable/ic_navigation_accept"
         app:cb_color="@color/fab_done"/>
 
 </RelativeLayout>

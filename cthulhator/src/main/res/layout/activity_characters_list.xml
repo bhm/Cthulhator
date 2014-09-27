@@ -30,7 +30,7 @@
         android:textColor="@color/grey_white_1000"
         android:textSize="@dimen/font_20"
         android:textStyle="bold"
-        tools:text="@string/placeholder_proverb"/>
+        android:text="@string/placeholder_proverb"/>
 
 
     <com.bustiblelemons.views.LoadMoreListView
