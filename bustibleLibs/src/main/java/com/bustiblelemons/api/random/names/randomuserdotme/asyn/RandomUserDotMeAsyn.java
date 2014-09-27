@@ -25,20 +25,30 @@ public class RandomUserDotMeAsyn extends AbsSimpleAsync<RandomUserMEQuery, List<
     private OnRandomUsersRetreived listener;
     private Logger       log      = new Logger(RandomUserDotMeAsyn.class);
     private RandomUserMe postPart = RandomUserMe.All;
+    private OnFinishAllQueries onFinishAllQueries;
 
     public RandomUserDotMeAsyn(Context context, OnRandomUsersRetreived listener) {
         super(context);
         this.listener = listener;
     }
 
+    public void setOnFinishAllQueries(OnFinishAllQueries onFinishAllQueries) {
+        this.onFinishAllQueries = onFinishAllQueries;
+    }
+
     @Override
     protected List<User> call(RandomUserMEQuery... queries) throws Exception {
         List<User> r = Collections.emptyList();
+        int total = 0;
         if (queries != null) {
             for (RandomUserMEQuery query : queries) {
+                total++;
                 List<User> users = getRandomUsers(query);
                 publishProgress(query, users);
             }
+        }
+        if (onFinishAllQueries != null) {
+            onFinishAllQueries.onFinishAllQueries(this, total);
         }
         return r;
     }
@@ -104,5 +114,9 @@ public class RandomUserDotMeAsyn extends AbsSimpleAsync<RandomUserMEQuery, List<
 
     public void postPart(RandomUserMe postPart) {
         this.postPart = postPart;
+    }
+
+    public interface OnFinishAllQueries {
+        void onFinishAllQueries(RandomUserDotMeAsyn async, int total);
     }
 }

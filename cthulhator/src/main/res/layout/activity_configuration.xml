@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/main_background">
+
+
+    <TextView
+        android:id="@android:id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="@string/touch_to_cache"
+        android:textColor="@color/white_87"
+        android:textSize="@dimen/font_32"/>
+
+    <at.markushi.ui.CircleButton
+        android:id="@android:id/closeButton"
+        android:layout_width="@dimen/fab"
+        android:layout_height="@dimen/fab"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/padding_16"
+        android:src="@drawable/ic_navigation_accept"
+        android:visibility="invisible"
+        app:cb_color="@color/fab_done"
+        tools:visibility="visible"/>
+
+</RelativeLayout>

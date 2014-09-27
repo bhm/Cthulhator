@@ -77,5 +77,7 @@
     <string name="assign_skills">Skillset</string>
     <string name="assign_skills_format">Skillset (%1$s)</string>
     <string name="choose_skillset">Skills</string>
+    <string name="configuration">Configuration</string>
+    <string name="touch_to_cache">Start Caching Random Users</string>
 
 </resources>
