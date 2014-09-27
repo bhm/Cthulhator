@@ -30,7 +30,7 @@
         android:padding="@dimen/padding_8"
         android:src="@drawable/ic_content_new_picture"
         android:visibility="visible"
-        app:cb_color="@color/portraits_fab"
+        app:cb_color="@color/fab_done"
         tools:visibility="visible"/>
 
 

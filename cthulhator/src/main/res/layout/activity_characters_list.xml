@@ -50,6 +50,6 @@
         android:layout_marginBottom="@dimen/fab_offset"
         android:layout_marginRight="@dimen/padding_16"
         android:src="@drawable/add_new_selector"
-        app:cb_color="@color/portraits_fab"/>
+        app:cb_color="@color/fab_done"/>
 
 </RelativeLayout>

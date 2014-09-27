@@ -229,6 +229,6 @@
         android:layout_marginRight="@dimen/padding_16"
         android:layout_marginTop="@dimen/fab_offset"
         android:src="@drawable/ic_navigation_accept"
-        app:cb_color="@color/portraits_fab"/>
+        app:cb_color="@color/fab_done"/>
 
 </RelativeLayout>

@@ -55,6 +55,6 @@
         android:layout_marginLeft="@dimen/padding_16"
         android:layout_marginRight="@dimen/padding_16"
         android:layout_marginTop="@dimen/fab_offset"
-        app:cb_color="@color/portraits_fab"/>
+        app:cb_color="@color/fab_done"/>
 
 </RelativeLayout>
