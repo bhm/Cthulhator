@@ -1,12 +1,14 @@
 package com.bustiblelemons.cthulhator.creation.characteristics.ui;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.util.SparseArray;
 import android.view.View;
 
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.creation.characteristics.logic.CharacterPropertyAdapter;
 import com.bustiblelemons.cthulhator.creation.ui.AbsCharacterCreationActivity;
+import com.bustiblelemons.cthulhator.fragments.SkillsListFragment;
 import com.bustiblelemons.cthulhator.model.CharacterProperty;
 import com.bustiblelemons.cthulhator.model.CthulhuCharacter;
 import com.bustiblelemons.cthulhator.model.CthulhuEdition;
@@ -46,6 +48,7 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
 
     private Set<CharacterProperty> characterProperties;
     private SavedCharacter         mSavedCharacter;
+    private SkillsListFragment mSkillEditorFragment;
 
 
     @Override
@@ -70,7 +73,17 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
 
     @OnClick(R.id.assign_skills)
     public void onOpenSkillsetEditor(View button) {
-        launchSkillsetEditor(mSavedCharacter);
+        attachSkillEditor();
+//        launchSkillsetEditor(mSavedCharacter);
+    }
+
+    private void attachSkillEditor() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        mSkillEditorFragment = SkillsListFragment.newInstance(mSavedCharacter);
+        transaction.replace(R.id.skill_editor_frame, mSkillEditorFragment, SkillsListFragment.TAG);
+        transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right,
+                R.anim.slide_in_left, R.anim.slide_out_right);
+        transaction.commit();
     }
 
 
@@ -224,7 +237,18 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
 
     @Override
     public void onBackPressed() {
-        setResult(RESULT_OK, mSavedCharacter);
-        super.onBackPressed();
+        if (mSkillEditorFragment != null && mSkillEditorFragment.isVisible()) {
+            detachSkillEditor();
+        } else {
+            setResult(RESULT_OK, mSavedCharacter);
+            super.onBackPressed();
+        }
+    }
+
+    private void detachSkillEditor() {
+        FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+        t.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right,
+                R.anim.slide_in_left, R.anim.slide_out_right);
+        t.detach(mSkillEditorFragment).commitAllowingStateLoss();
     }
 }

@@ -5,32 +5,100 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.fragments.AbsFragment;
+import com.bustiblelemons.cthulhator.adapters.SkillChanged;
+import com.bustiblelemons.cthulhator.adapters.SkillsAdapter;
+import com.bustiblelemons.cthulhator.creation.characteristics.logic.CharacterPropertyComparators;
+import com.bustiblelemons.cthulhator.creation.characteristics.logic.CharacterPropertySortAsyn;
+import com.bustiblelemons.cthulhator.model.CharacterProperty;
+import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
+
+import java.util.Comparator;
+import java.util.Locale;
+import java.util.Set;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /**
  * Created by bhm on 20.07.14.
  */
-public class SkillsListFragment extends AbsFragment {
-    public static final  int    ALPHABETICAL = 128;
-    public static final  int    VALUE        = 64;
-    private static final String ORDER        = "order";
+public class SkillsListFragment extends AbsArgFragment<SavedCharacter>
+        implements SkillChanged, CharacterPropertySortAsyn.OnPropertiesSorted {
 
-    private ListView list;
+    public static final String TAG = SkillsListFragment.class.getSimpleName();
+    @InjectView(android.R.id.list)
+    ListView listView;
+    @InjectView(R.id.points_available)
+    TextView pointsAvailable;
+    private SkillsAdapter  mSkillsAdapter;
+    private int            total;
+    private String         pointsAvailablePrefix;
+    private SavedCharacter mSavedCharacter;
+    private int mCareerPoints = 0;
+    private int mHobbyPoints  = 0;
+    private Set<CharacterProperty> mSkills;
+    private Comparator<CharacterProperty> mComparator = CharacterPropertyComparators.ALPHABETICAL;
 
-    public static SkillsListFragment newInstance(int order) {
+    public static SkillsListFragment newInstance(SavedCharacter arg) {
         SkillsListFragment r = new SkillsListFragment();
-        Bundle args = new Bundle();
-        args.putInt(ORDER, order);
-        r.setArguments(args);
+        r.setNewInstanceArgument(arg);
         return r;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_skills_list, container, false);
-        list = (ListView) rootView.findViewById(android.R.id.list);
+        View rootView = inflater.inflate(R.layout.activity_skill_chooser, container, false);
+        ButterKnife.inject(this, rootView);
         return rootView;
+    }
+
+    @Override
+    protected void onInstanceArgumentRead(SavedCharacter arg) {
+        mSavedCharacter = arg;
+        setupSkillsList();
+        setupPoints();
+    }
+
+    private void setupPoints() {
+        mCareerPoints = mSavedCharacter.getCareerPoints();
+        mHobbyPoints = mSavedCharacter.getHobbyPoints();
+    }
+
+    private void setPointsAvailable(int points) {
+        pointsAvailablePrefix = getString(R.string.points_available);
+        String val = String.format(Locale.ENGLISH, "%s %s", pointsAvailablePrefix, points);
+        pointsAvailable.setText(val);
+    }
+
+    private void setupSkillsList() {
+        mSkills = mSavedCharacter.getSkills();
+        CharacterPropertySortAsyn sortAsyn = new CharacterPropertySortAsyn(getContext(), this,
+                mSkills);
+        sortAsyn.executeCrossPlatform(mComparator);
+        mSkillsAdapter = new SkillsAdapter(getContext(), this);
+        listView.setAdapter(mSkillsAdapter);
+        listView.setClickable(false);
+    }
+
+    @Override
+    public boolean onSkillChanged(CharacterProperty name, int value, boolean up) {
+        int afterTotal = up ? total + 1 : total - 1;
+        if (afterTotal >= 0) {
+            setPointsAvailable(total);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void onCharacterPropertiesSorted(Comparator<CharacterProperty> comparator,
+                                            Set<CharacterProperty> sortedSet) {
+
+        if (mSkillsAdapter != null) {
+            mSkillsAdapter.refreshData(sortedSet);
+        }
     }
 }

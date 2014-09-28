@@ -239,6 +239,11 @@
         android:textSize="@dimen/font_16"
         android:textStyle="bold"/>
 
+    <FrameLayout
+        android:id="@id/skill_editor_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <at.markushi.ui.CircleButton
         android:id="@id/assign_skills"
         android:layout_width="@dimen/fab"
@@ -250,5 +255,4 @@
         android:layout_marginTop="@dimen/fab_offset"
         android:src="@drawable/ic_navigation_accept"
         app:cb_color="@color/fab_done"/>
-
 </RelativeLayout>

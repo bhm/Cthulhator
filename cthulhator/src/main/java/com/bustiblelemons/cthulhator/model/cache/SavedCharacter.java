@@ -2,10 +2,11 @@ package com.bustiblelemons.cthulhator.model.cache;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.LruCache;
+import android.support.v4.util.LruCache;
 
 import com.bustiblelemons.api.random.names.randomuserdotme.model.Location;
 import com.bustiblelemons.api.random.names.randomuserdotme.model.Name;
+import com.bustiblelemons.cthulhator.creation.characteristics.logic.CharacterPropertyComparators;
 import com.bustiblelemons.cthulhator.model.BirthData;
 import com.bustiblelemons.cthulhator.model.CharacterProperty;
 import com.bustiblelemons.cthulhator.model.CthulhuEdition;
@@ -20,10 +21,10 @@ import com.bustiblelemons.cthulhator.model.desc.CharacterDescription;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,7 +33,7 @@ import java.util.TreeSet;
 /**
  * Created by bhm on 12.08.14.
  */
-public class SavedCharacter implements Parcelable {
+public class SavedCharacter implements Parcelable, Serializable {
 
     public static final Parcelable.Creator<SavedCharacter> CREATOR     = new Parcelable.Creator<SavedCharacter>() {
         public SavedCharacter createFromParcel(Parcel source) {
@@ -43,30 +44,19 @@ public class SavedCharacter implements Parcelable {
             return new SavedCharacter[size];
         }
     };
+    @JsonIgnore
+    private static LruCache<CharacterProperty, List<Possesion>>        cachedAffectedPossessions =
+            new LruCache<CharacterProperty, List<Possesion>>(20);
+    @JsonIgnore
+    private static LruCache<CharacterProperty, Set<CharacterProperty>> propertyToProperty        =
+            new LruCache<CharacterProperty, Set<CharacterProperty>>(BRPStatistic.values().length);
     protected           Set<CharacterProperty>             properties  = new HashSet<CharacterProperty>();
     protected           List<Possesion>                    possesions  = new ArrayList<Possesion>();
     protected           Set<HistoryEvent>                  fullHistory = new HashSet<HistoryEvent>();
     private CthulhuEdition       edition;
     private CharacterDescription description;
     private BirthData            birth;
-    private long                 presentDate;
-    @JsonIgnore
-    private transient LruCache<CharacterProperty, List<Possesion>> cachedAffectedPossessions =
-            new LruCache<CharacterProperty, List<Possesion>>(20);
-    @JsonIgnore
-    private transient Comparator<CharacterProperty>                sPropertyComparator       = new Comparator<CharacterProperty>() {
-        @Override
-        public int compare(CharacterProperty lhs, CharacterProperty rhs) {
-            int lhsv = lhs.getValue();
-            int rhsv = rhs.getValue();
-            if (lhsv > rhsv) {
-                return 1;
-            } else if (lhsv < rhsv) {
-                return -1;
-            }
-            return 0;
-        }
-    };
+    private long presentDate;
     private int age;
 
     public SavedCharacter() {
@@ -107,14 +97,16 @@ public class SavedCharacter implements Parcelable {
 
     @JsonIgnore
     public Set<CharacterProperty> getTopCharacteristics() {
-        Set<CharacterProperty> r = new TreeSet<CharacterProperty>(sPropertyComparator);
+        Set<CharacterProperty> r = new TreeSet<CharacterProperty>(
+                CharacterPropertyComparators.VALUE);
         r.addAll(getStatistics());
         return r;
     }
 
     @JsonIgnore
     public Set<CharacterProperty> getTopCharacteristics(int max) {
-        Set<CharacterProperty> r = new TreeSet<CharacterProperty>(sPropertyComparator);
+        Set<CharacterProperty> r = new TreeSet<CharacterProperty>(
+                CharacterPropertyComparators.VALUE);
         int i = 0;
         for (CharacterProperty property : getStatistics()) {
             r.add(property);
@@ -128,14 +120,16 @@ public class SavedCharacter implements Parcelable {
 
     @JsonIgnore
     public Set<CharacterProperty> getTopSkills() {
-        Set<CharacterProperty> r = new TreeSet<CharacterProperty>(sPropertyComparator);
+        Set<CharacterProperty> r = new TreeSet<CharacterProperty>(
+                CharacterPropertyComparators.VALUE);
         r.addAll(getSkills());
         return r;
     }
 
     @JsonIgnore
     public Set<CharacterProperty> getTopSkills(int max) {
-        Set<CharacterProperty> r = new TreeSet<CharacterProperty>(sPropertyComparator);
+        Set<CharacterProperty> r = new TreeSet<CharacterProperty>(
+                CharacterPropertyComparators.VALUE);
         int i = 0;
         for (CharacterProperty property : getSkills()) {
             r.add(property);
@@ -176,7 +170,8 @@ public class SavedCharacter implements Parcelable {
         Set<CharacterProperty> r = new HashSet<CharacterProperty>();
         for (Relation relation : relations) {
             if (relation != null) {
-                CharacterProperty relatedProperty = getPropertyByName(relation.getPropertyName());
+                CharacterProperty relatedProperty = getPropertyByName(
+                        relation.getPropertyName());
                 if (relatedProperty != null) {
                     int value = relation.getBaseValueByRelation(toProperty.getValue());
                     relatedProperty.setValue(value);
@@ -529,7 +524,6 @@ public class SavedCharacter implements Parcelable {
                 ", birth=" + birth +
                 ", presentDate=" + presentDate +
                 ", cachedAffectedPossessions=" + cachedAffectedPossessions +
-                ", sPropertyComparator=" + sPropertyComparator +
                 ", age=" + age +
                 '}';
     }

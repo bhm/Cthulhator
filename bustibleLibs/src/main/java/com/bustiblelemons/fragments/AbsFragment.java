@@ -48,8 +48,8 @@ public abstract class AbsFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         ButterKnife.reset(this);
+        super.onDestroyView();
     }
 
     public interface ActionBarInterface {

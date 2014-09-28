@@ -93,4 +93,5 @@
     <item name="extra_info_text" type="id"/>
     <item name="gender_pager" type="id"/>
     <item name="suggested_skillset" type="id"/>
+    <item name="skill_editor_frame" type="id"/>
 </resources>
