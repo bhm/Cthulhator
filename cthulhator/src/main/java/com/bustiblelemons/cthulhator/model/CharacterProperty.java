@@ -224,16 +224,16 @@ public class CharacterProperty implements Serializable, Comparable<CharacterProp
     public boolean increaseValue() {
         if (getValue() + 1 <= getMaxValue()) {
             setValue(getValue() + 1);
-            return false;
+            return true;
         }
         return false;
     }
 
     @JsonIgnore
     public boolean decreaseValue() {
-        if (getValue() - 1 <= getMaxValue()) {
+        if (getValue() - 1 >= getMinValue()) {
             setValue(getValue() - 1);
-            return false;
+            return true;
         }
         return false;
     }

@@ -195,7 +195,8 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     private void increasePropertyAndUpdateView(SkillView view) {
         int id = view.getId();
         CharacterProperty property = idsToProperty.get(id);
-        if (property != null && property.decreaseValue()) {
+        if (property != null && property.increaseValue()) {
+            view.setIntValue(property.getValue());
             updateView(view, id, property);
         }
     }
@@ -203,23 +204,22 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     private void decreasePropertyAndUpdateView(SkillView view) {
         int id = view.getId();
         CharacterProperty property = idsToProperty.get(id);
-        if (property != null && property.increaseValue()) {
+        if (property != null && property.decreaseValue()) {
+            view.setIntValue(property.getValue());
             updateView(view, id, property);
         }
     }
 
     private void updateView(SkillView view, int id, CharacterProperty property) {
         CharacterPropertyAdapter adapter = idsToAdapters.get(id);
-        if (property != null) {
-            if (adapter == null) {
-                adapter = new CharacterPropertyAdapter(this);
-            }
-            Set<CharacterProperty> data = mSavedCharacter.getRelatedProperties(property);
-            adapter.refreshData(data);
-            view.setAdapter(adapter);
-            idsToProperty.put(id, property);
-            idsToAdapters.put(id, adapter);
+        if (adapter == null) {
+            adapter = new CharacterPropertyAdapter(this);
         }
+        Set<CharacterProperty> data = mSavedCharacter.getRelatedProperties(property);
+        adapter.refreshData(data);
+        view.setAdapter(adapter);
+        idsToProperty.put(id, property);
+        idsToAdapters.put(id, adapter);
     }
 
     @Override
