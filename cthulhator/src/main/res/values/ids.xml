@@ -92,4 +92,5 @@
     <item name="assign_skills" type="id"/>
     <item name="extra_info_text" type="id"/>
     <item name="gender_pager" type="id"/>
+    <item name="suggested_skillset" type="id"/>
 </resources>

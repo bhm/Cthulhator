@@ -2,18 +2,15 @@ package com.bustiblelemons.cthulhator.creation.characteristics.ui;
 
 import android.os.Bundle;
 import android.util.SparseArray;
-import android.widget.Button;
-import android.widget.TextView;
+import android.view.View;
 
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.creation.characteristics.logic.CharacterPropertyAdapter;
-import com.bustiblelemons.cthulhator.creation.characteristics.logic.PointPoolObserver;
 import com.bustiblelemons.cthulhator.creation.ui.AbsCharacterCreationActivity;
 import com.bustiblelemons.cthulhator.model.CharacterProperty;
 import com.bustiblelemons.cthulhator.model.CthulhuCharacter;
 import com.bustiblelemons.cthulhator.model.CthulhuEdition;
 import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
-import com.bustiblelemons.cthulhator.model.dice.PointPool;
 import com.bustiblelemons.views.SkillView;
 
 import java.util.List;
@@ -29,10 +26,10 @@ import butterknife.OnClick;
  * Created by bhm on 31.08.14.
  */
 public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
-        implements PointPoolObserver, SkillView.SkillViewListener {
+        implements SkillView.SkillViewListener {
 
     public static final int REQUEST_CODE = 4;
-    @InjectView(R.id.reroll)
+    @InjectView(R.id.assign_skills)
     CircleButton rerollButton;
 
     @InjectViews({R.id.edu,
@@ -43,15 +40,10 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
             R.id.str, R.id.con, R.id.siz})
     List<SkillView> characteristicsViewList;
 
-    @InjectView(R.id.points_available)
-    TextView pointsAvailable;
-
     private SparseArray<CharacterProperty>        idsToProperty = new SparseArray<CharacterProperty>();
-    private SparseArray<CharacterPropertyAdapter> idsToAdapters =
-            new SparseArray<CharacterPropertyAdapter>();
+    private SparseArray<CharacterPropertyAdapter> idsToAdapters = new SparseArray<CharacterPropertyAdapter>();
 
 
-    private PointPool pointPool = PointPool.EMPTY;
     private Set<CharacterProperty> characterProperties;
     private SavedCharacter         mSavedCharacter;
 
@@ -62,8 +54,6 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         onSetActionBarToClosable();
         setContentView(R.layout.activity_statistic_creator);
         ButterKnife.inject(this);
-        pointPool = new PointPool();
-        pointPool.register(this);
         mSavedCharacter = getInstanceArgument();
         if (mSavedCharacter == null) {
             mSavedCharacter = CthulhuCharacter.forEdition(CthulhuEdition.CoC5);
@@ -79,7 +69,7 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     }
 
     @OnClick(R.id.assign_skills)
-    public void onOpenSkillsetEditor(Button button) {
+    public void onOpenSkillsetEditor(View button) {
         launchSkillsetEditor(mSavedCharacter);
     }
 
@@ -90,16 +80,10 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     }
 
     @OnClick(R.id.reroll)
-    public void onReroll(CircleButton button) {
+    public void onReroll(View button) {
         distributePoints();
     }
 
-    private void updatePointsAvailable(int available) {
-        if (pointsAvailable != null) {
-            String format = getString(R.string.points_available_format, available);
-            pointsAvailable.setText(format);
-        }
-    }
 
     private void fillPropertyViews() {
         if (characteristicsViewList == null) {
@@ -133,11 +117,6 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
                 }
             }
         }
-        pointPool.setMax(points);
-        pointPool.setPoints(points);
-        pointPool.notifyObservers(points);
-        updatePointsAvailable(points);
-        log.d("Point pool %s", pointPool);
     }
 
     private void distributePoints() {
@@ -173,11 +152,6 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
                 }
             }
         }
-        pointPool.setMax(points);
-        pointPool.setPoints(points);
-        pointPool.notifyObservers(points);
-        updatePointsAvailable(points);
-        log.d("Point pool %s", pointPool);
     }
 
     private CharacterProperty getProperty(String name) {
@@ -188,18 +162,6 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
             }
         }
         return null;
-    }
-
-    @Override
-    public void update() {
-        updatePointsAvailable(pointPool.getPoints());
-    }
-
-    @Override
-    public void update(Integer d) {
-        if (d != null) {
-            updatePointsAvailable(d.intValue());
-        }
     }
 
     @Override
@@ -214,9 +176,8 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
 
     @Override
     public boolean onIncreaseClicked(SkillView view) {
-        if (pointPool.canIncrease() && view.canIncrease()) {
+        if (view.canIncrease()) {
             increasePropertyAndUpdateView(view);
-            pointPool.increase();
             return true;
         }
         return false;
@@ -224,9 +185,8 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
 
     @Override
     public boolean onDecreaseClicked(SkillView view) {
-        if (pointPool.canDecrease() && view.canDecrease()) {
+        if (view.canDecrease()) {
             decreasePropertyAndUpdateView(view);
-            pointPool.decrease();
             return true;
         }
         return false;

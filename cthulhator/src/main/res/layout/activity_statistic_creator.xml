@@ -10,21 +10,40 @@
         android:id="@id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/main_background">
+        android:background="@color/main_background"
+        android:minHeight="@dimen/twice_actionbar_height">
 
         <TextView
-            android:id="@id/points_available"
+            android:id="@id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/padding_16"
-            android:paddingLeft="@dimen/padding_48"
-            android:paddingRight="@dimen/padding_16"
-            android:paddingTop="@dimen/padding_16"
-            android:text="@string/points_available"
+            android:layout_alignParentLeft="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/padding_4"
+            android:layout_marginLeft="@dimen/actionbar_height"
+            android:layout_marginTop="@dimen/actionbar_height"
+            android:gravity="center|left"
+            android:text="@string/characteristics"
             android:textAllCaps="true"
-            android:textColor="@color/grey_white_1000"
-            android:textSize="@dimen/font_20"
-            android:textStyle="bold"/>
+            android:textColor="@color/white_87"
+            android:textSize="@dimen/font_16"
+            android:textStyle="bold|italic"/>
+
+        <TextView
+            android:id="@id/suggested_skillset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/title"
+            android:layout_alignParentLeft="true"
+            android:layout_alignRight="@id/title"
+            android:layout_below="@id/title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/actionbar_height"
+            android:gravity="center|left"
+            android:text="@string/placeholder_suggested_proffession"
+            android:textColor="@color/white_54"
+            android:textSize="@dimen/font_12"
+            android:textStyle="italic"/>
     </RelativeLayout>
 
     <FrameLayout
@@ -40,7 +59,7 @@
         android:id="@id/scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/assign_skills"
+        android:layout_above="@id/reroll"
         android:layout_below="@android:id/custom">
 
         <RelativeLayout
@@ -205,22 +224,23 @@
     </ScrollView>
 
     <Button
-        android:id="@id/assign_skills"
+        android:id="@id/reroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/padding_4"
         android:layout_marginLeft="@dimen/padding_8"
         android:layout_marginRight="@dimen/padding_8"
-        android:background="@color/main_button_color"
-        android:text="@string/assign_skills"
+        android:background="@drawable/main_button_selector"
+        android:padding="@dimen/padding_8"
+        android:text="@string/reroll"
         android:textAllCaps="true"
         android:textColor="@color/grey_white_1000"
         android:textSize="@dimen/font_16"
         android:textStyle="bold"/>
 
     <at.markushi.ui.CircleButton
-        android:id="@id/reroll"
+        android:id="@id/assign_skills"
         android:layout_width="@dimen/fab"
         android:layout_height="@dimen/fab"
         android:layout_alignParentRight="true"

@@ -81,5 +81,8 @@
     <string name="choose_skillset">Skills</string>
     <string name="configuration">Configuration</string>
     <string name="touch_to_cache">Start Caching Random Users</string>
+    <string name="reroll">Reroll</string>
+    <string name="characteristics">Statistics</string>
+    <string name="placeholder_suggested_proffession">Gumshoe</string>
 
 </resources>
