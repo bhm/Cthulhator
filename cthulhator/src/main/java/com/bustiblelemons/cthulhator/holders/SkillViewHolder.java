@@ -32,8 +32,10 @@ public class SkillViewHolder implements ViewHolder<CharacterProperty>, SkillView
     public void bindValues(CharacterProperty item, int position) {
         this.skill = item;
         if (skillView != null) {
+            skillView.setMinValue(item.getMinValue());
+            skillView.setMaxValue(item.getMaxValue());
             skillView.setTitle(item.getName());
-            skillView.setValue(item.getValue() + "");
+            skillView.setIntValue(item.getValue());
             skillView.setSkillViewListener(this);
         }
     }
