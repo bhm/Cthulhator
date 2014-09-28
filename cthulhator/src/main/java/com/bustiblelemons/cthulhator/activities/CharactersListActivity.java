@@ -112,7 +112,7 @@ public class CharactersListActivity extends AbsActionBarActivity
                 listView.setOnItemClickListener(listAdapter);
                 listView.setAdapter(listAdapter);
             }
-            listAdapter.addItems(characters);
+            listAdapter.refreshData(characters);
         }
     }
 

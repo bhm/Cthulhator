@@ -20,6 +20,7 @@ import com.bustiblelemons.cthulhator.model.brp.statistics.BRPStatistic;
 import com.bustiblelemons.cthulhator.model.desc.CharacterDescription;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,8 +34,10 @@ import java.util.TreeSet;
 /**
  * Created by bhm on 12.08.14.
  */
+@JsonIgnoreProperties
 public class SavedCharacter implements Parcelable, Serializable {
 
+    @JsonIgnore
     public static final Parcelable.Creator<SavedCharacter> CREATOR     = new Parcelable.Creator<SavedCharacter>() {
         public SavedCharacter createFromParcel(Parcel source) {
             return new SavedCharacter(source);
@@ -141,12 +144,14 @@ public class SavedCharacter implements Parcelable, Serializable {
         return r;
     }
 
+    @JsonIgnore
     private void updateSkillPointPools() {
         if (edition != null) {
             fillSkillPointPools(this.edition);
         }
     }
 
+    @JsonIgnore
     private void fillSkillPointPools(CthulhuEdition edition) {
         fillCareerPoints(edition);
         CharacterProperty edu = getPropertyByName(BRPStatistic.EDU.name());
@@ -156,6 +161,7 @@ public class SavedCharacter implements Parcelable, Serializable {
         addCharacterProperty(pointsProperty);
     }
 
+    @JsonIgnore
     private void fillCareerPoints(CthulhuEdition edition) {
         CharacterProperty __int = getPropertyByName(BRPStatistic.INT.name());
         CharacterProperty pointsProperty = BRPSkillPointPools.HOBBY.asProperty();
@@ -182,6 +188,7 @@ public class SavedCharacter implements Parcelable, Serializable {
         return r;
     }
 
+    @JsonIgnore
     private CharacterProperty getPropertyByName(String propertyName) {
         for (CharacterProperty prop : properties) {
             if (prop != null && prop.getName() != null) {
@@ -237,6 +244,7 @@ public class SavedCharacter implements Parcelable, Serializable {
         this.description = description;
     }
 
+    @JsonIgnore
     public String getName() {
         return description != null && description.getName() != null ? description.getName().getFullName() : null;
     }
@@ -278,10 +286,12 @@ public class SavedCharacter implements Parcelable, Serializable {
         return false;
     }
 
+    @JsonIgnore
     public int getCurrentSanity() {
         return 0;
     }
 
+    @JsonIgnore
     public int getMaxSanity() {
         return 0;
     }
@@ -358,6 +368,7 @@ public class SavedCharacter implements Parcelable, Serializable {
         description.setPortraitList(portraits);
     }
 
+    @JsonIgnore
     public Portrait getMainPortrait() {
         Portrait r = null;
         if (getPortraits() != null) {
@@ -373,6 +384,7 @@ public class SavedCharacter implements Parcelable, Serializable {
         return r;
     }
 
+    @JsonIgnore
     public void addPropertiesList(Set<CharacterProperty> characterProperties) {
         if (properties == null) {
             properties = new HashSet<CharacterProperty>();
@@ -528,11 +540,13 @@ public class SavedCharacter implements Parcelable, Serializable {
                 '}';
     }
 
+    @JsonIgnore
     @Override
     public int describeContents() {
         return 0;
     }
 
+    @JsonIgnore
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         int propSize = this.properties != null ? this.properties.size() : 0;
@@ -557,6 +571,7 @@ public class SavedCharacter implements Parcelable, Serializable {
         dest.writeInt(this.age);
     }
 
+    @JsonIgnore
     public int getHobbyPoints() {
         CharacterProperty _int = getPropertyByName(BRPStatistic.INT.name());
         if (_int != null) {
@@ -566,6 +581,7 @@ public class SavedCharacter implements Parcelable, Serializable {
         return 0;
     }
 
+    @JsonIgnore
     public int getCareerPoints() {
         CharacterProperty _int = getPropertyByName(BRPStatistic.EDU.name());
         if (_int != null) {
@@ -573,5 +589,47 @@ public class SavedCharacter implements Parcelable, Serializable {
             return edition.getCareerSkillPointMultiplier() * intVal;
         }
         return 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; }
+        if (o == null || getClass() != o.getClass()) { return false; }
+
+        SavedCharacter that = (SavedCharacter) o;
+
+        if (age != that.age) { return false; }
+        if (presentDate != that.presentDate) { return false; }
+        if (birth != null ? !birth.equals(that.birth) : that.birth != null) { return false; }
+        if (description != null ? !description.equals(
+                that.description) : that.description != null) {
+            return false;
+        }
+        if (edition != that.edition) { return false; }
+        if (fullHistory != null ? !fullHistory.equals(
+                that.fullHistory) : that.fullHistory != null) {
+            return false;
+        }
+        if (possesions != null ? !possesions.equals(that.possesions) : that.possesions != null) {
+            return false;
+        }
+        if (properties != null ? !properties.equals(that.properties) : that.properties != null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = properties != null ? properties.hashCode() : 0;
+        result = 31 * result + (possesions != null ? possesions.hashCode() : 0);
+        result = 31 * result + (fullHistory != null ? fullHistory.hashCode() : 0);
+        result = 31 * result + (edition != null ? edition.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (birth != null ? birth.hashCode() : 0);
+        result = 31 * result + (int) (presentDate ^ (presentDate >>> 32));
+        result = 31 * result + age;
+        return result;
     }
 }

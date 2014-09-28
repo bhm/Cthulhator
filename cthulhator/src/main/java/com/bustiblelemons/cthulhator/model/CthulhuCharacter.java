@@ -16,9 +16,6 @@ import java.util.List;
  */
 @JsonIgnoreProperties({"cachedStats", "cachdSkills"})
 public class CthulhuCharacter extends SavedCharacter {
-    private BirthData      birth;
-    private long           presentDate;
-    private List<Portrait> portraits;
 
     private transient LruCache<CharacterProperty, List<Possesion>> cachedAffectedPossessions =
             new LruCache<CharacterProperty, List<Possesion>>(20);
@@ -30,37 +27,6 @@ public class CthulhuCharacter extends SavedCharacter {
 
     public static CthulhuCharacter forEdition(CthulhuEdition edition) {
         return new CthulhuCharacter(edition);
-    }
-
-    public BirthData getBirth() {
-        return birth;
-    }
-
-    public void setBirth(BirthData birth) {
-        this.birth = birth;
-    }
-
-    public List<Portrait> getPortraits() {
-        return portraits;
-    }
-
-    public void setPortraits(List<Portrait> portraits) {
-        this.portraits = portraits;
-    }
-
-    public Portrait getMainPortrait() {
-        Portrait r = null;
-        if (portraits != null) {
-            for (Portrait portrait : portraits) {
-                if (r == null && portrait != null) {
-                    r = portrait;
-                }
-                if (portrait != null && portrait.isMain()) {
-                    return portrait;
-                }
-            }
-        }
-        return r;
     }
 
     public List<Possesion> getPossesions(CharacterProperty affectedBy) {
@@ -91,13 +57,6 @@ public class CthulhuCharacter extends SavedCharacter {
         return _prop;
     }
 
-    public List<HistoryEvent> getHistory() {
-        if (historyForCurrentAge == null && historyForCurrentAge.first.longValue() != presentDate) {
-            List<HistoryEvent> events = getHistoryEvents(presentDate);
-            historyForCurrentAge = Pair.create(presentDate, events);
-        }
-        return historyForCurrentAge.second;
-    }
 
     public List<HistoryEvent> getHistoryEvents(long tillDate) {
         List<HistoryEvent> events = new ArrayList<HistoryEvent>();

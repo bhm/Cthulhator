@@ -3,6 +3,8 @@ package io.github.scottmaclure.character.traits.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.util.Locale;
 
@@ -12,6 +14,7 @@ import io.github.scottmaclure.character.traits.model.providers.StringTraitProvid
 /**
  * Created by bhm on 02.08.14.
  */
+@JsonIgnoreProperties
 public class RandomTraitsSet implements Serializable, Parcelable {
 
     public static final Parcelable.Creator<RandomTraitsSet> CREATOR = new Parcelable.Creator<RandomTraitsSet>() {
@@ -28,6 +31,9 @@ public class RandomTraitsSet implements Serializable, Parcelable {
     private String characteristic;
     private String personality;
     private String speech;
+
+    public RandomTraitsSet() {
+    }
 
     private RandomTraitsSet(Builder b) {
         this.hair = b.hair;
