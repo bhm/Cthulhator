@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.bustiblelemons.activities.AbsActionBarActivity;
 import com.bustiblelemons.cthulhator.R;
@@ -35,6 +36,9 @@ public class CharactersListActivity extends AbsActionBarActivity
     LoadMoreListView listView;
     @InjectView(R.id.add_character)
     CircleButton     addFab;
+    @InjectView(android.R.id.progress)
+    ProgressBar progressBar;
+
     private SavedCharactersAdapter listAdapter;
     private Grouping               grouping;
     private FadingActionBarHelper  fadingbarHelper;
@@ -46,7 +50,6 @@ public class CharactersListActivity extends AbsActionBarActivity
         setContentView(R.layout.activity_characters_list);
         ButterKnife.inject(this);
         if (listView != null) {
-            listAdapter = new SavedCharactersAdapter(this);
             listView.setOnLoadMoreListener(this);
             listView.setAdapter(listAdapter);
             listView.setOnItemClickListener(listAdapter);
@@ -54,8 +57,16 @@ public class CharactersListActivity extends AbsActionBarActivity
     }
 
     private void loadFresh() {
+        listAdapter.removeAll();
+        showProgressBar();
         grouping = new Grouping();
         CharacterCache.loadSavedCharactersAsync(this, grouping);
+    }
+
+    private void showProgressBar() {
+        if (progressBar != null) {
+            progressBar.setVisibility(View.VISIBLE);
+        }
     }
 
     private FadingActionBarHelper setupFadingBar() {
@@ -111,8 +122,15 @@ public class CharactersListActivity extends AbsActionBarActivity
                 listAdapter = new SavedCharactersAdapter(this);
                 listView.setOnItemClickListener(listAdapter);
                 listView.setAdapter(listAdapter);
+                hideProgressbar();
             }
             listAdapter.refreshData(characters);
+        }
+    }
+
+    private void hideProgressbar() {
+        if (progressBar != null) {
+            progressBar.setVisibility(View.INVISIBLE);
         }
     }
 

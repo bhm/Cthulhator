@@ -26,7 +26,7 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
         TAG = getClass().getSimpleName();
     }
 
-    private List<T> data = new ArrayList<T>();
+    private List<T> mData = new ArrayList<T>();
     private Context        context;
     private LayoutInflater inflater;
 
@@ -37,7 +37,7 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
 
     public AbsListAdapter(Context context, List<T> data) {
         this(context);
-        this.data = new LinkedList<T>(data);
+        this.mData = new LinkedList<T>(data);
     }
 
 
@@ -72,7 +72,7 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
 
     @Override
     public int getCount() {
-        return data.size();
+        return mData.size();
     }
 
     @Override
@@ -82,18 +82,18 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
 
     @Override
     public T getItem(int position) {
-        return data.get(position);
+        return mData.get(position);
     }
 
 
     public boolean addItem(T item) {
-        boolean ret = this.data.add(item);
+        boolean ret = this.mData.add(item);
         notifyDataSetChanged();
         return ret;
     }
 
     public boolean addItems(Collection<T> items) {
-        boolean ret = this.data.addAll(items);
+        boolean ret = this.mData.addAll(items);
         notifyDataSetChanged();
         return ret;
     }
@@ -103,17 +103,17 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
     }
 
     public List<T> getItems() {
-        return this.data;
+        return this.mData;
     }
 
     public boolean removeItem(T item) {
-        boolean ret = this.data.remove(item);
+        boolean ret = this.mData.remove(item);
         notifyDataSetChanged();
         return ret;
     }
 
     public boolean removeItems(Collection<T> items) {
-        boolean r = this.data.removeAll(items);
+        boolean r = this.mData.removeAll(items);
         notifyDataSetChanged();
         return r;
     }
@@ -121,7 +121,7 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
     public List<T> getSelectedItems(SparseBooleanArray checkedItems) {
         List<T> result = new ArrayList<T>();
         if (checkedItems != null) {
-            for (int i = 0; i < data.size(); i++) {
+            for (int i = 0; i < mData.size(); i++) {
                 if (checkedItems.get(i)) {
                     result.add(getItem(i));
                 }
@@ -142,11 +142,11 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
     }
 
     public List<T> getData() {
-        return this.data;
+        return this.mData;
     }
 
     protected void setData(Collection<T> data) {
-        this.data = new LinkedList<T>(data);
+        this.mData = new LinkedList<T>(data);
     }
 
     public void removeItem(int pos) {
@@ -165,6 +165,11 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
         for (int position : positions) {
             getData().remove(position);
         }
+        notifyDataSetChanged();
+    }
+
+    public void removeAll() {
+        mData.clear();
         notifyDataSetChanged();
     }
 }

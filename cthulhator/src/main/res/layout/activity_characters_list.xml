@@ -12,8 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/twice_actionbar_height"
         android:background="@color/main_background">
-
-
     </RelativeLayout>
 
     <TextView
@@ -27,10 +25,17 @@
         android:paddingLeft="@dimen/padding_16"
         android:paddingRight="@dimen/padding_16"
         android:paddingTop="@dimen/padding_16"
+        android:text="@string/placeholder_proverb"
         android:textColor="@color/grey_white_1000"
         android:textSize="@dimen/font_20"
-        android:textStyle="bold"
-        android:text="@string/placeholder_proverb"/>
+        android:textStyle="bold"/>
+
+    <ProgressBar
+        android:id="@android:id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="visible"/>
 
 
     <com.bustiblelemons.views.LoadMoreListView
@@ -39,7 +44,9 @@
         android:layout_height="match_parent"
         android:layout_below="@id/header"
         android:layout_marginTop="@dimen/padding_20"
-        tools:listitem="@layout/single_saved_character"/>
+        android:visibility="invisible"
+        tools:listitem="@layout/single_saved_character"
+        tools:visibility="visible"/>
 
     <at.markushi.ui.CircleButton
         android:id="@id/add_character"
