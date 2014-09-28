@@ -302,7 +302,7 @@ public enum BRPSkill {
             return 30;
         }
     },
-    SubmashineGun {
+    SubmachineGun {
         @Override
         public int getBaseValue(CthulhuEdition edition) {
             return 15;
@@ -325,6 +325,7 @@ public enum BRPSkill {
         r.setType(PropertyType.SKILL);
         r.setMaxValue(100);
         r.setMinValue(0);
+        r.setValue(getBaseValue(edition));
         r.setRelations(getRelations());
         r.setActionGroup(getActionGroups());
         r.setBaseValue(getBaseValue(edition));
