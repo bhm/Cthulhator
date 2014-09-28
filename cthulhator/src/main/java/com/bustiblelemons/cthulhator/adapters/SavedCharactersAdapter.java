@@ -6,12 +6,12 @@ import android.widget.AdapterView;
 
 import com.bustiblelemons.adapters.AbsListAdapter;
 import com.bustiblelemons.cthulhator.holders.SavedCharacterHolder;
-import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
+import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
 
 /**
  * Created by bhm on 13.08.14.
  */
-public class SavedCharactersAdapter extends AbsListAdapter<SavedCharacter, SavedCharacterHolder>
+public class SavedCharactersAdapter extends AbsListAdapter<CharacterInfo, SavedCharacterHolder>
         implements AdapterView.OnItemClickListener {
     public SavedCharactersAdapter(Context context) {
         super(context);

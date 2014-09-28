@@ -94,4 +94,6 @@
     <item name="gender_pager" type="id"/>
     <item name="suggested_skillset" type="id"/>
     <item name="skill_editor_frame" type="id"/>
+    <item name="done" type="id"/>
+    <item name="card" type="id"/>
 </resources>

@@ -8,11 +8,10 @@ import android.view.View;
 import com.bustiblelemons.activities.AbsActionBarActivity;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.adapters.SavedCharactersAdapter;
-import com.bustiblelemons.cthulhator.async.SavedCharactersCallBack;
 import com.bustiblelemons.cthulhator.cache.CharacterCache;
 import com.bustiblelemons.cthulhator.creation.ui.CreationWorkFlowActivity;
 import com.bustiblelemons.cthulhator.model.Grouping;
-import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
+import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
 import com.bustiblelemons.views.LoadMoreListView;
 import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarHelper;
 
@@ -28,7 +27,7 @@ import butterknife.OnClick;
  */
 public class CharactersListActivity extends AbsActionBarActivity
         implements View.OnClickListener,
-                   SavedCharactersCallBack,
+                   CharacterCache.OnCharactersInfoLoaded,
                    LoadMoreListView.OnLoadMoreListener,
                    SearchView.OnQueryTextListener {
 
@@ -106,7 +105,7 @@ public class CharactersListActivity extends AbsActionBarActivity
     }
 
     @Override
-    public void onSavedCharactersLoaded(Grouping grouping, List<SavedCharacter> characters) {
+    public void onCharactersInfoLoaded(Grouping grouping, List<CharacterInfo> characters) {
         if (characters != null) {
             if (listAdapter == null) {
                 listAdapter = new SavedCharactersAdapter(this);
@@ -116,4 +115,5 @@ public class CharactersListActivity extends AbsActionBarActivity
             listAdapter.addItems(characters);
         }
     }
+
 }

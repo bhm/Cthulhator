@@ -15,6 +15,7 @@
             android:id="@id/preview_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/actionbar_height"
             app:extraInfoColor="@color/black_54"
             app:extraText="@string/placeholder_top_stats"
             app:mainInfoColor="@color/white_87"
@@ -37,6 +38,18 @@
                 android:layout_height="wrap_content"
                 android:text="@string/add_character_info"/>
         </RelativeLayout>
+
+        <at.markushi.ui.CircleButton
+            android:id="@id/done"
+            android:layout_width="@dimen/fab"
+            android:layout_height="@dimen/fab"
+            android:layout_alignBottom="@id/preview_card"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/padding_16"
+            android:layout_marginRight="@dimen/padding_16"
+            android:layout_marginTop="@dimen/fab_offset"
+            android:src="@drawable/ic_navigation_accept"
+            app:cb_color="@color/fab_done"/>
 
         <RelativeLayout
             android:id="@id/add_character_history"

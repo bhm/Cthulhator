@@ -4,9 +4,9 @@ import android.content.Context;
 import android.view.View;
 
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
-import com.bustiblelemons.holders.impl.AbsViewHolder;
-import com.bustiblelemons.views.LoadingImage;
+import com.bustiblelemons.cthulhator.view.charactercard.CharacterCardView;
+import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
+import com.bustiblelemons.holders.impl.ViewHolder;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -14,26 +14,25 @@ import butterknife.InjectView;
 /**
  * Created by bhm on 13.08.14.
  */
-public class SavedCharacterHolder extends AbsViewHolder<SavedCharacter> {
+public class SavedCharacterHolder implements ViewHolder<CharacterInfo> {
 
-    @InjectView(android.R.id.icon)
-    LoadingImage imageView;
+    @InjectView(R.id.card)
+    CharacterCardView cardView;
+    private Context context;
 
     public SavedCharacterHolder(Context context) {
-        super(context);
+        this.context = context;
     }
 
     @Override
     public void create(View convertView) {
-        super.create(convertView);
         ButterKnife.inject(this, convertView);
     }
 
     @Override
-    public void bindValues(SavedCharacter item, int position) {
-        setTitle(item.getName());
-        if (imageView != null) {
-            imageView.loadFrom(item.getPhotoUrl());
+    public void bindValues(CharacterInfo item, int position) {
+        if (cardView != null && item != null) {
+            cardView.setCardInfo(item);
         }
     }
 

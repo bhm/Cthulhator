@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.bustiblelemons.cthulhator.R;
+import com.bustiblelemons.cthulhator.cache.CharacterCache;
 import com.bustiblelemons.cthulhator.model.CthulhuCharacter;
 import com.bustiblelemons.cthulhator.model.CthulhuEdition;
 import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
@@ -65,6 +66,12 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
             case R.id.add_character_equipement:
                 break;
         }
+    }
+
+    @OnClick(R.id.done)
+    public void onSaveCharacter(View view) {
+        CharacterCache.saveCharacter(this, mSavedCharacter);
+        onBackPressed();
     }
 
     @Override

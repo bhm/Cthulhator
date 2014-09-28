@@ -5,8 +5,11 @@ import android.content.Context;
 import com.bustiblelemons.cthulhator.cache.CharacterCache;
 import com.bustiblelemons.cthulhator.model.Grouping;
 import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
+import com.bustiblelemons.cthulhator.model.cache.SavedCharacterTransformer;
 import com.bustiblelemons.cthulhator.model.cache.SavedCharactersSet;
+import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.github.scottmaclure.character.traits.asyn.AbsAsynTask;
@@ -14,21 +17,27 @@ import io.github.scottmaclure.character.traits.asyn.AbsAsynTask;
 /**
  * Created by bhm on 13.08.14.
  */
-public class SavedCharactersLoadAsyn extends AbsAsynTask<Grouping, List<SavedCharacter>> {
+public class SavedCharactersLoadAsyn extends AbsAsynTask<Grouping, List<CharacterInfo>> {
 
-    private final SavedCharactersCallBack callBack;
+    private final CharacterCache.OnCharactersInfoLoaded callBack;
 
-    public SavedCharactersLoadAsyn(Context context, SavedCharactersCallBack callBack) {
+    public SavedCharactersLoadAsyn(Context context, CharacterCache.OnCharactersInfoLoaded callBack) {
         super(context);
         this.callBack = callBack;
     }
 
     @Override
-    protected List<SavedCharacter> call(Grouping... groupings) throws Exception {
+    protected List<CharacterInfo> call(Grouping... groupings) throws Exception {
         for (Grouping g : groupings) {
             SavedCharactersSet set = CharacterCache.getCharacterSet(context);
             if (set != null) {
-                publishProgress(g, set.get(g.getOffset(), g.getLimit()));
+                List<CharacterInfo> infos = new ArrayList<CharacterInfo>();
+                for (SavedCharacter savedCharacter : set.getCharacters()) {
+                    CharacterInfo characterInfo =
+                            SavedCharacterTransformer.getInstance().transform(savedCharacter);
+                    infos.add(characterInfo);
+                }
+                publishProgress(g, infos);
             }
         }
         return null;
@@ -40,14 +49,14 @@ public class SavedCharactersLoadAsyn extends AbsAsynTask<Grouping, List<SavedCha
     }
 
     @Override
-    protected boolean onSuccess(List<SavedCharacter> result) {
+    protected boolean onSuccess(List<CharacterInfo> result) {
         return false;
     }
 
     @Override
-    public void onProgressUpdate(Grouping param, List<SavedCharacter> result) {
+    public void onProgressUpdate(Grouping param, List<CharacterInfo> result) {
         if (callBack != null) {
-            callBack.onSavedCharactersLoaded(param, result);
+            callBack.onCharactersInfoLoaded(param, result);
         }
     }
 }
