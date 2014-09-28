@@ -82,8 +82,10 @@ public class CharacterProperty implements Serializable, Comparable<CharacterProp
         return relations;
     }
 
-    public void setRelations(Collection<Relation> relations) {
-        this.relations = new HashSet<Relation>(relations);
+    public void setRelations(Collection<Relation> arg) {
+        if (arg != null) {
+            this.relations = new HashSet<Relation>(arg);
+        }
     }
 
     @JsonIgnore

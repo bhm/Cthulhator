@@ -4,11 +4,16 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+import java.io.Serializable;
 
 /**
  * Created by bhm on 29.07.14.
  */
-public class Relation implements Parcelable {
+@JsonIgnoreProperties
+public class Relation implements Parcelable, Serializable {
+    @JsonIgnore
     public static final Parcelable.Creator<Relation> CREATOR = new Parcelable.Creator<Relation>() {
         public Relation createFromParcel(Parcel source) {
             return new Relation(source);
@@ -133,11 +138,13 @@ public class Relation implements Parcelable {
         }
     }
 
+    @JsonIgnore
     @Override
     public int describeContents() {
         return 0;
     }
 
+    @JsonIgnore
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.propertyName);

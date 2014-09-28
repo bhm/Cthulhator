@@ -1,7 +1,12 @@
 package com.bustiblelemons.cthulhator.model.cache;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,7 +15,17 @@ import java.util.List;
  * Created by bhm on 13.08.14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SavedCharactersSet {
+public class SavedCharactersSet implements Serializable, Parcelable {
+    public static final Parcelable.Creator<SavedCharactersSet> CREATOR = new Parcelable.Creator<SavedCharactersSet>() {
+        public SavedCharactersSet createFromParcel(Parcel source) {
+            return new SavedCharactersSet(source);
+        }
+
+        public SavedCharactersSet[] newArray(int size) {
+            return new SavedCharactersSet[size];
+        }
+    };
+    @JsonIgnore
     private static SavedCharactersSet sEmpty;
 
     static {
@@ -19,6 +34,13 @@ public class SavedCharactersSet {
     }
 
     private List<SavedCharacter> characters;
+
+    public SavedCharactersSet() {
+    }
+
+    private SavedCharactersSet(Parcel in) {
+        in.readTypedList(characters, SavedCharacter.CREATOR);
+    }
 
     public List<SavedCharacter> getCharacters() {
         return characters;
@@ -38,11 +60,25 @@ public class SavedCharactersSet {
         return this.characters.subList(start, end);
     }
 
-    public static SavedCharactersSet empty() {
-        return sEmpty;
+    @JsonIgnore
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public void addDescription() {
+    @JsonIgnore
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(characters);
+    }
 
+    public void add(SavedCharacter character) {
+        if (character == null) {
+            return;
+        }
+        if (characters == null) {
+            characters = new ArrayList<SavedCharacter>();
+        }
+        characters.add(character);
     }
 }
