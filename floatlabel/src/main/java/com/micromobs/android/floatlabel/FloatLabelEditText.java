@@ -25,10 +25,11 @@ public class FloatLabelEditText
         extends LinearLayout {
 
     private int mCurrentApiVersion = android.os.Build.VERSION.SDK_INT, mFocusedColor, mUnFocusedColor, mFitScreenWidth, mGravity;
+    private int mMinLines = 1;
     private float  mTextSizeInSp;
     private String mHintText, mEditText;
-    private boolean mIsPassword = false;
 
+    private boolean mIsPassword = false;
     private AttributeSet mAttrs;
     private Context      mContext;
     private EditText     mEditTextView;
@@ -73,18 +74,18 @@ public class FloatLabelEditText
         return "";
     }
 
-    public void setText(CharSequence title) {
+    public void setText(int resId) {
         if (mEditTextView != null) {
-            mEditTextView.setText(title);
+            mEditTextView.setText(resId);
         }
     }
 
     // -----------------------------------------------------------------------
     // private helpers
 
-    public void setText(int resId) {
+    public void setText(CharSequence title) {
         if (mEditTextView != null) {
-            mEditTextView.setText(resId);
+            mEditTextView.setText(title);
         }
     }
 
@@ -113,40 +114,35 @@ public class FloatLabelEditText
     }
 
     private void getAttributesFromXmlAndStoreLocally() {
-        TypedArray attributesFromXmlLayout = mContext.obtainStyledAttributes(mAttrs,
+        TypedArray a = mContext.obtainStyledAttributes(mAttrs,
                 R.styleable.FloatLabelEditText);
-        if (attributesFromXmlLayout == null) {
+        if (a == null) {
             return;
         }
-
-        mHintText = attributesFromXmlLayout.getString(R.styleable.FloatLabelEditText_hint);
-        mEditText = attributesFromXmlLayout.getString(R.styleable.FloatLabelEditText_text);
-        mGravity = attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_gravity,
-                Gravity.LEFT);
-        mTextSizeInSp = getScaledFontSize(attributesFromXmlLayout.getDimensionPixelSize(
+        mHintText = a.getString(R.styleable.FloatLabelEditText_hint);
+        mEditText = a.getString(R.styleable.FloatLabelEditText_text);
+        mMinLines = a.getInteger(R.styleable.FloatLabelEditText__minLines, mMinLines);
+        mGravity = a.getInt(R.styleable.FloatLabelEditText_gravity, Gravity.LEFT | Gravity.TOP);
+        mTextSizeInSp = getScaledFontSize(a.getDimensionPixelSize(
                 R.styleable.FloatLabelEditText_textSize,
                 (int) mEditTextView.getTextSize()));
-        mFocusedColor = attributesFromXmlLayout.getColor(
-                R.styleable.FloatLabelEditText_textColorHintFocused,
+        mFocusedColor = a.getColor(R.styleable.FloatLabelEditText_textColorHintFocused,
                 android.R.color.black);
-        mUnFocusedColor = attributesFromXmlLayout.getColor(
-                R.styleable.FloatLabelEditText_textColorHintUnFocused,
+        mUnFocusedColor = a.getColor(R.styleable.FloatLabelEditText_textColorHintUnFocused,
                 android.R.color.darker_gray);
-        mFitScreenWidth = attributesFromXmlLayout.getInt(
-                R.styleable.FloatLabelEditText_fitScreenWidth, 0);
-        mIsPassword = (attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_inputType,
-                0) == 1);
-        attributesFromXmlLayout.recycle();
+        mFitScreenWidth = a.getInt(R.styleable.FloatLabelEditText_fitScreenWidth, 0);
+        mIsPassword = (a.getInt(R.styleable.FloatLabelEditText_inputType, 0) == 1);
+        a.recycle();
     }
 
     private void setupEditTextView() {
-
         if (mIsPassword) {
             mEditTextView.setInputType(InputType.TYPE_CLASS_TEXT |
                     InputType.TYPE_TEXT_VARIATION_PASSWORD);
             mEditTextView.setTypeface(Typeface.DEFAULT);
         }
 
+        mEditTextView.setMinLines(mMinLines);
         mEditTextView.setHint(mHintText);
         mEditTextView.setHintTextColor(mUnFocusedColor);
         mEditTextView.setText(mEditText);

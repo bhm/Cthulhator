@@ -11,6 +11,7 @@
             <enum name="center" value="17"/>
         </attr>
         <attr name="hint" format="string"/>
+        <attr name="_minLines" format="integer"/>
         <attr name="inputType" format="enum">
             <enum name="normal" value="0"/>
             <enum name="textPassword" value="1"/>
