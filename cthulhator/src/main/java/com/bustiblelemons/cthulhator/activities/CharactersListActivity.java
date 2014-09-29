@@ -57,7 +57,9 @@ public class CharactersListActivity extends AbsActionBarActivity
     }
 
     private void loadFresh() {
-        listAdapter.removeAll();
+        if (listAdapter != null) {
+            listAdapter.removeAll();
+        }
         showProgressBar();
         grouping = new Grouping();
         CharacterCache.loadSavedCharactersAsync(this, grouping);
