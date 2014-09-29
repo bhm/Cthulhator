@@ -4,15 +4,25 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.bustiblelemons.api.random.names.randomuserdotme.model.Location;
+import com.bustiblelemons.cthulhator.creation.history.model.TimeSpan;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by bhm on 29.07.14.
  */
-public class HistoryEvent implements Parcelable {
-    public static final Parcelable.Creator<HistoryEvent> CREATOR = new Parcelable.Creator<HistoryEvent>() {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class HistoryEvent implements Serializable, Parcelable, Comparable<HistoryEvent> {
+    @JsonIgnore
+    public static final  Parcelable.Creator<HistoryEvent> CREATOR            = new Parcelable.Creator<HistoryEvent>() {
         public HistoryEvent createFromParcel(Parcel source) {
             return new HistoryEvent(source);
         }
@@ -21,11 +31,64 @@ public class HistoryEvent implements Parcelable {
             return new HistoryEvent[size];
         }
     };
+    @JsonIgnore
+    public static final  Comparator<HistoryEvent>         COMPARATOR         = new Comparator<HistoryEvent>() {
+        @Override
+        public int compare(HistoryEvent lhs, HistoryEvent rhs) {
+            if (lhs == null && rhs == null) {
+                return 0;
+            } else if (lhs != null && rhs == null) {
+                return 1;
+            } else if (lhs == null && rhs != null) {
+                return -1;
+            } else {
+                long lEpoch = lhs.getDate();
+                long rEpoch = rhs.getDate();
+                if (lEpoch > rEpoch) {
+                    return 1;
+                } else if (lEpoch == rEpoch) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+            }
+        }
+    };
+    @JsonIgnore
+    public static final  Comparator<HistoryEvent>         COMPARATOR_DES     = new Comparator<HistoryEvent>() {
+        @Override
+        public int compare(HistoryEvent lhs, HistoryEvent rhs) {
+            if (lhs != null && rhs == null) {
+                return -1;
+            } else if (lhs == null && rhs == null) {
+                return 0;
+            } else if (lhs == null && rhs != null) {
+                return 1;
+            } else {
+                long lEpoch = lhs.getDate();
+                long rEpoch = rhs.getDate();
+                if (lEpoch > rEpoch) {
+                    return -1;
+                } else if (lEpoch == rEpoch) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
+        }
+    };
+    @JsonIgnore
+    private static       java.lang.String                 sFormat            = "MMMM dd, yyyy";
+    @JsonIgnore
+    private static final SimpleDateFormat                 SIMPLE_DATE_FORMAT = new SimpleDateFormat(
+            sFormat);
     private String   name;
     private String   description;
     private long     date;
     private Location location;
     private List<Relation> affected = new ArrayList<Relation>();
+    @JsonIgnore
+    private String formatedDate;
 
     public HistoryEvent() {
     }
@@ -38,6 +101,15 @@ public class HistoryEvent implements Parcelable {
         this.affected = new ArrayList<Relation>();
         in.readTypedList(this.affected, Relation.CREATOR);
     }
+
+    @JsonIgnore
+    public String getFormatedDate() {
+        if (formatedDate == null) {
+            formatedDate = SIMPLE_DATE_FORMAT.format(new Date(getDate()));
+        }
+        return formatedDate;
+    }
+
 
     public long getDate() {
         return date;
@@ -95,5 +167,26 @@ public class HistoryEvent implements Parcelable {
         dest.writeLong(this.date);
         dest.writeParcelable(this.location, flags);
         dest.writeTypedList(this.affected);
+    }
+
+    @JsonIgnore
+    public boolean isBetween(TimeSpan timeSpan) {
+        if (timeSpan == null) {
+            return false;
+        }
+        return getDate() >= timeSpan.getBeginEpoch() && getDate() <= timeSpan.getEndEpoch();
+    }
+
+    @Override
+    public int compareTo(HistoryEvent another) {
+        if (another == null) {
+            return 1;
+        }
+        if (getDate() > another.getDate()) {
+            return 1;
+        } else if (getDate() < another.getDate()) {
+            return -1;
+        }
+        return 0;
     }
 }
