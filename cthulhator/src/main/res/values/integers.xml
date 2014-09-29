@@ -4,4 +4,5 @@
     <integer name="jazz_age_min">1910</integer>
     <integer name="placeholder_perc_val">99</integer>
     <integer name="twit_length">140</integer>
+    <integer name="short_info_min_input">6</integer>
 </resources>

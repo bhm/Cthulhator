@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    style="@style/card"
+    xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
@@ -21,6 +23,8 @@
         android:textSize="@dimen/font_16"
         android:textStyle="bold"
         app:hint="@string/event_title_hint"
+        app:textColorHintFocused="@color/hint_focused"
+        app:textColorHintUnFocused="@color/hint_unfocused"
         tools:text="@string/placeholder_event"/>
 
     <com.micromobs.android.floatlabel.FloatLabelEditText
@@ -34,7 +38,10 @@
         android:paddingRight="@dimen/padding_16"
         android:textColor="@color/black_54"
         android:textSize="@dimen/font_14"
-        app:hint="@string/event_hint"/>
+        app:_minLines="@integer/short_info_min_input"
+        app:hint="@string/event_hint"
+        app:textColorHintFocused="@color/hint_focused"
+        app:textColorHintUnFocused="@color/hint_unfocused"/>
 
     <TextView
         android:id="@id/date"
@@ -53,5 +60,30 @@
         android:textSize="@dimen/font_12"
         android:textStyle="italic"
         tools:text="@string/placeholder_date"/>
+
+    <Button
+        android:id="@id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/date"
+        android:layout_marginRight="@dimen/padding_16"
+        android:background="@drawable/flat_button_selector"
+        android:padding="@dimen/padding_16"
+        android:text="@string/add_history_event"
+        android:textAllCaps="true"
+        android:textColor="@color/main_color_active"/>
+
+    <Button
+        android:id="@android:id/closeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/date"
+        android:layout_toLeftOf="@id/add"
+        android:background="@drawable/flat_button_selector"
+        android:padding="@dimen/padding_16"
+        android:text="@string/cancel"
+        android:textAllCaps="true"
+        android:textColor="@color/black_87"/>
 
 </RelativeLayout>
