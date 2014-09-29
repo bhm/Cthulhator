@@ -1,6 +1,7 @@
 package com.bustiblelemons.cthulhator.creation.history.ui;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,7 @@ public class HistoryEventDialog extends AbsArgDialogFragment<HistoryEvent> {
 
     public static HistoryEventDialog newInstance(HistoryEvent event) {
         HistoryEventDialog r = new HistoryEventDialog();
+        r.setNoTitle(true);
         r.setNewInstanceArgument(event);
         return r;
     }
@@ -43,6 +45,15 @@ public class HistoryEventDialog extends AbsArgDialogFragment<HistoryEvent> {
         super.onAttach(activity);
         if (activity instanceof OnHistoryEventPassedBack) {
             mCallback = (OnHistoryEventPassedBack) activity;
+        }
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        if (mCallback != null) {
+            HistoryEvent newEvent = new HistoryEvent();
+            mCallback.onHistoryEventEdited(mEvent, newEvent);
         }
     }
 

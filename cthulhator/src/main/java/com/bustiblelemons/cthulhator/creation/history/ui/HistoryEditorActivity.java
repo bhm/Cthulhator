@@ -1,6 +1,7 @@
 package com.bustiblelemons.cthulhator.creation.history.ui;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.creation.history.logic.HistoryAdapter;
@@ -14,7 +15,9 @@ import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
 
 import java.util.Set;
 
+import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 /**
@@ -22,7 +25,8 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
  */
 public class HistoryEditorActivity extends AbsCharacterCreationActivity
         implements OnOpenHistoryEventDetails,
-                   LoadHistoryEventsAsyn.OnHistoryEventsLoaded {
+                   LoadHistoryEventsAsyn.OnHistoryEventsLoaded,
+                   HistoryEventDialog.OnHistoryEventPassedBack {
 
     public static final int REQUEST_CODE = 8;
     @InjectView(android.R.id.list)
@@ -37,6 +41,7 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
         super.onCreate(savedInstanceState);
         onSetActionBarToClosable();
         setContentView(R.layout.activity_history_editor);
+        ButterKnife.inject(this);
         onSetActionBarToClosable();
         mSavedCharacter = getInstanceArgument();
         if (listView != null) {
@@ -53,7 +58,6 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
                 mHistoryAdapter.removeAll();
             }
             mLoadHistoryAsyn.executeCrossPlatform();
-
         }
     }
 
@@ -85,5 +89,16 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
             }
             mHistoryAdapter.addData(header, events);
         }
+    }
+
+    @OnClick(R.id.fab)
+    public void onAddHistoryEvent(View view) {
+        HistoryEventDialog dialog = HistoryEventDialog.newInstance(null);
+        dialog.show(getSupportFragmentManager(), HistoryEventDialog.TAG);
+    }
+
+    @Override
+    public void onHistoryEventEdited(HistoryEvent old, HistoryEvent newEvent) {
+
     }
 }

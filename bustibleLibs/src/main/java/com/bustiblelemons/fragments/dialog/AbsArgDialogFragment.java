@@ -1,10 +1,12 @@
 package com.bustiblelemons.fragments.dialog;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 
 import com.bustiblelemons.utils.BundleTools;
 
@@ -17,10 +19,28 @@ import butterknife.ButterKnife;
  */
 public abstract class AbsArgDialogFragment<A extends Serializable> extends DialogFragment {
     private static final String NEW_INSTANCE_ARG = "new_instance_arg";
-    private A instanceArgument;
+    private A       instanceArgument;
+    private boolean noTitle;
+
+    public void setNoTitle(boolean noTitle) {
+        this.noTitle = noTitle;
+    }
 
     public A getInstanceArgument() {
         return instanceArgument;
+    }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        if (noTitle()) {
+            dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        }
+        return dialog;
+    }
+
+    private boolean noTitle() {
+        return noTitle;
     }
 
     @Override
