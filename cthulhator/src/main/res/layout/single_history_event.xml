@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <TextView
+        android:id="@android:id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:paddingBottom="@dimen/padding_4"
+        android:paddingLeft="@dimen/padding_16"
+        android:paddingRight="@dimen/padding_16"
+        android:paddingTop="@dimen/padding_16"
+        android:textAllCaps="true"
+        android:textColor="@color/black_87"
+        android:textSize="@dimen/font_16"
+        android:textStyle="bold"
+        tools:text="@string/placeholder_event"/>
+
+    <TextView
+        android:id="@id/short_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@android:id/title"
+        android:ellipsize="end"
+        android:maxLength="@integer/twit_length"
+        android:paddingBottom="@dimen/padding_4"
+        android:paddingLeft="@dimen/padding_16"
+        android:paddingRight="@dimen/padding_16"
+        android:textColor="@color/black_54"
+        android:textSize="@dimen/font_14"
+        tools:text="@string/placeholder_event_short"/>
+
+    <TextView
+        android:id="@id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/short_info"
+        android:ellipsize="end"
+        android:gravity="center|right"
+        android:maxLength="@integer/twit_length"
+        android:paddingBottom="@dimen/padding_12"
+        android:paddingLeft="@dimen/padding_16"
+        android:paddingRight="@dimen/padding_16"
+        android:textColor="@color/black_54"
+        android:textSize="@dimen/font_12"
+        android:textStyle="italic"
+        tools:text="@string/placeholder_date"/>
+
+</RelativeLayout>

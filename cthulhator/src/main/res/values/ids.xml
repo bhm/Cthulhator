@@ -96,4 +96,5 @@
     <item name="skill_editor_frame" type="id"/>
     <item name="done" type="id"/>
     <item name="card" type="id"/>
+    <item name="date" type="id"/>
 </resources>
