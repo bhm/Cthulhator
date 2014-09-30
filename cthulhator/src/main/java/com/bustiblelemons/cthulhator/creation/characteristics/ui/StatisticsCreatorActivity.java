@@ -71,6 +71,7 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         }
     }
 
+
     @OnClick(R.id.assign_skills)
     public void onOpenSkillsetEditor(View button) {
         attachSkillEditor();

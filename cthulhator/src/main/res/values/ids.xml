@@ -102,4 +102,5 @@
     <item name="pick_birth" type="id"/>
     <item name="fab_pivot" type="id"/>
     <item name="list" type="id"/>
+    <item name="editor" type="id"/>
 </resources>
