@@ -32,7 +32,7 @@ public class CharactersListActivity extends AbsActionBarActivity
                    LoadMoreListView.OnLoadMoreListener,
                    SearchView.OnQueryTextListener {
 
-    @InjectView(android.R.id.list)
+    @InjectView(R.id.list)
     LoadMoreListView listView;
     @InjectView(R.id.add_character)
     CircleButton     addFab;
@@ -41,13 +41,11 @@ public class CharactersListActivity extends AbsActionBarActivity
 
     private SavedCharactersAdapter listAdapter;
     private Grouping               grouping;
-    private FadingActionBarHelper  fadingbarHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fadingbarHelper = setupFadingBar();
-        setContentView(R.layout.activity_characters_list);
+        setContentView(setupFadingBar().createView(this));
         ButterKnife.inject(this);
         if (listView != null) {
             listView.setOnLoadMoreListener(this);
@@ -77,7 +75,8 @@ public class CharactersListActivity extends AbsActionBarActivity
                 .headerLayout(R.layout.header_characters_list)
                 .headerOverlayLayout(R.layout.header_characters_list_overlay)
                 .contentLayout(R.layout.activity_characters_list)
-                .lightActionBar(true);
+                .parallax(false)
+                .lightActionBar(false);
         return helper;
     }
 

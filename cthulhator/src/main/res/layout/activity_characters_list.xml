@@ -2,33 +2,9 @@
 
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <RelativeLayout
-        android:id="@id/header"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/twice_actionbar_height"
-        android:background="@color/main_background">
-    </RelativeLayout>
-
-    <TextView
-        android:id="@id/proverb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/header"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@id/add_character"
-        android:paddingBottom="@dimen/padding_16"
-        android:paddingLeft="@dimen/padding_16"
-        android:paddingRight="@dimen/padding_16"
-        android:paddingTop="@dimen/padding_16"
-        android:text="@string/placeholder_proverb"
-        android:textColor="@color/grey_white_1000"
-        android:textSize="@dimen/font_20"
-        android:textStyle="bold"/>
 
     <ProgressBar
         android:id="@android:id/progress"
@@ -37,26 +13,12 @@
         android:layout_centerInParent="true"
         android:visibility="visible"/>
 
-
     <com.bustiblelemons.views.LoadMoreListView
-        android:id="@android:id/list"
+        android:id="@id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/header"
         android:layout_marginTop="@dimen/padding_20"
         android:visibility="invisible"
         tools:listitem="@layout/single_saved_character"
         tools:visibility="visible"/>
-
-    <at.markushi.ui.CircleButton
-        android:id="@id/add_character"
-        android:layout_width="@dimen/fab"
-        android:layout_height="@dimen/fab"
-        android:layout_alignBottom="@id/header"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="@dimen/fab_offset"
-        android:layout_marginRight="@dimen/padding_16"
-        android:src="@drawable/add_new_selector"
-        app:cb_color="@color/fab_done"/>
-
 </RelativeLayout>
