@@ -104,24 +104,6 @@ public class Relation implements Parcelable, Serializable {
         return this;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) { return true; }
-        if (o == null || getClass() != o.getClass()) { return false; }
-
-        Relation relation = (Relation) o;
-
-        if (propertyName != null ? !propertyName.equals(
-                relation.propertyName) : relation.propertyName != null) { return false; }
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return propertyName != null ? propertyName.hashCode() : 0;
-    }
-
     @JsonIgnore
     public int getBaseValueByRelation(int relatedPropertyValue) {
         switch (modifierType) {
@@ -155,4 +137,6 @@ public class Relation implements Parcelable, Serializable {
         dest.writeByte(modifiesMaximum ? (byte) 1 : (byte) 0);
         dest.writeByte(modifiesMinimum ? (byte) 1 : (byte) 0);
     }
+
+
 }

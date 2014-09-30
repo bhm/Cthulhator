@@ -98,4 +98,8 @@
     <item name="card" type="id"/>
     <item name="date" type="id"/>
     <item name="add" type="id"/>
+    <item name="tag_date" type="id"/>
+    <item name="pick_birth" type="id"/>
+    <item name="fab_pivot" type="id"/>
+    <item name="list" type="id"/>
 </resources>

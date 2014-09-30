@@ -18,11 +18,11 @@ import java.util.Locale;
 public class CharacterSettingsImpl implements CharacterSettings {
     private static final LruCache<Integer, CharacterSettingsImpl> cache =
             new LruCache<Integer, CharacterSettingsImpl>(3);
-    private static CharacterSettings  sDefaults;
-    private        boolean            modern;
-    private        int                year;
-    private        GoogleSearchGender googleSearchGender;
+    private static CharacterSettings sDefaults;
     private CthulhuPeriod cthulhuPeriod = CthulhuPeriod.JAZZAGE;
+    private boolean            modern;
+    private int                year;
+    private GoogleSearchGender googleSearchGender;
 
     public CharacterSettingsImpl() {
         this.year = CthulhuPeriod.JAZZAGE.getDefaultYear();
@@ -82,6 +82,9 @@ public class CharacterSettingsImpl implements CharacterSettings {
     }
 
     public void setCthulhuPeriod(CthulhuPeriod cthulhuPeriod) {
+        if (cthulhuPeriod == null) {
+            this.cthulhuPeriod = CthulhuPeriod.JAZZAGE;
+        }
         this.cthulhuPeriod = cthulhuPeriod;
     }
 

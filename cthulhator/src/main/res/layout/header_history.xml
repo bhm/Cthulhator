@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@id/header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/twice_actionbar_height"
+        android:background="@color/main_background">
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@id/fab_pivot"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fab_pivot"
+        android:layout_below="@id/header"
+        tools:background="@color/orange_100">
+    </FrameLayout>
+
+</RelativeLayout>

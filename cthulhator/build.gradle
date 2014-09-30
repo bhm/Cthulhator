@@ -63,4 +63,8 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind:2.1.4'
     compile 'joda-time:joda-time:2.2'
     compile 'se.emilsjolander:stickylistheaders:2.5.1'
+
+    compile("com.doomonafireball.betterpickers:library:1.5.2") {
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
 }

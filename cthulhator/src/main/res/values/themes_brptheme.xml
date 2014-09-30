@@ -57,6 +57,6 @@
     </style>
 
     <dimen name="actionbar_height">56dp</dimen>
-    <dimen name="twice_actionbar_height">112dp</dimen>
+    <dimen name="twice_actionbar_height">128dp</dimen>
     <dimen name="actionbar_statistics_creator">70dp</dimen>
 </resources>

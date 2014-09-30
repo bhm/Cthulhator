@@ -189,4 +189,40 @@ public class HistoryEvent implements Serializable, Parcelable, Comparable<Histor
         }
         return 0;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; }
+        if (o == null || getClass() != o.getClass()) { return false; }
+
+        HistoryEvent that = (HistoryEvent) o;
+
+        if (date != that.date) { return false; }
+        if (affected != null ? !affected.equals(that.affected) : that.affected != null) {
+            return false;
+        }
+        if (description != null ? !description.equals(
+                that.description) : that.description != null) {
+            return false;
+        }
+        if (formatedDate != null ? !formatedDate.equals(
+                that.formatedDate) : that.formatedDate != null) { return false; }
+        if (location != null ? !location.equals(that.location) : that.location != null) {
+            return false;
+        }
+        if (name != null ? !name.equals(that.name) : that.name != null) { return false; }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (int) (date ^ (date >>> 32));
+        result = 31 * result + (location != null ? location.hashCode() : 0);
+        result = 31 * result + (affected != null ? affected.hashCode() : 0);
+        result = 31 * result + (formatedDate != null ? formatedDate.hashCode() : 0);
+        return result;
+    }
 }

@@ -91,5 +91,6 @@
     <string name="event_title_hint">Title</string>
     <string name="add_history_event">ADD</string>
     <string name="cancel">Cancel</string>
+    <string name="born">Born</string>
 
 </resources>
