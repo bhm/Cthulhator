@@ -45,6 +45,7 @@ public class CharactersListActivity extends AbsActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        onSetActionBarToClosable();
         setContentView(setupFadingBar().createView(this));
         ButterKnife.inject(this);
         if (listView != null) {
