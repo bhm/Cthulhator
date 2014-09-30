@@ -85,4 +85,32 @@ public class Location implements LocationInfo, Parcelable, Serializable {
         dest.writeString(this.street);
         dest.writeString(this.zip);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; }
+        if (o == null || getClass() != o.getClass()) { return false; }
+
+        Location location = (Location) o;
+
+        if (city != null ? !city.equals(location.city) : location.city != null) { return false; }
+        if (state != null ? !state.equals(location.state) : location.state != null) {
+            return false;
+        }
+        if (street != null ? !street.equals(location.street) : location.street != null) {
+            return false;
+        }
+        if (zip != null ? !zip.equals(location.zip) : location.zip != null) { return false; }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = city != null ? city.hashCode() : 0;
+        result = 31 * result + (state != null ? state.hashCode() : 0);
+        result = 31 * result + (street != null ? street.hashCode() : 0);
+        result = 31 * result + (zip != null ? zip.hashCode() : 0);
+        return result;
+    }
 }
