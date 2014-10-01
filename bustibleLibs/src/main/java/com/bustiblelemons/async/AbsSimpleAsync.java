@@ -20,7 +20,10 @@ public abstract class AbsSimpleAsync<P, R extends Object> extends AsyncTask<P, P
 
     protected abstract boolean onException(Exception e);
 
-    protected abstract boolean onSuccess(R result);
+    protected boolean onSuccess(R result) {
+        return false;
+    }
+
 
     public Context getContext() {
         return context;
