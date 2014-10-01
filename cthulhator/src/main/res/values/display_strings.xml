@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="actiongroup_combat">Combat</string>
+    <string name="actiongroup_investigation">Investigation</string>
+    <string name="actiongroup_social">Social</string>
+    <string name="actiongroup_magic">Magic</string>
+    <string name="actiongroup_other">Other</string>
+</resources>

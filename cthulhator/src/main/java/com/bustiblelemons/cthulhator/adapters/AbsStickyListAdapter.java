@@ -8,8 +8,6 @@ import com.bustiblelemons.adapters.AbsListAdapter;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.holders.impl.ViewHolder;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
@@ -17,11 +15,9 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 /**
  * Created by bhm on 29.09.14.
  */
-public abstract class AbsStickyListAdapter<T, H extends ViewHolder<T>,
-        S, SH extends ViewHolder<S>>
+public abstract class AbsStickyListAdapter<T, H extends ViewHolder<T>, SH extends ViewHolder<T>>
         extends AbsListAdapter<T, H>
         implements StickyListHeadersAdapter {
-    private List<S> mHeaders;
 
     public AbsStickyListAdapter(Context context) {
         super(context);
@@ -34,46 +30,22 @@ public abstract class AbsStickyListAdapter<T, H extends ViewHolder<T>,
     protected abstract SH getHeaderViewHolder(int position);
 
     @Override
-    public View getHeaderView(int position, View view, ViewGroup viewGroup) {
-        ViewHolder<S> holder;
-        if (view == null) {
+    public View getHeaderView(int position, View convertView, ViewGroup viewGroup) {
+        ViewHolder<T> holder;
+        if (convertView == null) {
             holder = getHeaderViewHolder(position);
-            view = getInflater().inflate(holder.getLayoutId(position), viewGroup, false);
-
+            convertView = getInflater().inflate(holder.getLayoutId(position), viewGroup, false);
+            holder.create(convertView);
+            convertView.setTag(R.id.tag_holder, holder);
         } else {
-            holder = (ViewHolder<S>) view.getTag(R.id.tag_holder);
+            holder = (ViewHolder<T>) convertView.getTag(R.id.tag_holder);
         }
-        holder.bindValues(getHeaderItem(position), position);
-        return view;
-    }
-
-    private S getHeaderItem(int location) {
-        if (mHeaders != null) {
-            mHeaders.get(location);
-        }
-        return null;
+        holder.bindValues(getItem(position), position);
+        return convertView;
     }
 
     @Override
     public long getHeaderId(int i) {
         return i;
-    }
-
-    public void addData(S header, Collection<T> data) {
-        addHeader(header);
-        addItems(data);
-    }
-
-    private void addHeader(S header) {
-        if (mHeaders == null) {
-            mHeaders = new ArrayList<S>();
-        }
-        mHeaders.add(header);
-    }
-
-    @Override
-    public void removeAll() {
-        mHeaders.clear();
-        super.removeAll();
     }
 }

@@ -122,7 +122,7 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
             } else {
                 mHistoryAdapter.removeAll();
             }
-            mHistoryAdapter.addData(header, events);
+            mHistoryAdapter.addItems(events);
         }
     }
 

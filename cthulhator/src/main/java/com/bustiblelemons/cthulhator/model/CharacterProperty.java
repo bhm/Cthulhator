@@ -74,8 +74,12 @@ public class CharacterProperty implements Serializable, Comparable<CharacterProp
         return actionGroup;
     }
 
-    public void setActionGroup(List<ActionGroup> actionGroup) {
-        this.actionGroup = actionGroup;
+    public void setActionGroup(Collection<ActionGroup> collection) {
+        if (collection == null) {
+            this.actionGroup = new ArrayList<ActionGroup>();
+        } else {
+            this.actionGroup = new ArrayList<ActionGroup>(collection);
+        }
     }
 
     public Set<Relation> getRelations() {

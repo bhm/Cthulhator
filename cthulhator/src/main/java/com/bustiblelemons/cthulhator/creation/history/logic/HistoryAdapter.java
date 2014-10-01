@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.bustiblelemons.cthulhator.adapters.AbsStickyListAdapter;
-import com.bustiblelemons.cthulhator.creation.history.model.HistoryEventHeader;
 import com.bustiblelemons.cthulhator.creation.history.ui.HistoryEventHeaderHolder;
 import com.bustiblelemons.cthulhator.model.HistoryEvent;
 import com.bustiblelemons.holders.impl.AbsViewHolder;
@@ -14,7 +13,7 @@ import com.bustiblelemons.holders.impl.AbsViewHolder;
  * Created by bhm on 29.09.14.
  */
 public class HistoryAdapter extends AbsStickyListAdapter<HistoryEvent, AbsViewHolder<HistoryEvent>,
-        HistoryEventHeader, AbsViewHolder<HistoryEventHeader>>
+        AbsViewHolder<HistoryEvent>>
         implements AdapterView.OnItemClickListener {
     private final OnOpenHistoryEventDetails openHistoryEventDetails;
 
@@ -37,7 +36,7 @@ public class HistoryAdapter extends AbsStickyListAdapter<HistoryEvent, AbsViewHo
     }
 
     @Override
-    protected AbsViewHolder<HistoryEventHeader> getHeaderViewHolder(int position) {
+    protected AbsViewHolder<HistoryEvent> getHeaderViewHolder(int position) {
         return new HistoryEventHeaderHolder(getContext());
     }
 }

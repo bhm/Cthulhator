@@ -1,15 +1,15 @@
 package com.bustiblelemons.cthulhator.creation.characteristics.ui;
 
 import android.os.Bundle;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.adapters.SkillChanged;
-import com.bustiblelemons.cthulhator.adapters.SkillsAdapter;
 import com.bustiblelemons.cthulhator.creation.characteristics.logic.CharacterPropertyComparators;
 import com.bustiblelemons.cthulhator.creation.characteristics.logic.CharacterPropertySortAsyn;
+import com.bustiblelemons.cthulhator.creation.characteristics.logic.SkillsAdapterSticky;
 import com.bustiblelemons.cthulhator.creation.ui.AbsCharacterCreationActivity;
+import com.bustiblelemons.cthulhator.model.ActionGroup;
 import com.bustiblelemons.cthulhator.model.CharacterProperty;
 import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
 
@@ -19,6 +19,7 @@ import java.util.Set;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 /**
  * Created by bhm on 31.08.14.
@@ -30,13 +31,14 @@ public class SkillsChooserActivity extends AbsCharacterCreationActivity
     public static final int    REQUEST_CODE = 6;
 
     @InjectView(android.R.id.list)
-    ListView listView;
+    StickyListHeadersListView listView;
     @InjectView(R.id.points_available)
-    TextView pointsAvailable;
-    private SkillsAdapter mSkillsAdapter;
-    private int            total;
-    private String         pointsAvailablePrefix;
-    private SavedCharacter mSavedCharacter;
+    TextView                  pointsAvailable;
+    //    private SkillsAdapter       mSkillsAdapter;
+    private SkillsAdapterSticky mSkillsAdapterSticky;
+    private int                 total;
+    private String              pointsAvailablePrefix;
+    private SavedCharacter      mSavedCharacter;
     private int mCareerPoints = 0;
     private int mHobbyPoints  = 0;
     private Set<CharacterProperty> mSkills;
@@ -73,8 +75,8 @@ public class SkillsChooserActivity extends AbsCharacterCreationActivity
         mSkills = mSavedCharacter.getSkills();
         CharacterPropertySortAsyn sortAsyn = new CharacterPropertySortAsyn(this, this, mSkills);
         sortAsyn.executeCrossPlatform(mComparator);
-        mSkillsAdapter = new SkillsAdapter(this, this);
-        listView.setAdapter(mSkillsAdapter);
+        mSkillsAdapterSticky = new SkillsAdapterSticky(this, this);
+        listView.setAdapter(mSkillsAdapterSticky);
         listView.setClickable(false);
     }
 
@@ -104,8 +106,18 @@ public class SkillsChooserActivity extends AbsCharacterCreationActivity
     public void onCharacterPropertiesSorted(Comparator<CharacterProperty> comparator,
                                             Set<CharacterProperty> sortedSet) {
 
-        if (mSkillsAdapter != null) {
-            mSkillsAdapter.refreshData(sortedSet);
+        if (mSkillsAdapterSticky != null) {
+            mSkillsAdapterSticky.refreshData(sortedSet);
+        }
+    }
+
+    @Override
+    public void onCharacterPropertiesSortedByGroup(Comparator<CharacterProperty> comparator,
+                                                   ActionGroup header,
+                                                   Set<CharacterProperty> sortedSet) {
+        if (mSkillsAdapterSticky != null) {
+            mSkillsAdapterSticky.removeAll();
+            mSkillsAdapterSticky.addItems(sortedSet);
         }
     }
 }

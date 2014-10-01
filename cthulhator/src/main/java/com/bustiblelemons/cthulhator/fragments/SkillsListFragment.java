@@ -4,14 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.adapters.SkillChanged;
-import com.bustiblelemons.cthulhator.adapters.SkillsAdapter;
 import com.bustiblelemons.cthulhator.creation.characteristics.logic.CharacterPropertyComparators;
 import com.bustiblelemons.cthulhator.creation.characteristics.logic.CharacterPropertySortAsyn;
+import com.bustiblelemons.cthulhator.creation.characteristics.logic.SkillsAdapterSticky;
+import com.bustiblelemons.cthulhator.model.ActionGroup;
 import com.bustiblelemons.cthulhator.model.CharacterProperty;
 import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
 
@@ -21,6 +21,7 @@ import java.util.Set;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 /**
  * Created by bhm on 20.07.14.
@@ -30,13 +31,14 @@ public class SkillsListFragment extends AbsArgFragment<SavedCharacter>
 
     public static final String TAG = SkillsListFragment.class.getSimpleName();
     @InjectView(android.R.id.list)
-    ListView listView;
+    StickyListHeadersListView listView;
     @InjectView(R.id.points_available)
-    TextView pointsAvailable;
-    private SkillsAdapter  mSkillsAdapter;
-    private int            total;
-    private String         pointsAvailablePrefix;
-    private SavedCharacter mSavedCharacter;
+    TextView                  pointsAvailable;
+    //    private SkillsAdapter       mSkillsAdapter;
+    private SkillsAdapterSticky mSkillsAdapterSticky;
+    private int                 total;
+    private String              pointsAvailablePrefix;
+    private SavedCharacter      mSavedCharacter;
     private int mCareerPoints = 0;
     private int mHobbyPoints  = 0;
     private Set<CharacterProperty> mSkills;
@@ -78,8 +80,8 @@ public class SkillsListFragment extends AbsArgFragment<SavedCharacter>
         CharacterPropertySortAsyn sortAsyn = new CharacterPropertySortAsyn(getContext(), this,
                 mSkills);
         sortAsyn.executeCrossPlatform(mComparator);
-        mSkillsAdapter = new SkillsAdapter(getContext(), this);
-        listView.setAdapter(mSkillsAdapter);
+        mSkillsAdapterSticky = new SkillsAdapterSticky(getContext(), this);
+        listView.setAdapter(mSkillsAdapterSticky);
         listView.setClickable(false);
     }
 
@@ -97,8 +99,17 @@ public class SkillsListFragment extends AbsArgFragment<SavedCharacter>
     public void onCharacterPropertiesSorted(Comparator<CharacterProperty> comparator,
                                             Set<CharacterProperty> sortedSet) {
 
-        if (mSkillsAdapter != null) {
-            mSkillsAdapter.refreshData(sortedSet);
+        if (mSkillsAdapterSticky != null) {
+            mSkillsAdapterSticky.refreshData(sortedSet);
+        }
+    }
+
+    @Override
+    public void onCharacterPropertiesSortedByGroup(Comparator<CharacterProperty> comparator,
+                                                   ActionGroup header,
+                                                   Set<CharacterProperty> sortedSet) {
+        if (mSkillsAdapterSticky != null) {
+            mSkillsAdapterSticky.addItems(sortedSet);
         }
     }
 }
