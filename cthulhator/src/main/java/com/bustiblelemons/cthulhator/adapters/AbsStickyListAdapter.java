@@ -43,9 +43,4 @@ public abstract class AbsStickyListAdapter<T, H extends ViewHolder<T>, SH extend
         holder.bindValues(getItem(position), position);
         return convertView;
     }
-
-    @Override
-    public long getHeaderId(int i) {
-        return i;
-    }
 }

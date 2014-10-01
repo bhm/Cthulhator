@@ -39,4 +39,9 @@ public class HistoryAdapter extends AbsStickyListAdapter<HistoryEvent, AbsViewHo
     protected AbsViewHolder<HistoryEvent> getHeaderViewHolder(int position) {
         return new HistoryEventHeaderHolder(getContext());
     }
+
+    @Override
+    public long getHeaderId(int i) {
+        return 0;
+    }
 }

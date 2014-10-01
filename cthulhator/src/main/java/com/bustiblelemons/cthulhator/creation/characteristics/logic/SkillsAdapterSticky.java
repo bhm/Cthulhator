@@ -6,6 +6,7 @@ import com.bustiblelemons.cthulhator.adapters.AbsStickyListAdapter;
 import com.bustiblelemons.cthulhator.adapters.SkillChanged;
 import com.bustiblelemons.cthulhator.creation.characteristics.model.SkillsHeaderHolder;
 import com.bustiblelemons.cthulhator.holders.SkillViewHolder;
+import com.bustiblelemons.cthulhator.model.ActionGroup;
 import com.bustiblelemons.cthulhator.model.CharacterProperty;
 import com.bustiblelemons.holders.impl.ViewHolder;
 
@@ -29,5 +30,17 @@ public class SkillsAdapterSticky extends AbsStickyListAdapter<
     @Override
     protected ViewHolder<CharacterProperty> getHeaderViewHolder(int position) {
         return new SkillsHeaderHolder(getContext());
+    }
+
+
+    @Override
+    public long getHeaderId(int position) {
+        CharacterProperty item = getItem(position);
+        if (item == null) {
+            return position;
+        } else {
+            ActionGroup g = item.getMainActionGroup();
+            return g.hashCode();
+        }
     }
 }

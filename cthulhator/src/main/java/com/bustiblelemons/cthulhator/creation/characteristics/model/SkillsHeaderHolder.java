@@ -17,7 +17,7 @@ public class SkillsHeaderHolder extends AbsViewHolder<CharacterProperty> {
     @Override
     public void bindValues(CharacterProperty item, int position) {
         if (item != null) {
-            setTitle(item.getName());
+            setTitle(item.getMainActionGroup().name());
         }
     }
 

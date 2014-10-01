@@ -44,7 +44,9 @@ public class CharacterProperty implements Serializable, Comparable<CharacterProp
     @JsonIgnore
     private int nameResId = -1;
     @JsonIgnore
-    private int shortNameResId;
+    private int         shortNameResId;
+    @JsonIgnore
+    private ActionGroup mMainActionGroup;
 
     public CharacterProperty() {
     }
@@ -286,5 +288,17 @@ public class CharacterProperty implements Serializable, Comparable<CharacterProp
         dest.writeTypedArray(rel, flags);
         dest.writeInt(this.nameResId);
         dest.writeInt(this.shortNameResId);
+    }
+
+    public ActionGroup getMainActionGroup() {
+        if (mMainActionGroup == null) {
+            List<ActionGroup> groups = getActionGroup();
+            if (groups != null && groups.size() > 0) {
+                mMainActionGroup = groups.get(0);
+            } else {
+                mMainActionGroup = ActionGroup.OTHER;
+            }
+        }
+        return mMainActionGroup;
     }
 }
