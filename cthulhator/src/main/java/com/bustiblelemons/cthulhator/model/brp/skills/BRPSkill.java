@@ -65,7 +65,20 @@ public enum BRPSkill {
         public int getBaseValue(CthulhuEdition edition) {
             return 5;
         }
-    }, Bargain {
+    },
+    Astronomy {
+        private List<ActionGroup> mActionGroups;
+
+        @Override
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.INVESTIGATION);
+            }
+            return mActionGroups;
+        }
+    },
+    Bargain {
         private List<ActionGroup> mActionGroups;
 
         @Override
@@ -82,19 +95,6 @@ public enum BRPSkill {
             return 5;
         }
     },
-    Astronomy {
-        private List<ActionGroup> mActionGroups;
-
-        @Override
-        public List<ActionGroup> getActionGroups() {
-            if (mActionGroups == null) {
-                mActionGroups = new ArrayList<ActionGroup>();
-                mActionGroups.add(ActionGroup.INVESTIGATION);
-            }
-            return mActionGroups;
-        }
-    },
-
     Biology {
         private List<ActionGroup> mActionGroups;
 
