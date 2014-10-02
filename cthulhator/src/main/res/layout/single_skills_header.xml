@@ -9,6 +9,7 @@
         android:id="@android:id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/grey_white_1000"
         android:paddingBottom="@dimen/padding_12"
         android:paddingLeft="@dimen/padding_16"
         android:paddingRight="@dimen/padding_16"
