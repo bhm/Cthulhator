@@ -52,7 +52,7 @@ public enum CharacterPropertyComparators implements Comparator<CharacterProperty
                     return 0;
                 } else {
                     int byGroup = lGroup.compareTo(rGroup);
-                    return byGroup;
+                    return byGroup == 0 ? ALPHABETICAL.compare(lhs, rhs) : byGroup;
                 }
             } else {
                 return super.compare(lhs, rhs);
