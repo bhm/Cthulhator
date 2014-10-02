@@ -36,12 +36,10 @@ public class SkillsChooserActivity extends AbsCharacterCreationActivity
     @InjectView(R.id.points_available)
     TextView                  pointsAvailable;
     //    private SkillsAdapter       mSkillsAdapter;
-    private SkillsAdapterSticky mSkillsAdapterSticky;
-    private int                 total;
-    private String              pointsAvailablePrefix;
-    private SavedCharacter      mSavedCharacter;
-    private int mCareerPoints = 0;
-    private int mHobbyPoints  = 0;
+    private SkillsAdapterSticky    mSkillsAdapterSticky;
+    private int                    total;
+    private String                 pointsAvailablePrefix;
+    private SavedCharacter         mSavedCharacter;
     private Set<CharacterProperty> mSkills;
     private Comparator<CharacterProperty> mComparator = CharacterPropertyComparators.VALUE;
 
@@ -53,7 +51,6 @@ public class SkillsChooserActivity extends AbsCharacterCreationActivity
         ButterKnife.inject(this);
         mSavedCharacter = getInstanceArgument();
         setupSkillsList();
-        setupPoints();
     }
 
     @Override
@@ -61,10 +58,6 @@ public class SkillsChooserActivity extends AbsCharacterCreationActivity
         mSavedCharacter = arg;
     }
 
-    private void setupPoints() {
-        mCareerPoints = mSavedCharacter.getCareerPoints();
-        mHobbyPoints = mSavedCharacter.getHobbyPoints();
-    }
 
     private void setPointsAvailable(int points) {
         pointsAvailablePrefix = getString(R.string.points_available);
