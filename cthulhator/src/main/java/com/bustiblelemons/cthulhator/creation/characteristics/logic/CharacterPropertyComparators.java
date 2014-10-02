@@ -58,6 +58,27 @@ public enum CharacterPropertyComparators implements Comparator<CharacterProperty
                 return super.compare(lhs, rhs);
             }
         }
+    }, ACTION_BY_VALUE {
+        @Override
+        public int compare(CharacterProperty lhs, CharacterProperty rhs) {
+            if (lhs != null && rhs != null) {
+                ActionGroup lGroup = lhs.getMainActionGroup();
+                ActionGroup rGroup = rhs.getMainActionGroup();
+                if (lGroup != null && rGroup == null) {
+                    return 1;
+                } else if (lGroup == null && rGroup != null) {
+                    return -1;
+                } else if (lGroup == null && rGroup == null) {
+                    return 0;
+                } else {
+                    int byGroup = lGroup.compareTo(rGroup);
+                    return byGroup == 0 ? VALUE.compare(lhs, rhs) : byGroup;
+                }
+            } else {
+                return super.compare(lhs, rhs);
+            }
+        }
+
     };
 
     @Override
