@@ -62,7 +62,7 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
             mSavedCharacter = CthulhuCharacter.forEdition(CthulhuEdition.CoC5);
             characterProperties = mSavedCharacter.getProperties();
             onReroll(rerollButton);
-        } else if (mSavedCharacter != null && mSavedCharacter.getProperties().isEmpty()) {
+        } else if (mSavedCharacter != null && !mSavedCharacter.hasAssignedStatistics()) {
             characterProperties = mSavedCharacter.getProperties();
             onReroll(rerollButton);
         } else {
@@ -98,41 +98,6 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         distributePoints();
     }
 
-
-    private void fillPropertyViews() {
-        if (characteristicsViewList == null) {
-            return;
-        }
-        int points = 0;
-        for (SkillView view : characteristicsViewList) {
-            if (view != null && view.getTag() != null) {
-                String tag = (String) view.getTag();
-                CharacterProperty property = getProperty(tag);
-                int id = view.getId();
-                if (property != null) {
-                    idsToProperty.put(id, property);
-                    view.setSkillViewListener(this);
-                    view.setMinValue(property.getMinValue());
-                    view.setMaxValue(property.getMaxValue());
-                    int randValue = property.getValue();
-                    points += randValue;
-                    view.setIntValue(randValue);
-                    if (property.hasRelations()) {
-                        CharacterPropertyAdapter adapter;
-                        if (idsToAdapters.get(id) != null) {
-                            adapter = idsToAdapters.get(id);
-                        } else {
-                            adapter = new CharacterPropertyAdapter(this);
-                            idsToAdapters.put(id, adapter);
-                        }
-                        adapter.refreshData(mSavedCharacter.getRelatedProperties(property));
-                        view.setAdapter(adapter);
-                    }
-                }
-            }
-        }
-    }
-
     private void distributePoints() {
         if (characteristicsViewList == null) {
             return;
@@ -162,6 +127,40 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
                         adapter.refreshData(mSavedCharacter.getRelatedProperties(property));
                         view.setAdapter(adapter);
                         idsToAdapters.put(id, adapter);
+                    }
+                }
+            }
+        }
+    }
+
+    private void fillPropertyViews() {
+        if (characteristicsViewList == null) {
+            return;
+        }
+        int points = 0;
+        for (SkillView view : characteristicsViewList) {
+            if (view != null && view.getTag() != null) {
+                String tag = (String) view.getTag();
+                CharacterProperty property = getProperty(tag);
+                int id = view.getId();
+                if (property != null) {
+                    idsToProperty.put(id, property);
+                    view.setSkillViewListener(this);
+                    view.setMinValue(property.getMinValue());
+                    view.setMaxValue(property.getMaxValue());
+                    int randValue = property.getValue();
+                    points += randValue;
+                    view.setIntValue(randValue);
+                    if (property.hasRelations()) {
+                        CharacterPropertyAdapter adapter;
+                        if (idsToAdapters.get(id) != null) {
+                            adapter = idsToAdapters.get(id);
+                        } else {
+                            adapter = new CharacterPropertyAdapter(this);
+                            idsToAdapters.put(id, adapter);
+                        }
+                        adapter.refreshData(mSavedCharacter.getRelatedProperties(property));
+                        view.setAdapter(adapter);
                     }
                 }
             }
