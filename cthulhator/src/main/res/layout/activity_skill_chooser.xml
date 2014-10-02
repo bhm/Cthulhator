@@ -44,6 +44,13 @@
             android:textStyle="italic"/>
     </RelativeLayout>
 
+    <se.emilsjolander.stickylistheaders.StickyListHeadersListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header"
+        android:paddingTop="@dimen/padding_20"/>
+
     <at.markushi.ui.CircleButton
         android:id="@id/assign_skills"
         android:layout_width="@dimen/fab"
@@ -56,12 +63,4 @@
         android:layout_marginTop="@dimen/fab_offset"
         android:src="@drawable/ic_navigation_accept"
         app:cb_color="@color/fab_done"/>
-
-    <se.emilsjolander.stickylistheaders.StickyListHeadersListView
-        android:id="@android:id/list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/header"
-        android:paddingTop="@dimen/padding_20"/>
-
 </RelativeLayout>
