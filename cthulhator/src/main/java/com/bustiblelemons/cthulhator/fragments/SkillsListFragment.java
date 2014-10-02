@@ -43,7 +43,7 @@ public class SkillsListFragment extends AbsArgFragment<SavedCharacter>
     private int mCareerPoints = 0;
     private int mHobbyPoints  = 0;
     private Set<CharacterProperty> mSkills;
-    private Comparator<CharacterProperty> mComparator = CharacterPropertyComparators.ALPHABETICAL;
+    private Comparator<CharacterProperty> mComparator = CharacterPropertyComparators.ACTION_GROUP;
 
     public static SkillsListFragment newInstance(SavedCharacter arg) {
         SkillsListFragment r = new SkillsListFragment();
