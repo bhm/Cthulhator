@@ -38,7 +38,7 @@ import java.util.TreeSet;
 public class SavedCharacter implements Parcelable, Serializable {
 
     @JsonIgnore
-    public static final Parcelable.Creator<SavedCharacter> CREATOR     = new Parcelable.Creator<SavedCharacter>() {
+    public static final Parcelable.Creator<SavedCharacter>                  CREATOR                   = new Parcelable.Creator<SavedCharacter>() {
         public SavedCharacter createFromParcel(Parcel source) {
             return new SavedCharacter(source);
         }
@@ -48,19 +48,19 @@ public class SavedCharacter implements Parcelable, Serializable {
         }
     };
     @JsonIgnore
-    private static LruCache<CharacterProperty, List<Possesion>>        cachedAffectedPossessions =
+    private static      LruCache<CharacterProperty, List<Possesion>>        cachedAffectedPossessions =
             new LruCache<CharacterProperty, List<Possesion>>(20);
     @JsonIgnore
-    private static LruCache<CharacterProperty, Set<CharacterProperty>> propertyToProperty        =
+    private static      LruCache<CharacterProperty, Set<CharacterProperty>> propertyToProperty        =
             new LruCache<CharacterProperty, Set<CharacterProperty>>(BRPStatistic.values().length);
-    protected           Set<CharacterProperty>             properties  = new HashSet<CharacterProperty>();
-    protected           List<Possesion>                    possesions  = new ArrayList<Possesion>();
-    protected           Set<HistoryEvent>                  fullHistory = new HashSet<HistoryEvent>();
+    protected           Set<CharacterProperty>                              properties                = new HashSet<CharacterProperty>();
+    protected           List<Possesion>                                     possesions                = new ArrayList<Possesion>();
+    protected           Set<HistoryEvent>                                   fullHistory               = new HashSet<HistoryEvent>();
     private CthulhuEdition       edition;
     private CharacterDescription description;
     private BirthData            birth;
-    private long presentDate;
-    private int age;
+    private long                 presentDate;
+    private int                  age;
 
     public SavedCharacter() {
     }

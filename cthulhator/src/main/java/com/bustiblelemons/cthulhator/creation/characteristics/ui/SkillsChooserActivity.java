@@ -14,6 +14,7 @@ import com.bustiblelemons.cthulhator.model.CharacterProperty;
 import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -42,7 +43,7 @@ public class SkillsChooserActivity extends AbsCharacterCreationActivity
     private int mCareerPoints = 0;
     private int mHobbyPoints  = 0;
     private Set<CharacterProperty> mSkills;
-    private Comparator<CharacterProperty> mComparator = CharacterPropertyComparators.ALPHABETICAL;
+    private Comparator<CharacterProperty> mComparator = CharacterPropertyComparators.VALUE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +105,7 @@ public class SkillsChooserActivity extends AbsCharacterCreationActivity
 
     @Override
     public void onCharacterPropertiesSorted(Comparator<CharacterProperty> comparator,
-                                            Set<CharacterProperty> sortedSet) {
+                                            List<CharacterProperty> sortedSet) {
 
         if (mSkillsAdapterSticky != null) {
             mSkillsAdapterSticky.refreshData(sortedSet);
@@ -114,7 +115,7 @@ public class SkillsChooserActivity extends AbsCharacterCreationActivity
     @Override
     public void onCharacterPropertiesSortedByGroup(Comparator<CharacterProperty> comparator,
                                                    ActionGroup header,
-                                                   Set<CharacterProperty> sortedSet) {
+                                                   List<CharacterProperty> sortedSet) {
         if (mSkillsAdapterSticky != null) {
             mSkillsAdapterSticky.removeAll();
             mSkillsAdapterSticky.addItems(sortedSet);

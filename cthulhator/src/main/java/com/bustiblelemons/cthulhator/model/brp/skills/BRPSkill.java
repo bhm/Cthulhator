@@ -9,8 +9,10 @@ import com.bustiblelemons.cthulhator.model.PropertyType;
 import com.bustiblelemons.cthulhator.model.Relation;
 import com.bustiblelemons.cthulhator.model.brp.statistics.BRPStatistic;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -23,23 +25,100 @@ public enum BRPSkill {
             return 15;
         }
     },
-    Anthropology,
-    Archaeology,
+    Anthropology {
+        private List<ActionGroup> mActionGroups;
+
+        @Override
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.INVESTIGATION);
+            }
+            return mActionGroups;
+        }
+    },
+    Archaeology {
+        private List<ActionGroup> mActionGroups;
+
+        @Override
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.INVESTIGATION);
+            }
+            return mActionGroups;
+        }
+    },
     Art {
+        private List<ActionGroup> mActionGroups;
+
+        @Override
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.SOCIAL);
+            }
+            return mActionGroups;
+        }
+
         @Override
         public int getBaseValue(CthulhuEdition edition) {
             return 5;
         }
     },
-    Astronomy,
+    Astronomy {
+        private List<ActionGroup> mActionGroups;
+
+        @Override
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.INVESTIGATION);
+            }
+            return mActionGroups;
+        }
+    },
     Bargain {
+        private List<ActionGroup> mActionGroups;
+
+        @Override
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.SOCIAL);
+            }
+            return mActionGroups;
+        }
+
         @Override
         public int getBaseValue(CthulhuEdition edition) {
             return 5;
         }
     },
-    Biology,
-    Chemistry,
+    Biology {
+        private List<ActionGroup> mActionGroups;
+
+        @Override
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.MAGIC);
+            }
+            return mActionGroups;
+        }
+    },
+    Chemistry {
+        private List<ActionGroup> mActionGroups;
+
+        @Override
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.INVESTIGATION);
+            }
+            return mActionGroups;
+        }
+    },
     Climb {
         @Override
         public int getBaseValue(CthulhuEdition edition) {
@@ -58,8 +137,30 @@ public enum BRPSkill {
             return 15;
         }
     },
-    CthulhuMythos,
+    CthulhuMythos {
+        private List<ActionGroup> mActionGroups;
+
+        @Override
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.MAGIC);
+            }
+            return mActionGroups;
+        }
+    },
     Dodge {
+        private List<ActionGroup> mActionGroups;
+
+        @Override
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.COMBAT);
+            }
+            return mActionGroups;
+        }
+
         public Relation dexRelation;
         public Set<Relation> relations;
 
@@ -89,12 +190,34 @@ public enum BRPSkill {
         }
     },
     FastTalk {
+        private List<ActionGroup> mActionGroups;
+
+        @Override
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.SOCIAL);
+            }
+            return mActionGroups;
+        }
+
         @Override
         public int getBaseValue(CthulhuEdition edition) {
             return 5;
         }
     },
     FirstAid {
+        private List<ActionGroup> mActionGroups;
+
+        @Override
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.COMBAT);
+            }
+            return mActionGroups;
+        }
+
         @Override
         public int getBaseValue(CthulhuEdition edition) {
             return 30;
@@ -108,6 +231,17 @@ public enum BRPSkill {
         }
     },
     History {
+        private List<ActionGroup> mActionGroups;
+
+        @Override
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.INVESTIGATION);
+            }
+            return mActionGroups;
+        }
+
         @Override
         public int getBaseValue(CthulhuEdition edition) {
             return 20;
@@ -120,18 +254,51 @@ public enum BRPSkill {
         }
     },
     Law {
+        private List<ActionGroup> mActionGroups;
+
+        @Override
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.INVESTIGATION);
+            }
+            return mActionGroups;
+        }
+
         @Override
         public int getBaseValue(CthulhuEdition edition) {
             return 5;
         }
     },
     LibraryUse {
+        private List<ActionGroup> mActionGroups;
+
+        @Override
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.INVESTIGATION);
+            }
+            return mActionGroups;
+        }
+
         @Override
         public int getBaseValue(CthulhuEdition edition) {
             return 25;
         }
     },
     Listen {
+        private List<ActionGroup> mActionGroups;
+
+        @Override
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.INVESTIGATION);
+            }
+            return mActionGroups;
+        }
+
         @Override
         public int getBaseValue(CthulhuEdition edition) {
             return 25;
@@ -139,12 +306,17 @@ public enum BRPSkill {
     },
     Locksmith,
     MartialArts {
+        private List<ActionGroup> mActionGroups;
+
         @Override
-        public Set<ActionGroup> getActionGroups() {
-            Set<ActionGroup> r = super.getActionGroups();
-            r.add(ActionGroup.COMBAT);
-            return r;
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.COMBAT);
+            }
+            return mActionGroups;
         }
+
     },
     MechanicalRepair {
         @Override
@@ -153,6 +325,17 @@ public enum BRPSkill {
         }
     },
     Medicine {
+        private List<ActionGroup> mActionGroups;
+
+        @Override
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.INVESTIGATION);
+            }
+            return mActionGroups;
+        }
+
         @Override
         public int getBaseValue(CthulhuEdition edition) {
             return 5;
@@ -171,6 +354,17 @@ public enum BRPSkill {
         }
     },
     Occult {
+        private List<ActionGroup> mActionGroups;
+
+        @Override
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.MAGIC);
+            }
+            return mActionGroups;
+        }
+
         @Override
         public int getBaseValue(CthulhuEdition edition) {
             return 5;
@@ -248,12 +442,17 @@ public enum BRPSkill {
     //Weapons
     ,
     Axe {
+        private List<ActionGroup> mActionGroups;
+
         @Override
-        public Set<ActionGroup> getActionGroups() {
-            Set<ActionGroup> r = super.getActionGroups();
-            r.add(ActionGroup.COMBAT);
-            return r;
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.OTHER);
+            }
+            return mActionGroups;
         }
+
 
         @Override
         public int getBaseValue(CthulhuEdition edition) {
@@ -261,11 +460,15 @@ public enum BRPSkill {
         }
     },
     BlackJack {
+        private List<ActionGroup> mActionGroups;
+
         @Override
-        public Set<ActionGroup> getActionGroups() {
-            Set<ActionGroup> r = super.getActionGroups();
-            r.add(ActionGroup.COMBAT);
-            return r;
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.OTHER);
+            }
+            return mActionGroups;
         }
 
         @Override
@@ -274,12 +477,17 @@ public enum BRPSkill {
         }
     },
     Club {
+        private List<ActionGroup> mActionGroups;
+
         @Override
-        public Set<ActionGroup> getActionGroups() {
-            Set<ActionGroup> r = super.getActionGroups();
-            r.add(ActionGroup.COMBAT);
-            return r;
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.OTHER);
+            }
+            return mActionGroups;
         }
+
 
         @Override
         public int getBaseValue(CthulhuEdition edition) {
@@ -287,12 +495,17 @@ public enum BRPSkill {
         }
     },
     Knife {
+        private List<ActionGroup> mActionGroups;
+
         @Override
-        public Set<ActionGroup> getActionGroups() {
-            Set<ActionGroup> r = super.getActionGroups();
-            r.add(ActionGroup.COMBAT);
-            return r;
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.OTHER);
+            }
+            return mActionGroups;
         }
+
 
         @Override
         public int getBaseValue(CthulhuEdition edition) {
@@ -300,12 +513,17 @@ public enum BRPSkill {
         }
     },
     Sabre {
+        private List<ActionGroup> mActionGroups;
+
         @Override
-        public Set<ActionGroup> getActionGroups() {
-            Set<ActionGroup> r = super.getActionGroups();
-            r.add(ActionGroup.COMBAT);
-            return r;
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.OTHER);
+            }
+            return mActionGroups;
         }
+
 
         @Override
         public int getBaseValue(CthulhuEdition edition) {
@@ -313,12 +531,17 @@ public enum BRPSkill {
         }
     },
     Sword {
+        private List<ActionGroup> mActionGroups;
+
         @Override
-        public Set<ActionGroup> getActionGroups() {
-            Set<ActionGroup> r = super.getActionGroups();
-            r.add(ActionGroup.COMBAT);
-            return r;
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.OTHER);
+            }
+            return mActionGroups;
         }
+
 
         @Override
         public int getBaseValue(CthulhuEdition edition) {
@@ -326,12 +549,17 @@ public enum BRPSkill {
         }
     },
     Handgun {
+        private List<ActionGroup> mActionGroups;
+
         @Override
-        public Set<ActionGroup> getActionGroups() {
-            Set<ActionGroup> r = super.getActionGroups();
-            r.add(ActionGroup.COMBAT);
-            return r;
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.OTHER);
+            }
+            return mActionGroups;
         }
+
 
         @Override
         public int getBaseValue(CthulhuEdition edition) {
@@ -339,12 +567,17 @@ public enum BRPSkill {
         }
     },
     MachineGun {
+        private List<ActionGroup> mActionGroups;
+
         @Override
-        public Set<ActionGroup> getActionGroups() {
-            Set<ActionGroup> r = super.getActionGroups();
-            r.add(ActionGroup.COMBAT);
-            return r;
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.OTHER);
+            }
+            return mActionGroups;
         }
+
 
         @Override
         public int getBaseValue(CthulhuEdition edition) {
@@ -352,11 +585,15 @@ public enum BRPSkill {
         }
     },
     Rifle {
+        private List<ActionGroup> mActionGroups;
+
         @Override
-        public Set<ActionGroup> getActionGroups() {
-            Set<ActionGroup> r = super.getActionGroups();
-            r.add(ActionGroup.COMBAT);
-            return r;
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.OTHER);
+            }
+            return mActionGroups;
         }
 
         @Override
@@ -365,11 +602,15 @@ public enum BRPSkill {
         }
     },
     Shotgun {
+        private List<ActionGroup> mActionGroups;
+
         @Override
-        public Set<ActionGroup> getActionGroups() {
-            Set<ActionGroup> r = super.getActionGroups();
-            r.add(ActionGroup.COMBAT);
-            return r;
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.OTHER);
+            }
+            return mActionGroups;
         }
 
         @Override
@@ -378,11 +619,15 @@ public enum BRPSkill {
         }
     },
     SubmachineGun {
+        private List<ActionGroup> mActionGroups;
+
         @Override
-        public Set<ActionGroup> getActionGroups() {
-            Set<ActionGroup> r = super.getActionGroups();
-            r.add(ActionGroup.COMBAT);
-            return r;
+        public List<ActionGroup> getActionGroups() {
+            if (mActionGroups == null) {
+                mActionGroups = new ArrayList<ActionGroup>();
+                mActionGroups.add(ActionGroup.OTHER);
+            }
+            return mActionGroups;
         }
 
         @Override
@@ -396,7 +641,7 @@ public enum BRPSkill {
         editions.add(CthulhuEdition.CoC5);
     }
 
-    private Set<ActionGroup> mActionGroups;
+    private List<ActionGroup> mActionGroups;
 
     public Set<Relation> getRelations() {
         return Collections.emptySet();
@@ -432,9 +677,10 @@ public enum BRPSkill {
         return editions;
     }
 
-    public Set<ActionGroup> getActionGroups() {
+    public List<ActionGroup> getActionGroups() {
         if (mActionGroups == null) {
-            mActionGroups = new HashSet<ActionGroup>();
+            mActionGroups = new ArrayList<ActionGroup>();
+            mActionGroups.add(ActionGroup.OTHER);
         }
         return mActionGroups;
     }

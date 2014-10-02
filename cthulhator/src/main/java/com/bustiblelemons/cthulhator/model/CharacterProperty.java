@@ -19,7 +19,7 @@ import java.util.Set;
  * Created by bhm on 20.07.14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CharacterProperty implements Serializable, Comparable<CharacterProperty>, Parcelable {
+public class CharacterProperty implements Serializable, Parcelable {
 
     @JsonIgnore
     public static final CharacterProperty                     EMPTY   = new CharacterProperty();
@@ -251,18 +251,6 @@ public class CharacterProperty implements Serializable, Comparable<CharacterProp
         return PropertyFormat.PERCENTILE.equals(getFormat());
     }
 
-    @Override
-    public int compareTo(CharacterProperty another) {
-        if (another == null) {
-            return 1;
-        }
-        if (getValue() > another.getValue()) {
-            return 1;
-        } else if (getValue() < another.getValue()) {
-            return -1;
-        }
-        return 0;
-    }
 
     @Override
     public int describeContents() {
@@ -293,11 +281,10 @@ public class CharacterProperty implements Serializable, Comparable<CharacterProp
     public ActionGroup getMainActionGroup() {
         if (mMainActionGroup == null) {
             List<ActionGroup> groups = getActionGroup();
-            if (groups != null && groups.size() > 0) {
-                mMainActionGroup = groups.get(0);
-            } else {
-                mMainActionGroup = ActionGroup.OTHER;
+            for (ActionGroup g : groups) {
+                return mMainActionGroup = g;
             }
+            mMainActionGroup = ActionGroup.OTHER;
         }
         return mMainActionGroup;
     }
