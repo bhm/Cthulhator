@@ -2,7 +2,6 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/grey_white_1000">
@@ -45,19 +44,11 @@
             android:textStyle="italic"/>
     </RelativeLayout>
 
-    <FrameLayout
-        android:id="@id/fab_pivot"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/fab_pivot"
-        android:layout_below="@id/header"
-        tools:background="@color/orange_100">
-    </FrameLayout>
-
     <at.markushi.ui.CircleButton
         android:id="@id/assign_skills"
         android:layout_width="@dimen/fab"
         android:layout_height="@dimen/fab"
-        android:layout_above="@id/fab_pivot"
+        android:layout_alignBottom="@id/header"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="@dimen/fab_offset"
         android:layout_marginLeft="@dimen/padding_16"
@@ -70,7 +61,7 @@
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/fab_pivot"
+        android:layout_below="@id/header"
         android:paddingTop="@dimen/padding_20"/>
 
 </RelativeLayout>
