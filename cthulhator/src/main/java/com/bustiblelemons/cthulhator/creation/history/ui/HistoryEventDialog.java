@@ -1,7 +1,6 @@
 package com.bustiblelemons.cthulhator.creation.history.ui;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +36,7 @@ public class HistoryEventDialog extends AbsArgDialogFragment<HistoryEvent>
 
     private HistoryEvent             mEvent;
     private OnHistoryEventPassedBack mCallback;
-    private OnShowDatePicker mOnShowDatePicker;
+    private OnShowDatePicker         mOnShowDatePicker;
 
     public static HistoryEventDialog newInstance(HistoryEvent event) {
         HistoryEventDialog r = new HistoryEventDialog();
@@ -57,20 +56,6 @@ public class HistoryEventDialog extends AbsArgDialogFragment<HistoryEvent>
         }
     }
 
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        super.onDismiss(dialog);
-        if (mCallback != null) {
-            HistoryEvent newEvent = new HistoryEvent();
-            newEvent.setName(titleView.getText());
-            if (dateView != null && dateView.getTag(R.id.tag_date) != null) {
-                long newDate = ((Long) dateView.getTag(R.id.tag_date)).longValue();
-                newEvent.setDate(newDate);
-            }
-            newEvent.setDescription(descriptionView.getText());
-            mCallback.onHistoryEventEdited(mEvent, newEvent);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -87,6 +72,25 @@ public class HistoryEventDialog extends AbsArgDialogFragment<HistoryEvent>
             mEvent = new HistoryEvent();
         }
         setupView();
+    }
+
+    @OnClick(R.id.add)
+    public void onSave(View view) {
+        if (mCallback != null) {
+            HistoryEvent newEvent = new HistoryEvent();
+            newEvent.setName(titleView.getText());
+            if (dateView != null && dateView.getTag(R.id.tag_date) != null) {
+                long newDate = ((Long) dateView.getTag(R.id.tag_date)).longValue();
+                newEvent.setDate(newDate);
+            }
+            newEvent.setDescription(descriptionView.getText());
+            mCallback.onHistoryEventEdited(mEvent, newEvent);
+        }
+    }
+
+    @OnClick(android.R.id.closeButton)
+    public void onCancel(View view) {
+        dismiss();
     }
 
     private void setupView() {

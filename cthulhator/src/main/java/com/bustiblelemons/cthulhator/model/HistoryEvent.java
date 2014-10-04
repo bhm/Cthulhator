@@ -12,7 +12,6 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -29,52 +28,6 @@ public class HistoryEvent implements Serializable, Parcelable, Comparable<Histor
 
         public HistoryEvent[] newArray(int size) {
             return new HistoryEvent[size];
-        }
-    };
-    @JsonIgnore
-    public static final  Comparator<HistoryEvent>         COMPARATOR         = new Comparator<HistoryEvent>() {
-        @Override
-        public int compare(HistoryEvent lhs, HistoryEvent rhs) {
-            if (lhs == null && rhs == null) {
-                return 0;
-            } else if (lhs != null && rhs == null) {
-                return 1;
-            } else if (lhs == null && rhs != null) {
-                return -1;
-            } else {
-                long lEpoch = lhs.getDate();
-                long rEpoch = rhs.getDate();
-                if (lEpoch > rEpoch) {
-                    return 1;
-                } else if (lEpoch == rEpoch) {
-                    return 0;
-                } else {
-                    return -1;
-                }
-            }
-        }
-    };
-    @JsonIgnore
-    public static final  Comparator<HistoryEvent>         COMPARATOR_DES     = new Comparator<HistoryEvent>() {
-        @Override
-        public int compare(HistoryEvent lhs, HistoryEvent rhs) {
-            if (lhs != null && rhs == null) {
-                return -1;
-            } else if (lhs == null && rhs == null) {
-                return 0;
-            } else if (lhs == null && rhs != null) {
-                return 1;
-            } else {
-                long lEpoch = lhs.getDate();
-                long rEpoch = rhs.getDate();
-                if (lEpoch > rEpoch) {
-                    return -1;
-                } else if (lEpoch == rEpoch) {
-                    return 0;
-                } else {
-                    return 1;
-                }
-            }
         }
     };
     @JsonIgnore

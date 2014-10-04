@@ -10,7 +10,6 @@ import com.bustiblelemons.cthulhator.creation.history.logic.LoadHistoryEventsAsy
 import com.bustiblelemons.cthulhator.creation.history.logic.OnOpenHistoryEventDetails;
 import com.bustiblelemons.cthulhator.creation.history.logic.OnShowDatePicker;
 import com.bustiblelemons.cthulhator.creation.history.logic.ReportCharacterSettings;
-import com.bustiblelemons.cthulhator.creation.history.model.HistoryEventHeader;
 import com.bustiblelemons.cthulhator.creation.history.model.TimeSpan;
 import com.bustiblelemons.cthulhator.creation.ui.AbsCharacterCreationActivity;
 import com.bustiblelemons.cthulhator.model.BirthData;
@@ -42,7 +41,8 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
                    LoadHistoryEventsAsyn.OnHistoryEventsLoaded,
                    HistoryEventDialog.OnHistoryEventPassedBack,
                    OnShowDatePicker,
-                   ReportCharacterSettings, CalendarDatePickerDialog.OnDateSetListener {
+                   ReportCharacterSettings,
+                   CalendarDatePickerDialog.OnDateSetListener {
 
     public static final int REQUEST_CODE = 8;
     private static final String sDateFormat        = "MMM dd, yyyy";
@@ -66,6 +66,7 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
         onSetActionBarToClosable();
         mSavedCharacter = getInstanceArgument();
         if (listView != null) {
+            mHistoryAdapter = new HistoryAdapter(this, this);
             listView.setAdapter(mHistoryAdapter);
             listView.setOnItemClickListener(mHistoryAdapter);
         }
@@ -90,6 +91,7 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
     private void loadHistoryAsyn() {
         if (mSavedCharacter != null) {
             mLoadHistoryAsyn = new LoadHistoryEventsAsyn(this, mSavedCharacter);
+            mLoadHistoryAsyn.setOnHistoryEventsLoaded(this);
             mLoadHistoryAsyn.executeCrossPlatform();
         }
     }
@@ -114,8 +116,7 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
     }
 
     @Override
-    public void onHistoryEventsLoaded(TimeSpan span,
-                                      HistoryEventHeader header, Set<HistoryEvent> events) {
+    public void onHistoryEventsLoaded(TimeSpan span, Set<HistoryEvent> events) {
         if (span != null && events != null) {
             if (mHistoryAdapter == null) {
                 mHistoryAdapter = new HistoryAdapter(this, this);
@@ -134,6 +135,14 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
 
     @Override
     public void onHistoryEventEdited(HistoryEvent old, HistoryEvent newEvent) {
+        if (mHistoryAdapter == null) {
+            mHistoryAdapter = new HistoryAdapter(this, this);
+            listView.setAdapter(mHistoryAdapter);
+        }
+        if (old != null) {
+            mHistoryAdapter.removeItem(old);
+        }
+        mHistoryAdapter.addFirst(newEvent);
 
     }
 

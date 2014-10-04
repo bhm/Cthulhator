@@ -10,7 +10,6 @@ import android.widget.BaseAdapter;
 import com.bustiblelemons.bustiblelibs.R;
 import com.bustiblelemons.holders.impl.ViewHolder;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -19,23 +18,23 @@ import java.util.List;
 /**
  * Created by bhm on 20.07.14.
  */
-public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAdapter {
+public abstract class AbsLinkedListAdapter<T, H extends ViewHolder<T>> extends BaseAdapter {
     public static String TAG;
 
     {
         TAG = getClass().getSimpleName();
     }
 
-    private List<T> mData = new ArrayList<T>();
+    private LinkedList<T> mData = new LinkedList<T>();
     private Context        context;
     private LayoutInflater inflater;
 
-    public AbsListAdapter(Context context) {
+    public AbsLinkedListAdapter(Context context) {
         this.context = context;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public AbsListAdapter(Context context, List<T> data) {
+    public AbsLinkedListAdapter(Context context, List<T> data) {
         this(context);
         this.mData = new LinkedList<T>(data);
     }
@@ -86,6 +85,16 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
     }
 
 
+    public void addFirst(T item) {
+        mData.addFirst(item);
+        notifyDataSetChanged();
+    }
+
+    public void addLast(T item) {
+        mData.addLast(item);
+        notifyDataSetChanged();
+    }
+
     public boolean addItem(T item) {
         if (item == null) {
             return false;
@@ -122,7 +131,7 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
     }
 
     public List<T> getSelectedItems(SparseBooleanArray checkedItems) {
-        List<T> result = new ArrayList<T>();
+        List<T> result = new LinkedList<T>();
         if (checkedItems != null) {
             for (int i = 0; i < mData.size(); i++) {
                 if (checkedItems.get(i)) {
