@@ -2,10 +2,10 @@ package com.bustiblelemons.cthulhator.settings;
 
 import android.content.Context;
 
-import com.bustiblelemons.cthulhator.fragments.dialog.OnlineSearchUISettings;
-import com.bustiblelemons.cthulhator.model.CharacterSettings;
-import com.bustiblelemons.cthulhator.model.CharacterSettingsImpl;
-import com.bustiblelemons.cthulhator.model.CthulhuEdition;
+import com.bustiblelemons.cthulhator.character.portrait.model.OnlineSearchUISettings;
+import com.bustiblelemons.cthulhator.settings.character.CharacterSettings;
+import com.bustiblelemons.cthulhator.settings.character.CharacterSettingsImpl;
+import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
 import com.bustiblelemons.settings.BaseSettings;
 import com.bustiblelemons.storage.Storage;
 

@@ -1,7 +1,7 @@
 package com.bustiblelemons.google.apis.search.params;
 
-import com.bustiblelemons.api.AbsOnlineQuery;
 import com.bustiblelemons.logging.Logger;
+import com.bustiblelemons.network.AbsOnlineQuery;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -20,12 +20,12 @@ import java.util.List;
 public class GoogleImageSearch extends AbsOnlineQuery implements GImageSearch {
 
 
+    private static final Logger             log            = new Logger(GoogleImageSearch.class);
     private              List<Enum<?>>      params         = new ArrayList<Enum<?>>();
     private              int                resultsPerPage = GImageSearch.rsz;
-    private              Collection<String> sites          = new ArrayList<String>();
     private              int                start          = 0 - resultsPerPage;
+    private              Collection<String> sites          = new ArrayList<String>();
     private              String             mQuery         = "";
-    private static final Logger             log            = new Logger(GoogleImageSearch.class);
 
     private GoogleImageSearch(Options b) {
         params.add(b.filetype);
@@ -137,21 +137,57 @@ public class GoogleImageSearch extends AbsOnlineQuery implements GImageSearch {
         return GImageSearch.METHOD;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        GoogleImageSearch that = (GoogleImageSearch) o;
+
+        if (resultsPerPage != that.resultsPerPage) {
+            return false;
+        }
+        if (start != that.start) {
+            return false;
+        }
+        if (mQuery != null ? !mQuery.equals(that.mQuery) : that.mQuery != null) {
+            return false;
+        }
+        if (params != null ? !params.equals(that.params) : that.params != null) {
+            return false;
+        }
+        if (sites != null ? !sites.equals(that.sites) : that.sites != null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = params != null ? params.hashCode() : 0;
+        result = 31 * result + resultsPerPage;
+        result = 31 * result + (sites != null ? sites.hashCode() : 0);
+        result = 31 * result + start;
+        result = 31 * result + (mQuery != null ? mQuery.hashCode() : 0);
+        return result;
+    }
 
     public static class Options implements Serializable {
-        protected GImageSearch.safe        safe       = GImageSearch.safe.off;
-        protected GImageSearch.as_filetype filetype   = null;
-        protected GImageSearch.as_rights   rights     = null;
-        protected GImageSearch.imgtype     imagetype  = null;
-        protected GImageSearch.imgsz       imagesize  = null;
-        protected GImageSearch.imgc        imagecolor = null;
-
-        protected int resultsPerPage = GImageSearch.rsz;
-
-        public Collection<String> sites = new ArrayList<String>();
-        public int                start = 0;
-
-        protected String query = "";
+        public    Collection<String>       sites          = new ArrayList<String>();
+        public    int                      start          = 0;
+        protected GImageSearch.safe        safe           = GImageSearch.safe.off;
+        protected GImageSearch.as_filetype filetype       = null;
+        protected GImageSearch.as_rights   rights         = null;
+        protected GImageSearch.imgtype     imagetype      = null;
+        protected GImageSearch.imgsz       imagesize      = null;
+        protected GImageSearch.imgc        imagecolor     = null;
+        protected int                      resultsPerPage = GImageSearch.rsz;
+        protected String                   query          = "";
 
         public void start(int start) {
             this.start = start;
@@ -205,38 +241,12 @@ public class GoogleImageSearch extends AbsOnlineQuery implements GImageSearch {
             start += resultsPerPage;
         }
 
-        public void setQuery(String query) {
-            this.query = query;
-        }
-
         public String getQuery() {
             return this.query;
         }
-    }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) { return true; }
-        if (o == null || getClass() != o.getClass()) { return false; }
-
-        GoogleImageSearch that = (GoogleImageSearch) o;
-
-        if (resultsPerPage != that.resultsPerPage) { return false; }
-        if (start != that.start) { return false; }
-        if (mQuery != null ? !mQuery.equals(that.mQuery) : that.mQuery != null) { return false; }
-        if (params != null ? !params.equals(that.params) : that.params != null) { return false; }
-        if (sites != null ? !sites.equals(that.sites) : that.sites != null) { return false; }
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = params != null ? params.hashCode() : 0;
-        result = 31 * result + resultsPerPage;
-        result = 31 * result + (sites != null ? sites.hashCode() : 0);
-        result = 31 * result + start;
-        result = 31 * result + (mQuery != null ? mQuery.hashCode() : 0);
-        return result;
+        public void setQuery(String query) {
+            this.query = query;
+        }
     }
 }

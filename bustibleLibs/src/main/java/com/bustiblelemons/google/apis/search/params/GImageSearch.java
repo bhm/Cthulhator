@@ -1,6 +1,6 @@
 package com.bustiblelemons.google.apis.search.params;
 
-import com.bustiblelemons.api.OnlineQuery;
+import com.bustiblelemons.network.OnlineQuery;
 
 import org.apache.http.HttpResponse;
 
@@ -12,14 +12,29 @@ import java.util.Locale;
  * Created by bhm on 18.07.14.
  */
 public interface GImageSearch extends OnlineQuery {
-    String VERSION   = "v";
-    String VERSION_1 = "1.0";
-    String URL       = "https://ajax.googleapis.com/ajax/services/search/images";
-    String SCHEME    = "https";
-    String HOST      = "ajax.googleapis.com";
-    String METHOD    = "ajax/services/search/images";
-    String QUERY     = "q";
-    String START     = "start";
+    String VERSION          = "v";
+    String VERSION_1        = "1.0";
+    String URL              = "https://ajax.googleapis.com/ajax/services/search/images";
+    String SCHEME           = "https";
+    String HOST             = "ajax.googleapis.com";
+    String METHOD           = "ajax/services/search/images";
+    String QUERY            = "q";
+    String START            = "start";
+    String hl               = Locale.getDefault().getLanguage();
+    String RESULTS_PER_PAGE = "rsz";
+    int    rsz              = 4;
+
+    safe getSafeMode();
+
+    Enum<?> getImageType();
+
+    as_filetype getFileType();
+
+    imgsz getImageSize();
+
+    as_rights getRights();
+
+    HttpResponse query(String query) throws IOException, URISyntaxException;
 
     public enum as_rights {
         cc_publicdomain {
@@ -73,23 +88,7 @@ public interface GImageSearch extends OnlineQuery {
         active, moderate, off;
     }
 
-    safe getSafeMode();
-
-    Enum<?> getImageType();
-
-    as_filetype getFileType();
-
-    imgsz getImageSize();
-
-    as_rights getRights();
-
     enum imgc {
         gray, color;
     }
-
-    String hl               = Locale.getDefault().getLanguage();
-    String RESULTS_PER_PAGE = "rsz";
-    int    rsz              = 4;
-
-    HttpResponse query(String query) throws IOException, URISyntaxException;
 }

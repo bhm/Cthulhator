@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.model.time.YearsPeriod;
+import com.bustiblelemons.cthulhator.character.history.model.YearsPeriod;
 import com.bustiblelemons.holders.impl.AbsViewHolder;
 
 import java.util.Locale;

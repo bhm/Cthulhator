@@ -1,6 +1,6 @@
 package com.bustiblelemons.google.apis;
 
-import com.bustiblelemons.api.model.Gender;
+import com.bustiblelemons.model.Gender;
 
 /**
  * Created by bhm on 24.09.14.

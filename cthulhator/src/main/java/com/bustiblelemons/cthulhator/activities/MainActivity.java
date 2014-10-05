@@ -8,7 +8,8 @@ import android.view.MenuItem;
 
 import com.bustiblelemons.activities.AbsActionBarActivity;
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.creation.description.ui.RandomCharactersActivity;
+import com.bustiblelemons.cthulhator.character.description.ui.RandomCharactersActivity;
+import com.bustiblelemons.cthulhator.character.portrait.ui.PortraitsActivity;
 
 public class MainActivity extends AbsActionBarActivity {
 
@@ -21,16 +22,16 @@ public class MainActivity extends AbsActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_character:
-                return launchCharacterViewer(-1);
-            case R.id.action_test:
-                return launchTestActivity();
-            case R.id.action_portriats:
-                return launchPortraitsChooser();
-            case R.id.action_random_user:
-                return launchRandomUser();
-            default:
-                return super.onOptionsItemSelected(item);
+        case R.id.action_character:
+            return launchCharacterViewer(-1);
+        case R.id.action_test:
+            return launchTestActivity();
+        case R.id.action_portriats:
+            return launchPortraitsChooser();
+        case R.id.action_random_user:
+            return launchRandomUser();
+        default:
+            return super.onOptionsItemSelected(item);
         }
     }
 

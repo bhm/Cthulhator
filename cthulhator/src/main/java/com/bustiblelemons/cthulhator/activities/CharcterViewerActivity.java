@@ -6,7 +6,8 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.bustiblelemons.activities.AbsActionBarActivity;
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.fragments.BRPCharacterFragment;
+import com.bustiblelemons.cthulhator.character.portrait.ui.PortraitsActivity;
+import com.bustiblelemons.cthulhator.test.BRPCharacterFragment;
 import com.kbeanie.imagechooser.api.ChosenImage;
 import com.kbeanie.imagechooser.api.ImageChooserListener;
 

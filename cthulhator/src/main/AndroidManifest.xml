@@ -4,9 +4,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".AppClass"
@@ -16,47 +16,47 @@
         android:theme="@style/BRPTheme"
         tools:replace="android:theme">
         <activity
-            android:name=".activities.PortraitsActivity"
-            android:label="@string/activity_portraits"/>
+            android:name=".character.portrait.ui.PortraitsActivity"
+            android:label="@string/activity_portraits" />
         <activity
             android:name=".activities.CharcterViewerActivity"
-            android:label="@string/activity_character"/>
+            android:label="@string/activity_character" />
         <activity
-            android:name=".creation.description.ui.RandomCharactersActivity"
-            android:label="@string/activity_random_user"/>
+            android:name=".character.description.ui.RandomCharactersActivity"
+            android:label="@string/activity_random_user" />
         <activity
             android:name=".activities.TestActivity"
-            android:label="@string/activity_test"/>
+            android:label="@string/activity_test" />
         <activity
-            android:name=".creation.characteristics.ui.StatisticsCreatorActivity"
-            android:label="@string/add_character_statistics"/>
+            android:name=".character.characteristics.ui.StatisticsCreatorActivity"
+            android:label="@string/add_character_statistics" />
         <activity
-            android:name=".creation.history.ui.HistoryEditorActivity"
-            android:label="@string/add_character_history"/>
+            android:name=".character.history.ui.HistoryEditorActivity"
+            android:label="@string/add_character_history" />
         <activity
-            android:name=".creation.characteristics.ui.SkillsChooserActivity"
-            android:label="@string/choose_skillset"/>
+            android:name=".character.characteristics.ui.SkillsChooserActivity"
+            android:label="@string/choose_skillset" />
         <activity
-            android:name=".creation.ui.CreationWorkFlowActivity"
-            android:label="@string/creation_workflow"/>
+            android:name=".character.creation.ui.CreationWorkFlowActivity"
+            android:label="@string/creation_workflow" />
 
 
         <activity
-            android:name=".activities.CharactersListActivity"
+            android:name=".character.characterslist.ui.CharactersListActivity"
             android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".configuration.ConfigurationActivity"
             android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>

@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.bustiblelemons.adapters.AbsSpinnerAdapter;
-import com.bustiblelemons.cthulhator.holders.GImageGenderHolder;
+import com.bustiblelemons.cthulhator.character.portrait.logic.GImageGenderHolder;
 import com.bustiblelemons.google.apis.GoogleSearchGender;
 import com.bustiblelemons.holders.impl.ViewHolder;
 

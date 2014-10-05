@@ -3,7 +3,7 @@ package com.bustiblelemons.cthulhator.adapters;
 import android.support.v4.app.FragmentManager;
 
 import com.bustiblelemons.adapters.viewpager.AbsFragmentPagerAdapter;
-import com.bustiblelemons.cthulhator.fragments.RandomUserPhotoFragment;
+import com.bustiblelemons.cthulhator.character.description.ui.RandomUserPhotoFragment;
 import com.bustiblelemons.model.OnlinePhotoUrl;
 
 /**

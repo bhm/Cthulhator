@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
 import com.bustiblelemons.adapters.viewpager.AbsFragmentPagerAdapter;
-import com.bustiblelemons.cthulhator.fragments.BRPCharacterFragment;
-import com.bustiblelemons.cthulhator.model.cache.SavedCharacter;
+import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
+import com.bustiblelemons.cthulhator.test.BRPCharacterFragment;
 
 /**
  * Created by bhm on 26.07.14.

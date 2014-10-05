@@ -5,8 +5,8 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.bustiblelemons.adapters.AbsSpinnerAdapter;
-import com.bustiblelemons.cthulhator.model.time.CthulhuPeriod;
-import com.bustiblelemons.cthulhator.model.time.YearsPeriod;
+import com.bustiblelemons.cthulhator.character.history.model.YearsPeriod;
+import com.bustiblelemons.cthulhator.system.time.CthulhuPeriod;
 import com.bustiblelemons.holders.impl.ViewHolder;
 
 /**

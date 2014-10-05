@@ -6,15 +6,15 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.bustiblelemons.activities.AbsActionBarActivity;
-import com.bustiblelemons.api.model.Gender;
-import com.bustiblelemons.api.random.names.randomuserdotme.RandomUserMEQuery;
-import com.bustiblelemons.api.random.names.randomuserdotme.asyn.OnRandomUsersRetreived;
-import com.bustiblelemons.api.random.names.randomuserdotme.asyn.RandomUserDotMeAsyn;
-import com.bustiblelemons.api.random.names.randomuserdotme.model.User;
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.activities.CharactersListActivity;
-import com.bustiblelemons.cthulhator.cache.RandomUsersCache;
+import com.bustiblelemons.cthulhator.character.characterslist.logic.RandomUsersCache;
+import com.bustiblelemons.cthulhator.character.characterslist.ui.CharactersListActivity;
+import com.bustiblelemons.model.Gender;
 import com.bustiblelemons.model.OnlinePhotoUrl;
+import com.bustiblelemons.randomuserdotme.logic.OnRandomUsersRetreived;
+import com.bustiblelemons.randomuserdotme.logic.RandomUserDotMeAsyn;
+import com.bustiblelemons.randomuserdotme.logic.RandomUserMEQuery;
+import com.bustiblelemons.randomuserdotme.model.User;
 
 import java.util.HashSet;
 import java.util.List;
