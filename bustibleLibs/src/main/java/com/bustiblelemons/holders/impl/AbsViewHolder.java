@@ -49,7 +49,9 @@ public abstract class AbsViewHolder<T> implements ViewHolder<T> {
     }
 
     public boolean setTitle(int resId) {
-        titleView.setText(resId);
+        if (hasTitleView()) {
+            titleView.setText(resId);
+        }
         return hasTitleView();
     }
 
