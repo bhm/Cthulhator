@@ -68,12 +68,6 @@ public class HistoryEventDialog extends AbsArgDialogFragment<HistoryEvent>
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mEvent = getInstanceArgument();
-        if (mEvent == null) {
-            mEvent = new HistoryEvent();
-        }
-        mDate = new DateTime(mEvent.getDate());
-        setupView();
     }
 
     private void setupView() {
@@ -100,11 +94,8 @@ public class HistoryEventDialog extends AbsArgDialogFragment<HistoryEvent>
             if (mCallback != null) {
                 HistoryEvent newEvent = new HistoryEvent();
                 newEvent.setName(titleView.getText());
-                if (dateView != null && dateView.getTag(R.id.tag_date) != null) {
-                    long newDate = ((Long) dateView.getTag(R.id.tag_date)).longValue();
-                    newEvent.setDate(newDate);
-                }
                 newEvent.setDescription(descriptionView.getText());
+                newEvent.setDate(mDate.getMillis());
                 mCallback.onHistoryEventEdited(mEvent, newEvent);
             }
         } finally {
@@ -128,7 +119,12 @@ public class HistoryEventDialog extends AbsArgDialogFragment<HistoryEvent>
 
     @Override
     protected void onInstanceArgumentRead(HistoryEvent instanceArgument) {
-
+        mEvent = instanceArgument;
+        if (mEvent == null) {
+            mEvent = new HistoryEvent();
+        }
+        mDate = new DateTime(mEvent.getDate());
+        setupView();
     }
 
     @Override

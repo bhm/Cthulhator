@@ -700,22 +700,22 @@ public class SavedCharacter implements Parcelable, Serializable {
         return count >= sShouldHaveAssignedAtLeast;
     }
 
-    public void setSuggestedDateOfEvent(long suggestedDateOfEvent) {
-        this.suggestedDateOfEvent = suggestedDateOfEvent;
-    }
-
-    public long getSuggestedDateForEvent() {
+    public long getSuggestedDateOfEvent() {
         if (Long.MIN_VALUE == suggestedDateOfEvent) {
             DateTime now = new DateTime();
             int year = getAge() + getPeriod().getDefaultYear();
             int month = now.getMonthOfYear();
             Random r = new Random();
-            int dayOfMonth = r.nextInt(now.monthOfYear().getMaximumValue());
+            int dayOfMonth = r.nextInt(now.dayOfMonth().getMaximumValue());
             int hour = now.getHourOfDay();
             int minute = now.getMinuteOfHour();
             DateTime time = new DateTime(year, month, dayOfMonth, hour, minute);
             suggestedDateOfEvent = time.getMillis();
         }
         return suggestedDateOfEvent;
+    }
+
+    public void setSuggestedDateOfEvent(long suggestedDateOfEvent) {
+        this.suggestedDateOfEvent = suggestedDateOfEvent;
     }
 }

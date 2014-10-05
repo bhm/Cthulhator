@@ -57,9 +57,7 @@ public class HistoryEvent implements Serializable, Parcelable, Comparable<Histor
 
     @JsonIgnore
     public String getFormatedDate() {
-        if (formatedDate == null) {
-            formatedDate = SIMPLE_DATE_FORMAT.format(new Date(getDate()));
-        }
+        formatedDate = SIMPLE_DATE_FORMAT.format(new Date(getDate()));
         return formatedDate;
     }
 

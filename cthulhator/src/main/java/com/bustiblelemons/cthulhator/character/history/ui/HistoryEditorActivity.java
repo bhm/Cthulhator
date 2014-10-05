@@ -198,7 +198,7 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
             birth.setDate(mBirthDate.getMillis());
             mSavedCharacter.setBirth(birth);
         }
-        long suggestedEpoch = mSavedCharacter.getSuggestedDateForEvent();
+        long suggestedEpoch = mSavedCharacter.getSuggestedDateOfEvent();
         mSuggestedDate = new DateTime(suggestedEpoch);
     }
 
