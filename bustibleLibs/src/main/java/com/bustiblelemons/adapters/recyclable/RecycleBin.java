@@ -33,6 +33,27 @@ public class RecycleBin {
 
     private SparseArray<View> currentScrapViews;
 
+    static View retrieveFromScrap(SparseArray<View> scrapViews, int position) {
+        int size = scrapViews.size();
+        if (size > 0) {
+            // See if we still have a view for this position.
+            for (int i = 0; i < size; i++) {
+                int fromPosition = scrapViews.keyAt(i);
+                View view = scrapViews.get(fromPosition);
+                if (fromPosition == position) {
+                    scrapViews.remove(fromPosition);
+                    return view;
+                }
+            }
+            int index = size - 1;
+            View r = scrapViews.valueAt(index);
+            scrapViews.remove(scrapViews.keyAt(index));
+            return r;
+        } else {
+            return null;
+        }
+    }
+
     public void setViewTypeCount(int viewTypeCount) {
         if (viewTypeCount < 1) {
             throw new IllegalArgumentException("Can't have a viewTypeCount < 1");
@@ -132,46 +153,6 @@ public class RecycleBin {
             for (int j = 0; j < extras; j++) {
                 scrapPile.remove(scrapPile.keyAt(size--));
             }
-        }
-    }
-
-    /**
-     * Makes sure that the size of scrapViews does not exceed the size of activeViews.
-     * (This can happen if an adapter does not recycle its views).
-     */
-    private void pruneScrapViews() {
-        final int maxViews = activeViews.length;
-        final int viewTypeCount = this.viewTypeCount;
-        final SparseArray<View>[] scrapViews = this.scrapViews;
-        for (int i = 0; i < viewTypeCount; ++i) {
-            final SparseArray<View> scrapPile = scrapViews[i];
-            int size = scrapPile.size();
-            final int extras = size - maxViews;
-            size--;
-            for (int j = 0; j < extras; j++) {
-                scrapPile.remove(scrapPile.keyAt(size--));
-            }
-        }
-    }
-
-    static View retrieveFromScrap(SparseArray<View> scrapViews, int position) {
-        int size = scrapViews.size();
-        if (size > 0) {
-            // See if we still have a view for this position.
-            for (int i = 0; i < size; i++) {
-                int fromPosition = scrapViews.keyAt(i);
-                View view = scrapViews.get(fromPosition);
-                if (fromPosition == position) {
-                    scrapViews.remove(fromPosition);
-                    return view;
-                }
-            }
-            int index = size - 1;
-            View r = scrapViews.valueAt(index);
-            scrapViews.remove(scrapViews.keyAt(index));
-            return r;
-        } else {
-            return null;
         }
     }
 }
