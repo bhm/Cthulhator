@@ -1,4 +1,4 @@
-package io.github.scottmaclure.character.traits.model.providers;
+package io.github.scottmaclure.character.traits.providers;
 
 import android.content.Context;
 import android.content.res.AssetManager;

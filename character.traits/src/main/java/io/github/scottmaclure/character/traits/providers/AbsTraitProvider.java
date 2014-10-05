@@ -1,4 +1,4 @@
-package io.github.scottmaclure.character.traits.model.providers;
+package io.github.scottmaclure.character.traits.providers;
 
 import java.util.List;
 import java.util.Random;
@@ -12,7 +12,7 @@ public abstract class AbsTraitProvider<T> {
     public T getRandomTrait(List<T> list) {
         if (list != null) {
             int max = list.size();
-            int randPos =  mRandom.nextInt(max);
+            int randPos = mRandom.nextInt(max);
             return list.get(randPos);
         }
         return null;

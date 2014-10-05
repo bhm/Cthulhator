@@ -8,8 +8,8 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Locale;
 
-import io.github.scottmaclure.character.traits.model.providers.CharacteristicProvider;
-import io.github.scottmaclure.character.traits.model.providers.StringTraitProvider;
+import io.github.scottmaclure.character.traits.providers.CharacteristicProvider;
+import io.github.scottmaclure.character.traits.providers.StringTraitProvider;
 
 /**
  * Created by bhm on 02.08.14.

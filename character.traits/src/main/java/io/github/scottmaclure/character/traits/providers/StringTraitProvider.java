@@ -1,4 +1,4 @@
-package io.github.scottmaclure.character.traits.model.providers;
+package io.github.scottmaclure.character.traits.providers;
 
 /**
  * Created by bhm on 02.08.14.
