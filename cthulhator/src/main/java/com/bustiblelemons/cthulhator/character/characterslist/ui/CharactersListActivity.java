@@ -127,6 +127,14 @@ public class CharactersListActivity extends AbsActionBarActivity
                 hideProgressbar();
             }
             listAdapter.refreshData(characters);
+            hideProgressbar();
+            showListView();
+        }
+    }
+
+    private void showListView() {
+        if (listView != null) {
+            listView.setVisibility(View.VISIBLE);
         }
     }
 

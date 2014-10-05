@@ -36,8 +36,8 @@ public class CharacterCache {
 
     public static void loadSavedCharactersAsync(Context context, Grouping... groupings) {
         if (context instanceof OnCharactersInfoLoaded) {
-            SavedCharactersLoadAsyn load = new SavedCharactersLoadAsyn(context,
-                    (OnCharactersInfoLoaded) context);
+            SavedCharactersLoadAsyn load =
+                    new SavedCharactersLoadAsyn(context, (OnCharactersInfoLoaded) context);
             load.executeCrossPlatform(groupings);
         }
     }

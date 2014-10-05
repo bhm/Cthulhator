@@ -37,6 +37,7 @@ public class HistoryEventDialog extends AbsArgDialogFragment<HistoryEvent>
     private HistoryEvent             mEvent;
     private OnHistoryEventPassedBack mCallback;
     private OnShowDatePicker         mOnShowDatePicker;
+    private DateTime mDate;
 
     public static HistoryEventDialog newInstance(HistoryEvent event) {
         HistoryEventDialog r = new HistoryEventDialog();
@@ -71,26 +72,8 @@ public class HistoryEventDialog extends AbsArgDialogFragment<HistoryEvent>
         if (mEvent == null) {
             mEvent = new HistoryEvent();
         }
+        mDate = new DateTime(mEvent.getDate());
         setupView();
-    }
-
-    @OnClick(R.id.add)
-    public void onSave(View view) {
-        if (mCallback != null) {
-            HistoryEvent newEvent = new HistoryEvent();
-            newEvent.setName(titleView.getText());
-            if (dateView != null && dateView.getTag(R.id.tag_date) != null) {
-                long newDate = ((Long) dateView.getTag(R.id.tag_date)).longValue();
-                newEvent.setDate(newDate);
-            }
-            newEvent.setDescription(descriptionView.getText());
-            mCallback.onHistoryEventEdited(mEvent, newEvent);
-        }
-    }
-
-    @OnClick(android.R.id.closeButton)
-    public void onCancel(View view) {
-        dismiss();
     }
 
     private void setupView() {
@@ -101,10 +84,37 @@ public class HistoryEventDialog extends AbsArgDialogFragment<HistoryEvent>
             if (descriptionView != null) {
                 descriptionView.setText(mEvent.getDescription());
             }
-            if (dateView != null) {
-                dateView.setText(mEvent.getFormatedDate());
-            }
+            setDateView();
         }
+    }
+
+    private void setDateView() {
+        if (dateView != null) {
+            dateView.setText(mEvent.getFormatedDate());
+        }
+    }
+
+    @OnClick(R.id.add)
+    public void onSave(View view) {
+        try {
+            if (mCallback != null) {
+                HistoryEvent newEvent = new HistoryEvent();
+                newEvent.setName(titleView.getText());
+                if (dateView != null && dateView.getTag(R.id.tag_date) != null) {
+                    long newDate = ((Long) dateView.getTag(R.id.tag_date)).longValue();
+                    newEvent.setDate(newDate);
+                }
+                newEvent.setDescription(descriptionView.getText());
+                mCallback.onHistoryEventEdited(mEvent, newEvent);
+            }
+        } finally {
+            dismiss();
+        }
+    }
+
+    @OnClick(android.R.id.closeButton)
+    public void onCancel(View view) {
+        dismiss();
     }
 
 
@@ -118,13 +128,18 @@ public class HistoryEventDialog extends AbsArgDialogFragment<HistoryEvent>
 
     @Override
     protected void onInstanceArgumentRead(HistoryEvent instanceArgument) {
-        mEvent = instanceArgument;
+
     }
 
     @Override
     public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog,
                           int year, int monthOfYear, int dayOfMonth) {
-
+        int hour = mDate.getHourOfDay();
+        int minute = mDate.getMinuteOfHour();
+        mDate = new DateTime(year, monthOfYear, dayOfMonth, hour, minute);
+        long epochDate = mDate.getMillis();
+        mEvent.setDate(epochDate);
+        setDateView();
     }
 
     public interface OnHistoryEventPassedBack {

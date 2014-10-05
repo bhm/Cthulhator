@@ -22,11 +22,9 @@ import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDi
 import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarHelper;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 
 import java.util.Random;
 import java.util.Set;
-import java.util.TimeZone;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -56,6 +54,8 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
     private HistoryAdapter        mHistoryAdapter;
     private LoadHistoryEventsAsyn mLoadHistoryAsyn;
     private DateTime              mBirthDate;
+    private DateTime          mSuggestedDate;
+    private Set<HistoryEvent> mFullHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,10 +71,14 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
             listView.setOnItemClickListener(mHistoryAdapter);
         }
         if (pickBirthView != null) {
-            setupBornDate();
-            pickBirthView.setText(mBirthDate.toString(sDateFormat));
+            setupBirthDate();
+            setBirthDayView();
         }
         loadHistoryAsyn();
+    }
+
+    private void setBirthDayView() {
+        pickBirthView.setText(mBirthDate.toString(sDateFormat));
     }
 
     private FadingActionBarHelper setupFadingBar() {
@@ -106,7 +110,6 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
         loadHistoryAsyn();
     }
 
-
     @Override
     public void onOpenHistoryEventDetails(HistoryEvent event) {
         if (event == null) {
@@ -129,21 +132,32 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
 
     @OnClick(R.id.fab)
     public void onAddHistoryEvent(View view) {
-        HistoryEventDialog dialog = HistoryEventDialog.newInstance(null);
+        HistoryEvent suggestedEventWitDate = getSuggestedDate();
+        HistoryEventDialog dialog = HistoryEventDialog.newInstance(suggestedEventWitDate);
         dialog.show(getSupportFragmentManager(), HistoryEventDialog.TAG);
+    }
+
+    private HistoryEvent getSuggestedDate() {
+        HistoryEvent event = new HistoryEvent();
+        event.setDate(mSuggestedDate.getMillis());
+        return event;
     }
 
     @Override
     public void onHistoryEventEdited(HistoryEvent old, HistoryEvent newEvent) {
+        if (mFullHistory == null) {
+            mFullHistory = mSavedCharacter.getFullHistory();
+        }
         if (mHistoryAdapter == null) {
             mHistoryAdapter = new HistoryAdapter(this, this);
             listView.setAdapter(mHistoryAdapter);
         }
         if (old != null) {
+            mFullHistory.remove(old);
             mHistoryAdapter.removeItem(old);
         }
         mHistoryAdapter.addFirst(newEvent);
-
+        mFullHistory.add(newEvent);
     }
 
     @Override
@@ -165,7 +179,7 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
         onShowDatePickerCallback(mBirthDate, this);
     }
 
-    private void setupBornDate() {
+    private void setupBirthDate() {
         if (mSavedCharacter != null && mSavedCharacter.getBirth() != null) {
             BirthData birthData = mSavedCharacter.getBirth();
             mBirthDate = new DateTime(birthData.getDate());
@@ -174,14 +188,18 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
             int defaultYear = s.getCthulhuPeriod().getDefaultYear();
             int edu = mSavedCharacter.getStatisticValue(BRPStatistic.EDU.name());
             int suggestedAge = edu + 6;
-            int estateYear = defaultYear - suggestedAge;
+            int estimateYear = defaultYear - suggestedAge;
             Random r = new Random();
             int month = r.nextInt(12);
             int day = r.nextInt(27);
             int h = r.nextInt(23);
-            mBirthDate = new DateTime(estateYear, month, day, h, 0,
-                    DateTimeZone.forTimeZone(TimeZone.getDefault()));
+            mBirthDate = new DateTime(estimateYear, month, day, h, 0);
+            BirthData birth = new BirthData();
+            birth.setDate(mBirthDate.getMillis());
+            mSavedCharacter.setBirth(birth);
         }
+        long suggestedEpoch = mSavedCharacter.getSuggestedDateForEvent();
+        mSuggestedDate = new DateTime(suggestedEpoch);
     }
 
 
@@ -193,6 +211,9 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
     @Override
     public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog,
                           int year, int monthOfYear, int yearOfMonth) {
-
+        int hour = mBirthDate.getHourOfDay();
+        int minute = mBirthDate.getMinuteOfHour();
+        mBirthDate = new DateTime(year, monthOfYear, yearOfMonth, hour, minute);
+        setBirthDayView();
     }
 }
