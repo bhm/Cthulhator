@@ -19,6 +19,7 @@ public class LoadHistoryEventsAsyn
 
     private final SavedCharacter        mSavedCharacter;
     private       OnHistoryEventsLoaded onHistoryEventsLoaded;
+    private TimeSpan mTimespan;
 
     public LoadHistoryEventsAsyn(Context context, SavedCharacter savedCharacter) {
         super(context);
@@ -31,22 +32,26 @@ public class LoadHistoryEventsAsyn
 
     @Override
     protected Set<HistoryEvent> call(TimeSpan... params) throws Exception {
-        for (TimeSpan timespan : params) {
-            if (timespan != null) {
-                Set<HistoryEvent> sorted = new TreeSet<HistoryEvent>(HistoryComparators.DATE_DES);
-                sorted.addAll(mSavedCharacter.getFullHistory());
+//        for (TimeSpan timespan : params) {
+//            if (timespan != null) {
+//                Set<HistoryEvent> result = new TreeSet<HistoryEvent>(HistoryComparators.DATE_DES);
+//                Set<HistoryEvent> sorted = new TreeSet<HistoryEvent>(HistoryComparators.DATE_DES);
+//                sorted.addAll(mSavedCharacter.getFullHistory());
+//                for (HistoryEvent event : sorted) {
+//                    if (event != null) {
+//                        if (event.getDate() >= timespan.getBeginEpoch()
+//                                && event.getDate() <= timespan.getEndEpoch()) {
+//                            result.add(event);
+//                        }
+//                    }
+//                }
+//                publishProgress(timespan, result);
+//            } else {
                 Set<HistoryEvent> result = new TreeSet<HistoryEvent>(HistoryComparators.DATE_DES);
-                for (HistoryEvent event : sorted) {
-                    if (event != null) {
-                        if (event.getDate() >= timespan.getBeginEpoch()
-                                && event.getDate() <= timespan.getEndEpoch()) {
-                            result.add(event);
-                        }
-                    }
-                }
-                publishProgress(timespan, result);
-            }
-        }
+        result.addAll(mSavedCharacter.getFullHistory());
+        publishProgress(mTimespan, result);
+//            }
+//        }
         return null;
     }
 
@@ -57,7 +62,7 @@ public class LoadHistoryEventsAsyn
 
     @Override
     public void onProgressUpdate(TimeSpan param, Set<HistoryEvent> result) {
-        if (onHistoryEventsLoaded == null) {
+        if (onHistoryEventsLoaded != null) {
             onHistoryEventsLoaded.onHistoryEventsLoaded(param, result);
         }
     }

@@ -42,7 +42,12 @@ public class HistoryAdapter
     }
 
     @Override
-    public long getHeaderId(int i) {
-        return 0;
+    public long getHeaderId(int position) {
+        HistoryEvent e = getItem(position);
+        if (e != null) {
+            return e.getFormatedDate().hashCode();
+        } else {
+            return position;
+        }
     }
 }

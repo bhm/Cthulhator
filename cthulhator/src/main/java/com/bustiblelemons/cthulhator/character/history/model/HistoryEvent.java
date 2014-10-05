@@ -41,7 +41,9 @@ public class HistoryEvent implements Serializable, Parcelable, Comparable<Histor
     private Location location;
     private List<Relation> affected = new ArrayList<Relation>();
     @JsonIgnore
-    private String formatedDate;
+    private String  formatedDate;
+    @JsonIgnore
+    private boolean dateChanged;
 
     public HistoryEvent() {
     }
@@ -57,7 +59,9 @@ public class HistoryEvent implements Serializable, Parcelable, Comparable<Histor
 
     @JsonIgnore
     public String getFormatedDate() {
-        formatedDate = SIMPLE_DATE_FORMAT.format(new Date(getDate()));
+        if (dateChanged) {
+            formatedDate = SIMPLE_DATE_FORMAT.format(new Date(getDate()));
+        }
         return formatedDate;
     }
 
@@ -67,6 +71,7 @@ public class HistoryEvent implements Serializable, Parcelable, Comparable<Histor
     }
 
     public void setDate(long date) {
+        dateChanged = date != this.date;
         this.date = date;
     }
 

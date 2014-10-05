@@ -71,8 +71,8 @@ public class SavedCharacter implements Parcelable, Serializable {
     private BirthData            birth;
     private long                 presentDate;
     private int                  age;
-    private CthulhuPeriod period               = CthulhuPeriod.JAZZAGE;
-    private long          suggestedDateOfEvent = Long.MIN_VALUE;
+    private CthulhuPeriod period        = CthulhuPeriod.JAZZAGE;
+    private long          suggestedDate = Long.MIN_VALUE;
 
     public SavedCharacter() {
     }
@@ -98,7 +98,7 @@ public class SavedCharacter implements Parcelable, Serializable {
         this.birth = in.readParcelable(BirthData.class.getClassLoader());
         this.presentDate = in.readLong();
         this.age = in.readInt();
-        this.suggestedDateOfEvent = in.readLong();
+        this.suggestedDate = in.readLong();
     }
 
     public CthulhuEdition getEdition() {
@@ -612,7 +612,7 @@ public class SavedCharacter implements Parcelable, Serializable {
         dest.writeParcelable(this.birth, flags);
         dest.writeLong(this.presentDate);
         dest.writeInt(this.age);
-        dest.writeLong(this.suggestedDateOfEvent);
+        dest.writeLong(this.suggestedDate);
     }
 
     @JsonIgnore
@@ -700,22 +700,43 @@ public class SavedCharacter implements Parcelable, Serializable {
         return count >= sShouldHaveAssignedAtLeast;
     }
 
-    public long getSuggestedDateOfEvent() {
-        if (Long.MIN_VALUE == suggestedDateOfEvent) {
+    public long getSuggestedDate() {
+        if (Long.MIN_VALUE == suggestedDate) {
             DateTime now = new DateTime();
             int year = getAge() + getPeriod().getDefaultYear();
             int month = now.getMonthOfYear();
-            Random r = new Random();
-            int dayOfMonth = r.nextInt(now.dayOfMonth().getMaximumValue());
+            int dayOfMonth = now.getDayOfMonth();
             int hour = now.getHourOfDay();
             int minute = now.getMinuteOfHour();
             DateTime time = new DateTime(year, month, dayOfMonth, hour, minute);
-            suggestedDateOfEvent = time.getMillis();
+            suggestedDate = time.getMillis();
         }
-        return suggestedDateOfEvent;
+        return suggestedDate;
     }
 
-    public void setSuggestedDateOfEvent(long suggestedDateOfEvent) {
-        this.suggestedDateOfEvent = suggestedDateOfEvent;
+    public void setSuggestedDate(long suggestedDate) {
+        this.suggestedDate = suggestedDate;
+    }
+
+    public boolean removeHistoryEvent(HistoryEvent event) {
+        if (event == null) {
+            return false;
+        }
+        if (fullHistory == null) {
+            fullHistory = new TreeSet<HistoryEvent>();
+        }
+        fullHistory.remove(event);
+        return true;
+    }
+
+    public boolean addHistoryEvent(HistoryEvent event) {
+        if (event == null) {
+            return false;
+        }
+        if (fullHistory == null) {
+            fullHistory = new TreeSet<HistoryEvent>();
+        }
+        fullHistory.add(event);
+        return true;
     }
 }

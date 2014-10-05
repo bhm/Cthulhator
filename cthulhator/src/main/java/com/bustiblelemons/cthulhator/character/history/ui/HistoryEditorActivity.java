@@ -50,12 +50,11 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
     @InjectView(R.id.pick_birth)
     TextView                  pickBirthView;
     private TimeSpan span = TimeSpan.EMPTY;
-    private SavedCharacter        mSavedCharacter;
-    private HistoryAdapter        mHistoryAdapter;
-    private LoadHistoryEventsAsyn mLoadHistoryAsyn;
-    private DateTime              mBirthDate;
-    private DateTime          mSuggestedDate;
-    private Set<HistoryEvent> mFullHistory;
+    private SavedCharacter mSavedCharacter;
+    private HistoryAdapter mHistoryAdapter;
+    private DateTime       mBirthDate;
+    private DateTime       mSuggestedDate;
+    private TimeSpan       mSpan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,11 +73,21 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
             setupBirthDate();
             setBirthDayView();
         }
-        loadHistoryAsyn();
+        long begin = mBirthDate.getMillis();
+        long end = mSuggestedDate.getMillis();
+        mSpan = new TimeSpan(begin, end);
     }
 
     private void setBirthDayView() {
         pickBirthView.setText(mBirthDate.toString(sDateFormat));
+    }
+
+    private void loadHistoryAsyn() {
+        if (mSavedCharacter != null) {
+            LoadHistoryEventsAsyn loadHistoryAsyn = new LoadHistoryEventsAsyn(this, mSavedCharacter);
+            loadHistoryAsyn.setOnHistoryEventsLoaded(this);
+            loadHistoryAsyn.executeCrossPlatform(mSpan);
+        }
     }
 
     private FadingActionBarHelper setupFadingBar() {
@@ -90,14 +99,6 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
                 .parallax(false)
                 .lightActionBar(false);
         return helper;
-    }
-
-    private void loadHistoryAsyn() {
-        if (mSavedCharacter != null) {
-            mLoadHistoryAsyn = new LoadHistoryEventsAsyn(this, mSavedCharacter);
-            mLoadHistoryAsyn.setOnHistoryEventsLoaded(this);
-            mLoadHistoryAsyn.executeCrossPlatform();
-        }
     }
 
     @Override
@@ -112,7 +113,7 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
 
     @Override
     public void onOpenHistoryEventDetails(HistoryEvent event) {
-        if (event == null) {
+        if (event != null) {
             HistoryEventDialog dialog = HistoryEventDialog.newInstance(event);
             dialog.show(getSupportFragmentManager(), HistoryEventDialog.TAG);
         }
@@ -120,13 +121,11 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
 
     @Override
     public void onHistoryEventsLoaded(TimeSpan span, Set<HistoryEvent> events) {
-        if (span != null && events != null) {
+        if (events != null) {
             if (mHistoryAdapter == null) {
                 mHistoryAdapter = new HistoryAdapter(this, this);
-            } else {
-                mHistoryAdapter.removeAll();
             }
-            mHistoryAdapter.addItems(events);
+            mHistoryAdapter.refreshData(events);
         }
     }
 
@@ -145,19 +144,9 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
 
     @Override
     public void onHistoryEventEdited(HistoryEvent old, HistoryEvent newEvent) {
-        if (mFullHistory == null) {
-            mFullHistory = mSavedCharacter.getFullHistory();
-        }
-        if (mHistoryAdapter == null) {
-            mHistoryAdapter = new HistoryAdapter(this, this);
-            listView.setAdapter(mHistoryAdapter);
-        }
-        if (old != null) {
-            mFullHistory.remove(old);
-            mHistoryAdapter.removeItem(old);
-        }
-        mHistoryAdapter.addFirst(newEvent);
-        mFullHistory.add(newEvent);
+        mSavedCharacter.removeHistoryEvent(old);
+        mSavedCharacter.addHistoryEvent(newEvent);
+        loadHistoryAsyn();
     }
 
     @Override
@@ -198,7 +187,7 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
             birth.setDate(mBirthDate.getMillis());
             mSavedCharacter.setBirth(birth);
         }
-        long suggestedEpoch = mSavedCharacter.getSuggestedDateOfEvent();
+        long suggestedEpoch = mSavedCharacter.getSuggestedDate();
         mSuggestedDate = new DateTime(suggestedEpoch);
     }
 
