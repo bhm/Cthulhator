@@ -16,11 +16,13 @@ import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 import com.bustiblelemons.cthulhator.system.properties.PropertyType;
 import com.bustiblelemons.cthulhator.system.properties.Relation;
+import com.bustiblelemons.cthulhator.system.time.CthulhuPeriod;
 import com.bustiblelemons.randomuserdotme.model.Location;
 import com.bustiblelemons.randomuserdotme.model.Name;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.joda.time.DateTime;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -68,6 +71,8 @@ public class SavedCharacter implements Parcelable, Serializable {
     private BirthData            birth;
     private long                 presentDate;
     private int                  age;
+    private CthulhuPeriod period               = CthulhuPeriod.JAZZAGE;
+    private long          suggestedDateOfEvent = Long.MIN_VALUE;
 
     public SavedCharacter() {
     }
@@ -87,10 +92,13 @@ public class SavedCharacter implements Parcelable, Serializable {
         Collections.addAll(this.fullHistory, events);
         int tmpEdition = in.readInt();
         this.edition = tmpEdition == -1 ? null : CthulhuEdition.values()[tmpEdition];
+        int tmpPeriod = in.readInt();
+        this.period = tmpPeriod == -1 ? null : CthulhuPeriod.values()[tmpPeriod];
         this.description = in.readParcelable(CharacterDescription.class.getClassLoader());
         this.birth = in.readParcelable(BirthData.class.getClassLoader());
         this.presentDate = in.readLong();
         this.age = in.readInt();
+        this.suggestedDateOfEvent = in.readLong();
     }
 
     public CthulhuEdition getEdition() {
@@ -103,6 +111,33 @@ public class SavedCharacter implements Parcelable, Serializable {
         fillStatistics(edition);
         fillSkillsList(edition);
         updateSkillPointPools();
+        setupAgeAndBirth();
+    }
+
+    public CthulhuPeriod getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(CthulhuPeriod period) {
+        this.period = period;
+        setupAgeAndBirth();
+    }
+
+    @JsonIgnore
+    private void setupAgeAndBirth() {
+        int edu = getStatisticValue(BRPStatistic.EDU.name());
+        int year = period.getDefaultYear();
+        int suggestedAge = edu + 6;
+        setAge(suggestedAge);
+        int estimateYear = year - getAge();
+        Random r = new Random();
+        int month = r.nextInt(11) + 1;
+        int day = r.nextInt(26) + 1;
+        int h = r.nextInt(23) + 1;
+        DateTime birthday = new DateTime(estimateYear, month, day, h, 0);
+        BirthData birth = new BirthData();
+        birth.setDate(birthday.getMillis());
+        setBirth(birth);
     }
 
     @JsonIgnore
@@ -572,10 +607,12 @@ public class SavedCharacter implements Parcelable, Serializable {
         }
         dest.writeTypedArray(h, flags);
         dest.writeInt(this.edition == null ? -1 : this.edition.ordinal());
+        dest.writeInt(this.period == null ? -1 : this.period.ordinal());
         dest.writeParcelable(this.description, flags);
         dest.writeParcelable(this.birth, flags);
         dest.writeLong(this.presentDate);
         dest.writeInt(this.age);
+        dest.writeLong(this.suggestedDateOfEvent);
     }
 
     @JsonIgnore
@@ -661,5 +698,24 @@ public class SavedCharacter implements Parcelable, Serializable {
             }
         }
         return count >= sShouldHaveAssignedAtLeast;
+    }
+
+    public void setSuggestedDateOfEvent(long suggestedDateOfEvent) {
+        this.suggestedDateOfEvent = suggestedDateOfEvent;
+    }
+
+    public long getSuggestedDateForEvent() {
+        if (Long.MIN_VALUE == suggestedDateOfEvent) {
+            DateTime now = new DateTime();
+            int year = getAge() + getPeriod().getDefaultYear();
+            int month = now.getMonthOfYear();
+            Random r = new Random();
+            int dayOfMonth = r.nextInt(now.monthOfYear().getMaximumValue());
+            int hour = now.getHourOfDay();
+            int minute = now.getMinuteOfHour();
+            DateTime time = new DateTime(year, month, dayOfMonth, hour, minute);
+            suggestedDateOfEvent = time.getMillis();
+        }
+        return suggestedDateOfEvent;
     }
 }
