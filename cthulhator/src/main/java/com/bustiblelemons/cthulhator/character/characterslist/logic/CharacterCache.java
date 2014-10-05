@@ -6,6 +6,7 @@ import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharact
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharactersSet;
 import com.bustiblelemons.cthulhator.system.Grouping;
 import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
+import com.bustiblelemons.logging.Logger;
 import com.bustiblelemons.storage.Storage;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -20,7 +21,8 @@ import java.util.List;
  */
 public class CharacterCache {
 
-    private static String sCharactersCacheFile = "saved.characters.json";
+    private static final Logger log                  = new Logger(CharacterCache.class);
+    private static       String sCharactersCacheFile = "saved.characters.json";
     private static CharacterCache instance;
 
     protected CharacterCache() {

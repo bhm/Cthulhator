@@ -73,6 +73,9 @@ public class CharacterProperty implements Serializable, Parcelable {
     }
 
     public List<ActionGroup> getActionGroup() {
+        if (actionGroup == null) {
+            actionGroup = new ArrayList<ActionGroup>();
+        }
         return actionGroup;
     }
 

@@ -109,7 +109,7 @@ public class CharactersListActivity extends AbsActionBarActivity
 
     @Override
     public void onLoadMore() {
-        CharacterCache.loadSavedCharactersAsync(this, grouping.next());
+//        CharacterCache.loadSavedCharactersAsync(this, grouping.next());
     }
 
     @Override
@@ -129,11 +129,10 @@ public class CharactersListActivity extends AbsActionBarActivity
                 listAdapter = new SavedCharactersAdapter(this);
                 listView.setOnItemClickListener(listAdapter);
                 listView.setAdapter(listAdapter);
-                hideProgressbar();
             }
-            listAdapter.refreshData(characters);
             hideProgressbar();
             showListView();
+            listAdapter.addItems(characters);
         }
     }
 

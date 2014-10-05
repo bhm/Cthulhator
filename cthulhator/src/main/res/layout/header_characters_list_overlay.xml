@@ -1,16 +1,16 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    tools:background="@color/black_54">
 
     <RelativeLayout
         android:id="@id/header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/twice_actionbar_height"
-        tools:background="@color/main_background">
-    </RelativeLayout>
+        tools:background="@color/main_background"></RelativeLayout>
 
     <TextView
         android:id="@id/proverb"
@@ -25,15 +25,14 @@
         android:paddingTop="@dimen/padding_16"
         android:text="@string/placeholder_proverb"
         android:textColor="@color/grey_white_1000"
-        android:textSize="@dimen/headline"/>
+        android:textSize="@dimen/headline" />
 
     <FrameLayout
         android:id="@id/fab_pivot"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fab_pivot"
         android:layout_below="@id/header"
-        tools:background="@color/orange_100">
-    </FrameLayout>
+        tools:background="@color/orange_100"></FrameLayout>
 
     <at.markushi.ui.CircleButton
         android:id="@id/add_character"
@@ -44,5 +43,5 @@
         android:layout_marginBottom="@dimen/fab_offset"
         android:layout_marginRight="@dimen/padding_16"
         android:src="@drawable/add_new_selector"
-        app:cb_color="@color/fab_done"/>
+        app:cb_color="@color/fab_done" />
 </RelativeLayout>

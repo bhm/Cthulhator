@@ -42,9 +42,10 @@ public class CharacterCardView extends RelativeLayout implements View.OnClickLis
     private OnShortInfoClick          onShortInfoClick;
     private OnCharacterCardImageClick onCharacterCardImageClick;
     private OnCharacterCardViewClick  onCharacterCardViewClick;
-    private String mMainText;
-    private String mShortText;
-    private String mExtraText;
+    private String                    mMainText;
+    private String                    mShortText;
+    private String                    mExtraText;
+    private int mMenuIcon = R.drawable.abc_ic_menu_moreoverflow_normal_holo_light;
 
     public CharacterCardView(Context context) {
         super(context);
@@ -94,6 +95,8 @@ public class CharacterCardView extends RelativeLayout implements View.OnClickLis
             mExtraInfoColor = array.getColor(R.styleable.CharacterCardView_extraInfoColor,
                     mExtraInfoColor);
             mShowMenu = array.getBoolean(R.styleable.CharacterCardView_show_menu, mShowMenu);
+            mMenuIcon = array.getResourceId(R.styleable.CharacterCardView_menuIcon, mMenuIcon);
+            menuButton.setImageResource(mMenuIcon);
             mNoImageRes = array.getResourceId(R.styleable.CharacterCardView_no_image,
                     R.drawable.lemons);
             loadingImage.setImageDrawable(mNoImageRes);
@@ -160,7 +163,7 @@ public class CharacterCardView extends RelativeLayout implements View.OnClickLis
         setMainText(provider.getName());
         setShortText(provider.getMainInfo());
         setExtraText(provider.getExtraInfo());
-        if (loadingImage != null) {
+        if (loadingImage != null && provider.getPortraitUrl() != null) {
             loadingImage.loadFrom(provider.getPortraitUrl());
         }
     }
@@ -185,40 +188,40 @@ public class CharacterCardView extends RelativeLayout implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.name:
-                if (onMainInfoClick != null) {
-                    onMainInfoClick.onMainInfoClick(this);
-                }
-                if (onCharacterCardViewClick != null) {
-                    onCharacterCardViewClick.onMainInfoClick(this);
-                }
-                break;
-            case R.id.short_info:
-                if (onShortInfoClick != null) {
-                    onShortInfoClick.onShortInfoClick(this);
-                }
-                if (onCharacterCardViewClick != null) {
-                    onCharacterCardViewClick.onShortInfoClick(this);
-                }
-                break;
-            case R.id.extra_info_text:
-                if (onExtraInfoClick != null) {
-                    onExtraInfoClick.onExtraInfoClick(this);
-                }
-                if (onCharacterCardViewClick != null) {
-                    onCharacterCardViewClick.onExtraInfoClick(this);
-                }
-                break;
-            case android.R.id.icon:
-                if (onCharacterCardImageClick != null) {
-                    onCharacterCardImageClick.onImageClick(this);
-                }
-                if (onCharacterCardViewClick != null) {
-                    onCharacterCardViewClick.onImageClick(this);
-                }
-                break;
-            default:
-                break;
+        case R.id.name:
+            if (onMainInfoClick != null) {
+                onMainInfoClick.onMainInfoClick(this);
+            }
+            if (onCharacterCardViewClick != null) {
+                onCharacterCardViewClick.onMainInfoClick(this);
+            }
+            break;
+        case R.id.short_info:
+            if (onShortInfoClick != null) {
+                onShortInfoClick.onShortInfoClick(this);
+            }
+            if (onCharacterCardViewClick != null) {
+                onCharacterCardViewClick.onShortInfoClick(this);
+            }
+            break;
+        case R.id.extra_info_text:
+            if (onExtraInfoClick != null) {
+                onExtraInfoClick.onExtraInfoClick(this);
+            }
+            if (onCharacterCardViewClick != null) {
+                onCharacterCardViewClick.onExtraInfoClick(this);
+            }
+            break;
+        case android.R.id.icon:
+            if (onCharacterCardImageClick != null) {
+                onCharacterCardImageClick.onImageClick(this);
+            }
+            if (onCharacterCardViewClick != null) {
+                onCharacterCardViewClick.onImageClick(this);
+            }
+            break;
+        default:
+            break;
         }
     }
 

@@ -27,7 +27,7 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
     @InjectView(R.id.preview_card)
     CharacterCardView characterCardView;
     private SavedCharacter mSavedCharacter;
-    private CthulhuEdition mEdition;
+    private CthulhuEdition mEdition = CthulhuEdition.CoC5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

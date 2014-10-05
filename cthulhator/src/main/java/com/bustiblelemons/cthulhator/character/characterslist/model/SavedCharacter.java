@@ -66,7 +66,7 @@ public class SavedCharacter implements Parcelable, Serializable {
     protected Set<CharacterProperty> properties  = new HashSet<CharacterProperty>();
     protected List<Possesion>        possesions  = new ArrayList<Possesion>();
     protected Set<HistoryEvent>      fullHistory = new HashSet<HistoryEvent>();
-    private CthulhuEdition       edition;
+    private CthulhuEdition edition = CthulhuEdition.CoC5;
     private CharacterDescription description;
     private BirthData            birth;
     private long                 presentDate;
@@ -106,6 +106,9 @@ public class SavedCharacter implements Parcelable, Serializable {
     }
 
     public void setEdition(CthulhuEdition edition) {
+        if (edition == null) {
+            return;
+        }
         this.edition = edition;
         this.properties.clear();
         fillStatistics(edition);

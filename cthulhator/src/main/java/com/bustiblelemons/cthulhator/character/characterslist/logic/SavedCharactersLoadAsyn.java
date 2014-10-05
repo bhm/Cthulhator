@@ -2,6 +2,7 @@ package com.bustiblelemons.cthulhator.character.characterslist.logic;
 
 import android.content.Context;
 
+import com.bustiblelemons.async.AbsAsynTask;
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharactersSet;
 import com.bustiblelemons.cthulhator.system.Grouping;
@@ -10,7 +11,6 @@ import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.scottmaclure.character.traits.asyn.AbsAsynTask;
 
 /**
  * Created by bhm on 13.08.14.
