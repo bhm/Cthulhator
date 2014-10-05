@@ -12,6 +12,9 @@ import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
  */
 public class SavedCharactersAdapter extends AbsListAdapter<CharacterInfo, SavedCharacterHolder>
         implements AdapterView.OnItemClickListener {
+
+    private OnOpenSavedCharacter onOpenSavedCharacter;
+
     public SavedCharactersAdapter(Context context) {
         super(context);
     }
@@ -23,6 +26,10 @@ public class SavedCharactersAdapter extends AbsListAdapter<CharacterInfo, SavedC
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        CharacterInfo i = getItem(position);
+        if (onOpenSavedCharacter != null && i != null) {
+            onOpenSavedCharacter.onOpenSavedCharacter(i.getHashCode());
+        }
 
     }
 }

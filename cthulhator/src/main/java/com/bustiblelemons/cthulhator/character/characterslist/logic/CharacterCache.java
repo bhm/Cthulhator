@@ -54,6 +54,18 @@ public class CharacterCache {
         return getInstance()._getCharacterSet(context);
     }
 
+    public static SavedCharacter getSavedCharacterByHashCode(Context context, int characterHashCode) {
+        return getInstance()._getSavedByHashCode(context, characterHashCode);
+    }
+
+    public static void loadCharacterAsyn(Context context, int characterHashCode) {
+        if (context instanceof OnRetreiveCharacter) {
+            OnRetreiveCharacter onRetreiveCharacter = (OnRetreiveCharacter) context;
+            RetreiveCharacterAsyn asyn = new RetreiveCharacterAsyn(context, onRetreiveCharacter);
+            asyn.executeCrossPlatform(characterHashCode);
+        }
+    }
+
     public synchronized SavedCharactersSet _getCharacterSet(Context context) {
         ObjectMapper m = getMapper();
         File savedCharacters = CharacterCache.getSavedCharactersFile(context);
@@ -82,6 +94,23 @@ public class CharacterCache {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private SavedCharacter _getSavedByHashCode(Context context, int characterHashCode) {
+        SavedCharactersSet set = getCharacterSet(context);
+        if (set == null) {
+            return null;
+        }
+        for (SavedCharacter character : set.getCharacters()) {
+            if (character != null && character.hashCode() == characterHashCode) {
+                return character;
+            }
+        }
+        return null;
+    }
+
+    public interface OnRetreiveCharacter {
+        void onRetreiveCharacter(SavedCharacter savedCharacter, int hashCode);
     }
 
     public interface OnCharactersInfoLoaded {

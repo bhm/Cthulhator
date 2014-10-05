@@ -42,8 +42,8 @@ public class MainActivity extends AbsActionBarActivity {
     }
 
     private boolean launchCharacterViewer(int characterId) {
-        Intent i = new Intent(this, CharcterViewerActivity.class);
-        i.putExtra(CharcterViewerActivity.CHARCTER_ID, characterId);
+        Intent i = new Intent(this, CharacterViewerActivity.class);
+        i.putExtra(CharacterViewerActivity.CHARCTER_ID, characterId);
         startActivity(i);
         return true;
     }

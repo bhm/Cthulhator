@@ -19,7 +19,7 @@
             android:name=".character.portrait.ui.PortraitsActivity"
             android:label="@string/activity_portraits" />
         <activity
-            android:name=".activities.CharcterViewerActivity"
+            android:name=".activities.CharacterViewerActivity"
             android:label="@string/activity_character" />
         <activity
             android:name=".character.description.ui.RandomCharactersActivity"

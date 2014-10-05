@@ -8,8 +8,11 @@ import android.widget.ProgressBar;
 
 import com.bustiblelemons.activities.AbsActionBarActivity;
 import com.bustiblelemons.cthulhator.R;
+import com.bustiblelemons.cthulhator.activities.CharacterViewerActivity;
 import com.bustiblelemons.cthulhator.character.characterslist.logic.CharacterCache;
+import com.bustiblelemons.cthulhator.character.characterslist.logic.OnOpenSavedCharacter;
 import com.bustiblelemons.cthulhator.character.characterslist.logic.SavedCharactersAdapter;
+import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
 import com.bustiblelemons.cthulhator.character.creation.ui.CreationWorkFlowActivity;
 import com.bustiblelemons.cthulhator.system.Grouping;
 import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
@@ -30,7 +33,9 @@ public class CharactersListActivity extends AbsActionBarActivity
         implements View.OnClickListener,
                    CharacterCache.OnCharactersInfoLoaded,
                    LoadMoreListView.OnLoadMoreListener,
-                   SearchView.OnQueryTextListener {
+                   SearchView.OnQueryTextListener,
+                   OnOpenSavedCharacter,
+                   CharacterCache.OnRetreiveCharacter {
 
     @InjectView(R.id.list)
     LoadMoreListView listView;
@@ -144,4 +149,17 @@ public class CharactersListActivity extends AbsActionBarActivity
         }
     }
 
+    @Override
+    public void onOpenSavedCharacter(int characterHashCode) {
+        CharacterCache.getSavedCharacterByHashCode(this, characterHashCode);
+    }
+
+    @Override
+    public void onRetreiveCharacter(SavedCharacter savedCharacter, int hashCode) {
+        if (savedCharacter != null) {
+            Intent i = new Intent(this, CharacterViewerActivity.class);
+            i.putExtras(CharacterViewerActivity.getArguments(savedCharacter));
+            startActivity(i);
+        }
+    }
 }

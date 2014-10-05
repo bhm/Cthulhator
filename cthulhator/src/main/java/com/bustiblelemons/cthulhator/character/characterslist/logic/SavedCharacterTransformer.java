@@ -29,6 +29,7 @@ public class SavedCharacterTransformer {
             impl.setExtrainfo(extrainfo);
             String mainInfo = getMainInfo(savedCharacter);
             impl.setMainInfo(mainInfo);
+            impl.setHashCode(savedCharacter.hashCode());
             return impl;
         }
         return null;
@@ -70,6 +71,7 @@ public class SavedCharacterTransformer {
         private String extrainfo;
         private String mainInfo;
         private String url;
+        private int    hashCode;
 
         @Override
         public String getName() {
@@ -105,6 +107,15 @@ public class SavedCharacterTransformer {
         @Override
         public String getPortraitUrl() {
             return url;
+        }
+
+        @Override
+        public int getHashCode() {
+            return hashCode;
+        }
+
+        public void setHashCode(int hashCode) {
+            this.hashCode = hashCode;
         }
     }
 }

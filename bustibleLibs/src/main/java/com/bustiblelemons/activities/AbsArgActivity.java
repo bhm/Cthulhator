@@ -12,6 +12,12 @@ public abstract class AbsArgActivity<T extends Parcelable> extends AbsActionBarA
 
     public static final String INSTANCE_ARGUMENT = "instance_argument";
 
+    public static final <T extends Parcelable> Bundle getArguments(T arg) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(INSTANCE_ARGUMENT, arg);
+        return bundle;
+    }
+
     public T getInstanceArgument() {
         return (T) getExtras().getParcelable(INSTANCE_ARGUMENT);
     }
