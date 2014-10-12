@@ -105,4 +105,8 @@
     <item name="editor" type="id" />
     <item name="strongman" type="id" />
     <item name="johnny" type="id" />
+    <item name="names_indicator" type="id" />
+    <item name="characteristic_indicator" type="id" />
+    <item name="location_indicator" type="id" />
+    <item name="photos_indicator" type="id" />
 </resources>

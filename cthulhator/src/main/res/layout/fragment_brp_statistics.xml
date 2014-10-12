@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/main_background">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/solid_background">
 
     <LinearLayout
         android:id="@id/cards_container"
@@ -13,11 +11,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/card_brp_mythos"/>
+        <include layout="@layout/card_brp_mythos" />
 
-        <include layout="@layout/card_brp_mind"/>
+        <include layout="@layout/card_brp_mind" />
 
-        <include layout="@layout/card_brp_combat"/>
+        <include layout="@layout/card_brp_combat" />
 
     </LinearLayout>
 

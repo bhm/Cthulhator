@@ -41,6 +41,7 @@ import com.bustiblelemons.randomuserdotme.model.User;
 import com.bustiblelemons.storage.Storage;
 import com.bustiblelemons.views.LoadMoreViewPager;
 import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarHelper;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import org.apache.commons.io.FileUtils;
 
@@ -72,15 +73,23 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
 
     public static final int REQUEST_CODE = 2;
     @InjectView(R.id.photos_pager)
-    LoadMoreViewPager photosPager;
+    LoadMoreViewPager   photosPager;
+    @InjectView(R.id.photos_indicator)
+    CirclePageIndicator photosIndicator;
     @InjectView(R.id.names_pager)
-    LoadMoreViewPager namesPager;
+    LoadMoreViewPager   namesPager;
+    @InjectView(R.id.names_indicator)
+    CirclePageIndicator namesIndicator;
     @InjectView(R.id.characteristic_pager)
-    LoadMoreViewPager characteristicPager;
+    LoadMoreViewPager   characteristicPager;
+    @InjectView(R.id.characteristic_indicator)
+    CirclePageIndicator characteristicIndicator;
     @InjectView(R.id.location_pager)
-    LoadMoreViewPager locationsPager;
+    LoadMoreViewPager   locationsPager;
+    @InjectView(R.id.location_indicator)
+    CirclePageIndicator locationIndicator;
     @InjectView(R.id.fab)
-    CircleButton      settingsFab;
+    CircleButton        settingsFab;
 
     private PhotosPagerAdapter               photosPagerAdapter;
     private RandomUserMENamePagerAdapter     namesPagerAdapter;
@@ -152,6 +161,9 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
             }
             locationsPager.setAdapter(locationPagerAdapter);
             locationsPager.setLoadMoreListener(this);
+            if (locationIndicator != null) {
+                locationIndicator.setViewPager(locationsPager);
+            }
         }
     }
 
@@ -166,6 +178,9 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
             }
             characteristicPager.setAdapter(characteristicAdapter);
             characteristicPager.setLoadMoreListener(this);
+            if (characteristicIndicator != null) {
+                characteristicIndicator.setViewPager(characteristicPager);
+            }
             onTraitsDownloaded(TraitsSet.FILE);
         }
     }
@@ -178,6 +193,9 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
         photosPager.setLoadMoreListener(this);
         photosPager.setTag(R.id.tag_search, mCharacterSettings);
         photosPager.setAdapter(photosPagerAdapter);
+        if (photosIndicator != null) {
+            photosIndicator.setViewPager(photosPager);
+        }
         onLoadMore(photosPager);
     }
 
@@ -216,6 +234,9 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
         }
         namesPager.setLoadMoreListener(this);
         namesPager.setAdapter(namesPagerAdapter);
+        if (namesIndicator != null) {
+            namesIndicator.setViewPager(namesPager);
+        }
     }
 
     @Override

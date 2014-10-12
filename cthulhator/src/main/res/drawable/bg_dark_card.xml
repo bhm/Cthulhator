@@ -4,9 +4,9 @@
             android:dither="true"
             android:shape="rectangle">
 
-            <corners android:radius="2dp"/>
+            <corners android:radius="2dp" />
 
-            <solid android:color="#ccc"/>
+            <solid android:color="#ccc" />
 
         </shape>
     </item>
@@ -16,9 +16,9 @@
             android:dither="true"
             android:shape="rectangle">
 
-            <corners android:radius="2dp"/>
+            <corners android:radius="2dp" />
 
-            <solid android:color="@color/main_background"/>
+            <solid android:color="@color/solid_background" />
 
 
         </shape>

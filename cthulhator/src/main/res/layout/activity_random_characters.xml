@@ -1,33 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none">
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/light_background"
         android:orientation="vertical">
 
         <com.bustiblelemons.views.LoadMoreViewPager
             android:id="@id/names_pager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:background="@color/main_background"/>
+            tools:background="@color/solid_background" />
+
+        <com.viewpagerindicator.CirclePageIndicator
+            android:id="@id/names_indicator"
+            style="@style/indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/names_pager" />
 
         <com.bustiblelemons.views.LoadMoreViewPager
             android:id="@id/characteristic_pager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:background="@color/orange_100"/>
+            android:layout_below="@id/names_indicator"
+            tools:background="@color/orange_100" />
+
+        <com.viewpagerindicator.CirclePageIndicator
+            android:id="@id/characteristic_indicator"
+            style="@style/indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/characteristic_pager" />
 
         <com.bustiblelemons.views.LoadMoreViewPager
             android:id="@id/location_pager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:background="@color/red_500"/>
-    </LinearLayout>
+            android:layout_below="@id/characteristic_indicator"
+            tools:background="@color/red_500" />
+
+        <com.viewpagerindicator.CirclePageIndicator
+            android:id="@id/location_indicator"
+            style="@style/indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/location_pager" />
+    </RelativeLayout>
 </ScrollView>

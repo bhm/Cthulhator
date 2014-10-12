@@ -60,6 +60,10 @@
     </style>
 
     <style name="indicator">
+        <item name="android:paddingLeft">@dimen/padding_16</item>
+        <item name="android:paddingRight">@dimen/padding_16</item>
+        <item name="android:paddingBottom">@dimen/padding_8</item>
+        <item name="android:paddingTop">@dimen/padding_2</item>
         <item name="fillColor">@color/indicator_fill</item>
         <item name="strokeColor">@color/indicator_stroke</item>
     </style>

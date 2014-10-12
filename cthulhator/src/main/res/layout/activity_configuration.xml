@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/main_background">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/solid_background">
 
 
     <TextView
@@ -16,7 +16,7 @@
         android:gravity="center"
         android:text="@string/touch_to_cache"
         android:textColor="@color/white_87"
-        android:textSize="@dimen/font_32"/>
+        android:textSize="@dimen/font_32" />
 
     <at.markushi.ui.CircleButton
         android:id="@android:id/closeButton"
@@ -28,6 +28,6 @@
         android:src="@drawable/ic_navigation_accept"
         android:visibility="invisible"
         app:cb_color="@color/fab_done"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 
 </RelativeLayout>

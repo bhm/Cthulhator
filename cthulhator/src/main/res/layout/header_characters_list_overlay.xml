@@ -10,7 +10,7 @@
         android:id="@id/header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/twice_actionbar_height"
-        tools:background="@color/main_background"></RelativeLayout>
+        tools:background="@color/solid_background"></RelativeLayout>
 
     <TextView
         android:id="@id/proverb"

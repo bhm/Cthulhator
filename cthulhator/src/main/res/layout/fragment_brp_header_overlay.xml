@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/main_background">
+    android:background="@color/solid_background">
 
     <com.bustiblelemons.views.LoadingImage
         android:id="@+id/image_header"
@@ -16,7 +15,7 @@
         android:layout_marginBottom="@dimen/padding_32"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/no_face_poly"/>
+        android:src="@drawable/no_face_poly" />
 
 
     <at.markushi.ui.CircleButton
@@ -31,7 +30,7 @@
         android:src="@drawable/ic_content_new_picture"
         android:visibility="visible"
         app:cb_color="@color/fab_done"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 
 
 </RelativeLayout>

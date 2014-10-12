@@ -10,7 +10,7 @@
         android:id="@id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/main_background"
+        android:background="@color/solid_background"
         android:minHeight="@dimen/twice_actionbar_height">
 
         <TextView
