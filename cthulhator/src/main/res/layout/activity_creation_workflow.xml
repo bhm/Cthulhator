@@ -19,17 +19,6 @@
         app:shortText="@string/placeholder_short_info"
         app:show_menu="false" />
 
-    <at.markushi.ui.CircleButton
-        android:id="@id/done"
-        android:layout_width="@dimen/fab"
-        android:layout_height="@dimen/fab"
-        android:layout_alignBottom="@id/preview_card"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="@dimen/padding_16"
-        android:layout_marginRight="@dimen/padding_16"
-        android:layout_marginTop="@dimen/fab_offset"
-        android:src="@drawable/ic_navigation_accept"
-        app:cb_color="@color/fab_done" />
 
     <ScrollView
         android:id="@id/questionare"
@@ -98,5 +87,18 @@
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
+
+    <at.markushi.ui.CircleButton
+        android:id="@id/done"
+        android:layout_width="@dimen/fab"
+        android:layout_height="@dimen/fab"
+        android:layout_alignBottom="@id/preview_card"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/fab_offset"
+        android:layout_marginLeft="@dimen/padding_16"
+        android:layout_marginRight="@dimen/padding_16"
+        android:layout_marginTop="@dimen/fab_offset"
+        android:src="@drawable/ic_navigation_accept"
+        app:cb_color="@color/fab_done" />
 
 </RelativeLayout>
