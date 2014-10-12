@@ -71,8 +71,8 @@
 
                 <ImageView
                     android:id="@android:id/icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/creation_workflow_icon"
+                    android:layout_height="@dimen/creation_workflow_icon"
                     android:layout_alignParentRight="true"
                     android:paddingRight="@dimen/padding_8"
                     android:src="@drawable/ic_johnny_automatic_mirror_drawing" />
@@ -117,8 +117,8 @@
 
                 <ImageView
                     android:id="@android:id/icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/creation_workflow_icon"
+                    android:layout_height="@dimen/creation_workflow_icon"
                     android:layout_alignParentRight="true"
                     android:paddingRight="@dimen/padding_8"
                     android:src="@drawable/ic_pocketwatch" />
@@ -161,8 +161,8 @@
 
                 <ImageView
                     android:id="@android:id/icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/creation_workflow_icon"
+                    android:layout_height="@dimen/creation_workflow_icon"
                     android:layout_alignParentRight="true"
                     android:paddingRight="@dimen/padding_8"
                     android:src="@drawable/ic_strongmaninacircle" />
@@ -205,8 +205,8 @@
 
                 <ImageView
                     android:id="@android:id/icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/creation_workflow_icon"
+                    android:layout_height="@dimen/creation_workflow_icon"
                     android:layout_alignParentRight="true"
                     android:paddingRight="@dimen/padding_8"
                     android:src="@drawable/ic_bag" />

@@ -50,4 +50,5 @@
     <dimen name="font_10">10sp</dimen>
     <dimen name="padding_10">10dp</dimen>
     <dimen name="home_as_up_padding">46dp</dimen>
+    <dimen name="creation_workflow_icon">84dp</dimen>
 </resources>
