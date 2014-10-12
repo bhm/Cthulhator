@@ -9,7 +9,8 @@
     <color name="text_color">@color/blue_grey_900</color>
     <color name="main_color_selected">@color/orange_A100</color>
     <color name="main_color_active">@color/orange_A700</color>
-    <color name="card_background">@color/amber_50</color>
+    <color name="card_background">@color/grey_white_1000</color>
+    <color name="card_background_selected">@color/teal_50</color>
     <color name="dark_card_background">@color/main_color</color>
     <color name="dark_card_selected_background">@color/main_color</color>
     <color name="fab_done">@color/main_color_active</color>
