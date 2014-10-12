@@ -1,7 +1,6 @@
 package com.bustiblelemons.cthulhator.character.characteristics.ui;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.util.SparseArray;
 import android.view.View;
 
@@ -47,7 +46,6 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
 
     private Set<CharacterProperty> characterProperties;
     private SavedCharacter         mSavedCharacter;
-    private SkillsListFragment     mSkillEditorFragment;
 
 
     @Override
@@ -73,17 +71,8 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
 
     @OnClick(R.id.assign_skills)
     public void onOpenSkillsetEditor(View button) {
-        attachSkillEditor();
-//        launchSkillsetEditor(mSavedCharacter);
-    }
-
-    private void attachSkillEditor() {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        mSkillEditorFragment = SkillsListFragment.newInstance(mSavedCharacter);
-        transaction.replace(R.id.skill_editor_frame, mSkillEditorFragment, SkillsListFragment.TAG);
-        transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right,
-                R.anim.slide_in_left, R.anim.slide_out_right);
-        transaction.commit();
+//        attachSkillEditor();
+        launchSkillsetEditor(mSavedCharacter);
     }
 
 
@@ -236,18 +225,8 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
 
     @Override
     public void onBackPressed() {
-        if (mSkillEditorFragment != null && mSkillEditorFragment.isVisible()) {
-            detachSkillEditor();
-        } else {
-            setResult(RESULT_OK, mSavedCharacter);
-            super.onBackPressed();
-        }
+        setResult(RESULT_OK, mSavedCharacter);
+        super.onBackPressed();
     }
 
-    private void detachSkillEditor() {
-        FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-        t.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right,
-                R.anim.slide_in_left, R.anim.slide_out_right);
-        t.detach(mSkillEditorFragment).commitAllowingStateLoss();
-    }
 }

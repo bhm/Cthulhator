@@ -17,7 +17,7 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
-    <style name="Animation"/>
+    <style name="Animation" />
 
     <style name="Animation.SlideInAnimations">
         <item name="android:activityOpenEnterAnimation">@anim/slide_in_left</item>
@@ -42,6 +42,10 @@
 
     <style name="card.peeking.bottom" parent="card_peeking">
         <item name="android:layout_marginTop">@dimen/padding_8</item>
+    </style>
+
+    <style name="card.peeking.top" parent="card_peeking">
+        <item name="android:layout_marginBottom">@dimen/padding_8</item>
     </style>
 
     <style name="inset_divider">

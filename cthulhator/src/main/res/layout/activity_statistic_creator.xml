@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ScrollView
         android:id="@id/scroll"
@@ -36,7 +36,7 @@
                     android:text="@string/characteristics"
                     android:textAllCaps="true"
                     android:textColor="@color/white_87"
-                    android:textSize="@dimen/headline"/>
+                    android:textSize="@dimen/headline" />
 
                 <TextView
                     android:id="@id/suggested_skillset"
@@ -52,7 +52,7 @@
                     android:text="@string/placeholder_suggested_proffession"
                     android:textColor="@color/white_54"
                     android:textSize="@dimen/subhead"
-                    android:textStyle="italic"/>
+                    android:textStyle="italic" />
             </RelativeLayout>
 
             <FrameLayout
@@ -60,8 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/fab_pivot"
                 android:layout_below="@id/header"
-                tools:background="@color/orange_100">
-            </FrameLayout>
+                tools:background="@color/orange_100"></FrameLayout>
 
             <at.markushi.ui.CircleButton
                 android:id="@id/assign_skills"
@@ -73,8 +72,8 @@
                 android:layout_marginLeft="@dimen/padding_16"
                 android:layout_marginRight="@dimen/padding_16"
                 android:layout_marginTop="@dimen/fab_offset"
-                android:src="@drawable/ic_navigation_accept"
-                app:cb_color="@color/fab_done"/>
+                android:src="@drawable/ic_action_assign_skills"
+                app:cb_color="@color/fab_done" />
 
             <RelativeLayout
                 android:id="@id/editor"
@@ -97,7 +96,7 @@
                         app:statTitle="@string/education"
                         app:titleSize="@dimen/font_16"
                         app:valueBelow="true"
-                        app:valueSize="@dimen/font_18"/>
+                        app:valueSize="@dimen/font_18" />
 
                 </RelativeLayout>
 
@@ -118,7 +117,7 @@
                         app:statValue="@integer/placeholder_perc_val"
                         app:titleSize="@dimen/font_16"
                         app:valueBelow="true"
-                        app:valueSize="@dimen/font_18"/>
+                        app:valueSize="@dimen/font_18" />
 
                 </RelativeLayout>
 
@@ -140,7 +139,7 @@
                         app:statValue="@integer/placeholder_perc_val"
                         app:titleSize="@dimen/font_16"
                         app:valueBelow="true"
-                        app:valueSize="@dimen/font_18"/>
+                        app:valueSize="@dimen/font_18" />
 
                 </RelativeLayout>
 
@@ -162,7 +161,7 @@
                         app:statValue="@integer/placeholder_perc_val"
                         app:titleSize="@dimen/font_16"
                         app:valueBelow="true"
-                        app:valueSize="@dimen/font_18"/>
+                        app:valueSize="@dimen/font_18" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -183,7 +182,7 @@
                         app:statValue="@integer/placeholder_perc_val"
                         app:titleSize="@dimen/font_16"
                         app:valueBelow="true"
-                        app:valueSize="@dimen/font_18"/>
+                        app:valueSize="@dimen/font_18" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -205,7 +204,7 @@
                         app:statValue="@integer/placeholder_perc_val"
                         app:titleSize="@dimen/font_16"
                         app:valueBelow="true"
-                        app:valueSize="@dimen/font_18"/>
+                        app:valueSize="@dimen/font_18" />
 
 
                     <com.bustiblelemons.views.SkillView
@@ -219,7 +218,7 @@
                         app:statValue="@integer/placeholder_perc_val"
                         app:titleSize="@dimen/font_16"
                         app:valueBelow="true"
-                        app:valueSize="@dimen/font_18"/>
+                        app:valueSize="@dimen/font_18" />
 
                     <com.bustiblelemons.views.SkillView
                         android:id="@id/siz"
@@ -232,7 +231,7 @@
                         app:statValue="@integer/placeholder_perc_val"
                         app:titleSize="@dimen/font_16"
                         app:valueBelow="true"
-                        app:valueSize="@dimen/font_18"/>
+                        app:valueSize="@dimen/font_18" />
 
                 </RelativeLayout>
             </RelativeLayout>
@@ -253,11 +252,11 @@
         android:textAllCaps="true"
         android:textColor="@color/grey_white_1000"
         android:textSize="@dimen/font_16"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <FrameLayout
         android:id="@id/skill_editor_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

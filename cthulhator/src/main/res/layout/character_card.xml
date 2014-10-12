@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout
-    style="@style/card"
+
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/chracter_card">
 
-
     <com.bustiblelemons.views.LoadingImage
         android:id="@android:id/icon"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/extra_info"/>
+        android:layout_above="@id/extra_info" />
 
     <RelativeLayout
         android:id="@id/main_info"
@@ -33,7 +32,7 @@
             android:textColor="@color/white_87"
             android:textSize="@dimen/font_22"
             android:textStyle="bold"
-            tools:text="@string/placeholder_name"/>
+            tools:text="@string/placeholder_name" />
 
         <TextView
             android:id="@id/short_info"
@@ -47,7 +46,7 @@
             android:paddingRight="@dimen/padding_16"
             android:textColor="@color/white_87"
             android:textSize="@dimen/font_14"
-            tools:text="@string/placeholder_short_info"/>
+            tools:text="@string/placeholder_short_info" />
     </RelativeLayout>
 
 
@@ -73,7 +72,7 @@
             android:paddingTop="@dimen/padding_16"
             android:textColor="@color/black_54"
             android:textSize="@dimen/font_12"
-            tools:text="@string/placeholder_top_stats"/>
+            tools:text="@string/placeholder_top_stats" />
 
         <ImageButton
             android:id="@id/menu"
@@ -83,7 +82,7 @@
             android:layout_alignParentTop="true"
             android:background="@drawable/flat_button_selector"
             android:padding="@dimen/padding_8"
-            android:src="@drawable/abc_ic_menu_moreoverflow_normal_holo_light"/>
+            android:src="@drawable/abc_ic_menu_moreoverflow_normal_holo_light" />
 
     </RelativeLayout>
 
@@ -102,7 +101,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:background="@drawable/flat_button_selector"
-            android:src="@drawable/ic_action_navigation_expand"/>
+            android:src="@drawable/ic_action_navigation_expand" />
 
 
         <TextView
@@ -120,7 +119,7 @@
             android:text="@string/delete"
             android:textColor="@color/black_54"
             android:textSize="@dimen/font_24"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@id/cancel"
@@ -138,7 +137,7 @@
             android:textColor="@color/black_54"
             android:textSize="@dimen/font_24"
             android:textStyle="bold"
-            tools:text="@android:string/cancel"/>
+            tools:text="@android:string/cancel" />
 
     </RelativeLayout>
 </RelativeLayout>

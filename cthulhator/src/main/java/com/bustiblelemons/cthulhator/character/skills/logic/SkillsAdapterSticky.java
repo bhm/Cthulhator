@@ -1,11 +1,9 @@
-package com.bustiblelemons.cthulhator.character.characteristics.logic;
+package com.bustiblelemons.cthulhator.character.skills.logic;
 
 import android.content.Context;
 
 import com.bustiblelemons.cthulhator.adapters.AbsStickyListAdapter;
 import com.bustiblelemons.cthulhator.adapters.SkillChanged;
-import com.bustiblelemons.cthulhator.character.characteristics.model.SkillsHeaderHolder;
-import com.bustiblelemons.cthulhator.character.skills.logic.SkillViewHolder;
 import com.bustiblelemons.cthulhator.system.properties.ActionGroup;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 import com.bustiblelemons.holders.impl.ViewHolder;

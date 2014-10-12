@@ -1,4 +1,4 @@
-package com.bustiblelemons.cthulhator.character.characteristics.model;
+package com.bustiblelemons.cthulhator.character.skills.logic;
 
 import android.content.Context;
 

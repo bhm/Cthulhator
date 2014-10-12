@@ -11,12 +11,12 @@
         android:layout_height="wrap_content"
         android:background="@color/grey_white_1000"
         android:paddingBottom="@dimen/padding_12"
-        android:paddingLeft="@dimen/padding_16"
+        android:paddingLeft="@dimen/actionbar_height"
         android:paddingRight="@dimen/padding_16"
         android:paddingTop="@dimen/padding_12"
         android:textColor="@color/black_54"
         android:textSize="@dimen/body_2"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         tools:text="@string/placeholder_title" />
 
 </RelativeLayout>

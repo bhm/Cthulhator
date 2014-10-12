@@ -5,11 +5,11 @@ import android.os.Bundle;
 
 import com.bustiblelemons.activities.AbsArgActivity;
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.character.characteristics.ui.SkillsChooserActivity;
 import com.bustiblelemons.cthulhator.character.characteristics.ui.StatisticsCreatorActivity;
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
 import com.bustiblelemons.cthulhator.character.description.ui.RandomCharactersActivity;
 import com.bustiblelemons.cthulhator.character.history.ui.HistoryEditorActivity;
+import com.bustiblelemons.cthulhator.character.skills.ui.SkillsChooserActivity;
 
 /**
  * Created by bhm on 31.08.14.

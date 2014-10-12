@@ -1,98 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
+    <com.bustiblelemons.cthulhator.view.charactercard.CharacterCardView
+        android:id="@id/preview_card"
+        style="@style/card.peeking.top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:extraInfoColor="@color/black_54"
+        app:extraText="@string/placeholder_top_stats"
+        app:mainInfoColor="@color/white_87"
+        app:mainText="@string/hint_name"
+        app:no_image="@drawable/no_face_poly"
+        app:shortInfoColor="@color/white_87"
+        app:shortText="@string/placeholder_short_info"
+        app:show_menu="false" />
 
-    <RelativeLayout
+    <at.markushi.ui.CircleButton
+        android:id="@id/done"
+        android:layout_width="@dimen/fab"
+        android:layout_height="@dimen/fab"
+        android:layout_alignBottom="@id/preview_card"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="@dimen/padding_16"
+        android:layout_marginRight="@dimen/padding_16"
+        android:layout_marginTop="@dimen/fab_offset"
+        android:src="@drawable/ic_navigation_accept"
+        app:cb_color="@color/fab_done" />
+
+    <ScrollView
         android:id="@id/questionare"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.bustiblelemons.cthulhator.view.charactercard.CharacterCardView
-            android:id="@id/preview_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/actionbar_height"
-            app:extraInfoColor="@color/black_54"
-            app:extraText="@string/placeholder_top_stats"
-            app:mainInfoColor="@color/white_87"
-            app:mainText="@string/placeholder_name"
-            app:no_image="@drawable/no_face_poly"
-            app:shortInfoColor="@color/white_87"
-            app:shortText="@string/placeholder_short_info"
-            app:show_menu="false"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/preview_card">
 
         <RelativeLayout
-            android:id="@id/add_character_details"
-            style="@style/card"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/preview_card"
-            android:padding="@dimen/padding_16">
+            android:layout_height="wrap_content">
 
-            <TextView
+
+            <RelativeLayout
+                android:id="@id/add_character_details"
+                style="@style/card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/add_character_info"/>
-        </RelativeLayout>
+                android:padding="@dimen/padding_16">
 
-        <at.markushi.ui.CircleButton
-            android:id="@id/done"
-            android:layout_width="@dimen/fab"
-            android:layout_height="@dimen/fab"
-            android:layout_alignBottom="@id/preview_card"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="@dimen/padding_16"
-            android:layout_marginRight="@dimen/padding_16"
-            android:layout_marginTop="@dimen/fab_offset"
-            android:src="@drawable/ic_navigation_accept"
-            app:cb_color="@color/fab_done"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_character_info" />
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@id/add_character_history"
-            style="@style/card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/add_character_details"
-            android:padding="@dimen/padding_16">
-
-            <TextView
+            <RelativeLayout
+                android:id="@id/add_character_history"
+                style="@style/card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/add_character_history"/>
-        </RelativeLayout>
+                android:layout_below="@id/add_character_details"
+                android:padding="@dimen/padding_16">
 
-        <RelativeLayout
-            android:id="@id/add_character_statistics"
-            style="@style/card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/add_character_history"
-            android:padding="@dimen/padding_16">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_character_history" />
+            </RelativeLayout>
 
-            <TextView
+            <RelativeLayout
+                android:id="@id/add_character_statistics"
+                style="@style/card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/add_character_statistics"/>
-        </RelativeLayout>
+                android:layout_below="@id/add_character_history"
+                android:padding="@dimen/padding_16">
 
-        <RelativeLayout
-            android:id="@id/add_character_equipement"
-            style="@style/card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/add_character_statistics"
-            android:padding="@dimen/padding_16">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_character_statistics" />
+            </RelativeLayout>
 
-            <TextView
+            <RelativeLayout
+                android:id="@id/add_character_equipement"
+                style="@style/card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/add_character_equipment"/>
+                android:layout_below="@id/add_character_statistics"
+                android:padding="@dimen/padding_16">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_character_equipment" />
+            </RelativeLayout>
         </RelativeLayout>
+    </ScrollView>
 
-    </RelativeLayout>
-
-</ScrollView>
+</RelativeLayout>

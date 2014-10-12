@@ -1,4 +1,4 @@
-package com.bustiblelemons.cthulhator.character.characteristics.ui;
+package com.bustiblelemons.cthulhator.character.skills.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,8 +10,8 @@ import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.adapters.SkillChanged;
 import com.bustiblelemons.cthulhator.character.characteristics.logic.CharacterPropertyComparators;
 import com.bustiblelemons.cthulhator.character.characteristics.logic.CharacterPropertySortAsyn;
-import com.bustiblelemons.cthulhator.character.characteristics.logic.SkillsAdapterSticky;
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
+import com.bustiblelemons.cthulhator.character.skills.logic.SkillsAdapterSticky;
 import com.bustiblelemons.cthulhator.fragments.AbsArgFragment;
 import com.bustiblelemons.cthulhator.system.properties.ActionGroup;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
@@ -54,7 +54,7 @@ public class SkillsListFragment extends AbsArgFragment<SavedCharacter>
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.activity_skill_chooser, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_skill_editor, container, false);
         ButterKnife.inject(this, rootView);
         return rootView;
     }
