@@ -3,24 +3,24 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/grey_white_1000">
 
     <TextView
         android:id="@android:id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/grey_white_1000"
         android:paddingBottom="@dimen/padding_12"
         android:paddingLeft="@dimen/actionbar_height"
         android:paddingRight="@dimen/padding_16"
         android:paddingTop="@dimen/padding_12"
-        android:textColor="@color/black_54"
+        android:textColor="@color/black_87"
         android:textSize="@dimen/material_body_2"
         android:textStyle="bold|italic"
         tools:text="@string/placeholder_title" />
 
     <View
-        style="@style/inset_divider"
+        style="@style/full_bleed_divider"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_below="@android:id/title" />

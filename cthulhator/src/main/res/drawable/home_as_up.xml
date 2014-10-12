@@ -8,9 +8,8 @@
     </item>
     <item>
         <shape android:shape="rectangle">
-            <size android:width="32dp" />
+            <size android:width="@dimen/home_as_up_padding" />
             <solid android:color="@android:color/transparent" />
-            <padding android:left="@dimen/padding_72" />
         </shape>
     </item>
 </layer-list>

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_white_1000">
+    android:background="@color/light_background">
 
     <RelativeLayout
         android:id="@id/header"
@@ -52,6 +52,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/header"
+        android:background="@color/grey_white_1000"
+        android:divider="@null"
+        android:dividerHeight="0px"
         android:paddingTop="@dimen/padding_20" />
 
     <at.markushi.ui.CircleButton
