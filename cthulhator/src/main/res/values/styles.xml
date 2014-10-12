@@ -45,7 +45,7 @@
     </style>
 
     <style name="card.peeking.top" parent="card_peeking">
-        <item name="android:layout_marginBottom">@dimen/padding_8</item>
+        <item name="android:paddingBottom">@dimen/padding_8</item>
     </style>
 
     <style name="inset_divider">

@@ -43,9 +43,13 @@ public class CharactersListActivity extends AbsActionBarActivity
     CircleButton     addFab;
     @InjectView(android.R.id.progress)
     ProgressBar      progressBar;
-
     private SavedCharactersAdapter listAdapter;
     private Grouping               grouping;
+
+    @Override
+    public int getBackResIconId() {
+        return R.drawable.ic_action_navigation_back;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +136,7 @@ public class CharactersListActivity extends AbsActionBarActivity
             }
             hideProgressbar();
             showListView();
-            listAdapter.addItems(characters);
+//            listAdapter.addItems(characters);
         }
     }
 

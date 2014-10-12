@@ -25,7 +25,7 @@
         android:paddingTop="@dimen/padding_16"
         android:text="@string/placeholder_proverb"
         android:textColor="@color/grey_white_1000"
-        android:textSize="@dimen/headline" />
+        android:textSize="@dimen/material_headline" />
 
     <FrameLayout
         android:id="@id/fab_pivot"

@@ -14,7 +14,7 @@ import com.bustiblelemons.logging.Logger;
 /**
  * Created by bhm on 19.07.14.
  */
-public class AbsActionBarActivity extends ActionBarActivity
+public abstract class AbsActionBarActivity extends ActionBarActivity
         implements AbsFragment.ActionBarInterface {
 
     protected static Logger log;
@@ -44,8 +44,11 @@ public class AbsActionBarActivity extends ActionBarActivity
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayUseLogoEnabled(false);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_action_navigation_back_dark);
         return false;
+    }
+
+    public int getBackResIconId() {
+        return R.drawable.ic_action_navigation_back_dark;
     }
 
     protected int addFragment(int containerId, Fragment fragment) {
@@ -58,11 +61,11 @@ public class AbsActionBarActivity extends ActionBarActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        case android.R.id.home:
+            onBackPressed();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
         }
     }
 }

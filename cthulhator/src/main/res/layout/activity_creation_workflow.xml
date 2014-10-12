@@ -2,8 +2,10 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".CreationWorkFlowActivity">
 
     <com.bustiblelemons.cthulhator.view.charactercard.CharacterCardView
         android:id="@id/preview_card"
@@ -19,29 +21,59 @@
         app:shortText="@string/placeholder_short_info"
         app:show_menu="false" />
 
-
     <ScrollView
         android:id="@id/questionare"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/preview_card">
+        android:layout_below="@id/preview_card"
+        android:paddingTop="@dimen/fab_offset_positive">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
 
             <RelativeLayout
                 android:id="@id/add_character_details"
                 style="@style/card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/padding_16">
+                android:visibility="visible"
+                tools:visibility="gone">
+
+                <TextView
+                    android:id="@android:id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@android:id/icon"
+                    android:padding="@dimen/padding_16"
+                    android:text="@string/add_character_info"
+                    android:textColor="@color/black_87"
+                    android:textSize="@dimen/material_subhead" />
+
+                <View
+                    style="@style/inset_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@android:id/icon" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/add_character_info" />
+                    android:layout_below="@android:id/icon"
+                    android:paddingBottom="@dimen/padding_8"
+                    android:paddingLeft="@dimen/padding_16"
+                    android:paddingRight="@dimen/padding_16"
+                    android:paddingTop="@dimen/padding_8"
+                    android:text="@string/hint_assign_name"
+                    android:textColor="@color/black_54"
+                    android:textSize="@dimen/material_body_1" />
+
+                <ImageView
+                    android:id="@android:id/icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_johnny_automatic_mirror_drawing" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -50,12 +82,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/add_character_details"
-                android:padding="@dimen/padding_16">
+                android:visibility="visible"
+                tools:visibility="visible">
+
+                <TextView
+                    android:id="@android:id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@android:id/icon"
+                    android:padding="@dimen/padding_16"
+                    android:text="@string/add_character_history"
+                    android:textColor="@color/black_87"
+                    android:textSize="@dimen/material_subhead" />
+
+                <View
+                    style="@style/inset_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@android:id/icon" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/add_character_history" />
+                    android:layout_below="@android:id/icon"
+                    android:paddingBottom="@dimen/padding_8"
+                    android:paddingLeft="@dimen/padding_16"
+                    android:paddingRight="@dimen/padding_16"
+                    android:paddingTop="@dimen/padding_8"
+                    android:text="@string/hint_assign_name"
+                    android:textColor="@color/black_54"
+                    android:textSize="@dimen/material_body_1" />
+
+                <ImageView
+                    android:id="@android:id/icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_pocketwatch" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -63,13 +126,42 @@
                 style="@style/card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/add_character_history"
-                android:padding="@dimen/padding_16">
+                android:layout_below="@id/add_character_history">
+
+                <TextView
+                    android:id="@android:id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@android:id/icon"
+                    android:padding="@dimen/padding_16"
+                    android:text="@string/add_character_statistics"
+                    android:textColor="@color/black_87"
+                    android:textSize="@dimen/material_subhead" />
+
+                <View
+                    style="@style/inset_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@android:id/icon" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/add_character_statistics" />
+                    android:layout_below="@android:id/icon"
+                    android:paddingBottom="@dimen/padding_8"
+                    android:paddingLeft="@dimen/padding_16"
+                    android:paddingRight="@dimen/padding_16"
+                    android:paddingTop="@dimen/padding_8"
+                    android:text="@string/hint_assign_properties"
+                    android:textColor="@color/black_54"
+                    android:textSize="@dimen/material_body_1" />
+
+                <ImageView
+                    android:id="@android:id/icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_strongmaninacircle" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -77,13 +169,42 @@
                 style="@style/card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/add_character_statistics"
-                android:padding="@dimen/padding_16">
+                android:layout_below="@id/add_character_statistics">
+
+                <TextView
+                    android:id="@android:id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@android:id/icon"
+                    android:padding="@dimen/padding_16"
+                    android:text="@string/add_character_equipment"
+                    android:textColor="@color/black_87"
+                    android:textSize="@dimen/material_subhead" />
+
+                <View
+                    style="@style/inset_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@android:id/icon" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/add_character_equipment" />
+                    android:layout_below="@android:id/icon"
+                    android:paddingBottom="@dimen/padding_8"
+                    android:paddingLeft="@dimen/padding_16"
+                    android:paddingRight="@dimen/padding_16"
+                    android:paddingTop="@dimen/padding_8"
+                    android:text="@string/hint_equipment"
+                    android:textColor="@color/black_54"
+                    android:textSize="@dimen/material_body_1" />
+
+                <ImageView
+                    android:id="@android:id/icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_bag" />
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
@@ -92,8 +213,8 @@
         android:id="@id/done"
         android:layout_width="@dimen/fab"
         android:layout_height="@dimen/fab"
-        android:layout_alignBottom="@id/preview_card"
         android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/questionare"
         android:layout_marginBottom="@dimen/fab_offset"
         android:layout_marginLeft="@dimen/padding_16"
         android:layout_marginRight="@dimen/padding_16"

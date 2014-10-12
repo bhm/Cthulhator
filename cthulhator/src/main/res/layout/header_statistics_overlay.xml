@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@id/header"
@@ -25,7 +25,7 @@
             android:text="@string/characteristics"
             android:textAllCaps="true"
             android:textColor="@color/white_87"
-            android:textSize="@dimen/headline"/>
+            android:textSize="@dimen/material_headline" />
 
         <TextView
             android:id="@id/suggested_skillset"
@@ -40,8 +40,8 @@
             android:gravity="center|left"
             android:text="@string/placeholder_suggested_proffession"
             android:textColor="@color/white_54"
-            android:textSize="@dimen/subhead"
-            android:textStyle="italic"/>
+            android:textSize="@dimen/material_subhead"
+            android:textStyle="italic" />
     </RelativeLayout>
 
     <FrameLayout
@@ -49,7 +49,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/fab_pivot"
         android:layout_below="@id/header"
-        tools:background="@color/orange_100">
-    </FrameLayout>
+        tools:background="@color/orange_100"></FrameLayout>
 
 </RelativeLayout>

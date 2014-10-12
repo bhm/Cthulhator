@@ -69,6 +69,7 @@ public class SkillsListFragment extends AbsArgFragment<SavedCharacter>
     private void setupPoints() {
         mCareerPoints = mSavedCharacter.getCareerPoints();
         mHobbyPoints = mSavedCharacter.getHobbyPoints();
+        setPointsAvailable(mHobbyPoints + mCareerPoints);
     }
 
     private void setPointsAvailable(int points) {

@@ -3,23 +3,24 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <style name="BRPTheme" parent="@style/_BRPTheme"/>
+    <style name="BRPTheme" parent="@style/_BRPTheme" />
 
-  <style name="_BRPTheme" parent="AppTheme.Light.TranslucentActionBar">
+    <style name="_BRPTheme" parent="AppTheme.Light.TranslucentActionBar">
+        <item name="android:homeAsUpIndicator">@drawable/home_as_up</item>
 
-    <item name="android:textColorHighlight">#99607d8b</item>
-    <item name="android:textSelectHandleLeft">@drawable/brptheme_text_select_handle_left</item>
-    <item name="android:textSelectHandleRight">@drawable/brptheme_text_select_handle_right</item>
-    <item name="android:textSelectHandle">@drawable/brptheme_text_select_handle_middle</item>
+        <item name="android:textColorHighlight">#99607d8b</item>
+        <item name="android:textSelectHandleLeft">@drawable/brptheme_text_select_handle_left</item>
+        <item name="android:textSelectHandleRight">@drawable/brptheme_text_select_handle_right</item>
+        <item name="android:textSelectHandle">@drawable/brptheme_text_select_handle_middle</item>
 
-    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewBRPTheme</item>
+        <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewBRPTheme</item>
 
-    <item name="android:buttonStyle">@style/ButtonBRPTheme</item>
+        <item name="android:buttonStyle">@style/ButtonBRPTheme</item>
 
-    <item name="android:imageButtonStyle">@style/ImageButtonBRPTheme</item>
+        <item name="android:imageButtonStyle">@style/ImageButtonBRPTheme</item>
 
-    <item name="android:fastScrollThumbDrawable">@drawable/brptheme_fastscroll_thumb_holo</item>
+        <item name="android:fastScrollThumbDrawable">@drawable/brptheme_fastscroll_thumb_holo</item>
 
-  </style>
+    </style>
 
 </resources>

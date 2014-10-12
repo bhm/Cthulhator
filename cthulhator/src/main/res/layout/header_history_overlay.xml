@@ -1,5 +1,4 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -22,8 +21,8 @@
             android:paddingRight="@dimen/padding_16"
             android:text="@string/born"
             android:textColor="@color/white_87"
-            android:textSize="@dimen/title"
-            android:textStyle="bold"/>
+            android:textSize="@dimen/material_title"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@id/pick_birth"
@@ -37,8 +36,8 @@
             android:paddingLeft="@dimen/padding_16"
             android:paddingRight="@dimen/padding_16"
             android:textColor="@color/white_54"
-            android:textSize="@dimen/subhead"
-            tools:text="@string/placeholder_date"/>
+            android:textSize="@dimen/material_subhead"
+            tools:text="@string/placeholder_date" />
     </RelativeLayout>
 
     <FrameLayout
@@ -46,8 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/fab_pivot"
         android:layout_below="@id/header"
-        tools:background="@color/orange_100">
-    </FrameLayout>
+        tools:background="@color/orange_100"></FrameLayout>
 
     <at.markushi.ui.CircleButton
         android:id="@id/fab"
@@ -58,5 +56,5 @@
         android:layout_marginBottom="@dimen/fab_offset"
         android:layout_marginRight="@dimen/padding_16"
         android:src="@drawable/add_new_selector"
-        app:cb_color="@color/fab_done"/>
+        app:cb_color="@color/fab_done" />
 </RelativeLayout>

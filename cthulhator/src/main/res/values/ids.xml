@@ -1,106 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="cards_container" type="id"/>
-    <item name="value" type="id"/>
-    <item name="mythos_value" type="id"/>
-    <item name="sanity_value" type="id"/>
-    <item name="idea_value" type="id"/>
-    <item name="str" type="id"/>
-    <item name="siz" type="id"/>
-    <item name="kon" type="id"/>
-    <item name="dex" type="id"/>
-    <item name="add_picture" type="id"/>
-    <item name="bottom_card" type="id"/>
-    <item name="action_settings" type="id"/>
-    <item name="action_portriats" type="id"/>
-    <item name="action_character" type="id"/>
-    <item name="gender_spinner" type="id"/>
-    <item name="name" type="id"/>
-    <item name="location" type="id"/>
-    <item name="street" type="id"/>
-    <item name="city" type="id"/>
-    <item name="state" type="id"/>
-    <item name="zipcode" type="id"/>
-    <item name="street_title" type="id"/>
-    <item name="pick_location" type="id"/>
-    <item name="pager" type="id"/>
-    <item name="name_widget_title" type="id"/>
-    <item name="name_widget_name" type="id"/>
-    <item name="year_seekbar" type="id"/>
-    <item name="characteristic_pager" type="id"/>
-    <item name="hair" type="id"/>
-    <item name="personality" type="id"/>
-    <item name="speech" type="id"/>
-    <item name="characteristic" type="id"/>
-    <item name="facial" type="id"/>
-    <item name="photos_pager" type="id"/>
-    <item name="names_pager" type="id"/>
-    <item name="location_pager" type="id"/>
-    <item name="fab" type="id"/>
-    <item name="seekbar" type="id"/>
-    <item name="tag_search" type="id"/>
-    <item name="dummy_photos_pager" type="id"/>
-    <item name="year_spinner" type="id"/>
-    <item name="tag_search_prev" type="id"/>
-    <item name="add_character" type="id"/>
-    <item name="add_character_details" type="id"/>
-    <item name="add_character_statistics" type="id"/>
-    <item name="add_character_history" type="id"/>
-    <item name="add_character_equipement" type="id"/>
-    <item name="points_available" type="id"/>
-    <item name="reroll" type="id"/>
-    <item name="header" type="id"/>
-    <item name="size" type="id"/>
-    <item name="damage_bonus" type="id"/>
-    <item name="con" type="id"/>
-    <item name="hit_points" type="id"/>
-    <item name="body" type="id"/>
-    <item name="mind" type="id"/>
-    <item name="pow" type="id"/>
-    <item name="sanity" type="id"/>
-    <item name="luck" type="id"/>
-    <item name="magic_points" type="id"/>
-    <item name="sanity_points" type="id"/>
-    <item name="power_card" type="id"/>
-    <item name="body_card" type="id"/>
-    <item name="dex_card" type="id"/>
-    <item name="dodge" type="id"/>
-    <item name="int_card" type="id"/>
-    <item name="intelligence" type="id"/>
-    <item name="idea" type="id"/>
-    <item name="edu" type="id"/>
-    <item name="knowledge" type="id"/>
-    <item name="age_card" type="id"/>
-    <item name="edu_card" type="id"/>
-    <item name="age" type="id"/>
-    <item name="career_skill_points" type="id"/>
-    <item name="hobby_skill_points" type="id"/>
-    <item name="scroll" type="id"/>
-    <item name="app_card" type="id"/>
-    <item name="app" type="id"/>
-    <item name="questionare" type="id"/>
-    <item name="preview_card" type="id"/>
-    <item name="skills" type="id"/>
-    <item name="top_characteristics" type="id"/>
-    <item name="extra_info" type="id"/>
-    <item name="short_info" type="id"/>
-    <item name="main_info" type="id"/>
-    <item name="delete" type="id"/>
-    <item name="cancel" type="id"/>
-    <item name="menu" type="id"/>
-    <item name="proverb" type="id"/>
-    <item name="assign_skills" type="id"/>
-    <item name="extra_info_text" type="id"/>
-    <item name="gender_pager" type="id"/>
-    <item name="suggested_skillset" type="id"/>
-    <item name="skill_editor_frame" type="id"/>
-    <item name="done" type="id"/>
-    <item name="card" type="id"/>
-    <item name="date" type="id"/>
-    <item name="add" type="id"/>
-    <item name="tag_date" type="id"/>
-    <item name="pick_birth" type="id"/>
-    <item name="fab_pivot" type="id"/>
-    <item name="list" type="id"/>
-    <item name="editor" type="id"/>
+    <item name="cards_container" type="id" />
+    <item name="value" type="id" />
+    <item name="mythos_value" type="id" />
+    <item name="sanity_value" type="id" />
+    <item name="idea_value" type="id" />
+    <item name="str" type="id" />
+    <item name="siz" type="id" />
+    <item name="kon" type="id" />
+    <item name="dex" type="id" />
+    <item name="add_picture" type="id" />
+    <item name="bottom_card" type="id" />
+    <item name="action_settings" type="id" />
+    <item name="action_portriats" type="id" />
+    <item name="action_character" type="id" />
+    <item name="gender_spinner" type="id" />
+    <item name="name" type="id" />
+    <item name="location" type="id" />
+    <item name="street" type="id" />
+    <item name="city" type="id" />
+    <item name="state" type="id" />
+    <item name="zipcode" type="id" />
+    <item name="street_title" type="id" />
+    <item name="pick_location" type="id" />
+    <item name="pager" type="id" />
+    <item name="name_widget_title" type="id" />
+    <item name="name_widget_name" type="id" />
+    <item name="year_seekbar" type="id" />
+    <item name="characteristic_pager" type="id" />
+    <item name="hair" type="id" />
+    <item name="personality" type="id" />
+    <item name="speech" type="id" />
+    <item name="characteristic" type="id" />
+    <item name="facial" type="id" />
+    <item name="photos_pager" type="id" />
+    <item name="names_pager" type="id" />
+    <item name="location_pager" type="id" />
+    <item name="fab" type="id" />
+    <item name="seekbar" type="id" />
+    <item name="tag_search" type="id" />
+    <item name="dummy_photos_pager" type="id" />
+    <item name="year_spinner" type="id" />
+    <item name="tag_search_prev" type="id" />
+    <item name="add_character" type="id" />
+    <item name="add_character_details" type="id" />
+    <item name="add_character_statistics" type="id" />
+    <item name="add_character_history" type="id" />
+    <item name="add_character_equipement" type="id" />
+    <item name="points_available" type="id" />
+    <item name="reroll" type="id" />
+    <item name="header" type="id" />
+    <item name="size" type="id" />
+    <item name="damage_bonus" type="id" />
+    <item name="con" type="id" />
+    <item name="hit_points" type="id" />
+    <item name="body" type="id" />
+    <item name="mind" type="id" />
+    <item name="pow" type="id" />
+    <item name="sanity" type="id" />
+    <item name="luck" type="id" />
+    <item name="magic_points" type="id" />
+    <item name="sanity_points" type="id" />
+    <item name="power_card" type="id" />
+    <item name="body_card" type="id" />
+    <item name="dex_card" type="id" />
+    <item name="dodge" type="id" />
+    <item name="int_card" type="id" />
+    <item name="intelligence" type="id" />
+    <item name="idea" type="id" />
+    <item name="edu" type="id" />
+    <item name="knowledge" type="id" />
+    <item name="age_card" type="id" />
+    <item name="edu_card" type="id" />
+    <item name="age" type="id" />
+    <item name="career_skill_points" type="id" />
+    <item name="hobby_skill_points" type="id" />
+    <item name="scroll" type="id" />
+    <item name="app_card" type="id" />
+    <item name="app" type="id" />
+    <item name="questionare" type="id" />
+    <item name="preview_card" type="id" />
+    <item name="skills" type="id" />
+    <item name="top_characteristics" type="id" />
+    <item name="extra_info" type="id" />
+    <item name="short_info" type="id" />
+    <item name="main_info" type="id" />
+    <item name="delete" type="id" />
+    <item name="cancel" type="id" />
+    <item name="menu" type="id" />
+    <item name="proverb" type="id" />
+    <item name="assign_skills" type="id" />
+    <item name="extra_info_text" type="id" />
+    <item name="gender_pager" type="id" />
+    <item name="suggested_skillset" type="id" />
+    <item name="skill_editor_frame" type="id" />
+    <item name="done" type="id" />
+    <item name="card" type="id" />
+    <item name="date" type="id" />
+    <item name="add" type="id" />
+    <item name="tag_date" type="id" />
+    <item name="pick_birth" type="id" />
+    <item name="fab_pivot" type="id" />
+    <item name="list" type="id" />
+    <item name="editor" type="id" />
+    <item name="strongman" type="id" />
+    <item name="johnny" type="id" />
 </resources>

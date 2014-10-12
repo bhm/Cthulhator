@@ -16,6 +16,11 @@ import com.bustiblelemons.cthulhator.character.skills.ui.SkillsChooserActivity;
  */
 public abstract class AbsCharacterCreationActivity extends AbsArgActivity<SavedCharacter> {
 
+    @Override
+    public int getBackResIconId() {
+        return R.drawable.ic_action_navigation_back;
+    }
+
     protected void launchStatisticsCreator(SavedCharacter character) {
         Intent i = new Intent(this, StatisticsCreatorActivity.class);
         launchCreationActivity(i, StatisticsCreatorActivity.REQUEST_CODE, character);

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <bitmap
+            android:antialias="true"
+            android:gravity="center"
+            android:src="@drawable/ic_action_navigation_back" />
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <size android:width="32dp" />
+            <solid android:color="@android:color/transparent" />
+            <padding android:left="@dimen/padding_72" />
+        </shape>
+    </item>
+</layer-list>
