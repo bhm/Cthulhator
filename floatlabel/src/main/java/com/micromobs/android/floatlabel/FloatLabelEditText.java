@@ -34,6 +34,7 @@ public class FloatLabelEditText
     private Context      mContext;
     private EditText     mEditTextView;
     private TextView     mFloatingLabel;
+    private boolean mNoSuggestions = true;
 
     // -----------------------------------------------------------------------
     // default constructors
@@ -74,18 +75,18 @@ public class FloatLabelEditText
         return "";
     }
 
-    public void setText(int resId) {
+    public void setText(CharSequence title) {
         if (mEditTextView != null) {
-            mEditTextView.setText(resId);
+            mEditTextView.setText(title);
         }
     }
 
     // -----------------------------------------------------------------------
     // private helpers
 
-    public void setText(CharSequence title) {
+    public void setText(int resId) {
         if (mEditTextView != null) {
-            mEditTextView.setText(title);
+            mEditTextView.setText(resId);
         }
     }
 
@@ -130,6 +131,7 @@ public class FloatLabelEditText
                 android.R.color.black);
         mUnFocusedColor = a.getColor(R.styleable.FloatLabelEditText_textColorHintUnFocused,
                 android.R.color.darker_gray);
+        mNoSuggestions = a.getBoolean(R.styleable.FloatLabelEditText_noSuggestions, mNoSuggestions);
         mFitScreenWidth = a.getInt(R.styleable.FloatLabelEditText_fitScreenWidth, 0);
         mIsPassword = (a.getInt(R.styleable.FloatLabelEditText_inputType, 0) == 1);
         a.recycle();
@@ -137,8 +139,12 @@ public class FloatLabelEditText
 
     private void setupEditTextView() {
         if (mIsPassword) {
-            mEditTextView.setInputType(InputType.TYPE_CLASS_TEXT |
-                    InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            int type = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD;
+            if (mNoSuggestions) {
+                type = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType
+                        .TYPE_TEXT_FLAG_NO_SUGGESTIONS;
+            }
+            mEditTextView.setInputType(type);
             mEditTextView.setTypeface(Typeface.DEFAULT);
         }
 
@@ -281,10 +287,10 @@ public class FloatLabelEditText
         int prevWidth = mEditTextView.getWidth();
 
         switch (mFitScreenWidth) {
-            case 2:
-                return (int) Math.round(screenWidth * 0.5);
-            default:
-                return Math.round(screenWidth);
+        case 2:
+            return (int) Math.round(screenWidth * 0.5);
+        default:
+            return Math.round(screenWidth);
         }
     }
 
