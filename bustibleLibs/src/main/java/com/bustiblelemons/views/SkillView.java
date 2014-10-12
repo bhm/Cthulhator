@@ -45,9 +45,9 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
     private Drawable        incDrawable;
     private Drawable        decDrawable;
     private OnClickListener cachedOnClick;
-    private int maxValue = 100;
-    private int mValue   = maxValue;
-    private int minValue = 0;
+    private int maxValue   = 100;
+    private int mValue     = maxValue;
+    private int minValue   = 0;
     private int mTextColor = R.color.black_87;
     private SkillViewListener mChachedSkillViewListener;
     private final SkillViewListener mSkillViewListener = new SkillViewListener() {
@@ -67,11 +67,11 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
 
         @Override
         public boolean onIncreaseClicked(SkillView view) {
-            if (mChachedSkillViewListener != null &&
-                    mChachedSkillViewListener.onIncreaseClicked(view)) {
-                return true;
+            boolean cachedResp = false;
+            if (mChachedSkillViewListener != null) {
+                cachedResp = mChachedSkillViewListener.onIncreaseClicked(view);
             }
-            if (view.canIncrease()) {
+            if (view.canIncrease() && cachedResp) {
                 int nVal = getIntValue() + 1;
                 view.setIntValue(nVal);
                 return true;
@@ -81,11 +81,11 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
 
         @Override
         public boolean onDecreaseClicked(SkillView view) {
-            if (mChachedSkillViewListener != null &&
-                    mChachedSkillViewListener.onDecreaseClicked(view)) {
-                return true;
+            boolean cachedResp = false;
+            if (mChachedSkillViewListener != null) {
+                cachedResp = mChachedSkillViewListener.onDecreaseClicked(view);
             }
-            if (canDecrease()) {
+            if (canDecrease() && cachedResp) {
                 int nVal = view.getIntValue() - 1;
                 view.setIntValue(nVal);
                 return true;

@@ -38,13 +38,14 @@ public class SkillsListFragment extends AbsArgFragment<SavedCharacter>
     TextView                  pointsAvailable;
     //    private SkillsAdapter       mSkillsAdapter;
     private SkillsAdapterSticky mSkillsAdapterSticky;
-    private int                 total;
+    private int mPointsAvailable;
     private String              pointsAvailablePrefix;
     private SavedCharacter      mSavedCharacter;
     private int mCareerPoints = 0;
     private int mHobbyPoints  = 0;
     private Set<CharacterProperty> mSkills;
     private Comparator<CharacterProperty> mComparator = CharacterPropertyComparators.ACTION_GROUP;
+    private int mMaxPoints;
 
     public static SkillsListFragment newInstance(SavedCharacter arg) {
         SkillsListFragment r = new SkillsListFragment();
@@ -69,7 +70,9 @@ public class SkillsListFragment extends AbsArgFragment<SavedCharacter>
     private void setupPoints() {
         mCareerPoints = mSavedCharacter.getCareerPoints();
         mHobbyPoints = mSavedCharacter.getHobbyPoints();
-        setPointsAvailable(mHobbyPoints + mCareerPoints);
+        mPointsAvailable = mHobbyPoints = mCareerPoints;
+        mMaxPoints = mPointsAvailable;
+        setPointsAvailable(mMaxPoints);
     }
 
     private void setPointsAvailable(int points) {
@@ -90,9 +93,11 @@ public class SkillsListFragment extends AbsArgFragment<SavedCharacter>
 
     @Override
     public boolean onSkillChanged(CharacterProperty name, int value, boolean up) {
-        int afterTotal = up ? total + 1 : total - 1;
-        if (afterTotal >= 0) {
-            setPointsAvailable(total);
+        // uping the skill depletes the point pool
+        int afterTotal = up ? mPointsAvailable - 1 : mPointsAvailable + 1;
+        if (afterTotal >= 0 && afterTotal <= mMaxPoints) {
+            mPointsAvailable = afterTotal;
+            setPointsAvailable(mPointsAvailable);
             return true;
         }
         return false;
