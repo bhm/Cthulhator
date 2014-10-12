@@ -59,4 +59,9 @@
         <item name="android:background">@drawable/full_bleed_divider</item>
     </style>
 
+    <style name="indicator">
+        <item name="fillColor">@color/indicator_fill</item>
+        <item name="strokeColor">@color/indicator_stroke</item>
+    </style>
+
 </resources>
