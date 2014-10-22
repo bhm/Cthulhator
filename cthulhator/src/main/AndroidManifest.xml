@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="com.bustiblelemons.cthulhator"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.bustiblelemons.cthulhator">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -33,7 +32,8 @@
         <activity
             android:name=".character.characteristics.ui.StatisticsCreatorActivity"
             android:label="@string/add_character_statistics"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Platform.AppCompat" />
         <activity
             android:name=".character.history.ui.HistoryEditorActivity"
             android:label="@string/add_character_history"

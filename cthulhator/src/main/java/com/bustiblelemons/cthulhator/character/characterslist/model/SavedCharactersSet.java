@@ -3,8 +3,8 @@ package com.bustiblelemons.cthulhator.character.characterslist.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
 import java.util.ArrayList;

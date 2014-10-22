@@ -3,8 +3,8 @@ package com.bustiblelemons.cthulhator.system.properties;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
 
@@ -23,13 +23,13 @@ public class Relation implements Parcelable, Serializable {
             return new Relation[size];
         }
     };
-    private String       propertyName;
-    private int          modifier;
+    private String propertyName;
+    private int modifier;
     private ModifierType modifierType;
-    private int          max;
-    private int          min;
-    private boolean      modifiesMaximum;
-    private boolean      modifiesMinimum;
+    private int max;
+    private int min;
+    private boolean modifiesMaximum;
+    private boolean modifiesMinimum;
 
     public Relation() {
     }
@@ -107,16 +107,16 @@ public class Relation implements Parcelable, Serializable {
     @JsonIgnore
     public int getBaseValueByRelation(int relatedPropertyValue) {
         switch (modifierType) {
-        case MULTIPLY:
-            return relatedPropertyValue * modifier;
-        case ADDITION:
-            return relatedPropertyValue + modifier;
-        case DIVISION:
-            return relatedPropertyValue / modifier;
-        case SUBSTRACT:
-            return relatedPropertyValue - modifier;
-        default:
-            return relatedPropertyValue;
+            case MULTIPLY:
+                return relatedPropertyValue * modifier;
+            case ADDITION:
+                return relatedPropertyValue + modifier;
+            case DIVISION:
+                return relatedPropertyValue / modifier;
+            case SUBSTRACT:
+                return relatedPropertyValue - modifier;
+            default:
+                return relatedPropertyValue;
         }
     }
 

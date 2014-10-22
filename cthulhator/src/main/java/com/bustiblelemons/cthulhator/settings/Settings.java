@@ -8,8 +8,7 @@ import com.bustiblelemons.cthulhator.settings.character.CharacterSettingsImpl;
 import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
 import com.bustiblelemons.settings.BaseSettings;
 import com.bustiblelemons.storage.Storage;
-
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,10 +19,10 @@ import java.io.IOException;
  */
 public class Settings extends BaseSettings {
 
-    public static final  String CACHE_FOLDER                = "cache_folder";
-    private static final String EDITION                     = "edition";
-    private static       String sPortraitSettingsFilename   = "portraits.settings";
-    private static       String sRandomCharSettingsFilename = "random.char.settings";
+    public static final String CACHE_FOLDER = "cache_folder";
+    private static final String EDITION = "edition";
+    private static String sPortraitSettingsFilename = "portraits.settings";
+    private static String sRandomCharSettingsFilename = "random.char.settings";
 
 
     public static CharacterSettings getLastPortratiSettings(Context context) {

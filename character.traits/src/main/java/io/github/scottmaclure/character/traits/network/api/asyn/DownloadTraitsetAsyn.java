@@ -2,7 +2,7 @@ package io.github.scottmaclure.character.traits.network.api.asyn;
 
 import android.content.Context;
 
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 

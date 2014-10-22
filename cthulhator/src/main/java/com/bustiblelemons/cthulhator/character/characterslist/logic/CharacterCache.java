@@ -8,8 +8,7 @@ import com.bustiblelemons.cthulhator.system.Grouping;
 import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
 import com.bustiblelemons.logging.Logger;
 import com.bustiblelemons.storage.Storage;
-
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,8 +20,8 @@ import java.util.List;
  */
 public class CharacterCache {
 
-    private static final Logger log                  = new Logger(CharacterCache.class);
-    private static       String sCharactersCacheFile = "saved.characters.json";
+    private static final Logger log = new Logger(CharacterCache.class);
+    private static String sCharactersCacheFile = "saved.characters.json";
     private static CharacterCache instance;
 
     protected CharacterCache() {

@@ -1,15 +1,16 @@
 
 package io.github.scottmaclure.character.traits.model;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.codehaus.jackson.annotate.JsonAnyGetter;
-import org.codehaus.jackson.annotate.JsonAnySetter;
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.annotate.JsonPropertyOrder;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,31 +21,31 @@ import java.util.Random;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 @JsonPropertyOrder({
-    "speech",
-    "hair",
-    "facialFeatures",
-    "characteristics",
-    "personality",
-    "bodyLocations"
+        "speech",
+        "hair",
+        "facialFeatures",
+        "characteristics",
+        "personality",
+        "bodyLocations"
 })
 public class TraitsSet {
 
-    public static final String               FILE                 = "traits.json";
+    public static final String FILE = "traits.json";
     @JsonProperty("speech")
-    private             List<String>         speech               = new ArrayList<String>();
+    private List<String> speech = new ArrayList<String>();
     @JsonProperty("hair")
-    private             List<String>         hair                 = new ArrayList<String>();
+    private List<String> hair = new ArrayList<String>();
     @JsonProperty("facialFeatures")
-    private             List<String>         facialFeatures       = new ArrayList<String>();
+    private List<String> facialFeatures = new ArrayList<String>();
     @JsonProperty("characteristics")
-    private             List<Characteristic> characteristics      = new ArrayList<Characteristic>();
+    private List<Characteristic> characteristics = new ArrayList<Characteristic>();
     @JsonProperty("personality")
-    private             List<String>         personality          = new ArrayList<String>();
+    private List<String> personality = new ArrayList<String>();
     @JsonProperty("bodyLocations")
-    private             List<String>         bodyLocations        = new ArrayList<String>();
+    private List<String> bodyLocations = new ArrayList<String>();
     @JsonIgnore
-    private             Map<String, Object>  additionalProperties = new HashMap<String, Object>();
-    private             Random               mRandom              = new Random();
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Random mRandom = new Random();
 
     @JsonProperty("speech")
     public List<String> getSpeech() {

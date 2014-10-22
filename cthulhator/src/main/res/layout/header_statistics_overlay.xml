@@ -22,7 +22,7 @@
             android:layout_marginLeft="@dimen/actionbar_height"
             android:layout_marginTop="@dimen/actionbar_height"
             android:gravity="center|left"
-            android:text="@string/characteristics"
+            android:text="@string/statistics"
             android:textAllCaps="true"
             android:textColor="@color/white_87"
             android:textSize="@dimen/material_headline" />

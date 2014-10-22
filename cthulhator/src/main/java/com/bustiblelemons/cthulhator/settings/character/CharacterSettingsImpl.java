@@ -5,9 +5,9 @@ import android.support.v4.util.LruCache;
 import com.bustiblelemons.cthulhator.character.history.model.YearsPeriod;
 import com.bustiblelemons.cthulhator.system.time.CthulhuPeriod;
 import com.bustiblelemons.google.apis.GoogleSearchGender;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import org.apache.commons.lang.WordUtils;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import java.util.Locale;
 
@@ -20,8 +20,8 @@ public class CharacterSettingsImpl implements CharacterSettings {
             new LruCache<Integer, CharacterSettingsImpl>(3);
     private static CharacterSettings sDefaults;
     private CthulhuPeriod cthulhuPeriod = CthulhuPeriod.JAZZAGE;
-    private boolean            modern;
-    private int                year;
+    private boolean modern;
+    private int year;
     private GoogleSearchGender googleSearchGender;
 
     public CharacterSettingsImpl() {

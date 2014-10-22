@@ -3,8 +3,7 @@ package com.bustiblelemons.cache;
 import android.support.v4.util.LruCache;
 
 import com.bustiblelemons.logging.Logger;
-
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,9 +14,9 @@ import java.io.IOException;
 public abstract class AbsCache {
     public static final Logger log = new Logger(AbsCache.class);
 
-    private final int                                   memoryDivider = 1024 * 8;
-    private       int                                   cacheSize     = (int) (Runtime.getRuntime().maxMemory() / memoryDivider);
-    private       LruCache<CacheFileDescriptor, byte[]> sCache        = new LruCache<CacheFileDescriptor, byte[]>(
+    private final int memoryDivider = 1024 * 8;
+    private int cacheSize = (int) (Runtime.getRuntime().maxMemory() / memoryDivider);
+    private LruCache<CacheFileDescriptor, byte[]> sCache = new LruCache<CacheFileDescriptor, byte[]>(
             cacheSize);
     private CacheConfig confg;
 

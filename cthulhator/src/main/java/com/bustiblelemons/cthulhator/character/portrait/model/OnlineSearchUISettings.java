@@ -1,8 +1,8 @@
 package com.bustiblelemons.cthulhator.character.portrait.model;
 
 import com.bustiblelemons.cthulhator.settings.character.CharacterSettings;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  * Created by bhm on 12.08.14.

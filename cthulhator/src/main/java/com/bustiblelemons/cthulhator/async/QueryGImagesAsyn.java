@@ -8,9 +8,9 @@ import com.bustiblelemons.google.apis.search.params.GImageSearch;
 import com.bustiblelemons.logging.Logger;
 import com.bustiblelemons.model.OnlinePhotoUrl;
 import com.bustiblelemons.model.OnlinePhotoUrlImpl;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.http.HttpResponse;
-import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
 import java.io.InputStream;

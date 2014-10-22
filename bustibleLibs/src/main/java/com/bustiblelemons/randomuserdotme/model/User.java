@@ -4,8 +4,8 @@ package com.bustiblelemons.randomuserdotme.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
 
@@ -21,23 +21,23 @@ public class User implements Serializable, Parcelable {
             return new User[size];
         }
     };
-    private String   sSN;
-    private String   cell;
-    private String   dob;
-    private String   email;
-    private String   gender;
+    private String sSN;
+    private String cell;
+    private String dob;
+    private String email;
+    private String gender;
     private Location location;
-    private String   md5;
-    private Name     name;
-    private String   password;
-    private String   phone;
-    private Picture  picture;
-    private String   registered;
-    private String   salt;
-    private String   sha1;
-    private String   sha256;
-    private String   username;
-    private String   version;
+    private String md5;
+    private Name name;
+    private String password;
+    private String phone;
+    private Picture picture;
+    private String registered;
+    private String salt;
+    private String sha1;
+    private String sha256;
+    private String username;
+    private String version;
 
     public User() {
     }

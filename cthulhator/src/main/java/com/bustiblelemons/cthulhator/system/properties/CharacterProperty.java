@@ -3,8 +3,8 @@ package com.bustiblelemons.cthulhator.system.properties;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import java.util.Set;
 public class CharacterProperty implements Serializable, Parcelable {
 
     @JsonIgnore
-    public static final CharacterProperty                     EMPTY   = new CharacterProperty();
+    public static final CharacterProperty EMPTY = new CharacterProperty();
     public static final Parcelable.Creator<CharacterProperty> CREATOR = new Parcelable.Creator<CharacterProperty>() {
         public CharacterProperty createFromParcel(Parcel source) {
             return new CharacterProperty(source);
@@ -32,19 +32,19 @@ public class CharacterProperty implements Serializable, Parcelable {
             return new CharacterProperty[size];
         }
     };
-    private String            name;
-    private int               value;
-    private int               maxValue;
-    private int               minValue;
-    private int               baseValue;
-    private PropertyFormat    format;
-    private PropertyType      type;
+    private String name;
+    private int value;
+    private int maxValue;
+    private int minValue;
+    private int baseValue;
+    private PropertyFormat format;
+    private PropertyType type;
     private List<ActionGroup> actionGroup;
-    private Set<Relation>     relations;
+    private Set<Relation> relations;
     @JsonIgnore
     private int nameResId = -1;
     @JsonIgnore
-    private int         shortNameResId;
+    private int shortNameResId;
     @JsonIgnore
     private ActionGroup mMainActionGroup;
 

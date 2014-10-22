@@ -3,7 +3,7 @@ package io.github.scottmaclure.character.traits.providers;
 import android.content.Context;
 import android.content.res.AssetManager;
 
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,7 +23,7 @@ import io.github.scottmaclure.character.traits.storage.Storage;
  */
 public class RandomTraitsSetProvider {
     private static RandomTraitsSetProvider instance;
-    private final  Context                 mContext;
+    private final Context mContext;
     private String sDefaultTraitsJson = "traits-default.json";
     private TraitsSet mSet;
     private OnRandomTraitsetDownloaded sOnRandomTraitsetCallbackExtra = new OnRandomTraitsetDownloaded() {
@@ -44,6 +44,10 @@ public class RandomTraitsSetProvider {
         return instance == null ? instance = new RandomTraitsSetProvider(context) : instance;
     }
 
+    public static final ObjectMapper getMapper() {
+        return LazyMapper.INSTANCE;
+    }
+
     private TraitsSet getTraitSet(Context context) {
         if (hasDownloaded(context)) {
             try {
@@ -58,7 +62,7 @@ public class RandomTraitsSetProvider {
     }
 
     private TraitsSet readFromDownloaded(Context context) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = getMapper();
         File saveFile = Storage.getStorageFile(context, TraitsSet.FILE);
         return mapper.readValue(new FileInputStream(saveFile), TraitsSet.class);
     }
@@ -79,7 +83,7 @@ public class RandomTraitsSetProvider {
         if (manager != null) {
             try {
                 InputStream in = manager.open(sDefaultTraitsJson);
-                ObjectMapper mapper = new ObjectMapper();
+                ObjectMapper mapper = getMapper();
                 TraitsSet set = mapper.readValue(in, TraitsSet.class);
                 return set;
             } catch (IOException e) {
@@ -109,6 +113,10 @@ public class RandomTraitsSetProvider {
             }
         }
         return r;
+    }
+
+    private static final class LazyMapper {
+        private static final ObjectMapper INSTANCE = new ObjectMapper();
     }
 
     private class AnonymDownloadTraiSet extends DownloadTraitsetAsyn {

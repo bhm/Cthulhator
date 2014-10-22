@@ -10,8 +10,7 @@ import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 import com.bustiblelemons.cthulhator.system.properties.Relation;
 import com.bustiblelemons.randomuserdotme.model.Location;
-
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
 import java.util.List;

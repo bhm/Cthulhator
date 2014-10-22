@@ -1,8 +1,7 @@
 package com.bustiblelemons.cthulhator.system.dice;
 
 import com.bustiblelemons.patterns.ObservedObjectImpl;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Random;
 
@@ -12,9 +11,9 @@ import java.util.Random;
 public class PointPool extends ObservedObjectImpl<Integer> {
     public static final PointPool EMPTY = new PointPool(Integer.MAX_VALUE);
     private Random mRandom;
-    private int mMax   = Integer.MAX_VALUE;
+    private int mMax = Integer.MAX_VALUE;
     private int points = mMax;
-    private int mMin   = 0;
+    private int mMin = 0;
 
     private PointPool(int max) {
         this(0, max);
@@ -157,8 +156,8 @@ public class PointPool extends ObservedObjectImpl<Integer> {
 
     public static class Builder {
         private long mSeed = System.currentTimeMillis();
-        private int  mMax  = 100;
-        private int  mMin  = 0;
+        private int mMax = 100;
+        private int mMin = 0;
 
         public Builder setSeed(long mSeed) {
             this.mSeed = mSeed;

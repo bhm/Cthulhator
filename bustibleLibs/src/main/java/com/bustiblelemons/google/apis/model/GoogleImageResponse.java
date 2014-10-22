@@ -1,6 +1,7 @@
 package com.bustiblelemons.google.apis.model;
 
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Collections;
 import java.util.List;
@@ -11,8 +12,8 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GoogleImageResponse {
     private GImageResponseData responseData;
-    private String             responseDetails;
-    private int                responseStatus;
+    private String responseDetails;
+    private int responseStatus;
 
     public List<GoogleImageObject> getResults() {
         return responseData != null ? responseData.getResults() :

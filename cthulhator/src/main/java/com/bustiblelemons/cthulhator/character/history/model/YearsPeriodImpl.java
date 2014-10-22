@@ -1,6 +1,7 @@
 package com.bustiblelemons.cthulhator.character.history.model;
 
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
 
@@ -10,10 +11,10 @@ import java.io.Serializable;
 @JsonIgnoreProperties({"Builder", "MODERN", "CURRENT_YEAR"})
 public class YearsPeriodImpl implements Serializable, YearsPeriod {
 
-    private int    maxYear;
-    private int    minYear;
-    private int    yearJump;
-    private int    defaultYear;
+    private int maxYear;
+    private int minYear;
+    private int yearJump;
+    private int defaultYear;
     private String name;
 
     private YearsPeriodImpl(Builder b) {
@@ -51,10 +52,10 @@ public class YearsPeriodImpl implements Serializable, YearsPeriod {
 
     public static class Builder {
 
-        protected int    jump;
-        protected int    min;
-        protected int    max;
-        protected int    defaultYear;
+        protected int jump;
+        protected int min;
+        protected int max;
+        protected int defaultYear;
         protected String name;
 
         public Builder setDefaultYear(int defaultYear) {

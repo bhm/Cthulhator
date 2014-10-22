@@ -6,8 +6,8 @@ import com.bustiblelemons.cthulhator.system.dice.PolyHedralDice;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 import com.bustiblelemons.cthulhator.system.properties.PropertyFormat;
 import com.bustiblelemons.cthulhator.system.properties.PropertyType;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 
-import org.codehaus.jackson.annotate.JsonIgnoreType;
 
 /**
  * Created by bhm on 10.09.14.
@@ -35,25 +35,25 @@ public class BRPStatCharacterProperty extends CharacterProperty {
     private static CharacterProperty fromBRPStatistic(BRPStatistic statistic) {
         PointPoolFromDiceFactory fromDice;
         switch (statistic) {
-        case CON:
-        case DEX:
-        case STR:
-        case APP:
-        case POW:
-            fromDice = new PointPoolFromDiceFactory();
-            fromDice.addDicePool(3, PolyHedralDice.D6);
-            return fromPointPool(fromDice.build());
-        case INT:
-        case SIZ:
-            fromDice = new PointPoolFromDiceFactory();
-            fromDice.addDicePool(2, PolyHedralDice.D6).addModifiers(6);
-            return fromPointPool(fromDice.build());
-        case EDU:
-            fromDice = new PointPoolFromDiceFactory();
-            fromDice.addDicePool(3, PolyHedralDice.D6).addModifiers(3);
-            return fromPointPool(fromDice.build());
-        default:
-            return new Builder().build();
+            case CON:
+            case DEX:
+            case STR:
+            case APP:
+            case POW:
+                fromDice = new PointPoolFromDiceFactory();
+                fromDice.addDicePool(3, PolyHedralDice.D6);
+                return fromPointPool(fromDice.build());
+            case INT:
+            case SIZ:
+                fromDice = new PointPoolFromDiceFactory();
+                fromDice.addDicePool(2, PolyHedralDice.D6).addModifiers(6);
+                return fromPointPool(fromDice.build());
+            case EDU:
+                fromDice = new PointPoolFromDiceFactory();
+                fromDice.addDicePool(3, PolyHedralDice.D6).addModifiers(3);
+                return fromPointPool(fromDice.build());
+            default:
+                return new Builder().build();
         }
     }
 
@@ -67,11 +67,11 @@ public class BRPStatCharacterProperty extends CharacterProperty {
 
     @JsonIgnoreType
     public static class Builder {
-        private int            max       = 100;
-        private int            min       = 0;
-        private int            baseValue = min;
-        private PropertyType   type      = PropertyType.STATISTIC;
-        private PropertyFormat format    = PropertyFormat.NUMBER;
+        private int max = 100;
+        private int min = 0;
+        private int baseValue = min;
+        private PropertyType type = PropertyType.STATISTIC;
+        private PropertyFormat format = PropertyFormat.NUMBER;
 
         public int getBaseValue() {
             return baseValue;

@@ -19,9 +19,9 @@ import com.bustiblelemons.cthulhator.system.properties.Relation;
 import com.bustiblelemons.cthulhator.system.time.CthulhuPeriod;
 import com.bustiblelemons.randomuserdotme.model.Location;
 import com.bustiblelemons.randomuserdotme.model.Name;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.joda.time.DateTime;
 
 import java.io.Serializable;
@@ -41,7 +41,7 @@ import java.util.TreeSet;
 public class SavedCharacter implements Parcelable, Serializable {
 
     @JsonIgnore
-    public static final Parcelable.Creator<SavedCharacter>                  CREATOR                    = new Parcelable.Creator<SavedCharacter>() {
+    public static final Parcelable.Creator<SavedCharacter> CREATOR = new Parcelable.Creator<SavedCharacter>() {
         public SavedCharacter createFromParcel(Parcel source) {
             return new SavedCharacter(source);
         }
@@ -51,28 +51,28 @@ public class SavedCharacter implements Parcelable, Serializable {
         }
     };
     @JsonIgnore
-    private static      LruCache<CharacterProperty, List<Possesion>>        cachedAffectedPossessions  =
+    private static LruCache<CharacterProperty, List<Possesion>> cachedAffectedPossessions =
             new LruCache<CharacterProperty, List<Possesion>>(20);
     @JsonIgnore
-    private static      LruCache<CharacterProperty, Set<CharacterProperty>> propertyToProperty         =
+    private static LruCache<CharacterProperty, Set<CharacterProperty>> propertyToProperty =
             new LruCache<CharacterProperty, Set<CharacterProperty>>(BRPStatistic.values().length);
     @JsonIgnore
-    private static      int                                                 sShouldHaveAssignedAtLeast = 2;
+    private static int sShouldHaveAssignedAtLeast = 2;
 
     static {
         sShouldHaveAssignedAtLeast = BRPStatistic.values().length / 5;
     }
 
-    protected Set<CharacterProperty> properties  = new HashSet<CharacterProperty>();
-    protected List<Possesion>        possesions  = new ArrayList<Possesion>();
-    protected Set<HistoryEvent>      fullHistory = new HashSet<HistoryEvent>();
+    protected Set<CharacterProperty> properties = new HashSet<CharacterProperty>();
+    protected List<Possesion> possesions = new ArrayList<Possesion>();
+    protected Set<HistoryEvent> fullHistory = new HashSet<HistoryEvent>();
     private CthulhuEdition edition = CthulhuEdition.CoC5;
     private CharacterDescription description;
-    private BirthData            birth;
-    private long                 presentDate;
-    private int                  age;
-    private CthulhuPeriod period        = CthulhuPeriod.JAZZAGE;
-    private long          suggestedDate = Long.MIN_VALUE;
+    private BirthData birth;
+    private long presentDate;
+    private int age;
+    private CthulhuPeriod period = CthulhuPeriod.JAZZAGE;
+    private long suggestedDate = Long.MIN_VALUE;
 
     public SavedCharacter() {
     }

@@ -1,8 +1,7 @@
 package com.bustiblelemons.cthulhator.character.characterslist.model;
 
 import com.bustiblelemons.randomuserdotme.model.User;
-
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 

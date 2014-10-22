@@ -6,9 +6,8 @@ import android.os.Parcelable;
 import com.bustiblelemons.cthulhator.character.portrait.model.Portrait;
 import com.bustiblelemons.randomuserdotme.model.Location;
 import com.bustiblelemons.randomuserdotme.model.Name;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,10 +29,10 @@ public class CharacterDescription implements Serializable, Parcelable {
             return new CharacterDescription[size];
         }
     };
-    private Name            name;
-    private Location        location;
+    private Name name;
+    private Location location;
     private RandomTraitsSet traits;
-    private List<Portrait>  portraitList;
+    private List<Portrait> portraitList;
 
     public CharacterDescription() {
     }

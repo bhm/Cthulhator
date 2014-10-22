@@ -1,6 +1,7 @@
 package com.bustiblelemons.cthulhator.system;
 
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Created by bhm on 13.08.14.
@@ -8,9 +9,9 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Grouping {
     public static final int DEFAULT_OFFSET = 0;
-    private             int offset         = DEFAULT_OFFSET;
-    public static final int DEFAULT_LIMIT  = 20;
-    private             int limit          = DEFAULT_LIMIT;
+    private int offset = DEFAULT_OFFSET;
+    public static final int DEFAULT_LIMIT = 20;
+    private int limit = DEFAULT_LIMIT;
 
     public int getLimit() {
         return limit;

@@ -5,8 +5,7 @@ import android.content.Context;
 import com.bustiblelemons.cthulhator.character.characterslist.model.RandomUserSaveModel;
 import com.bustiblelemons.randomuserdotme.model.User;
 import com.bustiblelemons.storage.Storage;
-
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.FileOutputStream;

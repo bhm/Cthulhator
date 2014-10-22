@@ -2,9 +2,10 @@ package io.github.scottmaclure.character.traits.network.api;
 
 import android.util.Log;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
 import java.io.InputStream;
