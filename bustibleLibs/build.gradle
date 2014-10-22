@@ -44,7 +44,11 @@ dependencies {
         force = true
     }
     provided 'commons-lang:commons-lang:2.6'
-    provided 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
+
+    provided 'com.fasterxml.jackson.core:jackson-databind:2.4.3'
+    provided 'com.fasterxml.jackson.core:jackson-annotations:2.4.3'
+    provided 'com.fasterxml.jackson.core:jackson-core:2.4.3'
+
     provided 'com.nostra13.universalimageloader:universal-image-loader:1.9.+'
     provided 'org.apache.httpcomponents:httpmime:4.2.5'
     provided 'com.jakewharton:butterknife:5.1.1'

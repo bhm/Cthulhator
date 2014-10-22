@@ -52,7 +52,10 @@ dependencies {
     compile('com.android.support:appcompat-v7:21.0.0') {
         force = true
     }
-    compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.4.3'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.4.3'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.4.3'
+
     compile 'commons-io:commons-io:2.4'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.+'
     compile 'com.github.manuelpeinado.fadingactionbar:fadingactionbar-abc:3.1.2'
