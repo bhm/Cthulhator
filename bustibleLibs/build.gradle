@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+    compileSdkVersion 21
+    buildToolsVersion '21.0.1'
 
     defaultConfig {
         applicationId "com.bustiblelemons.bustiblelibs"
@@ -40,7 +40,7 @@ android {
 dependencies {
     provided project(':circle-button')
     provided project(':floatlabel')
-    provided ('com.android.support:appcompat-v7:19.1.0') {
+    provided('com.android.support:appcompat-v7:21.0.0') {
         force = true
     }
     provided 'commons-lang:commons-lang:2.6'

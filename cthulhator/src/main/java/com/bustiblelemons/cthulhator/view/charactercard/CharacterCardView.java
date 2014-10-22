@@ -45,7 +45,7 @@ public class CharacterCardView extends RelativeLayout implements View.OnClickLis
     private String                    mMainText;
     private String                    mShortText;
     private String                    mExtraText;
-    private int mMenuIcon = R.drawable.abc_ic_menu_moreoverflow_normal_holo_light;
+    private int mMenuIcon = R.drawable.ic_overflow_dots;
 
     public CharacterCardView(Context context) {
         super(context);

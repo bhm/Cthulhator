@@ -11,17 +11,16 @@ repositories {
 
 
 dependencies {
-    provided ('com.android.support:appcompat-v7:19.1.0') {
+    provided('com.android.support:appcompat-v7:19.1.0') {
         force = true
     }
-
     provided 'com.jakewharton.espresso:espresso:1.1-r3'
     androidTestCompile 'com.jakewharton.espresso:espresso:1.1-r3'
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+    compileSdkVersion 21
+    buildToolsVersion '21.0.1'
 
 
 

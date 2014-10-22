@@ -18,7 +18,7 @@ import com.bustiblelemons.cthulhator.character.history.model.TimeSpan;
 import com.bustiblelemons.cthulhator.settings.Settings;
 import com.bustiblelemons.cthulhator.settings.character.CharacterSettings;
 import com.bustiblelemons.cthulhator.system.brp.statistics.BRPStatistic;
-import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
+//import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarHelper;
 
 import org.joda.time.DateTime;
@@ -36,25 +36,26 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
  */
 public class HistoryEditorActivity extends AbsCharacterCreationActivity
         implements OnOpenHistoryEventDetails,
-                   LoadHistoryEventsAsyn.OnHistoryEventsLoaded,
-                   HistoryEventDialog.OnHistoryEventPassedBack,
-                   OnShowDatePicker,
-                   ReportCharacterSettings,
-                   CalendarDatePickerDialog.OnDateSetListener {
+        LoadHistoryEventsAsyn.OnHistoryEventsLoaded,
+        HistoryEventDialog.OnHistoryEventPassedBack,
+//        OnShowDatePicker,
+//                   ReportCharacterSettings,
+//                   CalendarDatePickerDialog.OnDateSetListener {
+        ReportCharacterSettings {
 
-    public static final  int    REQUEST_CODE       = 8;
-    private static final String sDateFormat        = "MMM dd, yyyy";
-    private static final String sCalendarDialogTag = CalendarDatePickerDialog.class.getSimpleName();
+    public static final int REQUEST_CODE = 8;
+    private static final String sDateFormat = "MMM dd, yyyy";
+//    private static final String sCalendarDialogTag = CalendarDatePickerDialog.class.getSimpleName();
     @InjectView(R.id.list)
     StickyListHeadersListView listView;
     @InjectView(R.id.pick_birth)
-    TextView                  pickBirthView;
+    TextView pickBirthView;
     private TimeSpan span = TimeSpan.EMPTY;
     private SavedCharacter mSavedCharacter;
     private HistoryAdapter mHistoryAdapter;
-    private DateTime       mBirthDate;
-    private DateTime       mSuggestedDate;
-    private TimeSpan       mSpan;
+    private DateTime mBirthDate;
+    private DateTime mSuggestedDate;
+    private TimeSpan mSpan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,23 +150,23 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
         loadHistoryAsyn();
     }
 
-    @Override
-    public void onShowDatePickerCallback(DateTime forDateTime, CalendarDatePickerDialog.OnDateSetListener callback) {
-        if (forDateTime != null) {
-            CalendarDatePickerDialog d = CalendarDatePickerDialog.newInstance(callback,
-                    forDateTime.getYear(),
-                    forDateTime.getMonthOfYear(),
-                    forDateTime.getDayOfMonth());
-            int startYear = forDateTime.getYear() - 100;
-            int endYear = forDateTime.getYear() + 100;
-            d.setYearRange(startYear, endYear);
-            d.show(getSupportFragmentManager(), sCalendarDialogTag);
-        }
-    }
+//    @Override
+//    public void onShowDatePickerCallback(DateTime forDateTime, CalendarDatePickerDialog.OnDateSetListener callback) {
+//        if (forDateTime != null) {
+//            CalendarDatePickerDialog d = CalendarDatePickerDialog.newInstance(callback,
+//                    forDateTime.getYear(),
+//                    forDateTime.getMonthOfYear(),
+//                    forDateTime.getDayOfMonth());
+//            int startYear = forDateTime.getYear() - 100;
+//            int endYear = forDateTime.getYear() + 100;
+//            d.setYearRange(startYear, endYear);
+//            d.show(getSupportFragmentManager(), sCalendarDialogTag);
+//        }
+//    }
 
     @OnClick(R.id.pick_birth)
     public void onPickBirthday(View view) {
-        onShowDatePickerCallback(mBirthDate, this);
+//        onShowDatePickerCallback(mBirthDate, this);
     }
 
     private void setupBirthDate() {
@@ -197,12 +198,12 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
         return Settings.getLastPortratiSettings(this);
     }
 
-    @Override
-    public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog,
-                          int year, int monthOfYear, int yearOfMonth) {
-        int hour = mBirthDate.getHourOfDay();
-        int minute = mBirthDate.getMinuteOfHour();
-        mBirthDate = new DateTime(year, monthOfYear, yearOfMonth, hour, minute);
-        setBirthDayView();
-    }
+//    @Override
+//    public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog,
+//                          int year, int monthOfYear, int yearOfMonth) {
+//        int hour = mBirthDate.getHourOfDay();
+//        int minute = mBirthDate.getMinuteOfHour();
+//        mBirthDate = new DateTime(year, monthOfYear, yearOfMonth, hour, minute);
+//        setBirthDayView();
+//    }
 }

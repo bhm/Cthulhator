@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.bustiblelemons.bustiblelibs.R;
@@ -26,11 +25,11 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
     private View        rootView;
     private String      addresToLoad;
     private String      failbackAddress;
-    private ProgressBar progress;
+//    private ProgressBar progress;
     private ImageView   image;
     private boolean     showProgress;
     private int noImageRes = R.drawable.lemons;
-    private Animation animationIn;
+    private Animation mAnimationIn;
     private boolean   useAnimations;
 
     public LoadingImage(Context context) {
@@ -51,14 +50,14 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
     private void init(Context context, AttributeSet attrs) {
         rootView = LayoutInflater.from(context).inflate(R.layout.loading_image, this, true);
         image = (ImageView) rootView.findViewById(R.id.___image);
-        progress = (ProgressBar) rootView.findViewById(R.id.___progress);
+//        progress = (ProgressBar) rootView.findViewById(R.id.___progress);
         if (attrs != null) {
             TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.LoadingImage);
             noImageRes = array.getResourceId(R.styleable.LoadingImage_no_image, R.drawable.lemons);
             loadDefault();
             showProgress = array.getBoolean(R.styleable.LoadingImage_show_progressbar, false);
             if (showProgress) {
-                progress.setVisibility(View.VISIBLE);
+                showProgressBar();
             }
             setupAnimations(array);
             array.recycle();
@@ -76,7 +75,7 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
     }
 
     private void setAnimationIn(int resId) {
-        this.animationIn = getAnimation(resId);
+        mAnimationIn = getAnimation(resId);
     }
 
     private Animation getAnimation(int resId) {
@@ -115,9 +114,9 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
     }
 
     private void showProgressBar() {
-        if (showProgress) {
-            progress.setVisibility(VISIBLE);
-        }
+//        if (showProgress) {
+//            progress.setVisibility(VISIBLE);
+//        }
     }
 
     @Override
@@ -131,9 +130,9 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
     }
 
     private void hideProgressbar() {
-        if (showProgress) {
-            progress.setVisibility(GONE);
-        }
+//        if (showProgress) {
+//            progress.setVisibility(GONE);
+//        }
     }
 
     @Override
@@ -144,10 +143,10 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
     }
 
     private void loadBitmap(Bitmap loadedImage) {
-        if (useAnimations && animationIn != null) {
-            image.startAnimation(animationIn);
-        }
         image.setImageBitmap(loadedImage);
+        if (useAnimations && mAnimationIn != null) {
+            image.startAnimation(mAnimationIn);
+        }
     }
 
     @Override
@@ -157,7 +156,9 @@ public class LoadingImage extends RelativeLayout implements ImageLoadingListener
     }
 
     private void loadDefault() {
-        image.setImageResource(noImageRes);
+        if (image != null) {
+            image.setImageResource(noImageRes);
+        }
     }
 
     public void setImageDrawable(int noImageRes) {

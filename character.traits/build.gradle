@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+    compileSdkVersion 21
+    buildToolsVersion '21.0.1'
 
     defaultConfig {
         applicationId "io.github.scottmaclure.character.traits"
@@ -38,7 +38,7 @@ android {
 }
 
 dependencies {
-    provided ('com.android.support:appcompat-v7:19.1.0') {
+    provided('com.android.support:appcompat-v7:19.1.0') {
         force = true
     }
     provided 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
