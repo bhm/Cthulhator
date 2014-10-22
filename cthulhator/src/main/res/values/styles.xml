@@ -68,4 +68,36 @@
         <item name="strokeColor">@color/indicator_stroke</item>
     </style>
 
+    <style name="CreatorTheme" parent="Base.Theme.AppCompat.Light">
+        <item name="android:actionBarStyle">@null</item>
+        <item name="actionBarStyle">@null</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowActionModeOverlay">false</item>
+    </style>
+
+    <style name="toolbar_title">
+        <item name="android:textColor">@color/white_87</item>
+        <item name="android:textSize">@dimen/material_headline</item>
+        <item name="android:layout_marginBottom">@dimen/padding_4</item>
+        <item name="android:layout_marginLeft">@dimen/actionbar_height</item>
+        <item name="android:layout_marginTop">@dimen/actionbar_height</item>
+        <item name="android:gravity">center|left</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="toolbar_subtitle" parent="toolbar_title">
+        <item name="android:textColor">@color/white_54</item>
+        <item name="android:textSize">@dimen/material_subhead</item>
+        <item name="android:layout_marginBottom">@dimen/padding_4</item>
+        <item name="android:layout_marginLeft">@dimen/actionbar_height</item>
+        <item name="android:layout_marginTop">@dimen/actionbar_height</item>
+        <item name="android:gravity">center|left</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="statistic_creator_title" parent="toolbar_title">
+
+    </style>
+
+    <color name="primary_color">@color/white_87</color>
 </resources>

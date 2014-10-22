@@ -6,89 +6,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <android.support.v7.widget.Toolbar
+        android:id="@id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/solid_background"
+        android:paddingBottom="@dimen/padding_16"
+        android:paddingTop="@dimen/actionbar_height"
+        app:collapseIcon="@drawable/ic_overflow_dots"
+        app:navigationIcon="@drawable/ic_action_navigation_back_dark"
+        app:subtitle="@string/placeholder_suggested_proffession"
+        app:subtitleTextAppearance="@style/toolbar_subtitle"
+        app:title="@string/statistics"
+        app:titleTextAppearance="@style/statistic_creator_title">
+
+
+    </android.support.v7.widget.Toolbar>
+
+    <FrameLayout
+        android:id="@id/fab_pivot"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fab_pivot"
+        android:layout_below="@id/header"
+        tools:background="@color/orange_100" />
+
+    <at.markushi.ui.CircleButton
+        android:id="@id/assign_skills"
+        android:layout_width="@dimen/fab"
+        android:layout_height="@dimen/fab"
+        android:layout_above="@id/fab_pivot"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/fab_offset"
+        android:layout_marginLeft="@dimen/padding_16"
+        android:layout_marginRight="@dimen/padding_16"
+        android:layout_marginTop="@dimen/fab_offset"
+        android:src="@drawable/ic_action_assign_skills"
+        app:cb_color="@color/fab_done" />
+
+
+    <com.bustiblelemons.observablescrollview.ObservableScrollView
         android:id="@id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/reroll">
+        android:layout_above="@id/reroll"
+        android:layout_below="@id/header"
+        android:paddingTop="@dimen/fab_offset_positive">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@id/header"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/black_87"
-                android:title="@string/statistics"
-                android:titleTextAppearance="@color/white_87">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/solid_background"
-                    android:minHeight="@dimen/twice_actionbar_height">
-
-                    <TextView
-                        android:id="@id/title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginBottom="@dimen/padding_4"
-                        android:layout_marginLeft="@dimen/actionbar_height"
-                        android:layout_marginTop="@dimen/actionbar_height"
-                        android:gravity="center|left"
-                        android:text="@string/statistics"
-                        android:textAllCaps="true"
-                        android:textColor="@color/white_87"
-                        android:textSize="@dimen/material_headline" />
-
-                    <TextView
-                        android:id="@id/suggested_skillset"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignLeft="@id/title"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignRight="@id/title"
-                        android:layout_below="@id/title"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginLeft="@dimen/actionbar_height"
-                        android:gravity="center|left"
-                        android:text="@string/placeholder_suggested_proffession"
-                        android:textColor="@color/white_54"
-                        android:textSize="@dimen/material_subhead"
-                        android:textStyle="italic" />
-                </RelativeLayout>
-            </android.support.v7.widget.Toolbar>
-
-
-            <FrameLayout
-                android:id="@id/fab_pivot"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/fab_pivot"
-                android:layout_below="@id/header"
-                tools:background="@color/orange_100"></FrameLayout>
-
-            <at.markushi.ui.CircleButton
-                android:id="@id/assign_skills"
-                android:layout_width="@dimen/fab"
-                android:layout_height="@dimen/fab"
-                android:layout_above="@id/fab_pivot"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="@dimen/fab_offset"
-                android:layout_marginLeft="@dimen/padding_16"
-                android:layout_marginRight="@dimen/padding_16"
-                android:layout_marginTop="@dimen/fab_offset"
-                android:src="@drawable/ic_action_assign_skills"
-                app:cb_color="@color/fab_done" />
-
             <RelativeLayout
                 android:id="@id/editor"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/fab_pivot">
+                android:layout_height="match_parent">
 
                 <RelativeLayout
                     android:id="@id/edu_card"
@@ -245,7 +216,7 @@
                 </RelativeLayout>
             </RelativeLayout>
         </RelativeLayout>
-    </ScrollView>
+    </com.bustiblelemons.observablescrollview.ObservableScrollView>
 
     <Button
         android:id="@id/reroll"

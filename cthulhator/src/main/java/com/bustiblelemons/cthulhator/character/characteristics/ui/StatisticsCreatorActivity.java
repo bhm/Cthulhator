@@ -1,7 +1,6 @@
 package com.bustiblelemons.cthulhator.character.characteristics.ui;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.view.View;
@@ -9,10 +8,13 @@ import android.view.View;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.characteristics.logic.CharacterPropertyAdapter;
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
+import com.bustiblelemons.cthulhator.character.creation.ui.AbsCharacterCreationActivity;
 import com.bustiblelemons.cthulhator.system.CthulhuCharacter;
 import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 import com.bustiblelemons.logging.Logger;
+import com.bustiblelemons.observablescrollview.ObservableScrollView;
+import com.bustiblelemons.observablescrollview.ScrollViewListener;
 import com.bustiblelemons.views.SkillView;
 
 import java.util.List;
@@ -27,8 +29,8 @@ import butterknife.OnClick;
 /**
  * Created by bhm on 31.08.14.
  */
-public class StatisticsCreatorActivity extends ActionBarActivity
-        implements SkillView.SkillViewListener {
+public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
+        implements SkillView.SkillViewListener, ScrollViewListener, View.OnClickListener {
 
     public static final int REQUEST_CODE = 4;
     private static final Logger log = new Logger(StatisticsCreatorActivity.class);
@@ -41,6 +43,8 @@ public class StatisticsCreatorActivity extends ActionBarActivity
             R.id.app,
             R.id.str, R.id.con, R.id.siz})
     List<SkillView> characteristicsViewList;
+    @InjectView(R.id.scroll)
+    ObservableScrollView scrollView;
     private SparseArray<CharacterProperty> idsToProperty = new SparseArray<CharacterProperty>();
     private SparseArray<CharacterPropertyAdapter> idsToAdapters = new SparseArray<CharacterPropertyAdapter>();
     private Set<CharacterProperty> characterProperties;
@@ -53,9 +57,12 @@ public class StatisticsCreatorActivity extends ActionBarActivity
         setContentView(R.layout.activity_statistic_creator);
         mToolbar = (Toolbar) findViewById(R.id.header);
         if (mToolbar != null) {
+            mToolbar.setCollapsible(true);
+            mToolbar.setNavigationOnClickListener(this);
             setSupportActionBar(mToolbar);
         }
         ButterKnife.inject(this);
+        scrollView.setScrollViewListener(this);
 //        mSavedCharacter = getInstanceArgument();
         if (mSavedCharacter == null) {
             mSavedCharacter = CthulhuCharacter.forEdition(CthulhuEdition.CoC5);
@@ -78,10 +85,10 @@ public class StatisticsCreatorActivity extends ActionBarActivity
     }
 
 
-//    @Override
-//    protected void onInstanceArgumentRead(SavedCharacter arg) {
-//        mSavedCharacter = arg;
-//    }
+    @Override
+    protected void onInstanceArgumentRead(SavedCharacter arg) {
+        mSavedCharacter = arg;
+    }
 
     @OnClick(R.id.reroll)
     public void onReroll(View button) {
@@ -227,8 +234,21 @@ public class StatisticsCreatorActivity extends ActionBarActivity
 
     @Override
     public void onBackPressed() {
-//        setResult(RESULT_OK, mSavedCharacter);
+        setResult(RESULT_OK, mSavedCharacter);
         super.onBackPressed();
     }
 
+
+    @Override
+    public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
+//        if (mToolbar != null && mToolbar.getHeight() > 0) {
+//            int height = mToolbar.getHeight();
+//            mToolbar.sethe
+//        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        onBackPressed();
+    }
 }

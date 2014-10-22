@@ -33,7 +33,7 @@
             android:name=".character.characteristics.ui.StatisticsCreatorActivity"
             android:label="@string/add_character_statistics"
             android:screenOrientation="portrait"
-            android:theme="@style/Platform.AppCompat" />
+            android:theme="@style/CreatorTheme" />
         <activity
             android:name=".character.history.ui.HistoryEditorActivity"
             android:label="@string/add_character_history"
