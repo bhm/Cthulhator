@@ -3,6 +3,9 @@ package com.bustiblelemons.cthulhator.character.characteristics.ui;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.bustiblelemons.cthulhator.R;
@@ -57,7 +60,6 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         setContentView(R.layout.activity_statistic_creator);
         mToolbar = (Toolbar) findViewById(R.id.header);
         if (mToolbar != null) {
-            mToolbar.setCollapsible(true);
             mToolbar.setNavigationOnClickListener(this);
             setSupportActionBar(mToolbar);
         }
@@ -77,11 +79,27 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = new MenuInflater(this);
+        inflater.inflate(R.menu.statistics_creator, menu);
+        return menu.size() > 0;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item != null && item.getItemId() == R.id.reroll) {
+            distributePoints();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
 
     @OnClick(R.id.assign_skills)
     public void onOpenSkillsetEditor(View button) {
 //        attachSkillEditor();
-//        launchSkillsetEditor(mSavedCharacter);
+        launchSkillsetEditor(mSavedCharacter);
     }
 
 

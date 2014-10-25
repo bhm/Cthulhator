@@ -4,19 +4,17 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                tools:context=".StatisticsCreatorActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/solid_background"
-        android:paddingBottom="@dimen/padding_16"
-        android:paddingTop="@dimen/padding_24"
+        android:paddingBottom="@dimen/fab_offset_positive"
         app:collapseIcon="@drawable/ic_overflow_dots"
         app:navigationIcon="@drawable/ic_action_navigation_back_dark"
-        app:subtitle="@string/placeholder_suggested_proffession"
-        app:subtitleTextAppearance="@style/toolbar_subtitle"
         app:title="@string/statistics"
         app:titleTextAppearance="@style/statistic_creator_title">
 
@@ -212,7 +210,7 @@
     </com.bustiblelemons.observablescrollview.ObservableScrollView>
 
     <Button
-        android:id="@id/reroll"
+        android:id="@id/assign_skills"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -221,7 +219,7 @@
         android:layout_marginRight="@dimen/padding_8"
         android:background="@drawable/main_button_selector"
         android:padding="@dimen/padding_8"
-        android:text="@string/reroll"
+        android:text="@string/assign_skills"
         android:textAllCaps="true"
         android:textColor="@color/grey_white_1000"
         android:textSize="@dimen/font_16"
@@ -240,7 +238,7 @@
         tools:background="@color/orange_100"/>
 
     <at.markushi.ui.CircleButton
-        android:id="@id/assign_skills"
+        android:id="@id/done"
         android:layout_width="@dimen/fab"
         android:layout_height="@dimen/fab"
         android:layout_above="@id/fab_pivot"
@@ -249,7 +247,7 @@
         android:layout_marginLeft="@dimen/padding_16"
         android:layout_marginRight="@dimen/padding_16"
         android:layout_marginTop="@dimen/fab_offset"
-        android:src="@drawable/ic_action_assign_skills"
+        android:src="@drawable/ic_navigation_accept"
         app:cb_color="@color/fab_done"/>
 
 
