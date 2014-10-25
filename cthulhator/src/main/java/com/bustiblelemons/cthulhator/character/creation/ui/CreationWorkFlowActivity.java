@@ -25,7 +25,7 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
         implements View.OnClickListener, CharacterCardView.OnCharacterCardViewClick {
 
     @InjectView(R.id.preview_card)
-    CharacterCardView characterCardView;
+    CharacterCardView mCharacterCardView;
     private SavedCharacter mSavedCharacter;
     private CthulhuEdition mEdition = CthulhuEdition.CoC5;
 
@@ -41,8 +41,8 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
         } else {
             mEdition = mSavedCharacter.getEdition();
         }
-        if (characterCardView != null) {
-            characterCardView.setOnCharacterCardViewClick(this);
+        if (mCharacterCardView != null) {
+            mCharacterCardView.setOnCharacterCardViewClick(this);
         }
         onSetActionBarToClosable();
     }
@@ -92,10 +92,10 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
     @Override
     protected void onInstanceArgumentRead(SavedCharacter arg) {
         mSavedCharacter = arg;
-        if (mSavedCharacter != null && characterCardView != null) {
+        if (mSavedCharacter != null && mCharacterCardView != null) {
             CharacterInfo characterInfo = SavedCharacterTransformer.getInstance().transform(
                     mSavedCharacter);
-            characterCardView.setCardInfo(characterInfo);
+            mCharacterCardView.setCardInfo(characterInfo);
         }
     }
 
