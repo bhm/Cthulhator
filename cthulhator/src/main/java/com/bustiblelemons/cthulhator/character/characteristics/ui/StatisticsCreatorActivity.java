@@ -35,24 +35,24 @@ import butterknife.OnClick;
 public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         implements SkillView.SkillViewListener, ScrollViewListener, View.OnClickListener {
 
-    public static final int REQUEST_CODE = 4;
-    private static final Logger log = new Logger(StatisticsCreatorActivity.class);
-    @InjectView(R.id.assign_skills)
-    CircleButton rerollButton;
+    public static final  int    REQUEST_CODE = 4;
+    private static final Logger log          = new Logger(StatisticsCreatorActivity.class);
+    @InjectView(R.id.done)
+    CircleButton         mFab;
     @InjectViews({R.id.edu,
             R.id.intelligence,
             R.id.pow,
             R.id.dex,
             R.id.app,
             R.id.str, R.id.con, R.id.siz})
-    List<SkillView> characteristicsViewList;
+    List<SkillView>      mCharacteristicsViewList;
     @InjectView(R.id.scroll)
-    ObservableScrollView scrollView;
-    private SparseArray<CharacterProperty> idsToProperty = new SparseArray<CharacterProperty>();
-    private SparseArray<CharacterPropertyAdapter> idsToAdapters = new SparseArray<CharacterPropertyAdapter>();
-    private Set<CharacterProperty> characterProperties;
-    private SavedCharacter mSavedCharacter;
-    private Toolbar mToolbar;
+    ObservableScrollView mScrollView;
+    private SparseArray<CharacterProperty>        mIdsToProperty = new SparseArray<CharacterProperty>();
+    private SparseArray<CharacterPropertyAdapter> mIdsToAdapters = new SparseArray<CharacterPropertyAdapter>();
+    private Set<CharacterProperty> mCharacterProperties;
+    private SavedCharacter         mSavedCharacter;
+    private Toolbar                mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,17 +64,17 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
             setSupportActionBar(mToolbar);
         }
         ButterKnife.inject(this);
-        scrollView.setScrollViewListener(this);
-//        mSavedCharacter = getInstanceArgument();
+        mScrollView.setScrollViewListener(this);
+        mSavedCharacter = getInstanceArgument();
         if (mSavedCharacter == null) {
             mSavedCharacter = CthulhuCharacter.forEdition(CthulhuEdition.CoC5);
-            characterProperties = mSavedCharacter.getProperties();
-            onReroll(rerollButton);
+            mCharacterProperties = mSavedCharacter.getProperties();
+            fillPropertyViews();
         } else if (mSavedCharacter != null && !mSavedCharacter.hasAssignedStatistics()) {
-            characterProperties = mSavedCharacter.getProperties();
-            onReroll(rerollButton);
+            mCharacterProperties = mSavedCharacter.getProperties();
+            distributeRandomPoints();
         } else {
-            characterProperties = mSavedCharacter.getProperties();
+            mCharacterProperties = mSavedCharacter.getProperties();
             fillPropertyViews();
         }
     }
@@ -89,7 +89,7 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item != null && item.getItemId() == R.id.reroll) {
-            distributePoints();
+            distributeRandomPoints();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -98,8 +98,13 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
 
     @OnClick(R.id.assign_skills)
     public void onOpenSkillsetEditor(View button) {
-//        attachSkillEditor();
         launchSkillsetEditor(mSavedCharacter);
+    }
+
+    @OnClick(R.id.done)
+    public void onDone(View button) {
+        setResult(RESULT_OK, mSavedCharacter);
+        onBackPressed();
     }
 
 
@@ -108,23 +113,18 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         mSavedCharacter = arg;
     }
 
-    @OnClick(R.id.reroll)
-    public void onReroll(View button) {
-        distributePoints();
-    }
-
-    private void distributePoints() {
-        if (characteristicsViewList == null) {
+    private void distributeRandomPoints() {
+        if (mCharacteristicsViewList == null) {
             return;
         }
         int points = 0;
-        for (SkillView view : characteristicsViewList) {
+        for (SkillView view : mCharacteristicsViewList) {
             if (view != null && view.getTag() != null) {
                 String tag = (String) view.getTag();
                 CharacterProperty property = getProperty(tag);
                 int id = view.getId();
                 if (property != null) {
-                    idsToProperty.put(id, property);
+                    mIdsToProperty.put(id, property);
                     view.setSkillViewListener(this);
                     view.setMinValue(property.getMinValue());
                     view.setMaxValue(property.getMaxValue());
@@ -133,15 +133,15 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
                     view.setIntValue(randValue);
                     if (property.hasRelations()) {
                         CharacterPropertyAdapter adapter;
-                        if (idsToAdapters.get(id) != null) {
-                            adapter = idsToAdapters.get(id);
+                        if (mIdsToAdapters.get(id) != null) {
+                            adapter = mIdsToAdapters.get(id);
                         } else {
                             adapter = new CharacterPropertyAdapter(this);
-                            idsToAdapters.put(id, adapter);
+                            mIdsToAdapters.put(id, adapter);
                         }
                         adapter.refreshData(mSavedCharacter.getRelatedProperties(property));
                         view.setAdapter(adapter);
-                        idsToAdapters.put(id, adapter);
+                        mIdsToAdapters.put(id, adapter);
                     }
                 }
             }
@@ -149,30 +149,30 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     }
 
     private void fillPropertyViews() {
-        if (characteristicsViewList == null) {
+        if (mCharacteristicsViewList == null) {
             return;
         }
         int points = 0;
-        for (SkillView view : characteristicsViewList) {
+        for (SkillView view : mCharacteristicsViewList) {
             if (view != null && view.getTag() != null) {
                 String tag = (String) view.getTag();
                 CharacterProperty property = getProperty(tag);
                 int id = view.getId();
                 if (property != null) {
-                    idsToProperty.put(id, property);
+                    mIdsToProperty.put(id, property);
                     view.setSkillViewListener(this);
                     view.setMinValue(property.getMinValue());
                     view.setMaxValue(property.getMaxValue());
-                    int randValue = property.getValue();
-                    points += randValue;
-                    view.setIntValue(randValue);
+                    int value = property.getValue();
+                    points += value;
+                    view.setIntValue(value);
                     if (property.hasRelations()) {
                         CharacterPropertyAdapter adapter;
-                        if (idsToAdapters.get(id) != null) {
-                            adapter = idsToAdapters.get(id);
+                        if (mIdsToAdapters.get(id) != null) {
+                            adapter = mIdsToAdapters.get(id);
                         } else {
                             adapter = new CharacterPropertyAdapter(this);
-                            idsToAdapters.put(id, adapter);
+                            mIdsToAdapters.put(id, adapter);
                         }
                         adapter.refreshData(mSavedCharacter.getRelatedProperties(property));
                         view.setAdapter(adapter);
@@ -183,7 +183,7 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     }
 
     private CharacterProperty getProperty(String name) {
-        for (CharacterProperty property : characterProperties) {
+        for (CharacterProperty property : mCharacterProperties) {
             if (property.getName() != null && property.getName().equals(name)) {
                 log.d("%s vs %s", name, property.getName());
                 return property;
@@ -222,7 +222,7 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
 
     private void increasePropertyAndUpdateView(SkillView view) {
         int id = view.getId();
-        CharacterProperty property = idsToProperty.get(id);
+        CharacterProperty property = mIdsToProperty.get(id);
         if (property != null && property.increaseValue()) {
             view.setIntValue(property.getValue());
             updateView(view, id, property);
@@ -231,7 +231,7 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
 
     private void decreasePropertyAndUpdateView(SkillView view) {
         int id = view.getId();
-        CharacterProperty property = idsToProperty.get(id);
+        CharacterProperty property = mIdsToProperty.get(id);
         if (property != null && property.decreaseValue()) {
             view.setIntValue(property.getValue());
             updateView(view, id, property);
@@ -239,21 +239,15 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     }
 
     private void updateView(SkillView view, int id, CharacterProperty property) {
-        CharacterPropertyAdapter adapter = idsToAdapters.get(id);
+        CharacterPropertyAdapter adapter = mIdsToAdapters.get(id);
         if (adapter == null) {
             adapter = new CharacterPropertyAdapter(this);
         }
         Set<CharacterProperty> data = mSavedCharacter.getRelatedProperties(property);
         adapter.refreshData(data);
         view.setAdapter(adapter);
-        idsToProperty.put(id, property);
-        idsToAdapters.put(id, adapter);
-    }
-
-    @Override
-    public void onBackPressed() {
-        setResult(RESULT_OK, mSavedCharacter);
-        super.onBackPressed();
+        mIdsToProperty.put(id, property);
+        mIdsToAdapters.put(id, adapter);
     }
 
 
