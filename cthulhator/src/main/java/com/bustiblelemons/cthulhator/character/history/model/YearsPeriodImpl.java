@@ -50,6 +50,12 @@ public class YearsPeriodImpl implements Serializable, YearsPeriod {
         return name;
     }
 
+    @Override
+    public int getDefaultYearJumpPosition() {
+        int r = getDefaultYear() - getMinYear() / getYearJump();
+        return r > 1 ? r - 1 : 0;
+    }
+
     public static class Builder {
 
         protected int jump;

@@ -86,6 +86,12 @@ public enum CthulhuPeriod implements YearsPeriod {
     }
 
     @Override
+    public int getDefaultYearJumpPosition() {
+        int r = getDefaultYear() - getMinYear() / getYearJump();
+        return r > 1 ? r - 1 : 0;
+    }
+
+    @Override
     public String getName() {
         return WordUtils.capitalizeFully(name());
     }

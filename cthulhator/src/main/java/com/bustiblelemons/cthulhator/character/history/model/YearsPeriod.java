@@ -19,4 +19,6 @@ public interface YearsPeriod extends Serializable {
     int getYearJump();
 
     String getName();
+
+    int getDefaultYearJumpPosition();
 }

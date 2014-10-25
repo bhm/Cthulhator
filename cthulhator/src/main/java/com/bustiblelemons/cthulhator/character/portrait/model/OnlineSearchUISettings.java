@@ -1,6 +1,8 @@
 package com.bustiblelemons.cthulhator.character.portrait.model;
 
 import com.bustiblelemons.cthulhator.settings.character.CharacterSettings;
+import com.bustiblelemons.cthulhator.system.time.CthulhuPeriod;
+import com.bustiblelemons.google.apis.GoogleSearchGender;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
@@ -9,29 +11,22 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OnlineSearchUISettings {
-    private static OnlineSearchUISettings sDefaults;
-
-    static {
-        sDefaults = new OnlineSearchUISettings();
-        sDefaults.setGenderSpinnerPosition(0);
-        sDefaults.setPeriodSpinnerPosition(1);
-        sDefaults.setSeekbarPosition(2);
-    }
 
     private int genderSpinnerPosition;
     private int periodSpinnerPosition;
     private int seekbarPosition;
 
     public static OnlineSearchUISettings defaults() {
-        return sDefaults;
+        return LazyDefaults.sDefaults;
     }
 
     public static OnlineSearchUISettings from(CharacterSettings settings) {
-        int genderPosition = settings.getGender().ordinal();
-        int periodSpinnerPosition = settings.getCthulhuPeriod().ordinal();
+        GoogleSearchGender gender = settings.getGender();
+        CthulhuPeriod period = settings.getCthulhuPeriod();
         OnlineSearchUISettings r = new OnlineSearchUISettings();
-        r.setGenderSpinnerPosition(genderPosition);
-        r.setPeriodSpinnerPosition(periodSpinnerPosition);
+        r.setGenderSpinnerPosition(gender.ordinal());
+        r.setPeriodSpinnerPosition(period.ordinal());
+        r.setSeekbarPosition(period.getDefaultYearJumpPosition());
         return r;
     }
 
@@ -57,5 +52,17 @@ public class OnlineSearchUISettings {
 
     public void setSeekbarPosition(int seekbarPosition) {
         this.seekbarPosition = seekbarPosition;
+    }
+
+    private static final class LazyDefaults {
+        private static OnlineSearchUISettings sDefaults;
+
+        static {
+            CthulhuPeriod p = CthulhuPeriod.JAZZAGE;
+            sDefaults = new OnlineSearchUISettings();
+            sDefaults.setGenderSpinnerPosition(GoogleSearchGender.ANY.ordinal());
+            sDefaults.setPeriodSpinnerPosition(p.ordinal());
+            sDefaults.setSeekbarPosition(p.getDefaultYearJumpPosition());
+        }
     }
 }

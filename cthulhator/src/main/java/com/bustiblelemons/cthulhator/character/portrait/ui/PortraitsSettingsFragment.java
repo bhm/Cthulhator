@@ -238,6 +238,7 @@ public class PortraitsSettingsFragment extends AbsArgFragment<CharacterSettings>
             yearSeekbar.setMinValue(period.getMinYear());
             yearSeekbar.setJumpValue(period.getYearJump());
             yearSeekbar.setMaxValue(period.getMaxYear());
+            yearSeekbar.setProgress(period.getDefaultYearJumpPosition());
         }
     }
 
