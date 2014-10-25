@@ -72,6 +72,7 @@
         <item name="android:actionBarStyle">@null</item>
         <item name="colorPrimary">@color/main_button_color</item>
         <item name="colorAccent">@color/white_87</item>
+        <item name="colorPrimaryDark">@color/black_87</item>
         <item name="android:actionOverflowButtonStyle">
             @style/Widget.AppCompat.ActionButton.Overflow
         </item>
