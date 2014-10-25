@@ -279,6 +279,12 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
 
     public void executeRandomUserMeQuery(RandomUserMe postPart) {
         Gender gender = GenderTransformer.toRandomUserMe(mCharacterSettings.getGender());
+        if (queryOptions == null) {
+            queryOptions = new RandomUserMEQuery.Options();
+        }
+        if (query == null) {
+            query = queryOptions.build();
+        }
         query.setGender(gender);
         if (RandomUserMe.Portraits.equals(postPart)) {
             RandomUserDotMePortraitsAsyn async = new RandomUserDotMePortraitsAsyn(this, this);

@@ -31,7 +31,7 @@ public class CharacterCardView extends RelativeLayout implements
     @InjectView(R.id.extra_info)
     TextView    mExtraInfoView;
     @InjectView(android.R.id.icon)
-    RemoteImage loadingImage;
+    RemoteImage remoteImage;
     @InjectView(R.id.menu)
     ImageButton menuButton;
     private View rootView;
@@ -89,13 +89,9 @@ public class CharacterCardView extends RelativeLayout implements
         mMainInfoView = (TextView) rootView.findViewById(R.id.main_info);
         mShortInfoView = (TextView) rootView.findViewById(R.id.short_info);
         mExtraInfoView = (TextView) rootView.findViewById(R.id.extra_info_text);
-        loadingImage = (RemoteImage) rootView.findViewById(android.R.id.icon);
-
-        if (loadingImage != null) {
-            loadingImage.setPaletteColorsGeneratedSelective(this);
-        }
+        remoteImage = (RemoteImage) rootView.findViewById(android.R.id.icon);
         menuButton = (ImageButton) rootView.findViewById(R.id.menu);
-        setOnClickListeners(this, mMainInfoView, mShortInfoView, mExtraInfoView, loadingImage);
+        setOnClickListeners(this, mMainInfoView, mShortInfoView, mExtraInfoView, remoteImage);
         if (attrs != null) {
             TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CharacterCardView);
             mMainInfoColor = array.getColor(R.styleable.CharacterCardView_mainInfoColor,
@@ -106,15 +102,15 @@ public class CharacterCardView extends RelativeLayout implements
                     mExtraInfoColor);
             mUsePaletteColors = array.getBoolean(R.styleable.CharacterCardView_usePaletteColors,
                     mUsePaletteColors);
-            if (loadingImage != null) {
-                loadingImage.usePalette(mUsePaletteColors);
+            if (mUsePaletteColors && remoteImage != null) {
+                remoteImage.setPaletteColorsGeneratedSelective(this);
             }
             mShowMenu = array.getBoolean(R.styleable.CharacterCardView_show_menu, mShowMenu);
             mMenuIcon = array.getResourceId(R.styleable.CharacterCardView_menuIcon, mMenuIcon);
             menuButton.setImageResource(mMenuIcon);
             mNoImageRes = array.getResourceId(R.styleable.CharacterCardView_no_image,
                     R.drawable.lemons);
-            loadingImage.setImageDrawable(mNoImageRes);
+            remoteImage.setImageDrawable(mNoImageRes);
             menuButton.setVisibility(mShowMenu ? VISIBLE : INVISIBLE);
             setNameColor(mMainInfoColor);
             setShortInfoColor(mShortInfoColor);
@@ -178,8 +174,8 @@ public class CharacterCardView extends RelativeLayout implements
         setMainText(provider.getName());
         setShortText(provider.getMainInfo());
         setExtraText(provider.getExtraInfo());
-        if (loadingImage != null && provider.getPortraitUrl() != null) {
-            loadingImage.loadFrom(provider.getPortraitUrl());
+        if (remoteImage != null && provider.getPortraitUrl() != null) {
+            remoteImage.forceLoadFrom(provider.getPortraitUrl());
         }
     }
 

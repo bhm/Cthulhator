@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:no_image="@drawable/no_face_poly"
-        app:progress_gravity="bottom"
-        app:show_progressbar="true" />
+        app:progress_gravity="bottom" />
 
 </RelativeLayout>
