@@ -213,8 +213,7 @@ public class RemoteImage extends ImageView implements ImageLoadingListener,
     }
 
     public void forceLoadFrom(String url) {
-        setTag(R.id.___tag_url, null);
-        loadFrom(url);
+        rLoadUrl(url);
     }
 
     public void setPaletteColorsGeneratedSelective(PaletteColorsGeneratedSelective
