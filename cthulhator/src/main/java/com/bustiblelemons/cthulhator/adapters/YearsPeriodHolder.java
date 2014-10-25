@@ -10,7 +10,6 @@ import com.bustiblelemons.holders.impl.AbsViewHolder;
 
 import java.util.Locale;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 /**
@@ -28,12 +27,6 @@ public class YearsPeriodHolder extends AbsViewHolder<YearsPeriod> {
     }
 
     @Override
-    public void create(View convertView) {
-        super.create(convertView);
-        ButterKnife.inject(this, convertView);
-    }
-
-    @Override
     public void bindValues(YearsPeriod item, int position) {
         setTitle(item.getName());
         if (yearsView != null) {
@@ -44,6 +37,8 @@ public class YearsPeriodHolder extends AbsViewHolder<YearsPeriod> {
                 String format = max == min ? "%s" : "%s-%s";
                 String years = String.format(Locale.ENGLISH, format, min, max);
                 yearsView.setText(years);
+            } else {
+                yearsView.setVisibility(View.GONE);
             }
         }
     }

@@ -5,8 +5,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.Optional;
 
 
 public abstract class AbsViewHolder<T> implements ViewHolder<T> {
@@ -18,9 +16,7 @@ public abstract class AbsViewHolder<T> implements ViewHolder<T> {
     }
 
     protected Context  context;
-    @Optional
-    @InjectView(android.R.id.title)
-    protected TextView titleView;
+    TextView titleView;
     private int position = 0;
 
     public AbsViewHolder(Context context) {
@@ -33,6 +29,7 @@ public abstract class AbsViewHolder<T> implements ViewHolder<T> {
 
     @Override
     public void create(View convertView) {
+        titleView = (TextView) convertView.findViewById(android.R.id.title);
         ButterKnife.inject(this, convertView);
     }
 
