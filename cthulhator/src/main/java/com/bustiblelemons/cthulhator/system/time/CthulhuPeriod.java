@@ -29,7 +29,7 @@ public enum CthulhuPeriod implements YearsPeriod {
     }, JAZZAGE {
         @Override
         public int getDefaultYear() {
-            return 1920;
+            return 1910;
         }
 
         @Override
