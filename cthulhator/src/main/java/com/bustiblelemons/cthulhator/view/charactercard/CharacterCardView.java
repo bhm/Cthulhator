@@ -3,6 +3,7 @@ package com.bustiblelemons.cthulhator.view.charactercard;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v7.graphics.Palette;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -126,12 +127,6 @@ public class CharacterCardView extends RelativeLayout implements
         addView(rootView);
     }
 
-    public void setMainText(String text) {
-        if (mMainInfoView != null) {
-            mMainInfoView.setText(text);
-        }
-    }
-
     private void setOnClickListeners(OnClickListener listener, View... views) {
         if (listener == null) {
             return;
@@ -179,14 +174,20 @@ public class CharacterCardView extends RelativeLayout implements
         }
     }
 
+    public void setMainText(String text) {
+        if (mMainInfoView != null && !TextUtils.isEmpty(text)) {
+            mMainInfoView.setText(text);
+        }
+    }
+
     private void setExtraText(String text) {
-        if (mExtraInfoView != null) {
+        if (mExtraInfoView != null && !TextUtils.isEmpty(text)) {
             mExtraInfoView.setText(text);
         }
     }
 
     private void setShortText(String text) {
-        if (mShortInfoView != null) {
+        if (mShortInfoView != null && !TextUtils.isEmpty(text)) {
             mShortInfoView.setText(text);
         }
     }
