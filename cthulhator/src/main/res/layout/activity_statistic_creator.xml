@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
         android:id="@id/header"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@color/solid_background"
         android:paddingBottom="@dimen/padding_16"
-        android:paddingTop="@dimen/actionbar_height"
+        android:paddingTop="@dimen/padding_24"
         app:collapseIcon="@drawable/ic_overflow_dots"
         app:navigationIcon="@drawable/ic_action_navigation_back_dark"
         app:subtitle="@string/placeholder_suggested_proffession"
@@ -23,38 +23,16 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <FrameLayout
-        android:id="@id/fab_pivot"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/fab_pivot"
-        android:layout_below="@id/header"
-        tools:background="@color/orange_100" />
-
-    <at.markushi.ui.CircleButton
-        android:id="@id/assign_skills"
-        android:layout_width="@dimen/fab"
-        android:layout_height="@dimen/fab"
-        android:layout_above="@id/fab_pivot"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="@dimen/fab_offset"
-        android:layout_marginLeft="@dimen/padding_16"
-        android:layout_marginRight="@dimen/padding_16"
-        android:layout_marginTop="@dimen/fab_offset"
-        android:src="@drawable/ic_action_assign_skills"
-        app:cb_color="@color/fab_done" />
-
-
     <com.bustiblelemons.observablescrollview.ObservableScrollView
         android:id="@id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/reroll"
-        android:layout_below="@id/header"
-        android:paddingTop="@dimen/fab_offset_positive">
+        android:layout_below="@id/header">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/fab_offset_positive">
 
             <RelativeLayout
                 android:id="@id/editor"
@@ -76,7 +54,7 @@
                         app:statTitle="@string/education"
                         app:titleSize="@dimen/font_16"
                         app:valueBelow="true"
-                        app:valueSize="@dimen/font_18" />
+                        app:valueSize="@dimen/font_18"/>
 
                 </RelativeLayout>
 
@@ -97,7 +75,7 @@
                         app:statValue="@integer/placeholder_perc_val"
                         app:titleSize="@dimen/font_16"
                         app:valueBelow="true"
-                        app:valueSize="@dimen/font_18" />
+                        app:valueSize="@dimen/font_18"/>
 
                 </RelativeLayout>
 
@@ -119,7 +97,7 @@
                         app:statValue="@integer/placeholder_perc_val"
                         app:titleSize="@dimen/font_16"
                         app:valueBelow="true"
-                        app:valueSize="@dimen/font_18" />
+                        app:valueSize="@dimen/font_18"/>
 
                 </RelativeLayout>
 
@@ -141,7 +119,7 @@
                         app:statValue="@integer/placeholder_perc_val"
                         app:titleSize="@dimen/font_16"
                         app:valueBelow="true"
-                        app:valueSize="@dimen/font_18" />
+                        app:valueSize="@dimen/font_18"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -162,7 +140,7 @@
                         app:statValue="@integer/placeholder_perc_val"
                         app:titleSize="@dimen/font_16"
                         app:valueBelow="true"
-                        app:valueSize="@dimen/font_18" />
+                        app:valueSize="@dimen/font_18"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -172,7 +150,6 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/app_card"
                     tools:visibility="gone">
-
 
                     <com.bustiblelemons.views.SkillView
                         android:id="@id/str"
@@ -184,8 +161,7 @@
                         app:statValue="@integer/placeholder_perc_val"
                         app:titleSize="@dimen/font_16"
                         app:valueBelow="true"
-                        app:valueSize="@dimen/font_18" />
-
+                        app:valueSize="@dimen/font_18"/>
 
                     <com.bustiblelemons.views.SkillView
                         android:id="@id/con"
@@ -198,7 +174,7 @@
                         app:statValue="@integer/placeholder_perc_val"
                         app:titleSize="@dimen/font_16"
                         app:valueBelow="true"
-                        app:valueSize="@dimen/font_18" />
+                        app:valueSize="@dimen/font_18"/>
 
                     <com.bustiblelemons.views.SkillView
                         android:id="@id/siz"
@@ -211,10 +187,27 @@
                         app:statValue="@integer/placeholder_perc_val"
                         app:titleSize="@dimen/font_16"
                         app:valueBelow="true"
-                        app:valueSize="@dimen/font_18" />
+                        app:valueSize="@dimen/font_18"/>
 
                 </RelativeLayout>
             </RelativeLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@id/editor"
+                android:layout_marginBottom="@dimen/padding_4"
+                android:layout_marginLeft="@dimen/padding_8"
+                android:layout_marginRight="@dimen/padding_8"
+                android:background="@drawable/main_button_selector"
+                android:padding="@dimen/padding_8"
+                android:text="@string/reroll"
+                android:textAllCaps="true"
+                android:textColor="@color/grey_white_1000"
+                android:textSize="@dimen/font_16"
+                android:textStyle="bold"
+                android:visibility="invisible"/>
         </RelativeLayout>
     </com.bustiblelemons.observablescrollview.ObservableScrollView>
 
@@ -232,11 +225,32 @@
         android:textAllCaps="true"
         android:textColor="@color/grey_white_1000"
         android:textSize="@dimen/font_16"
-        android:textStyle="bold" />
+        android:textStyle="bold"/>
 
     <FrameLayout
         android:id="@id/skill_editor_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
+
+    <FrameLayout
+        android:id="@id/fab_pivot"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fab_pivot"
+        android:layout_below="@id/header"
+        tools:background="@color/orange_100"/>
+
+    <at.markushi.ui.CircleButton
+        android:id="@id/assign_skills"
+        android:layout_width="@dimen/fab"
+        android:layout_height="@dimen/fab"
+        android:layout_above="@id/fab_pivot"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/fab_offset"
+        android:layout_marginLeft="@dimen/padding_16"
+        android:layout_marginRight="@dimen/padding_16"
+        android:layout_marginTop="@dimen/fab_offset"
+        android:src="@drawable/ic_action_assign_skills"
+        app:cb_color="@color/fab_done"/>
+
 
 </RelativeLayout>
