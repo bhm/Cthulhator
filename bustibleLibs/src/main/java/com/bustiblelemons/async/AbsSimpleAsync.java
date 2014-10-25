@@ -43,6 +43,18 @@ public abstract class AbsSimpleAsync<P, R extends Object> extends AsyncTask<P, P
         publishProgress(Pair.create(param, result));
     }
 
+    protected abstract void onProgressUpdate(P param, R result);
+
+    @Override
+    protected void onProgressUpdate(Pair<P, R>... values) {
+        super.onProgressUpdate(values);
+        for (Pair<P, R> v : values) {
+            if (v != null) {
+                onProgressUpdate(v.first, v.second);
+            }
+        }
+    }
+
     @Override
     protected void onPostExecute(R result) {
         super.onPostExecute(result);

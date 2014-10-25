@@ -21,8 +21,10 @@
     <attr name="extraText" format="string" />
     <attr name="shortText" format="string" />
     <attr name="menuIcon" format="reference" />
+    <attr name="usePaletteColors" format="boolean" />
     <declare-styleable name="CharacterCardView">
         <attr name="no_image" />
+        <attr name="usePaletteColors" />
         <attr name="menuIcon" />
         <attr name="mainInfoColor" />
         <attr name="shortInfoColor" />

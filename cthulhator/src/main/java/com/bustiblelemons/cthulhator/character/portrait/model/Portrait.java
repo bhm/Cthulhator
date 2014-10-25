@@ -3,11 +3,14 @@ package com.bustiblelemons.cthulhator.character.portrait.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 
 /**
  * Created by bhm on 29.07.14.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Portrait implements Serializable, Parcelable {
     public static final Parcelable.Creator<Portrait> CREATOR = new Parcelable.Creator<Portrait>() {
         public Portrait createFromParcel(Parcel source) {
@@ -22,6 +25,9 @@ public class Portrait implements Serializable, Parcelable {
     private String  url;
     private byte[]  data;
     private boolean isMain;
+    private int lightVibrant;
+    private int lightMuted;
+    private int darkMuted;
 
     public Portrait() {
     }

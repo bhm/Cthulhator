@@ -1,7 +1,6 @@
 package com.bustiblelemons.randomuserdotme.logic;
 
 import android.content.Context;
-import android.util.Pair;
 
 import com.bustiblelemons.async.AbsSimpleAsync;
 import com.bustiblelemons.logging.Logger;
@@ -75,29 +74,22 @@ public class RandomUserDotMeAsyn extends AbsSimpleAsync<RandomUserMEQuery, List<
     }
 
     @Override
-    protected void onProgressUpdate(Pair<RandomUserMEQuery, List<User>>... values) {
-        super.onProgressUpdate(values);
-        if (values != null) {
-            for (Pair<RandomUserMEQuery, List<User>> pair : values) {
-                if (listener != null) {
-                    postData(pair);
-                }
-            }
-        }
+    protected void onProgressUpdate(RandomUserMEQuery param, List<User> result) {
+        postData(param, result);
     }
 
-    private void postData(Pair<RandomUserMEQuery, List<User>> pair) {
+    private void postData(RandomUserMEQuery query, List<User> users) {
         switch (postPart) {
-        default:
-        case All:
-            listener.onRandomUsersRetreived(pair.first, pair.second);
-            break;
-        case Names:
-            listener.onRandomUsersNames(pair.first, pair.second);
-            break;
-        case Location:
-            listener.onRandomUsersLocations(pair.first, pair.second);
-            break;
+            default:
+            case All:
+                listener.onRandomUsersRetreived(query, users);
+                break;
+            case Names:
+                listener.onRandomUsersNames(query, users);
+                break;
+            case Location:
+                listener.onRandomUsersLocations(query, users);
+                break;
         }
     }
 

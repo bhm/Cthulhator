@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <com.bustiblelemons.views.LoadingImage
+    <com.bustiblelemons.views.loadingimage.RemoteImage
         android:id="@android:id/icon"
-        app:show_progressbar="true"
-        app:progress_gravity="bottom"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        app:progress_gravity="bottom"
+        app:show_progressbar="true" />
 
 </RelativeLayout>

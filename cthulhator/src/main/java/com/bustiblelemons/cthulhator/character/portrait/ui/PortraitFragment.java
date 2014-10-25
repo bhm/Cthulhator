@@ -8,14 +8,14 @@ import android.view.ViewGroup;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.fragments.AbsFragment;
 import com.bustiblelemons.model.OnlinePhotoUrl;
-import com.bustiblelemons.views.LoadingImage;
+import com.bustiblelemons.views.loadingimage.RemoteImage;
 
 /**
  * Created by bhm on 18.07.14.
  */
 public class PortraitFragment extends AbsFragment {
     public static final String URL = "url";
-    private LoadingImage image;
+    private RemoteImage image;
 
     public static PortraitFragment newInstance(OnlinePhotoUrl imageObject) {
         PortraitFragment r = new PortraitFragment();
@@ -32,7 +32,7 @@ public class PortraitFragment extends AbsFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_portraits, container, false);
-        image = (LoadingImage) rootView.findViewById(android.R.id.icon);
+        image = (RemoteImage) rootView.findViewById(android.R.id.icon);
         if (hasArgument(URL)) {
             String url = getArguments().getString(URL);
             log.d("url %s", url);

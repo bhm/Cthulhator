@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.fragments.AbsArgFragment;
 import com.bustiblelemons.model.OnlinePhotoUrl;
-import com.bustiblelemons.views.LoadingImage;
+import com.bustiblelemons.views.loadingimage.RemoteImage;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -19,7 +19,7 @@ import butterknife.InjectView;
 public class RandomUserPhotoFragment extends AbsArgFragment<OnlinePhotoUrl> {
 
     @InjectView(android.R.id.icon)
-    LoadingImage imageView;
+    RemoteImage imageView;
 
     public static RandomUserPhotoFragment newInstance(OnlinePhotoUrl user) {
         RandomUserPhotoFragment r = new RandomUserPhotoFragment();

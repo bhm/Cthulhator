@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
 import com.bustiblelemons.fragments.AbsParcelableArgFragment;
-import com.bustiblelemons.views.LoadingImage;
+import com.bustiblelemons.views.loadingimage.RemoteImage;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -19,7 +19,7 @@ import butterknife.InjectView;
 public class PreviewCardFragment extends AbsParcelableArgFragment<SavedCharacter> {
 
     @InjectView(R.id.icon)
-    LoadingImage imageView;
+    RemoteImage imageView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

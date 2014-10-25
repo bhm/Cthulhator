@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bustiblelemons="@string/bustiblelemons_xml_namespace"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
-    <com.bustiblelemons.views.LoadingImage        
+    <com.bustiblelemons.views.loadingimage.RemoteImage
         android:id="@android:id/icon"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </com.bustiblelemons.views.LoadingImage>
+        android:layout_height="match_parent"></com.bustiblelemons.views.loadingimage.RemoteImage>
 
 </RelativeLayout>

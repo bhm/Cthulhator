@@ -2,7 +2,6 @@ package com.bustiblelemons.randomuserdotme.logic;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
-import android.util.Pair;
 
 import com.bustiblelemons.async.AbsSimpleAsync;
 import com.bustiblelemons.logging.Logger;
@@ -82,20 +81,12 @@ public class RandomUserDotMePortraitsAsyn extends
     }
 
     @Override
-    protected void onProgressUpdate(Pair<RandomUserMEQuery, List<OnlinePhotoUrl>>... values) {
-        super.onProgressUpdate(values);
-        if (values != null) {
-            for (Pair<RandomUserMEQuery, List<OnlinePhotoUrl>> pair : values) {
-                postData(pair);
-            }
+    protected void onProgressUpdate(RandomUserMEQuery param, List<OnlinePhotoUrl> result) {
+        if (listener != null) {
+            listener.onRandomUsersPortraits(param, result);
         }
     }
 
-    private void postData(Pair<RandomUserMEQuery, List<OnlinePhotoUrl>> pair) {
-        if (listener != null) {
-            listener.onRandomUsersPortraits(pair.first, pair.second);
-        }
-    }
 
     @Override
     protected boolean onException(Exception e) {

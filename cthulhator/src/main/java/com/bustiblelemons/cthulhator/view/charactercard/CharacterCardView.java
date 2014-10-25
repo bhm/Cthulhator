@@ -2,6 +2,7 @@ package com.bustiblelemons.cthulhator.view.charactercard;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.v7.graphics.Palette;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -11,7 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.views.LoadingImage;
+import com.bustiblelemons.views.loadingimage.RemoteImage;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -19,18 +20,20 @@ import butterknife.OnClick;
 /**
  * Created by bhm on 21.09.14.
  */
-public class CharacterCardView extends RelativeLayout implements View.OnClickListener {
+public class CharacterCardView extends RelativeLayout implements
+                                                      View.OnClickListener,
+                                                      RemoteImage.PaletteColorsGeneratedSelective {
 
     @InjectView(R.id.name)
-    TextView     mMainInfoView;
+    TextView    mMainInfoView;
     @InjectView(R.id.main_info)
-    TextView     mShortInfoView;
+    TextView    mShortInfoView;
     @InjectView(R.id.extra_info)
-    TextView     mExtraInfoView;
+    TextView    mExtraInfoView;
     @InjectView(android.R.id.icon)
-    LoadingImage loadingImage;
+    RemoteImage loadingImage;
     @InjectView(R.id.menu)
-    ImageButton  menuButton;
+    ImageButton menuButton;
     private View rootView;
     private boolean mShowMenu       = true;
     private int     mNoImageRes     = R.drawable.lemons;
@@ -45,7 +48,9 @@ public class CharacterCardView extends RelativeLayout implements View.OnClickLis
     private String                    mMainText;
     private String                    mShortText;
     private String                    mExtraText;
-    private int mMenuIcon = R.drawable.ic_overflow_dots;
+    private View                      mMainInfoBackground;
+    private int     mMenuIcon         = R.drawable.ic_overflow_dots;
+    private boolean mUsePaletteColors = true;
 
     public CharacterCardView(Context context) {
         super(context);
@@ -80,10 +85,15 @@ public class CharacterCardView extends RelativeLayout implements View.OnClickLis
 
     private void init(Context context, AttributeSet attrs) {
         rootView = LayoutInflater.from(context).inflate(R.layout.character_card, this, false);
-        mMainInfoView = (TextView) rootView.findViewById(R.id.name);
+        mMainInfoBackground = rootView.findViewById(android.R.id.background);
+        mMainInfoView = (TextView) rootView.findViewById(R.id.main_info);
         mShortInfoView = (TextView) rootView.findViewById(R.id.short_info);
         mExtraInfoView = (TextView) rootView.findViewById(R.id.extra_info_text);
-        loadingImage = (LoadingImage) rootView.findViewById(android.R.id.icon);
+        loadingImage = (RemoteImage) rootView.findViewById(android.R.id.icon);
+
+        if (loadingImage != null) {
+            loadingImage.setPaletteColorsGeneratedSelective(this);
+        }
         menuButton = (ImageButton) rootView.findViewById(R.id.menu);
         setOnClickListeners(this, mMainInfoView, mShortInfoView, mExtraInfoView, loadingImage);
         if (attrs != null) {
@@ -94,6 +104,11 @@ public class CharacterCardView extends RelativeLayout implements View.OnClickLis
                     mShortInfoColor);
             mExtraInfoColor = array.getColor(R.styleable.CharacterCardView_extraInfoColor,
                     mExtraInfoColor);
+            mUsePaletteColors = array.getBoolean(R.styleable.CharacterCardView_usePaletteColors,
+                    mUsePaletteColors);
+            if (loadingImage != null) {
+                loadingImage.usePalette(mUsePaletteColors);
+            }
             mShowMenu = array.getBoolean(R.styleable.CharacterCardView_show_menu, mShowMenu);
             mMenuIcon = array.getResourceId(R.styleable.CharacterCardView_menuIcon, mMenuIcon);
             menuButton.setImageResource(mMenuIcon);
@@ -188,45 +203,65 @@ public class CharacterCardView extends RelativeLayout implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-        case R.id.name:
-            if (onMainInfoClick != null) {
-                onMainInfoClick.onMainInfoClick(this);
-            }
-            if (onCharacterCardViewClick != null) {
-                onCharacterCardViewClick.onMainInfoClick(this);
-            }
-            break;
-        case R.id.short_info:
-            if (onShortInfoClick != null) {
-                onShortInfoClick.onShortInfoClick(this);
-            }
-            if (onCharacterCardViewClick != null) {
-                onCharacterCardViewClick.onShortInfoClick(this);
-            }
-            break;
-        case R.id.extra_info_text:
-            if (onExtraInfoClick != null) {
-                onExtraInfoClick.onExtraInfoClick(this);
-            }
-            if (onCharacterCardViewClick != null) {
-                onCharacterCardViewClick.onExtraInfoClick(this);
-            }
-            break;
-        case android.R.id.icon:
-            if (onCharacterCardImageClick != null) {
-                onCharacterCardImageClick.onImageClick(this);
-            }
-            if (onCharacterCardViewClick != null) {
-                onCharacterCardViewClick.onImageClick(this);
-            }
-            break;
-        default:
-            break;
+            case R.id.name:
+                if (onMainInfoClick != null) {
+                    onMainInfoClick.onMainInfoClick(this);
+                }
+                if (onCharacterCardViewClick != null) {
+                    onCharacterCardViewClick.onMainInfoClick(this);
+                }
+                break;
+            case R.id.short_info:
+                if (onShortInfoClick != null) {
+                    onShortInfoClick.onShortInfoClick(this);
+                }
+                if (onCharacterCardViewClick != null) {
+                    onCharacterCardViewClick.onShortInfoClick(this);
+                }
+                break;
+            case R.id.extra_info_text:
+                if (onExtraInfoClick != null) {
+                    onExtraInfoClick.onExtraInfoClick(this);
+                }
+                if (onCharacterCardViewClick != null) {
+                    onCharacterCardViewClick.onExtraInfoClick(this);
+                }
+                break;
+            case android.R.id.icon:
+                if (onCharacterCardImageClick != null) {
+                    onCharacterCardImageClick.onImageClick(this);
+                }
+                if (onCharacterCardViewClick != null) {
+                    onCharacterCardViewClick.onImageClick(this);
+                }
+                break;
+            default:
+                break;
         }
     }
 
     public void setOnCharacterCardViewClick(OnCharacterCardViewClick onCharacterCardViewClick) {
         this.onCharacterCardViewClick = onCharacterCardViewClick;
+    }
+
+    @Override
+    public void onPaletteDarkColorsGenerated(RemoteImage loadingImage, Palette.Swatch darkVibrant,
+                                             Palette.Swatch darkMuted) {
+        if (darkMuted != null && mMainInfoBackground != null) {
+            int backgroundColor = darkMuted.getRgb();
+            mMainInfoBackground.setBackgroundColor(backgroundColor);
+        }
+    }
+
+    @Override
+    public void onPaletteLightColorsGenerated(RemoteImage loadingImage, Palette.Swatch vibrant,
+                                              Palette.Swatch muted) {
+        if (vibrant != null && mMainInfoView != null) {
+            mMainInfoView.setTextColor(vibrant.getTitleTextColor());
+        }
+        if (vibrant != null && mShortInfoView != null) {
+            mShortInfoView.setTextColor(vibrant.getBodyTextColor());
+        }
     }
 
     public interface OnMenuItemSelected {
