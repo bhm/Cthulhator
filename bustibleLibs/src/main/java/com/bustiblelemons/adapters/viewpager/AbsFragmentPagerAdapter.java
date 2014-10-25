@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.SparseArray;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -36,30 +37,24 @@ public abstract class AbsFragmentPagerAdapter<T, F extends Fragment>
     }
 
     public void addData(T... data) {
-        for (T item : data) {
-            mData.add(item);
-            int pos = mData.size();
-            F f = newInstance(item);
-            mFragments.put(pos, f);
+        if (mData == null) {
+            mData = new ArrayList<T>();
         }
+        Collections.addAll(mData, data);
         notifyDataSetChanged();
     }
 
     public void addData(List<T> data) {
-        for (int i = 0; i < data.size(); i++) {
-            T item = data.get(i);
-            F f = newInstance(item);
-            mData.add(item);
-            mFragments.put(i, f);
+        if (mData == null) {
+            mData = new ArrayList<T>();
         }
+        mData.addAll(data);
+
         notifyDataSetChanged();
     }
 
     public boolean addData(T item) {
         boolean r = mData.add(item);
-        int pos = mData.size();
-        F f = newInstance(item);
-        mFragments.put(pos, f);
         notifyDataSetChanged();
         return r;
     }
@@ -88,7 +83,7 @@ public abstract class AbsFragmentPagerAdapter<T, F extends Fragment>
 
     @Override
     public int getCount() {
-        return this.mData.size();
+        return mData.size();
     }
 
     @Override
