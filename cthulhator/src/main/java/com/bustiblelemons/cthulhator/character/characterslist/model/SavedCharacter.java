@@ -119,15 +119,15 @@ public class SavedCharacter implements Parcelable, Serializable {
         }
         this.edition = edition;
         this.properties.clear();
-        fillStatistics(edition);
-        fillSkillsList(edition);
-        updateDamageBonus(edition);
+        fillStatistics();
+        fillSkillsList();
+        updateDamageBonus();
         updateSkillPointPools();
         setupAgeAndBirth();
     }
 
-    private void updateDamageBonus(CthulhuEdition edition) {
-        CharacterProperty damageBonus = new CharacterProperty();
+    private void updateDamageBonus() {
+        CharacterProperty damageBonus = getDamageBonus().asCharacterProperty();
         addCharacterProperty(damageBonus);
     }
 
@@ -268,14 +268,14 @@ public class SavedCharacter implements Parcelable, Serializable {
     }
 
     @JsonIgnore
-    public void fillSkillsList(CthulhuEdition edition) {
-        addPropertiesList(edition.getSkills());
+    public void fillSkillsList() {
+        addPropertiesList(getEdition().getSkills());
         updateSkills();
     }
 
     @JsonIgnore
-    public void fillStatistics(CthulhuEdition edition) {
-        addPropertiesList(edition.getCharacteristics());
+    public void fillStatistics() {
+        addPropertiesList(getEdition().getCharacteristics());
     }
 
     @JsonIgnore
