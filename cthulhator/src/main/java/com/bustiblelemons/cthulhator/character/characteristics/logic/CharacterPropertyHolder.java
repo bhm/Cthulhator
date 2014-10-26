@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
+import com.bustiblelemons.cthulhator.system.properties.PropertyType;
 import com.bustiblelemons.holders.impl.ViewHolder;
 import com.bustiblelemons.utils.ResourceHelper;
 import com.bustiblelemons.views.SkillView;
@@ -35,9 +36,12 @@ public class CharacterPropertyHolder implements ViewHolder<CharacterProperty> {
     @Override
     public void bindValues(CharacterProperty item, int position) {
         if (item != null) {
-            titleView.setTitle(item.getDisplayName());
+            titleView.setTitle(item.getName());
             titleView.setIsPercentile(item.isPercentile());
             titleView.setIntValue(item.getValue());
+            if (PropertyType.DAMAGE_BONUS.equals(item.getType())) {
+                titleView.setValue(item.getDisplayName());
+            }
         }
     }
 

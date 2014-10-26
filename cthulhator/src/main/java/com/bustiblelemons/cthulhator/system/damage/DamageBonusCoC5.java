@@ -5,6 +5,7 @@ import com.bustiblelemons.cthulhator.system.dice.model.PointPool;
 import com.bustiblelemons.cthulhator.system.dice.model.PolyhedralDice;
 import com.bustiblelemons.cthulhator.system.properties.ActionGroup;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
+import com.bustiblelemons.cthulhator.system.properties.PropertyFormat;
 import com.bustiblelemons.cthulhator.system.properties.PropertyType;
 
 import java.util.ArrayList;
@@ -151,9 +152,9 @@ enum DamageBonusCoC5 implements DamageBonus {
     private int       mMin;
     private PointPool mPointPool;
 
-    DamageBonusCoC5(int mMax, int mMin) {
-        this.mMax = mMax;
-        this.mMin = mMin;
+    DamageBonusCoC5(int min, int max) {
+        this.mMin = min;
+        this.mMax = max;
     }
 
     public static DamageBonus fromProperties(int con, int siz) {
@@ -162,7 +163,7 @@ enum DamageBonusCoC5 implements DamageBonus {
 
     private static DamageBonus fromPropertySum(int i) {
         for (DamageBonusCoC5 bonusCoC5 : values()) {
-            if (i < bonusCoC5.getMax() && i > bonusCoC5.getMin()) {
+            if (i <= bonusCoC5.getMax() && i >= bonusCoC5.getMin()) {
                 return bonusCoC5;
             }
         }
@@ -223,6 +224,7 @@ enum DamageBonusCoC5 implements DamageBonus {
     public CharacterProperty asCharacterProperty() {
         CharacterProperty r = new CharacterProperty();
         r.setDisplayName(toString());
+        r.setFormat(PropertyFormat.NUMBER);
         r.setType(PropertyType.DAMAGE_BONUS);
         PointPool pointPool = getPointPool();
         r.setMinValue(pointPool.getMin());

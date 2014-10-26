@@ -50,7 +50,6 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     ObservableScrollView mScrollView;
     private SparseArray<CharacterProperty>        mIdsToProperty = new SparseArray<CharacterProperty>();
     private SparseArray<CharacterPropertyAdapter> mIdsToAdapters = new SparseArray<CharacterPropertyAdapter>();
-    private Set<CharacterProperty> mCharacterProperties;
     private SavedCharacter         mSavedCharacter;
     private Toolbar                mToolbar;
 
@@ -68,13 +67,10 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         mSavedCharacter = getInstanceArgument();
         if (mSavedCharacter == null) {
             mSavedCharacter = CthulhuCharacter.forEdition(CthulhuEdition.CoC5);
-            mCharacterProperties = mSavedCharacter.getProperties();
             fillPropertyViews();
         } else if (mSavedCharacter != null && !mSavedCharacter.hasAssignedStatistics()) {
-            mCharacterProperties = mSavedCharacter.getProperties();
             distributeRandomPoints();
         } else {
-            mCharacterProperties = mSavedCharacter.getProperties();
             fillPropertyViews();
         }
     }
@@ -131,21 +127,11 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
                     int randValue = property.randomValue();
                     points += randValue;
                     view.setIntValue(randValue);
-                    if (property.hasRelations()) {
-                        CharacterPropertyAdapter adapter;
-                        if (mIdsToAdapters.get(id) != null) {
-                            adapter = mIdsToAdapters.get(id);
-                        } else {
-                            adapter = new CharacterPropertyAdapter(this);
-                            mIdsToAdapters.put(id, adapter);
-                        }
-                        adapter.refreshData(mSavedCharacter.getRelatedProperties(property));
-                        view.setAdapter(adapter);
-                        mIdsToAdapters.put(id, adapter);
-                    }
+
                 }
             }
         }
+        readRelations();
     }
 
     private void fillPropertyViews() {
@@ -159,31 +145,40 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
                 CharacterProperty property = getProperty(tag);
                 int id = view.getId();
                 if (property != null) {
-                    mIdsToProperty.put(id, property);
                     view.setSkillViewListener(this);
                     view.setMinValue(property.getMinValue());
                     view.setMaxValue(property.getMaxValue());
                     int value = property.getValue();
                     points += value;
                     view.setIntValue(value);
-                    if (property.hasRelations()) {
-                        CharacterPropertyAdapter adapter;
-                        if (mIdsToAdapters.get(id) != null) {
-                            adapter = mIdsToAdapters.get(id);
-                        } else {
-                            adapter = new CharacterPropertyAdapter(this);
-                            mIdsToAdapters.put(id, adapter);
-                        }
-                        adapter.refreshData(mSavedCharacter.getRelatedProperties(property));
-                        view.setAdapter(adapter);
-                    }
+                    mIdsToProperty.put(id, property);
                 }
+            }
+        }
+        readRelations();
+    }
+
+    private void readRelations() {
+        for (SkillView view : mCharacteristicsViewList) {
+            String tag = (String) view.getTag();
+            CharacterProperty property = getProperty(tag);
+            int id = view.getId();
+            if (property.hasRelations()) {
+                CharacterPropertyAdapter adapter;
+                if (mIdsToAdapters.get(id) != null) {
+                    adapter = mIdsToAdapters.get(id);
+                } else {
+                    adapter = new CharacterPropertyAdapter(this);
+                    mIdsToAdapters.put(id, adapter);
+                }
+                adapter.refreshData(mSavedCharacter.getRelatedProperties(property));
+                view.setAdapter(adapter);
             }
         }
     }
 
     private CharacterProperty getProperty(String name) {
-        for (CharacterProperty property : mCharacterProperties) {
+        for (CharacterProperty property : mSavedCharacter.getStatistics()) {
             if (property.getName() != null && property.getName().equals(name)) {
                 log.d("%s vs %s", name, property.getName());
                 return property;
