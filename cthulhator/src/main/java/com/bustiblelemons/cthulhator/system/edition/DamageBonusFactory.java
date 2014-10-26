@@ -7,8 +7,8 @@ import com.bustiblelemons.cthulhator.system.dice.PointPoolFromDiceBuilder;
  */
 public class DamageBonusFactory {
 
-    public static DamageBonus forEdition(CthulhuEdition edition, int constitution, int size) {
-        DamageBonus r = new DamageBonus();
+    public static DamageBonusBracket forEdition(CthulhuEdition edition, int constitution, int size) {
+        DamageBonusBracket r = new DamageBonusBracket();
         int cumulative = constitution + size;
         switch (edition) {
         default:
