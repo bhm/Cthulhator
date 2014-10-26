@@ -223,10 +223,10 @@ enum DamageBonusCoC5 implements DamageBonus {
     public CharacterProperty asCharacterProperty() {
         CharacterProperty r = new CharacterProperty();
         r.setDisplayName(toString());
-        r.setType(PropertyType.DICE_BONUS);
+        r.setType(PropertyType.DAMAGE_BONUS);
         PointPool pointPool = getPointPool();
-        r.setMaxValue(pointPool.getMax());
         r.setMinValue(pointPool.getMin());
+        r.setMaxValue(pointPool.getMax());
         r.setName(DamageBonus.class.getSimpleName());
         List<ActionGroup> g = new ArrayList<ActionGroup>();
         g.add(ActionGroup.COMBAT);

@@ -12,6 +12,7 @@ import com.bustiblelemons.cthulhator.character.portrait.model.Portrait;
 import com.bustiblelemons.cthulhator.character.possessions.model.Possesion;
 import com.bustiblelemons.cthulhator.system.brp.skills.BRPSkillPointPools;
 import com.bustiblelemons.cthulhator.system.brp.statistics.BRPStatistic;
+import com.bustiblelemons.cthulhator.system.brp.statistics.HitPoints;
 import com.bustiblelemons.cthulhator.system.damage.DamageBonus;
 import com.bustiblelemons.cthulhator.system.damage.DamageBonusFactory;
 import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
@@ -75,6 +76,8 @@ public class SavedCharacter implements Parcelable, Serializable {
     private int                  age;
     private CthulhuPeriod period        = CthulhuPeriod.JAZZAGE;
     private long          suggestedDate = Long.MIN_VALUE;
+    @JsonIgnore
+    private HitPoints hitPoints;
 
     public SavedCharacter() {
     }
@@ -103,12 +106,6 @@ public class SavedCharacter implements Parcelable, Serializable {
         this.suggestedDate = in.readLong();
     }
 
-    public DamageBonus getDamageBonus() {
-        int con = getStatisticValue(BRPStatistic.CON.name());
-        int siz = getStatisticValue(BRPStatistic.SIZ.name());
-        return DamageBonusFactory.forEdition(getEdition(), con, siz);
-    }
-
     public CthulhuEdition getEdition() {
         if (edition == null) {
             edition = CthulhuEdition.CoC5;
@@ -127,6 +124,13 @@ public class SavedCharacter implements Parcelable, Serializable {
         updateDamageBonus();
         updateSkillPointPools();
         setupAgeAndBirth();
+    }
+
+    @JsonIgnore
+    public DamageBonus getDamageBonus() {
+        int con = getStatisticValue(BRPStatistic.CON.name());
+        int siz = getStatisticValue(BRPStatistic.SIZ.name());
+        return DamageBonusFactory.forEdition(getEdition(), con, siz);
     }
 
     private void updateDamageBonus() {
@@ -238,11 +242,17 @@ public class SavedCharacter implements Parcelable, Serializable {
         Set<CharacterProperty> r = new HashSet<CharacterProperty>();
         for (Relation relation : relations) {
             if (relation != null) {
-                CharacterProperty relatedProperty = getPropertyByName(
-                        relation.getPropertyName());
+                String propName = relation.getPropertyName();
+                CharacterProperty relatedProperty = getPropertyByName(propName);
                 if (relatedProperty != null) {
-                    int value = relation.getBaseValueByRelation(toProperty.getValue());
-                    relatedProperty.setValue(value);
+                    if (PropertyType.DAMAGE_BONUS.equals(relatedProperty.getType())) {
+                        relatedProperty = getDamageBonus().asCharacterProperty();
+                    } else if (PropertyType.HIT_POINTS.equals(relatedProperty.getType())) {
+                        relatedProperty = getHitPoints().asCharacterProperty();
+                    } else {
+                        int value = relation.getBaseValueByRelation(toProperty.getValue());
+                        relatedProperty.setValue(value);
+                    }
                     r.add(relatedProperty);
                 }
             }
@@ -758,5 +768,15 @@ public class SavedCharacter implements Parcelable, Serializable {
         }
         fullHistory.add(event);
         return true;
+    }
+
+    @JsonIgnore
+    public HitPoints getHitPoints() {
+        return hitPoints;
+    }
+
+    @JsonIgnore
+    public void setHitPoints(HitPoints hitPoints) {
+        this.hitPoints = hitPoints;
     }
 }
