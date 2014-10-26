@@ -1,15 +1,18 @@
 package com.bustiblelemons.cthulhator.system.dice;
 
+import com.bustiblelemons.cthulhator.system.dice.model.PointPool;
+import com.bustiblelemons.cthulhator.system.dice.model.PolyhedralDice;
+
 /**
  * Created by bhm on 09.09.14.
  */
-public class PointPoolFromDiceFactory {
+public class PointPoolFromDiceBuilder {
 
     private int min = 0;
 
     private int currentMax = 0;
 
-    public PointPoolFromDiceFactory addDicePool(int count, PolyHedralDice dice) {
+    public PointPoolFromDiceBuilder addDicePool(int count, PolyhedralDice dice) {
         for (int i = 0; i < count; i++) {
             min++;
             currentMax += dice.getMax();
@@ -17,7 +20,7 @@ public class PointPoolFromDiceFactory {
         return this;
     }
 
-    public PointPoolFromDiceFactory addModifiers(int... modifiers) {
+    public PointPoolFromDiceBuilder addModifiers(int... modifiers) {
         for (int mod : modifiers) {
             min += mod;
             currentMax += mod;
