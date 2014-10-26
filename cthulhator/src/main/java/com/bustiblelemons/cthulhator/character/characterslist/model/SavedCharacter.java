@@ -110,6 +110,9 @@ public class SavedCharacter implements Parcelable, Serializable {
     }
 
     public CthulhuEdition getEdition() {
+        if (edition == null) {
+            edition = CthulhuEdition.CoC5;
+        }
         return edition;
     }
 
