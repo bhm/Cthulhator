@@ -121,8 +121,14 @@ public class SavedCharacter implements Parcelable, Serializable {
         this.properties.clear();
         fillStatistics(edition);
         fillSkillsList(edition);
+        updateDamageBonus(edition);
         updateSkillPointPools();
         setupAgeAndBirth();
+    }
+
+    private void updateDamageBonus(CthulhuEdition edition) {
+        CharacterProperty damageBonus = new CharacterProperty();
+        addCharacterProperty(damageBonus);
     }
 
     public CthulhuPeriod getPeriod() {

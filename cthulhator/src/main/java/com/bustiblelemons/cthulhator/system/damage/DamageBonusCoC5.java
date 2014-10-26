@@ -3,6 +3,12 @@ package com.bustiblelemons.cthulhator.system.damage;
 import com.bustiblelemons.cthulhator.system.dice.PointPoolFromDiceBuilder;
 import com.bustiblelemons.cthulhator.system.dice.model.PointPool;
 import com.bustiblelemons.cthulhator.system.dice.model.PolyhedralDice;
+import com.bustiblelemons.cthulhator.system.properties.ActionGroup;
+import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
+import com.bustiblelemons.cthulhator.system.properties.PropertyType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by hiv on 26.10.14.
@@ -210,5 +216,19 @@ enum DamageBonusCoC5 implements DamageBonus {
     @Override
     public int random() {
         return getPointPool().randomValue();
+    }
+
+    @Override
+    public CharacterProperty asCharacterProperty() {
+        CharacterProperty r = new CharacterProperty();
+        r.setType(PropertyType.BONUS);
+        PointPool pointPool = getPointPool();
+        r.setMaxValue(pointPool.getMax());
+        r.setMinValue(pointPool.getMin());
+        r.setName(DamageBonus.class.getSimpleName());
+        List<ActionGroup> g = new ArrayList<ActionGroup>();
+        g.add(ActionGroup.COMBAT);
+        r.setActionGroup(g);
+        return r;
     }
 }
