@@ -1,13 +1,16 @@
-package com.bustiblelemons.cthulhator.system.dice;
+package com.bustiblelemons.cthulhator.system.dice.model;
 
 import com.bustiblelemons.patterns.ObservedObjectImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 
 import java.util.Random;
 
 /**
  * Created by bhm on 09.09.14.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PointPool extends ObservedObjectImpl<Integer> {
     public static final PointPool EMPTY = new PointPool(Integer.MAX_VALUE);
     private Random mRandom;
@@ -154,6 +157,7 @@ public class PointPool extends ObservedObjectImpl<Integer> {
         return getPoints() > getMin();
     }
 
+    @JsonIgnoreType
     public static class Builder {
         private long mSeed = System.currentTimeMillis();
         private int mMax = 100;

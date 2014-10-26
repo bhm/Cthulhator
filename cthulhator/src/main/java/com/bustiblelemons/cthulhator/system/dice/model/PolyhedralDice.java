@@ -1,9 +1,9 @@
-package com.bustiblelemons.cthulhator.system.dice;
+package com.bustiblelemons.cthulhator.system.dice.model;
 
 /**
  * Created by bhm on 09.09.14.
  */
-public enum PolyHedralDice {
+public enum PolyhedralDice {
     D2 {
         @Override
         public int getMax() {

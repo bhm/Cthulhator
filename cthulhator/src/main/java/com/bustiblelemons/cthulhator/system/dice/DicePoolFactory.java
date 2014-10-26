@@ -1,5 +1,7 @@
 package com.bustiblelemons.cthulhator.system.dice;
 
+import com.bustiblelemons.cthulhator.system.dice.model.Polyhedral;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;

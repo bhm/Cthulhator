@@ -1,4 +1,7 @@
-package com.bustiblelemons.cthulhator.system.dice;
+package com.bustiblelemons.cthulhator.system.dice.model;
+
+import com.bustiblelemons.cthulhator.system.dice.DicePoolElement;
+import com.bustiblelemons.cthulhator.system.dice.DiceRoll;
 
 import java.util.Random;
 

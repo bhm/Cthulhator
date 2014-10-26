@@ -1,5 +1,6 @@
 package com.bustiblelemons.cthulhator.system.dice;
 
+import com.bustiblelemons.cthulhator.system.dice.model.PointPool;
 import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 
