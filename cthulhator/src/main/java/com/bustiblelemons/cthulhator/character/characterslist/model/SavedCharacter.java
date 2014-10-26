@@ -12,6 +12,8 @@ import com.bustiblelemons.cthulhator.character.portrait.model.Portrait;
 import com.bustiblelemons.cthulhator.character.possessions.model.Possesion;
 import com.bustiblelemons.cthulhator.system.brp.skills.BRPSkillPointPools;
 import com.bustiblelemons.cthulhator.system.brp.statistics.BRPStatistic;
+import com.bustiblelemons.cthulhator.system.damage.DamageBonus;
+import com.bustiblelemons.cthulhator.system.damage.DamageBonusFactory;
 import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 import com.bustiblelemons.cthulhator.system.properties.PropertyType;
@@ -41,7 +43,7 @@ import java.util.TreeSet;
 public class SavedCharacter implements Parcelable, Serializable {
 
     @JsonIgnore
-    public static final Parcelable.Creator<SavedCharacter> CREATOR = new Parcelable.Creator<SavedCharacter>() {
+    public static final Parcelable.Creator<SavedCharacter>                  CREATOR                    = new Parcelable.Creator<SavedCharacter>() {
         public SavedCharacter createFromParcel(Parcel source) {
             return new SavedCharacter(source);
         }
@@ -51,28 +53,28 @@ public class SavedCharacter implements Parcelable, Serializable {
         }
     };
     @JsonIgnore
-    private static LruCache<CharacterProperty, List<Possesion>> cachedAffectedPossessions =
+    private static      LruCache<CharacterProperty, List<Possesion>>        cachedAffectedPossessions  =
             new LruCache<CharacterProperty, List<Possesion>>(20);
     @JsonIgnore
-    private static LruCache<CharacterProperty, Set<CharacterProperty>> propertyToProperty =
+    private static      LruCache<CharacterProperty, Set<CharacterProperty>> propertyToProperty         =
             new LruCache<CharacterProperty, Set<CharacterProperty>>(BRPStatistic.values().length);
     @JsonIgnore
-    private static int sShouldHaveAssignedAtLeast = 2;
+    private static      int                                                 sShouldHaveAssignedAtLeast = 2;
 
     static {
         sShouldHaveAssignedAtLeast = BRPStatistic.values().length / 5;
     }
 
-    protected Set<CharacterProperty> properties = new HashSet<CharacterProperty>();
-    protected List<Possesion> possesions = new ArrayList<Possesion>();
-    protected Set<HistoryEvent> fullHistory = new HashSet<HistoryEvent>();
-    private CthulhuEdition edition = CthulhuEdition.CoC5;
+    protected Set<CharacterProperty> properties  = new HashSet<CharacterProperty>();
+    protected List<Possesion>        possesions  = new ArrayList<Possesion>();
+    protected Set<HistoryEvent>      fullHistory = new HashSet<HistoryEvent>();
+    private   CthulhuEdition         edition     = CthulhuEdition.CoC5;
     private CharacterDescription description;
-    private BirthData birth;
-    private long presentDate;
-    private int age;
-    private CthulhuPeriod period = CthulhuPeriod.JAZZAGE;
-    private long suggestedDate = Long.MIN_VALUE;
+    private BirthData            birth;
+    private long                 presentDate;
+    private int                  age;
+    private CthulhuPeriod period        = CthulhuPeriod.JAZZAGE;
+    private long          suggestedDate = Long.MIN_VALUE;
 
     public SavedCharacter() {
     }
@@ -99,6 +101,12 @@ public class SavedCharacter implements Parcelable, Serializable {
         this.presentDate = in.readLong();
         this.age = in.readInt();
         this.suggestedDate = in.readLong();
+    }
+
+    public DamageBonus getDamageBonus() {
+        int con = getStatisticValue(BRPStatistic.CON.name());
+        int siz = getStatisticValue(BRPStatistic.SIZ.name());
+        return DamageBonusFactory.forEdition(getEdition(), con, siz);
     }
 
     public CthulhuEdition getEdition() {

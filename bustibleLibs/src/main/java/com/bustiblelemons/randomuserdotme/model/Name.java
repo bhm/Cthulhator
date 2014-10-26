@@ -78,4 +78,26 @@ public class Name implements Serializable, Parcelable {
         dest.writeString(this.last);
         dest.writeString(this.title);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Name name = (Name) o;
+
+        if (first != null ? !first.equals(name.first) : name.first != null) return false;
+        if (last != null ? !last.equals(name.last) : name.last != null) return false;
+        if (title != null ? !title.equals(name.title) : name.title != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = first != null ? first.hashCode() : 0;
+        result = 31 * result + (last != null ? last.hashCode() : 0);
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        return result;
+    }
 }

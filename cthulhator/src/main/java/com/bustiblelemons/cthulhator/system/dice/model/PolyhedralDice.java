@@ -4,7 +4,17 @@ package com.bustiblelemons.cthulhator.system.dice.model;
  * Created by bhm on 09.09.14.
  */
 public enum PolyhedralDice {
-    D2 {
+    D0 {
+        @Override
+        public int getMax() {
+            return 0;
+        }
+    }, D1 {
+        @Override
+        public int getMax() {
+            return 1;
+        }
+    }, D2 {
         @Override
         public int getMax() {
             return 2;
@@ -43,6 +53,11 @@ public enum PolyhedralDice {
         @Override
         public int getMax() {
             return 32;
+        }
+    }, D4 {
+        @Override
+        public int getMax() {
+            return 4;
         }
     };
 

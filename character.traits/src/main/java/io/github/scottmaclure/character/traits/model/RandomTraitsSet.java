@@ -132,6 +132,34 @@ public class RandomTraitsSet implements Serializable, Parcelable {
         dest.writeString(this.speech);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RandomTraitsSet that = (RandomTraitsSet) o;
+
+        if (characteristic != null ? !characteristic.equals(that.characteristic) : that.characteristic != null)
+            return false;
+        if (facial != null ? !facial.equals(that.facial) : that.facial != null) return false;
+        if (hair != null ? !hair.equals(that.hair) : that.hair != null) return false;
+        if (personality != null ? !personality.equals(that.personality) : that.personality != null)
+            return false;
+        if (speech != null ? !speech.equals(that.speech) : that.speech != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = hair != null ? hair.hashCode() : 0;
+        result = 31 * result + (facial != null ? facial.hashCode() : 0);
+        result = 31 * result + (characteristic != null ? characteristic.hashCode() : 0);
+        result = 31 * result + (personality != null ? personality.hashCode() : 0);
+        result = 31 * result + (speech != null ? speech.hashCode() : 0);
+        return result;
+    }
+
     public static class Builder {
 
         protected String hair;

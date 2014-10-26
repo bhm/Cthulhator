@@ -13,10 +13,11 @@ import java.util.Random;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PointPool extends ObservedObjectImpl<Integer> {
     public static final PointPool EMPTY = new PointPool(Integer.MAX_VALUE);
+    public static final PointPool ZERO  = new PointPool(0, 0);
     private Random mRandom;
-    private int mMax = Integer.MAX_VALUE;
+    private int mMax   = Integer.MAX_VALUE;
     private int points = mMax;
-    private int mMin = 0;
+    private int mMin   = 0;
 
     private PointPool(int max) {
         this(0, max);
@@ -40,6 +41,23 @@ public class PointPool extends ObservedObjectImpl<Integer> {
     public static PointPool random(int max) {
         PointPool r = new PointPool(max);
         return r;
+    }
+
+    public int randomValue() {
+        Random r = new Random();
+        int ret = 0;
+        if (getMin() >= 0) {
+            int n = getMax() - getMin();
+            int roll = r.nextInt(n);
+            ret = roll + getMin() + 1;
+        } else {
+            int absMin = Math.abs(getMin());
+            int n = getMax() + absMin;
+            int roll = r.nextInt(n);
+            ret = getMax() - roll;
+        }
+        r = null;
+        return ret;
     }
 
     public int getMax() {
@@ -160,8 +178,8 @@ public class PointPool extends ObservedObjectImpl<Integer> {
     @JsonIgnoreType
     public static class Builder {
         private long mSeed = System.currentTimeMillis();
-        private int mMax = 100;
-        private int mMin = 0;
+        private int  mMax  = 100;
+        private int  mMin  = 0;
 
         public Builder setSeed(long mSeed) {
             this.mSeed = mSeed;

@@ -68,4 +68,28 @@ public class BirthData implements Serializable, Parcelable {
         dest.writeString(this.description);
         dest.writeLong(this.date);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BirthData birthData = (BirthData) o;
+
+        if (date != birthData.date) return false;
+        if (description != null ? !description.equals(birthData.description) : birthData.description != null)
+            return false;
+        if (location != null ? !location.equals(birthData.location) : birthData.location != null)
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = location != null ? location.hashCode() : 0;
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (int) (date ^ (date >>> 32));
+        return result;
+    }
 }

@@ -5,8 +5,6 @@ import android.support.v4.util.LruCache;
 import com.bustiblelemons.cthulhator.system.brp.skills.BRPSkill;
 import com.bustiblelemons.cthulhator.system.brp.statistics.BRPCharacterProperties;
 import com.bustiblelemons.cthulhator.system.brp.statistics.BRPStatistic;
-import com.bustiblelemons.cthulhator.system.dice.PointPoolFromDiceBuilder;
-import com.bustiblelemons.cthulhator.system.dice.model.PointPool;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 
 import java.util.Collections;
@@ -44,11 +42,6 @@ public enum CthulhuEdition {
 
     public int getCareerSkillPointMultiplier() {
         return 20;
-    }
-
-    public PointPool getDamageBonus() {
-        PointPoolFromDiceBuilder r = new PointPoolFromDiceBuilder();
-        return r.build();
     }
 
     public Set<CharacterProperty> getCharacteristics() {

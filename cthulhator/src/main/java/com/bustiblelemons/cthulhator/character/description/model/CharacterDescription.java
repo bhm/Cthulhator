@@ -29,10 +29,10 @@ public class CharacterDescription implements Serializable, Parcelable {
             return new CharacterDescription[size];
         }
     };
-    private Name name;
-    private Location location;
+    private Name            name;
+    private Location        location;
     private RandomTraitsSet traits;
-    private List<Portrait> portraitList;
+    private List<Portrait>  portraitList;
 
     public CharacterDescription() {
     }
@@ -107,5 +107,25 @@ public class CharacterDescription implements Serializable, Parcelable {
         dest.writeParcelable(this.location, flags);
         dest.writeParcelable(this.traits, flags);
         dest.writeTypedList(this.portraitList);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CharacterDescription that = (CharacterDescription) o;
+
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (traits != null ? !traits.equals(that.traits) : that.traits != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (traits != null ? traits.hashCode() : 0);
+        return result;
     }
 }
