@@ -167,7 +167,8 @@ public enum DamageBonusCoC7 implements DamageBonus {
     @Override
     public CharacterProperty asCharacterProperty() {
         CharacterProperty r = new CharacterProperty();
-        r.setType(PropertyType.BONUS);
+        r.setDisplayName(toString());
+        r.setType(PropertyType.DICE_BONUS);
         PointPool pointPool = getPointPool();
         r.setMaxValue(pointPool.getMax());
         r.setMinValue(pointPool.getMin());
@@ -178,5 +179,12 @@ public enum DamageBonusCoC7 implements DamageBonus {
         return r;
     }
 
+    @Override
+    public String toString() {
+        if (getDiceCount() == 0) {
+            return "0";
+        }
+        return getDiceCount() + getDice().name();
+    }
 }
 

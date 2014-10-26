@@ -35,7 +35,7 @@ public class CharacterPropertyHolder implements ViewHolder<CharacterProperty> {
     @Override
     public void bindValues(CharacterProperty item, int position) {
         if (item != null) {
-            titleView.setTitle(item.getName());
+            titleView.setTitle(item.getDisplayName());
             titleView.setIsPercentile(item.isPercentile());
             titleView.setIntValue(item.getValue());
         }

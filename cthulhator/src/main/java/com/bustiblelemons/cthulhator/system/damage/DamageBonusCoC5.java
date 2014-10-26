@@ -19,7 +19,7 @@ enum DamageBonusCoC5 implements DamageBonus {
 
         @Override
         int getDiceCount() {
-            return 1;
+            return -1;
         }
 
         @Override
@@ -42,7 +42,7 @@ enum DamageBonusCoC5 implements DamageBonus {
 
         @Override
         int getDiceCount() {
-            return 1;
+            return -1;
         }
 
         @Override
@@ -218,10 +218,12 @@ enum DamageBonusCoC5 implements DamageBonus {
         return getPointPool().randomValue();
     }
 
+
     @Override
     public CharacterProperty asCharacterProperty() {
         CharacterProperty r = new CharacterProperty();
-        r.setType(PropertyType.BONUS);
+        r.setDisplayName(toString());
+        r.setType(PropertyType.DICE_BONUS);
         PointPool pointPool = getPointPool();
         r.setMaxValue(pointPool.getMax());
         r.setMinValue(pointPool.getMin());
@@ -230,5 +232,13 @@ enum DamageBonusCoC5 implements DamageBonus {
         g.add(ActionGroup.COMBAT);
         r.setActionGroup(g);
         return r;
+    }
+
+    @Override
+    public String toString() {
+        if (getDiceCount() == 0) {
+            return "0";
+        }
+        return getDiceCount() + getDice().name();
     }
 }

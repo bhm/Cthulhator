@@ -1,6 +1,7 @@
 package com.bustiblelemons.cthulhator.system.brp.statistics;
 
 import com.bustiblelemons.cthulhator.system.brp.skills.BRPSkill;
+import com.bustiblelemons.cthulhator.system.damage.DamageBonus;
 import com.bustiblelemons.cthulhator.system.properties.ActionGroup;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 import com.bustiblelemons.cthulhator.system.properties.ModifierType;
@@ -73,6 +74,20 @@ public enum BRPStatistic {
             return relations;
         }
     }, SIZ {
+        public Relation damageRelation;
+        public List<Relation> relations;
+
+        @Override
+        public List<Relation> getRelations() {
+            if (relations == null) {
+                relations = new ArrayList<Relation>();
+                damageRelation = new Relation()
+                        .setPropertyName(DamageBonus.class.getSimpleName())
+                        .setModifierType(ModifierType.NONE);
+                relations.add(damageRelation);
+            }
+            return relations;
+        }
     }, SAN {
         public Relation powRelation;
         public List<Relation> relations;

@@ -2,6 +2,7 @@ package com.bustiblelemons.cthulhator.system.properties;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -22,7 +23,7 @@ import java.util.Set;
 public class CharacterProperty implements Serializable, Parcelable {
 
     @JsonIgnore
-    public static final CharacterProperty EMPTY = new CharacterProperty();
+    public static final CharacterProperty                     EMPTY   = new CharacterProperty();
     public static final Parcelable.Creator<CharacterProperty> CREATOR = new Parcelable.Creator<CharacterProperty>() {
         public CharacterProperty createFromParcel(Parcel source) {
             return new CharacterProperty(source);
@@ -32,27 +33,29 @@ public class CharacterProperty implements Serializable, Parcelable {
             return new CharacterProperty[size];
         }
     };
-    private String name;
-    private int value;
-    private int maxValue;
-    private int minValue;
-    private int baseValue;
-    private PropertyFormat format;
-    private PropertyType type;
+    private String            name;
+    private int               value;
+    private int               maxValue;
+    private int               minValue;
+    private int               baseValue;
+    private PropertyFormat    format;
+    private PropertyType      type;
     private List<ActionGroup> actionGroup;
-    private Set<Relation> relations;
+    private Set<Relation>     relations;
     @JsonIgnore
     private int nameResId = -1;
     @JsonIgnore
-    private int shortNameResId;
+    private int         shortNameResId;
     @JsonIgnore
     private ActionGroup mMainActionGroup;
+    private String      displayName;
 
     public CharacterProperty() {
     }
 
     private CharacterProperty(Parcel in) {
         this.name = in.readString();
+        this.displayName = in.readString();
         this.value = in.readInt();
         this.maxValue = in.readInt();
         this.minValue = in.readInt();
@@ -269,6 +272,7 @@ public class CharacterProperty implements Serializable, Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.name);
+        dest.writeString(this.displayName);
         dest.writeInt(this.value);
         dest.writeInt(this.maxValue);
         dest.writeInt(this.minValue);
@@ -296,5 +300,16 @@ public class CharacterProperty implements Serializable, Parcelable {
             mMainActionGroup = ActionGroup.OTHER;
         }
         return mMainActionGroup;
+    }
+
+    public String getDisplayName() {
+        if (!TextUtils.isEmpty(displayName)) {
+            return displayName;
+        }
+        return getName();
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 }
