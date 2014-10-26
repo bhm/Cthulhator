@@ -11,7 +11,7 @@ public class DamageBonusFactory {
         default:
         case CoC5:
             return DamageBonusCoC5.fromProperties(con, siz);
-        case CoC6:
+        case CoC7:
             return DamageBonusCoC7.fromProperties(con, siz);
         }
     }
