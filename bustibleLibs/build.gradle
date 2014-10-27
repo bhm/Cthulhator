@@ -40,9 +40,7 @@ android {
 dependencies {
     provided project(':circle-button')
     provided project(':floatlabel')
-    provided('com.android.support:appcompat-v7:21.0.0') {
-        force = true
-    }
+    provided('com.android.support:appcompat-v7:21.0.+')
     provided 'commons-lang:commons-lang:2.6'
 
     provided 'com.fasterxml.jackson.core:jackson-databind:2.4.3'

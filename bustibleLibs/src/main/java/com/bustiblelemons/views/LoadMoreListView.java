@@ -38,6 +38,21 @@ public class LoadMoreListView extends ListView implements AbsListView.OnScrollLi
     private boolean     pauseOnFling  = false;
     private boolean     showLoader    = true;
 
+    public LoadMoreListView(Context context) {
+        super(context);
+        init(context);
+    }
+
+    public LoadMoreListView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(context);
+    }
+
+    public LoadMoreListView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init(context);
+    }
+
     public void setShowLoader(boolean showLoader) {
         this.showLoader = showLoader;
     }
@@ -58,21 +73,6 @@ public class LoadMoreListView extends ListView implements AbsListView.OnScrollLi
         this.pauseOnScroll = pauseOnScroll;
     }
 
-    public LoadMoreListView(Context context) {
-        super(context);
-        init(context);
-    }
-
-    public LoadMoreListView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context);
-    }
-
-    public LoadMoreListView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init(context);
-    }
-
     private void init(Context context) {
         try {
             if (pauseOnFling) {
@@ -84,15 +84,16 @@ public class LoadMoreListView extends ListView implements AbsListView.OnScrollLi
 
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        // footer
-        mFooterView = (RelativeLayout) mInflater.inflate(R.layout.load_more_footer, this, false);
+        if (!isInEditMode()) {
+            // footer
+            mFooterView = (RelativeLayout) mInflater.inflate(R.layout.load_more_footer, this, false);
         /*
          * mLabLoadMore = (TextView) mFooterView
 		 * .findViewById(R.id.load_more_lab_view);
 		 */
-        mProgressBarLoadMore = (ProgressBar) mFooterView.findViewById(android.R.id.progress);
-
-        addFooterView(mFooterView);
+            mProgressBarLoadMore = (ProgressBar) mFooterView.findViewById(android.R.id.progress);
+            addFooterView(mFooterView);
+        }
 
         super.setOnScrollListener(this);
     }

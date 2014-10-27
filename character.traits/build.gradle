@@ -38,10 +38,7 @@ android {
 }
 
 dependencies {
-    provided('com.android.support:appcompat-v7:19.1.0') {
-        force = true
-    }
-
+    provided('com.android.support:appcompat-v7:21.0.+')
     provided 'com.fasterxml.jackson.core:jackson-databind:2.4.3'
     provided 'com.fasterxml.jackson.core:jackson-annotations:2.4.3'
     provided 'com.fasterxml.jackson.core:jackson-core:2.4.3'

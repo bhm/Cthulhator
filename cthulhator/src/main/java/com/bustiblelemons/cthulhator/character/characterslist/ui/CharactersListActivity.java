@@ -3,6 +3,7 @@ package com.bustiblelemons.cthulhator.character.characterslist.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -45,6 +46,7 @@ public class CharactersListActivity extends AbsActionBarActivity
     ProgressBar      progressBar;
     private SavedCharactersAdapter listAdapter;
     private Grouping               grouping;
+    private Toolbar mToolbar;
 
     @Override
     public int getBackResIconId() {
@@ -55,7 +57,13 @@ public class CharactersListActivity extends AbsActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         onSetActionBarToClosable();
-        setContentView(setupFadingBar().createView(this));
+        setContentView(R.layout.header_characters_list_overlay);
+        mToolbar = (Toolbar) findViewById(R.id.header);
+        if (mToolbar != null) {
+            mToolbar.setNavigationOnClickListener(this);
+            setSupportActionBar(mToolbar);
+        }
+        setSupportActionBar(mToolbar);
         ButterKnife.inject(this);
         if (listView != null) {
             listView.setOnLoadMoreListener(this);
