@@ -30,7 +30,7 @@
         android:layout_below="@id/header"
         android:layout_marginRight="@dimen/padding_16"
         android:layout_marginTop="@dimen/fab_offset"
-        android:src="@drawable/add_new_selector"
+        android:src="@drawable/ic_inc_selected"
         app:cb_color="@color/fab_done"/>
 
     <com.bustiblelemons.views.LoadMoreListView

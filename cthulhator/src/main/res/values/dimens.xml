@@ -52,4 +52,7 @@
     <dimen name="home_as_up_padding">46dp</dimen>
     <dimen name="creation_workflow_icon">84dp</dimen>
     <dimen name="padding_24">24sp</dimen>
+
+    <dimen name="actionbar_height">56p</dimen>
+    <dimen name="twice_actionbar_height">112dp</dimen>
 </resources>
