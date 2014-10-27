@@ -67,6 +67,7 @@ dependencies {
     compile 'com.android.support:cardview-v7:+'
     // Ripple view
     compile 'com.github.traex.rippleeffect:library:1.2.+'
+//    compile project(':RippleEffect')
 //    compile('com.doomonafireball.betterpickers:library:1.5.2') {
 //        exclude group: 'com.android.support', module: 'support-v4'
 //    }

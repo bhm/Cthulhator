@@ -54,4 +54,5 @@ dependencies {
     provided 'commons-io:commons-io:2.4'
 
     provided 'com.github.traex.rippleeffect:library:1.2.+'
+//    provided project(':RippleEffect')
 }

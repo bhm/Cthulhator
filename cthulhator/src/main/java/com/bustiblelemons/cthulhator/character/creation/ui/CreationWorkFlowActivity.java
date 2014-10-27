@@ -33,6 +33,10 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creation_workflow);
+        View addDetails = findViewById(R.id.add_character_details);
+        if (addDetails != null) {
+            addDetails.setOnClickListener(this);
+        }
         ButterKnife.inject(this);
         mSavedCharacter = getInstanceArgument();
         if (mSavedCharacter == null) {

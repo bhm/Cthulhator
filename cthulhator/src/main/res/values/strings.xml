@@ -93,8 +93,9 @@
     <string name="cancel">Cancel</string>
     <string name="born">Born</string>
     <string name="skills">Skills</string>
-    <string name="hint_assign_properties">Assign statistics and skills</string>
+    <string name="hint_assign_statistics">Assign statistics and skills</string>
     <string name="hint_assign_name">Descirbe your character</string>
     <string name="hint_equipment">What\'s in the bag, man.</string>
+    <string name="hint_history">Tell character\'s story</string>
 
 </resources>

@@ -6,10 +6,10 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.andexert.library.RippleView;
 import com.bustiblelemons.bustiblelibs.R;
 
 import butterknife.InjectView;
@@ -18,7 +18,7 @@ import butterknife.Optional;
 /**
  * Created by hiv on 27.10.14.
  */
-public class CardView extends RippleView {
+public class CardView extends FrameLayout {
     @Optional
     @InjectView(android.R.id.title)
     TextView  mTitleView;

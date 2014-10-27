@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--<com.andexert.library.RippleView-->
+<!--style="@style/card"-->
+<!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--xmlns:tools="http://schemas.android.com/tools"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:visibility="visible"-->
+<!--app:rv_color="@color/orange_A700">-->
 <RelativeLayout
     style="@style/card"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:visibility="visible">
+    android:visibility="visible"
+    app:rv_color="@color/orange_A700">
 
-    <TextView
+<TextView
         android:id="@android:id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,3 +73,4 @@
         android:paddingRight="@dimen/padding_8"
         android:src="@drawable/lemons"/>
 </RelativeLayout>
+    <!--</com.andexert.library.RippleView>-->
