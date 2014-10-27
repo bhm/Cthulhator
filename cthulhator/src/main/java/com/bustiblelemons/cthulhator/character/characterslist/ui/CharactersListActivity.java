@@ -26,6 +26,7 @@ import at.markushi.ui.CircleButton;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import butterknife.Optional;
 
 /**
  * Created by bhm on 13.08.14.
@@ -42,8 +43,10 @@ public class CharactersListActivity extends AbsActionBarActivity
     LoadMoreListView listView;
     @InjectView(R.id.add_character)
     CircleButton     addFab;
+    @Optional
     @InjectView(android.R.id.progress)
     ProgressBar      progressBar;
+
     private SavedCharactersAdapter listAdapter;
     private Grouping               grouping;
     private Toolbar mToolbar;
@@ -56,14 +59,12 @@ public class CharactersListActivity extends AbsActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        onSetActionBarToClosable();
-        setContentView(R.layout.header_characters_list_overlay);
+        setContentView(R.layout.activity_characters_list);
         mToolbar = (Toolbar) findViewById(R.id.header);
         if (mToolbar != null) {
             mToolbar.setNavigationOnClickListener(this);
             setSupportActionBar(mToolbar);
         }
-        setSupportActionBar(mToolbar);
         ButterKnife.inject(this);
         if (listView != null) {
             listView.setOnLoadMoreListener(this);

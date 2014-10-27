@@ -17,7 +17,7 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
-    <style name="Animation" />
+    <style name="Animation"/>
 
     <style name="Animation.SlideInAnimations">
         <item name="android:activityOpenEnterAnimation">@anim/slide_in_left</item>
@@ -68,7 +68,7 @@
         <item name="strokeColor">@color/indicator_stroke</item>
     </style>
 
-    <style name="CreatorTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="toolbar_theme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
         <item name="android:actionBarStyle">@null</item>
         <item name="colorPrimary">@color/main_button_color</item>
         <item name="colorAccent">@color/white_87</item>
