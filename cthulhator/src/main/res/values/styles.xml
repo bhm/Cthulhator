@@ -139,8 +139,8 @@
         <item name="background">@android:color/transparent</item>
     </style>
 
-    <style name="AppTheme.TranslucentActionBar">
-        <item name="android:actionBarStyle">@style/Widget.ActionBar.Transparent</item>
+    <style name="AppTheme.TranslucentActionBar" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <item name="android:actionBarStyle">@style/Widget.ActionBar.Transparent</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="actionBarStyle">@style/Widget.ActionBar.Transparent</item>
         <item name="windowActionBarOverlay">true</item>
