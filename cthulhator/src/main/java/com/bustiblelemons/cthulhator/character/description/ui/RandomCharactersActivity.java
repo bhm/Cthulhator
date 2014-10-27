@@ -108,6 +108,7 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FadingActionBarHelper helper = setupFadingBar();
+        setContentView(helper.createView(this));
         mCharacterSettings = Settings.getLastPortratiSettings(this);
         attachPortraitSettings();
         onSetActionBarToClosable();
@@ -133,7 +134,6 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
                 .headerOverlayLayout(R.layout.header_random_characters_overlay)
                 .contentLayout(R.layout.activity_random_characters)
                 .lightActionBar(true);
-        setContentView(helper.createView(this));
         return helper;
     }
 

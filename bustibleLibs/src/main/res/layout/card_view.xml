@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    style="@style/card"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="visible">
+
+    <TextView
+        android:id="@android:id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@android:id/icon"
+        android:padding="@dimen/padding_16"
+        android:textColor="@color/black_87"
+        android:textSize="@dimen/material_subhead"
+        tools:text="@string/placeholder_title"/>
+
+    <TextView
+        android:id="@android:id/hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@android:id/title"
+        android:layout_toLeftOf="@android:id/icon"
+        android:maxLength="@integer/one_twit"
+        android:paddingBottom="@dimen/padding_8"
+        android:paddingLeft="@dimen/padding_16"
+        android:paddingRight="@dimen/padding_16"
+        android:paddingTop="@dimen/padding_8"
+        android:textColor="@color/black_87"
+        android:textSize="@dimen/material_body_2"
+        tools:text="@string/placeholder_slipsum_1"/>
+
+    <View
+        android:id="@id/card_divider"
+        style="@style/inset_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@android:id/hint"/>
+
+    <TextView
+        android:id="@android:id/custom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/card_divider"
+        android:paddingBottom="@dimen/padding_8"
+        android:paddingLeft="@dimen/padding_16"
+        android:paddingRight="@dimen/padding_16"
+        android:paddingTop="@dimen/padding_8"
+        android:textColor="@color/black_54"
+        android:textSize="@dimen/material_body_1"
+        tools:text="@string/placeholder_description"/>
+
+    <ImageView
+        android:id="@android:id/icon"
+        android:layout_width="@dimen/cardview_simple_icon"
+        android:layout_height="@dimen/cardview_simple_icon"
+        android:layout_above="@id/card_divider"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@android:id/title"
+        android:paddingRight="@dimen/padding_8"
+        android:src="@drawable/lemons"/>
+</RelativeLayout>

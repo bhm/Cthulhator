@@ -44,7 +44,6 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
         if (mCharacterCardView != null) {
             mCharacterCardView.setOnCharacterCardViewClick(this);
         }
-        onSetActionBarToClosable();
     }
 
     @OnClick({R.id.add_character_details,

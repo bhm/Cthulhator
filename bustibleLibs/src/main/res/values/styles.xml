@@ -12,11 +12,39 @@
         -->
     </style>
 
+    <style name="card">
+        <item name="android:background">@drawable/card_selector</item>
+        <item name="android:layout_margin">@dimen/padding_8</item>
+    </style>
+
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
     <style name="progress" parent="Base.Widget.AppCompat.ProgressBar"></style>
+
+    <style name="card_peeking">
+        <item name="android:background">@drawable/card_selector</item>
+    </style>
+
+    <style name="card.peeking.bottom" parent="card_peeking">
+        <item name="android:layout_marginTop">@dimen/padding_8</item>
+    </style>
+
+    <style name="card.peeking.top" parent="card_peeking">
+        <item name="android:paddingBottom">@dimen/padding_8</item>
+    </style>
+
+    <style name="inset_divider">
+        <item name="android:layout_height">@dimen/inset_divider</item>
+        <item name="android:background">@drawable/inset_divider</item>
+    </style>
+
+    <style name="full_bleed_divider">
+        <item name="android:padding">@dimen/padding_4</item>
+        <item name="android:layout_height">@dimen/full_bleed_divider</item>
+        <item name="android:background">@drawable/full_bleed_divider</item>
+    </style>
 
 </resources>

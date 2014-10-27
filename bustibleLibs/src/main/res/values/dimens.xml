@@ -29,4 +29,5 @@
     <dimen name="peeking_sheet">64dp</dimen>
     <dimen name="padding_20">20dp</dimen>
     <dimen name="button_size">48dp</dimen>
+    <dimen name="cardview_simple_icon">84dp</dimen>
 </resources>

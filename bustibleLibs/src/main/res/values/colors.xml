@@ -19,7 +19,7 @@
     <color name="card_background_selected">@color/teal_50</color>
     <color name="dark_card_background">@color/main_color</color>
     <color name="dark_card_selected_background">@color/main_color</color>
-    <color name="fab_done">@color/teal_300</color>
+    <color name="fab_done">@color/teal_500</color>
     <color name="male_female_color">@color/main_color</color>
     <color name="flat_button_selected">@color/blue_grey_50</color>
     <color name="hint_focused">@color/blue_grey_500</color>

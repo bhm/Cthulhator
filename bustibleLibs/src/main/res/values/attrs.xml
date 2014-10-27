@@ -1,115 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="RemoteImage">
-        <attr name="_textColor" format="color" />
-        <attr name="android:scaleType" />
-        <attr name="no_image" format="reference" />
-        <attr name="progress_style" format="reference" />
-        <attr name="progress_gravity" />
-        <attr name="use_animations" format="boolean" />
-        <attr name="animationIn" format="reference" />
-        <attr name="animationOut" format="reference" />
+        <attr name="_textColor" format="color"/>
+        <attr name="android:scaleType"/>
+        <attr name="no_image" format="reference"/>
+        <attr name="progress_style" format="reference"/>
+        <attr name="progress_gravity"/>
+        <attr name="use_animations" format="boolean"/>
+        <attr name="animationIn" format="reference"/>
+        <attr name="animationOut" format="reference"/>
     </declare-styleable>
     <declare-styleable name="LoadMoreViewPager">
-        <attr name="threshold" format="integer" />
+        <attr name="threshold" format="integer"/>
     </declare-styleable>
     <declare-styleable name="PropertyView">
-        <attr name="_textColor" />
-        <attr name="hideTitle" format="boolean" />
-        <attr name="statValue" format="integer" />
-        <attr name="statTitle" format="reference" />
-        <attr name="titleSize" format="dimension" />
-        <attr name="valueSize" format="dimension" />
-        <attr name="percentile" format="boolean" />
-        <attr name="showModifiers" format="boolean" />
-        <attr name="increaseSrc" format="reference" />
-        <attr name="decreaseSrc" format="reference" />
-        <attr name="minValue" format="integer" />
-        <attr name="maxValue" format="integer" />
-        <attr name="jumpValue" format="integer" />
-        <attr name="defaultValue" format="integer" />
-        <attr name="compact" format="boolean" />
-        <attr name="titleGravity" />
-        <attr name="valueGravity" />
-        <attr name="valuePosition" />
+        <attr name="_textColor"/>
+        <attr name="hideTitle" format="boolean"/>
+        <attr name="statValue" format="integer"/>
+        <attr name="statTitle" format="reference"/>
+        <attr name="titleSize" format="dimension"/>
+        <attr name="valueSize" format="dimension"/>
+        <attr name="percentile" format="boolean"/>
+        <attr name="showModifiers" format="boolean"/>
+        <attr name="increaseSrc" format="reference"/>
+        <attr name="decreaseSrc" format="reference"/>
+        <attr name="minValue" format="integer"/>
+        <attr name="maxValue" format="integer"/>
+        <attr name="jumpValue" format="integer"/>
+        <attr name="defaultValue" format="integer"/>
+        <attr name="compact" format="boolean"/>
+        <attr name="titleGravity"/>
+        <attr name="valueGravity"/>
+        <attr name="valuePosition"/>
     </declare-styleable>
 
     <attr name="titleGravity" format="integer">
-        <flag name="left" value="3" />
-        <flag name="top" value="48" />
-        <flag name="right" value="80" />
-        <flag name="bottom" value="5" />
+        <flag name="left" value="3"/>
+        <flag name="top" value="48"/>
+        <flag name="right" value="80"/>
+        <flag name="bottom" value="5"/>
     </attr>
-    <attr name="valueGravity" />
+    <attr name="valueGravity"/>
 
     <attr name="valuePosition" format="integer">
-        <enum name="top" value="1" />
-        <enum name="right" value="2" />
-        <enum name="bottom" value="3" />
-        <enum name="left" value="4" />
+        <enum name="top" value="1"/>
+        <enum name="right" value="2"/>
+        <enum name="bottom" value="3"/>
+        <enum name="left" value="4"/>
     </attr>
     <declare-styleable name="StatisticView">
-        <attr name="hideTitle" />
-        <attr name="_textColor" />
-        <attr name="statValue" />
-        <attr name="statTitle" />
-        <attr name="titleSize" />
-        <attr name="valueSize" />
-        <attr name="percentile" />
-        <attr name="showModifiers" />
-        <attr name="increaseSrc" />
-        <attr name="decreaseSrc" />
-        <attr name="valueBiggerIfTitleMissing" format="boolean" />
-        <attr name="valueBelow" format="boolean" />
+        <attr name="hideTitle"/>
+        <attr name="_textColor"/>
+        <attr name="statValue"/>
+        <attr name="statTitle"/>
+        <attr name="titleSize"/>
+        <attr name="valueSize"/>
+        <attr name="percentile"/>
+        <attr name="showModifiers"/>
+        <attr name="increaseSrc"/>
+        <attr name="decreaseSrc"/>
+        <attr name="valueBiggerIfTitleMissing" format="boolean"/>
+        <attr name="valueBelow" format="boolean"/>
 
     </declare-styleable>
 
     <declare-styleable name="SkillView">
-        <attr name="_textColor" />
-        <attr name="hideTitle" />
-        <attr name="statValue" />
-        <attr name="statTitle" />
-        <attr name="titleSize" />
-        <attr name="valueSize" />
-        <attr name="percentile" />
-        <attr name="showModifiers" />
-        <attr name="increaseSrc" />
-        <attr name="decreaseSrc" />
-        <attr name="titleGravity" />
-        <attr name="valueGravity" />
-        <attr name="minValue" />
-        <attr name="defaultValue" />
-        <attr name="maxValue" />
-        <attr name="valueLeft" format="boolean" />
+        <attr name="_textColor"/>
+        <attr name="hideTitle"/>
+        <attr name="statValue"/>
+        <attr name="statTitle"/>
+        <attr name="titleSize"/>
+        <attr name="valueSize"/>
+        <attr name="percentile"/>
+        <attr name="showModifiers"/>
+        <attr name="increaseSrc"/>
+        <attr name="decreaseSrc"/>
+        <attr name="titleGravity"/>
+        <attr name="valueGravity"/>
+        <attr name="minValue"/>
+        <attr name="defaultValue"/>
+        <attr name="maxValue"/>
+        <attr name="valueLeft" format="boolean"/>
     </declare-styleable>
     <declare-styleable name="FloatingActionButton">
-        <attr name="buttonColor" format="color" />
-        <attr name="anchorView" format="reference" />
+        <attr name="buttonColor" format="color"/>
+        <attr name="anchorView" format="reference"/>
     </declare-styleable>
     <declare-styleable name="TitledSeekbar">
-        <attr name="progress" format="integer" />
-        <attr name="hideTitle" />
-        <attr name="_textColor" />
-        <attr name="compact" />
-        <attr name="statTitle" />
-        <attr name="titleSize" />
-        <attr name="valueSize" />
-        <attr name="percentile" />
-        <attr name="increaseSrc" />
-        <attr name="decreaseSrc" />
-        <attr name="minValue" />
-        <attr name="defaultValue" />
-        <attr name="maxValue" />
-        <attr name="jumpValue" />
-        <attr name="valuesArray" format="reference" />
+        <attr name="progress" format="integer"/>
+        <attr name="hideTitle"/>
+        <attr name="_textColor"/>
+        <attr name="compact"/>
+        <attr name="statTitle"/>
+        <attr name="titleSize"/>
+        <attr name="valueSize"/>
+        <attr name="percentile"/>
+        <attr name="increaseSrc"/>
+        <attr name="decreaseSrc"/>
+        <attr name="minValue"/>
+        <attr name="defaultValue"/>
+        <attr name="maxValue"/>
+        <attr name="jumpValue"/>
+        <attr name="valuesArray" format="reference"/>
 
+    </declare-styleable>
+    <declare-styleable name="CardView">
+        <attr name="card_title" format="string"/>
+        <attr name="card_title_style" format="reference"/>
+        <attr name="card_description" format="string"/>
+        <attr name="card_description_style" format="reference"/>
+        <attr name="card_hint" format="string"/>
+        <attr name="card_hint_style" format="reference"/>
+        <attr name="card_image" format="reference"/>
     </declare-styleable>
 
     <attr name="progress_gravity">
-        <flag name="bottom" value="80" />
-        <flag name="top" value="48" />
-        <flag name="center" value="17" />
-        <flag name="left" value="3" />
-        <flag name="right" value="5" />
+        <flag name="bottom" value="80"/>
+        <flag name="top" value="48"/>
+        <flag name="center" value="17"/>
+        <flag name="left" value="3"/>
+        <flag name="right" value="5"/>
     </attr>
 </resources>

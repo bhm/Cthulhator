@@ -36,4 +36,5 @@
     <item name="list_container" type="id"/>
     <item name="skillview_title" type="id"/>
     <item name="skillview_value" type="id"/>
+    <item name="card_divider" type="id"/>
 </resources>

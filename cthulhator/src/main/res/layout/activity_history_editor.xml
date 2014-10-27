@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/solid_background"
+        android:paddingBottom="@dimen/fab_offset_positive"
+        app:collapseIcon="@drawable/ic_overflow_dots"
+        app:contentInsetStart="0dp"
+        app:navigationIcon="@drawable/ic_action_navigation_back_dark"
+        app:title="@string/placeholder_proverb"
+        app:titleTextAppearance="@style/statistic_creator_title">
+
+    </android.support.v7.widget.Toolbar>
 
     <se.emilsjolander.stickylistheaders.StickyListHeadersListView
         android:id="@id/list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header"/>
 
+    <at.markushi.ui.CircleButton
+        android:id="@id/fab"
+        android:layout_width="@dimen/fab"
+        android:layout_height="@dimen/fab"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/header"
+        android:layout_marginRight="@dimen/padding_16"
+        android:layout_marginTop="@dimen/fab_offset"
+        android:src="@drawable/ic_action_event"
+        app:cb_color="@color/fab_done"/>
 
 </RelativeLayout>

@@ -33,11 +33,22 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/padding_16">
 
+            <com.bustiblelemons.views.card.CardView
+                android:id="@id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:card_description="Foo3"
+                app:card_description_style="@style/card_description"
+                app:card_hint="Foo2"
+                app:card_image="@drawable/ic_johnny_automatic_mirror_drawing"
+                app:card_title="Foo"/>
+
             <RelativeLayout
                 android:id="@id/add_character_details"
                 style="@style/card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/fab"
                 android:visibility="visible"
                 tools:visibility="gone">
 

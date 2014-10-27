@@ -52,4 +52,6 @@ dependencies {
     provided 'org.apache.httpcomponents:httpmime:4.2.5'
     provided 'com.jakewharton:butterknife:5.1.1'
     provided 'commons-io:commons-io:2.4'
+
+    provided 'com.github.traex.rippleeffect:library:1.2.+'
 }

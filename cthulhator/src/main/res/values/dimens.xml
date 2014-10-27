@@ -53,6 +53,6 @@
     <dimen name="creation_workflow_icon">84dp</dimen>
     <dimen name="padding_24">24sp</dimen>
 
-    <dimen name="actionbar_height">56p</dimen>
+    <dimen name="actionbar_height">56dp</dimen>
     <dimen name="twice_actionbar_height">112dp</dimen>
 </resources>

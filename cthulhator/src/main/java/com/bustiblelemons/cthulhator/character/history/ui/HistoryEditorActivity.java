@@ -1,8 +1,11 @@
 package com.bustiblelemons.cthulhator.character.history.ui;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
@@ -10,7 +13,6 @@ import com.bustiblelemons.cthulhator.character.creation.ui.AbsCharacterCreationA
 import com.bustiblelemons.cthulhator.character.history.logic.HistoryAdapter;
 import com.bustiblelemons.cthulhator.character.history.logic.LoadHistoryEventsAsyn;
 import com.bustiblelemons.cthulhator.character.history.logic.OnOpenHistoryEventDetails;
-import com.bustiblelemons.cthulhator.character.history.logic.OnShowDatePicker;
 import com.bustiblelemons.cthulhator.character.history.logic.ReportCharacterSettings;
 import com.bustiblelemons.cthulhator.character.history.model.BirthData;
 import com.bustiblelemons.cthulhator.character.history.model.HistoryEvent;
@@ -18,7 +20,6 @@ import com.bustiblelemons.cthulhator.character.history.model.TimeSpan;
 import com.bustiblelemons.cthulhator.settings.Settings;
 import com.bustiblelemons.cthulhator.settings.character.CharacterSettings;
 import com.bustiblelemons.cthulhator.system.brp.statistics.BRPStatistic;
-//import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarHelper;
 
 import org.joda.time.DateTime;
@@ -31,37 +32,43 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
+//import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
+
 /**
  * Created by bhm on 22.09.14.
  */
 public class HistoryEditorActivity extends AbsCharacterCreationActivity
         implements OnOpenHistoryEventDetails,
-        LoadHistoryEventsAsyn.OnHistoryEventsLoaded,
-        HistoryEventDialog.OnHistoryEventPassedBack,
+                   LoadHistoryEventsAsyn.OnHistoryEventsLoaded,
+                   HistoryEventDialog.OnHistoryEventPassedBack,
 //        OnShowDatePicker,
 //                   ReportCharacterSettings,
 //                   CalendarDatePickerDialog.OnDateSetListener {
-        ReportCharacterSettings {
+                   ReportCharacterSettings, View.OnClickListener {
 
-    public static final int REQUEST_CODE = 8;
-    private static final String sDateFormat = "MMM dd, yyyy";
-//    private static final String sCalendarDialogTag = CalendarDatePickerDialog.class.getSimpleName();
+    public static final  int    REQUEST_CODE = 8;
+    private static final String sDateFormat  = "MMM dd, yyyy";
+    //    private static final String sCalendarDialogTag = CalendarDatePickerDialog.class.getSimpleName();
     @InjectView(R.id.list)
     StickyListHeadersListView listView;
-    @InjectView(R.id.pick_birth)
-    TextView pickBirthView;
+
     private TimeSpan span = TimeSpan.EMPTY;
     private SavedCharacter mSavedCharacter;
     private HistoryAdapter mHistoryAdapter;
-    private DateTime mBirthDate;
-    private DateTime mSuggestedDate;
-    private TimeSpan mSpan;
+    private DateTime       mBirthDate;
+    private DateTime       mSuggestedDate;
+    private TimeSpan       mSpan;
+    private Toolbar        mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        onSetActionBarToClosable();
-        setContentView(setupFadingBar().createView(this));
+        setContentView(R.layout.activity_history_editor);
+        mToolbar = (Toolbar) findViewById(R.id.header);
+        if (mToolbar != null) {
+            mToolbar.setNavigationOnClickListener(this);
+            setSupportActionBar(mToolbar);
+        }
         ButterKnife.inject(this);
         onSetActionBarToClosable();
         mSavedCharacter = getInstanceArgument();
@@ -70,17 +77,17 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
             listView.setAdapter(mHistoryAdapter);
             listView.setOnItemClickListener(mHistoryAdapter);
         }
-        if (pickBirthView != null) {
-            setupBirthDate();
-            setBirthDayView();
-        }
+        setupBirthDate();
+        setBirthDayView();
         long begin = mBirthDate.getMillis();
         long end = mSuggestedDate.getMillis();
         mSpan = new TimeSpan(begin, end);
     }
 
     private void setBirthDayView() {
-        pickBirthView.setText(mBirthDate.toString(sDateFormat));
+        if (mToolbar != null) {
+            mToolbar.setSubtitle(mBirthDate.toString(sDateFormat));
+        }
     }
 
     private void loadHistoryAsyn() {
@@ -100,6 +107,22 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
                 .parallax(false)
                 .lightActionBar(false);
         return helper;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = new MenuInflater(this);
+        inflater.inflate(R.menu.history_editor, menu);
+        return menu != null && menu.size() > 0;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item != null && item.getItemId() == R.id.pick_birth) {
+            //        onShowDatePickerCallback(mBirthDate, this);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -164,10 +187,6 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
 //        }
 //    }
 
-    @OnClick(R.id.pick_birth)
-    public void onPickBirthday(View view) {
-//        onShowDatePickerCallback(mBirthDate, this);
-    }
 
     private void setupBirthDate() {
         if (mSavedCharacter != null && mSavedCharacter.getBirth() != null) {
@@ -196,6 +215,11 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
     @Override
     public CharacterSettings onGetCharacterSettings() {
         return Settings.getLastPortratiSettings(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        onBackPressed();
     }
 
 //    @Override
