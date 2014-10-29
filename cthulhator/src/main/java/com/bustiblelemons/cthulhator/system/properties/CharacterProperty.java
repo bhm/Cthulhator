@@ -242,8 +242,8 @@ public class CharacterProperty implements Serializable, Parcelable {
 
     @JsonIgnore
     public boolean increaseValue() {
-        if (getValue() + 1 <= getMaxValue()) {
-            setValue(getValue() + 1);
+        if (value + 1 <= getMaxValue()) {
+            value++;
             return true;
         }
         return false;
@@ -251,8 +251,8 @@ public class CharacterProperty implements Serializable, Parcelable {
 
     @JsonIgnore
     public boolean decreaseValue() {
-        if (getValue() - 1 >= getMinValue()) {
-            setValue(getValue() - 1);
+        if (value - 1 >= getMinValue()) {
+            value--;
             return true;
         }
         return false;
