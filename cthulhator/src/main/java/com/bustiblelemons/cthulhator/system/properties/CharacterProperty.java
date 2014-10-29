@@ -20,11 +20,14 @@ import java.util.Set;
  * Created by bhm on 20.07.14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CharacterProperty implements Serializable, Parcelable {
+public class CharacterProperty extends ObservableCharacterProperty
+        implements Serializable, Parcelable {
 
     @JsonIgnore
     public static final CharacterProperty                     EMPTY   = new CharacterProperty();
-    public static final Parcelable.Creator<CharacterProperty> CREATOR = new Parcelable.Creator<CharacterProperty>() {
+    @JsonIgnore
+    public static final Parcelable.Creator<CharacterProperty> CREATOR
+            = new Parcelable.Creator<CharacterProperty>() {
         public CharacterProperty createFromParcel(Parcel source) {
             return new CharacterProperty(source);
         }

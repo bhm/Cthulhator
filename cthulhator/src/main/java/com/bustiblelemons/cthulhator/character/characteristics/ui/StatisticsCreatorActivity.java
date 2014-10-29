@@ -113,7 +113,6 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         if (mCharacteristicsViewList == null) {
             return;
         }
-        int points = 0;
         for (SkillView view : mCharacteristicsViewList) {
             if (view != null && view.getTag() != null) {
                 String tag = (String) view.getTag();
@@ -125,7 +124,6 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
                     view.setMinValue(property.getMinValue());
                     view.setMaxValue(property.getMaxValue());
                     int randValue = property.randomValue();
-                    points += randValue;
                     view.setIntValue(randValue);
 
                 }
@@ -217,6 +215,10 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         if (property != null && property.decreaseValue()) {
             updateView(view, id, property);
         }
+    }
+
+    public void onCharacterPropertChanged(CharacterProperty property) {
+
     }
 
     private void updateView(SkillView view, int id, CharacterProperty property) {
