@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attrs name="accentColor" format="color"/>
-    <attrs name="titleColor" format="color"/>
-    <attrs name="valueColor" format="color"/>
+    <attr name="accentColor" format="color"/>
+    <attr name="titleColor" format="color"/>
+    <attr name="valueColor" format="color"/>
 
     <declare-styleable name="RemoteImage">
         <attr name="titleColor"/>
