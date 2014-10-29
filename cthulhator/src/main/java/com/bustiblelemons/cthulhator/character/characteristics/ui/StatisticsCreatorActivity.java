@@ -33,7 +33,7 @@ import butterknife.OnClick;
  * Created by bhm on 31.08.14.
  */
 public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
-        implements SkillView.SkillViewListener, ScrollViewListener, View.OnClickListener {
+        implements SkillView.OnValueButtonsClicked, ScrollViewListener, View.OnClickListener {
 
     public static final  int    REQUEST_CODE = 4;
     private static final Logger log          = new Logger(StatisticsCreatorActivity.class);
@@ -121,7 +121,7 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
                 int id = view.getId();
                 if (property != null) {
                     mIdsToProperty.put(id, property);
-                    view.setSkillViewListener(this);
+                    view.setOnValueButtonsClicked(this);
                     view.setMinValue(property.getMinValue());
                     view.setMaxValue(property.getMaxValue());
                     int randValue = property.randomValue();
@@ -138,18 +138,16 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         if (mCharacteristicsViewList == null) {
             return;
         }
-        int points = 0;
         for (SkillView view : mCharacteristicsViewList) {
             if (view != null && view.getTag() != null) {
                 String tag = (String) view.getTag();
                 CharacterProperty property = getProperty(tag);
                 int id = view.getId();
                 if (property != null) {
-                    view.setSkillViewListener(this);
+                    view.setOnValueButtonsClicked(this);
                     view.setMinValue(property.getMinValue());
                     view.setMaxValue(property.getMaxValue());
                     int value = property.getValue();
-                    points += value;
                     view.setIntValue(value);
                     mIdsToProperty.put(id, property);
                 }
@@ -185,16 +183,6 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
             }
         }
         return null;
-    }
-
-    @Override
-    public void onSkillValueClick(SkillView view) {
-
-    }
-
-    @Override
-    public void onSkillTitleClick(SkillView view) {
-
     }
 
     @Override
