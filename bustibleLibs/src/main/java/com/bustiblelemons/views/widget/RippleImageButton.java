@@ -17,18 +17,19 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.bustiblelemons.bustiblelibs.R;
 
 /**
- * Created by hiv on 28.10.14.
+ * Created by hiv on 29.10.14.
  */
-public class RippleButton extends Button {
+public class RippleImageButton extends ImageButton {
+
     private int WIDTH;
     private int HEIGHT;
     private int FRAME_RATE  = 10;
-    private int DURATION    = 400;
+    private int DURATION    = 200;
     private int PAINT_ALPHA = 90;
     private Handler canvasHandler;
     private float   radiusMax        = 0;
@@ -42,7 +43,7 @@ public class RippleButton extends Button {
     private float          zoomScale;
     private ScaleAnimation scaleAnimation;
     private boolean hasToZoom  = false;
-    private boolean isCentered = false;
+    private boolean isCentered = true;
     private int     rippleType = 0;
     private Paint           paint;
     private Bitmap          originBitmap;
@@ -58,23 +59,23 @@ public class RippleButton extends Button {
     private boolean  passClickToParent = false;
 
 
-    public RippleButton(Context context) {
+    public RippleImageButton(Context context) {
         super(context);
         init(context, null);
     }
 
-    public RippleButton(Context context, AttributeSet attrs) {
+    public RippleImageButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public RippleButton(Context context, AttributeSet attrs, int defStyleAttr) {
+    public RippleImageButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public RippleButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public RippleImageButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context, attrs);
     }
@@ -85,7 +86,7 @@ public class RippleButton extends Button {
 
         if (attrs != null) {
             final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RippleView);
-            rippleColor = typedArray.getColor(R.styleable.RippleView_rv_color, getResources().getColor(R.color.rippelColor));
+            rippleColor = typedArray.getColor(R.styleable.RippleView_rv_color, android.R.color.holo_green_light);
             rippleType = typedArray.getInt(R.styleable.RippleView_rv_type, rippleType);
             hasToZoom = typedArray.getBoolean(R.styleable.RippleView_rv_zoom, hasToZoom);
             isCentered = typedArray.getBoolean(R.styleable.RippleView_rv_centered, isCentered);
@@ -125,18 +126,15 @@ public class RippleButton extends Button {
     public void draw(Canvas canvas) {
         super.draw(canvas);
         if (animationRunning) {
+            if (DURATION <= ((timer * FRAME_RATE) / 2)) {
+                this.performClick();
+            }
             if (DURATION <= timer * FRAME_RATE) {
                 animationRunning = false;
                 timer = 0;
                 durationEmpty = -1;
                 timerEmpty = 0;
                 canvas.restore();
-                if (hasParent() && passClickToParent) {
-                    View parent = (View) getParent();
-                    parent.performClick();
-                } else {
-                    this.performClick();
-                }
                 invalidate();
                 return;
             } else {

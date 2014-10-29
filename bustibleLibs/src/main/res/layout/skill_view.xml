@@ -32,7 +32,7 @@
             android:textStyle="bold"
             tools:text="@string/placeholder_title"/>
 
-        <ImageButton
+        <com.bustiblelemons.views.widget.RippleImageButton
             android:id="@id/inc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             android:src="@drawable/increase_selector"
             tools:visibility="visible"/>
 
-        <ImageButton
+        <com.bustiblelemons.views.widget.RippleImageButton
             android:id="@id/dec"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
