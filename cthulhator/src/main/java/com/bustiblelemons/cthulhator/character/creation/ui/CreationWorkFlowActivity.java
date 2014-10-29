@@ -3,6 +3,8 @@ package com.bustiblelemons.cthulhator.character.creation.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.characterslist.logic.CharacterCache;
@@ -13,6 +15,7 @@ import com.bustiblelemons.cthulhator.system.CthulhuCharacter;
 import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
 import com.bustiblelemons.cthulhator.view.charactercard.CharacterCardView;
 import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
+import com.bustiblelemons.views.card.CardView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -22,10 +25,13 @@ import butterknife.OnClick;
  * Created by bhm on 29.08.14.
  */
 public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
-        implements View.OnClickListener, CharacterCardView.OnCharacterCardViewClick {
+        implements View.OnClickListener, CharacterCardView.OnCharacterCardViewClick,
+                   CardView.OnTitleClick {
 
     @InjectView(R.id.preview_card)
     CharacterCardView mCharacterCardView;
+    @InjectView(R.id.add_character_equipement)
+    CardView          mEquipmentCardView;
     private SavedCharacter mSavedCharacter;
     private CthulhuEdition mEdition = CthulhuEdition.CoC5;
 
@@ -47,6 +53,9 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
         }
         if (mCharacterCardView != null) {
             mCharacterCardView.setOnCharacterCardViewClick(this);
+        }
+        if (mEquipmentCardView != null) {
+            mEquipmentCardView.setOnTitleClick(this);
         }
     }
 
@@ -120,5 +129,10 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
     @Override
     public void onExtraInfoClick(CharacterCardView view) {
         launchStatisticsCreator(mSavedCharacter);
+    }
+
+    @Override
+    public void onCardTitleClick(CardView cardView, TextView view) {
+        Toast.makeText(this, view.getText(), Toast.LENGTH_LONG).show();
     }
 }
