@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attrs name="accentColor" format="color"/>
+    <attrs name="titleColor" format="color"/>
+    <attrs name="valueColor" format="color"/>
+
     <declare-styleable name="RemoteImage">
-        <attr name="_textColor" format="color"/>
+        <attr name="titleColor"/>
         <attr name="android:scaleType"/>
         <attr name="no_image" format="reference"/>
         <attr name="progress_style" format="reference"/>
@@ -14,7 +18,7 @@
         <attr name="threshold" format="integer"/>
     </declare-styleable>
     <declare-styleable name="PropertyView">
-        <attr name="_textColor"/>
+        <attr name="titleColor"/>
         <attr name="hideTitle" format="boolean"/>
         <attr name="statValue" format="integer"/>
         <attr name="statTitle" format="reference"/>
@@ -50,7 +54,7 @@
     </attr>
     <declare-styleable name="StatisticView">
         <attr name="hideTitle"/>
-        <attr name="_textColor"/>
+        <attr name="titleColor"/>
         <attr name="statValue"/>
         <attr name="statTitle"/>
         <attr name="titleSize"/>
@@ -64,11 +68,10 @@
 
     </declare-styleable>
 
-    <attrs name="accentColor" format="color"/>
 
     <declare-styleable name="SkillView">
-        <attr name="_textColor"/>
-        <attr name="accentColor"/>
+        <attr name="titleColor"/>
+        <attr name="valueColor"/>
         <attr name="hideTitle"/>
         <attr name="statValue"/>
         <attr name="statTitle"/>
@@ -92,7 +95,7 @@
     <declare-styleable name="TitledSeekbar">
         <attr name="progress" format="integer"/>
         <attr name="hideTitle"/>
-        <attr name="_textColor"/>
+        <attr name="titleColor"/>
         <attr name="compact"/>
         <attr name="statTitle"/>
         <attr name="titleSize"/>
