@@ -50,8 +50,8 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     ObservableScrollView mScrollView;
     private SparseArray<CharacterProperty>        mIdsToProperty = new SparseArray<CharacterProperty>();
     private SparseArray<CharacterPropertyAdapter> mIdsToAdapters = new SparseArray<CharacterPropertyAdapter>();
-    private SavedCharacter         mSavedCharacter;
-    private Toolbar                mToolbar;
+    private SavedCharacter mSavedCharacter;
+    private Toolbar        mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -219,7 +219,6 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         int id = view.getId();
         CharacterProperty property = mIdsToProperty.get(id);
         if (property != null && property.increaseValue()) {
-            view.setIntValue(property.getValue());
             updateView(view, id, property);
         }
     }
@@ -228,7 +227,6 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         int id = view.getId();
         CharacterProperty property = mIdsToProperty.get(id);
         if (property != null && property.decreaseValue()) {
-            view.setIntValue(property.getValue());
             updateView(view, id, property);
         }
     }
