@@ -87,7 +87,8 @@ public enum CthulhuPeriod implements YearsPeriod {
 
     @Override
     public int getDefaultYearJumpPosition() {
-        int r = getDefaultYear() - getMinYear() / getYearJump();
+        int divider = getYearJump() != 0 ? getYearJump() : 1;
+        int r = getDefaultYear() - getMinYear() / divider;
         return r > 1 ? r - 1 : 0;
     }
 
