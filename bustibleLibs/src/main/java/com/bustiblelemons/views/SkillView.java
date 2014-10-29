@@ -110,6 +110,7 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         }
     };
     private int             mJump     = 1;
+    private OnValueButtonsClicked mOnValueButtonsClicked;
 
     public SkillView(Context context) {
         super(context);
@@ -117,12 +118,12 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         init(context, null);
     }
 
+
     public SkillView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
         setSkillViewListener(mSkillViewListener);
     }
-
 
     public SkillView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -197,7 +198,6 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         }
         addView(rootView);
     }
-
 
     private void setValueColor(int textColor) {
         if (valueView != null) {
@@ -476,8 +476,14 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         if (mSkillViewListener != null) {
             int id = view.getId();
             if (id == R.id.dec) {
+                if (mOnValueButtonsClicked != null) {
+                    mOnValueButtonsClicked.onDecreaseClicked(this);
+                }
                 mSkillViewListener.onDecreaseClicked(this);
             } else if (id == R.id.inc) {
+                if (mOnValueButtonsClicked != null) {
+                    mOnValueButtonsClicked.onIncreaseClicked(this);
+                }
                 mSkillViewListener.onIncreaseClicked(this);
             } else if (id == android.R.id.custom) {
                 mSkillViewListener.onSkillValueClick(this);
@@ -505,6 +511,16 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         mListAdapter = listAdapter;
         mListAdapter.registerDataSetObserver(mObserver);
         rPopulateViews();
+    }
+
+    public void setOnValueButtonsClicked(OnValueButtonsClicked onValueButtonsClicked) {
+        this.mOnValueButtonsClicked = onValueButtonsClicked;
+    }
+
+    public interface OnValueButtonsClicked {
+        boolean onIncreaseClicked(SkillView view);
+
+        boolean onDecreaseClicked(SkillView view);
     }
 
     public interface SkillViewListener extends PropertyViewListener<SkillView> {
