@@ -21,7 +21,6 @@ public class SkillsChooserActivity extends AbsCharacterCreationActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        onSetActionBarToClosable();
         setContentView(R.layout.activity_skill_chooser);
         ButterKnife.inject(this);
         mSavedCharacter = getInstanceArgument();
