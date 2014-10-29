@@ -45,10 +45,11 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
     private Drawable        incDrawable;
     private Drawable        decDrawable;
     private OnClickListener cachedOnClick;
-    private int maxValue   = 100;
-    private int mValue     = maxValue;
-    private int minValue   = 0;
-    private int mTextColor = R.color.black_87;
+    private int maxValue    = 100;
+    private int mValue      = maxValue;
+    private int minValue    = 0;
+    private int mTitleColor = R.color.black_87;
+    private int mValueColor = R.color.black_54;
     private SkillViewListener mChachedSkillViewListener;
     private final SkillViewListener mSkillViewListener = new SkillViewListener() {
         @Override
@@ -172,7 +173,8 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         if (attrs != null) {
             TypedArray skillArray = context.obtainStyledAttributes(attrs, R.styleable.SkillView);
             setupModifiers(skillArray);
-            mTextColor = skillArray.getColor(R.styleable.SkillView__textColor, R.color.black_87);
+            mTitleColor = skillArray.getColor(R.styleable.SkillView__textColor, R.color.black_87);
+            mValueColor = skillArray.getColor(R.styleable.SkillView__textColor, R.color.black_54);
             valueLeft = skillArray.getBoolean(R.styleable.SkillView_valueLeft, valueLeft);
             int defValGravity = valueLeft ? Gravity.LEFT : Gravity.RIGHT;
             int defTitlteGravity = valueLeft ? Gravity.RIGHT : Gravity.LEFT;
@@ -189,16 +191,13 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
                 hideTitle();
             }
             setTexts(skillArray);
-            setColor(mTextColor);
+            setTitleColor(mTitleColor);
+            setValueColor(mValueColor);
             skillArray.recycle();
         }
         addView(rootView);
     }
 
-    private void setColor(int textColor) {
-        setTitleColor(textColor);
-        setValueColor(textColor);
-    }
 
     private void setValueColor(int textColor) {
         if (valueView != null) {

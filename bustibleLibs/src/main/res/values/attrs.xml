@@ -64,8 +64,11 @@
 
     </declare-styleable>
 
+    <attrs name="accentColor" format="color"/>
+
     <declare-styleable name="SkillView">
         <attr name="_textColor"/>
+        <attr name="accentColor"/>
         <attr name="hideTitle"/>
         <attr name="statValue"/>
         <attr name="statTitle"/>
