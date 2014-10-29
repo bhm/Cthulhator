@@ -57,6 +57,7 @@ public class RippleImageButton extends ImageButton {
         }
     };
     private boolean  passClickToParent = false;
+    private boolean  clickIssued       = false;
 
 
     public RippleImageButton(Context context) {
@@ -126,7 +127,8 @@ public class RippleImageButton extends ImageButton {
     public void draw(Canvas canvas) {
         super.draw(canvas);
         if (animationRunning) {
-            if (DURATION <= ((timer * FRAME_RATE) / 2)) {
+            if (!clickIssued) {
+                clickIssued = true;
                 this.performClick();
             }
             if (DURATION <= timer * FRAME_RATE) {
@@ -136,6 +138,7 @@ public class RippleImageButton extends ImageButton {
                 timerEmpty = 0;
                 canvas.restore();
                 invalidate();
+                clickIssued = false;
                 return;
             } else {
                 canvasHandler.postDelayed(runnable, FRAME_RATE);
