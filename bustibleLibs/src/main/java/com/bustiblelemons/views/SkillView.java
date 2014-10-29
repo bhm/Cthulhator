@@ -173,8 +173,8 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         if (attrs != null) {
             TypedArray skillArray = context.obtainStyledAttributes(attrs, R.styleable.SkillView);
             setupModifiers(skillArray);
-            mTitleColor = skillArray.getColor(R.styleable.SkillView__textColor, R.color.black_87);
-            mValueColor = skillArray.getColor(R.styleable.SkillView__textColor, R.color.black_54);
+            mTitleColor = skillArray.getColor(R.styleable.SkillView_titleColor, R.color.black_87);
+            mValueColor = skillArray.getColor(R.styleable.SkillView_valueColor, R.color.black_54);
             valueLeft = skillArray.getBoolean(R.styleable.SkillView_valueLeft, valueLeft);
             int defValGravity = valueLeft ? Gravity.LEFT : Gravity.RIGHT;
             int defTitlteGravity = valueLeft ? Gravity.RIGHT : Gravity.LEFT;
