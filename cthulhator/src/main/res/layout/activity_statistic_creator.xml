@@ -210,7 +210,7 @@
         </RelativeLayout>
     </com.bustiblelemons.observablescrollview.ObservableScrollView>
 
-    <Button
+    <com.bustiblelemons.views.widget.RippleButton
         android:id="@id/assign_skills"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
