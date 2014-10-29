@@ -38,7 +38,7 @@ public class SkillsListFragment extends AbsArgFragment<SavedCharacter>
     TextView                  pointsAvailable;
     //    private SkillsAdapter       mSkillsAdapter;
     private SkillsAdapterSticky mSkillsAdapterSticky;
-    private int mPointsAvailable;
+    private int                 mPointsAvailable;
     private String              pointsAvailablePrefix;
     private SavedCharacter      mSavedCharacter;
     private int mCareerPoints = 0;
@@ -70,7 +70,7 @@ public class SkillsListFragment extends AbsArgFragment<SavedCharacter>
     private void setupPoints() {
         mCareerPoints = mSavedCharacter.getCareerPoints();
         mHobbyPoints = mSavedCharacter.getHobbyPoints();
-        mPointsAvailable = mHobbyPoints = mCareerPoints;
+        mPointsAvailable = mHobbyPoints + mCareerPoints;
         mMaxPoints = mPointsAvailable;
         setPointsAvailable(mMaxPoints);
     }
