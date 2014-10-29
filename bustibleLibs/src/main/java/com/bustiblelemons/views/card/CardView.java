@@ -18,7 +18,7 @@ import butterknife.Optional;
 /**
  * Created by hiv on 27.10.14.
  */
-public class CardView extends FrameLayout {
+public class CardView extends FrameLayout implements View.OnClickListener {
     @Optional
     @InjectView(android.R.id.title)
     TextView  mTitleView;
@@ -39,6 +39,7 @@ public class CardView extends FrameLayout {
     private int mTitleStyleRes        = -1;
     private int mDescriptioneStyleRes = -1;
     private int mHintResStyle         = -1;
+    private OnTitleClick mOnTitleClick;
 
     public CardView(Context context) {
         super(context);
@@ -50,16 +51,16 @@ public class CardView extends FrameLayout {
         init(context, attrs);
     }
 
-    public CardView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(context, attrs);
-    }
-
 //    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 //    public CardView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
 //        super(context, attrs, defStyleAttr, defStyleRes);
 //        init(context, attrs);
 //    }
+
+    public CardView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init(context, attrs);
+    }
 
     private void init(Context context, AttributeSet attrs) {
         rootView = LayoutInflater.from(context).inflate(R.layout.card_view, this, true);
@@ -89,6 +90,18 @@ public class CardView extends FrameLayout {
         }
     }
 
+    public void setTitle(int titleRes) {
+        if (mTitleView != null) {
+            mTitleView.setText(titleRes);
+        }
+    }
+
+    public void setTitle(String title) {
+        if (mTitleView != null) {
+            mTitleView.setText(title);
+        }
+    }
+
     private void setupDescription(Context context) {
         if (mDescriptionView != null) {
             mDescriptionView.setText(mDescription);
@@ -110,10 +123,28 @@ public class CardView extends FrameLayout {
     private void setupTitle(Context context) {
         if (mTitleView != null) {
             mTitleView.setText(mTitle);
+            mTitleView.setOnClickListener(this);
             if (mTitleStyleRes > 0) {
                 mTitleView.setTextAppearance(context, mTitleStyleRes);
             }
         }
     }
 
+    public void setOnTitleClick(OnTitleClick onTitleClick) {
+        this.mOnTitleClick = onTitleClick;
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == android.R.id.title) {
+            if (mOnTitleClick != null) {
+                mOnTitleClick.onCardTitleClick(this, (TextView) v);
+            }
+        }
+    }
+
+    public interface OnTitleClick {
+        void onCardTitleClick(CardView cardView, TextView view);
+    }
 }
