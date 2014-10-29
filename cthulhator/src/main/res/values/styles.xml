@@ -68,8 +68,9 @@
         <item name="strokeColor">@color/indicator_stroke</item>
     </style>
 
-    <style name="toolbar_theme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="ToolbarTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
         <item name="android:actionBarStyle">@null</item>
+        <item name="rv_color">@color/ripple_color</item>
         <item name="colorPrimary">@color/main_button_color</item>
         <item name="colorAccent">@color/white_87</item>
         <item name="colorPrimaryDark">@color/black_87</item>

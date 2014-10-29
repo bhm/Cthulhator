@@ -13,6 +13,7 @@
     <color name="text_color">@color/blue_grey_900</color>
     <color name="main_color_selected">@color/orange_A100</color>
     <color name="main_color_active">@color/orange_A700</color>
+    <color name="ripple_color">@color/orange_A700</color>
     <color name="indicator_fill">@color/teal_500</color>
     <color name="indicator_stroke">@color/orange_100</color>
     <color name="card_background">@color/grey_white_1000</color>
