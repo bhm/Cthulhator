@@ -43,7 +43,8 @@ import java.util.TreeSet;
  */
 @JsonIgnoreProperties
 public class SavedCharacter implements
-                            Parcelable, Serializable {
+                            Parcelable, Serializable,
+                            ObservableCharacterProperty.OnCorelativesChanged<CharacterProperty> {
 
     @JsonIgnore
     public static final Parcelable.Creator<SavedCharacter>                  CREATOR                    = new Parcelable.Creator<SavedCharacter>() {
@@ -82,7 +83,7 @@ public class SavedCharacter implements
     private HitPoints hitPoints;
 
     @JsonIgnore
-    private ObservableCharacterProperty.OnCharacterPropertChanged<CharacterProperty> propertiesObserver;
+    private ObservableCharacterProperty.OnReltivesChanged<CharacterProperty> reltivesChanged;
 
     public SavedCharacter() {
     }
@@ -111,8 +112,8 @@ public class SavedCharacter implements
         this.suggestedDate = in.readLong();
     }
 
-    public void setPropertiesObserver(ObservableCharacterProperty.OnCharacterPropertChanged<CharacterProperty> propertiesObserver) {
-        this.propertiesObserver = propertiesObserver;
+    public void setPropertiesObserver(ObservableCharacterProperty.OnReltivesChanged<CharacterProperty> reltivesChanged) {
+        this.reltivesChanged = reltivesChanged;
     }
 
     public CthulhuEdition getEdition() {
@@ -251,6 +252,7 @@ public class SavedCharacter implements
         if (property == null) {
             return r;
         }
+        r = new HashSet<CharacterProperty>();
         Set<CharacterProperty> relatedProperties = getRelatedProperties(property);
         for (CharacterProperty related : relatedProperties) {
             if (related != null) {
@@ -262,12 +264,19 @@ public class SavedCharacter implements
     }
 
     @JsonIgnore
-    public void notifyCoRelatives(CharacterProperty ofProperty) {
+    @Override
+    public void onUpdateCorelatives(CharacterProperty ofProperty) {
+        if (reltivesChanged == null) {
+            return;
+        }
         Set<CharacterProperty> corelatives = getCorelatives(ofProperty);
         if (corelatives != null) {
             for (CharacterProperty property : corelatives) {
+                String ofPropertyName = ofProperty.getName();
                 if (property != null) {
-                    property.notifyObservers();
+                    if (!ofPropertyName.equalsIgnoreCase(property.getName())) {
+                        reltivesChanged.onUpdateRelativeProperties(property);
+                    }
                 }
             }
         }
@@ -275,8 +284,12 @@ public class SavedCharacter implements
 
     @JsonIgnore
     public Set<CharacterProperty> getRelatedProperties(CharacterProperty toProperty) {
+        if (toProperty == null) {
+            throw new IllegalArgumentException("Passed param was null");
+        }
         Collection<Relation> relations = toProperty.getRelations();
         Set<CharacterProperty> r = new HashSet<CharacterProperty>();
+        toProperty.addCorelativesObserver(this);
         for (Relation relation : relations) {
             if (relation != null) {
                 String propName = relation.getPropertyName();

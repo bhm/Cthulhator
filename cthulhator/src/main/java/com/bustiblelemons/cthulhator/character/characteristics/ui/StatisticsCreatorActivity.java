@@ -34,7 +34,7 @@ import butterknife.OnClick;
  */
 public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         implements SkillView.OnValueButtonsClicked, View.OnClickListener,
-                   ObservableCharacterProperty.OnCharacterPropertChanged<CharacterProperty> {
+                   ObservableCharacterProperty.OnReltivesChanged<CharacterProperty> {
 
     public static final  int    REQUEST_CODE = 4;
     private static final Logger log          = new Logger(StatisticsCreatorActivity.class);
@@ -65,14 +65,15 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         }
         ButterKnife.inject(this);
         mSavedCharacter = getInstanceArgument();
-        mSavedCharacter.setPropertiesObserver(this);
         if (mSavedCharacter == null) {
             mSavedCharacter = CthulhuCharacter.forEdition(CthulhuEdition.CoC5);
             mSavedCharacter.setPropertiesObserver(this);
             fillPropertyViews();
         } else if (mSavedCharacter != null && !mSavedCharacter.hasAssignedStatistics()) {
+            mSavedCharacter.setPropertiesObserver(this);
             distributeRandomPoints();
         } else {
+            mSavedCharacter.setPropertiesObserver(this);
             fillPropertyViews();
         }
     }
@@ -206,6 +207,8 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     private void increasePropertyAndUpdateView(SkillView view) {
         int id = view.getId();
         CharacterProperty property = mIdsToProperty.get(id);
+        view.setIntValue(property.getValue());
+        property.notifyCorelatives();
         if (property != null && property.increaseValue()) {
             updateView(view, id, property);
         }
@@ -214,19 +217,27 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     private void decreasePropertyAndUpdateView(SkillView view) {
         int id = view.getId();
         CharacterProperty property = mIdsToProperty.get(id);
+        view.setIntValue(property.getValue());
+        property.notifyCorelatives();
         if (property != null && property.decreaseValue()) {
             updateView(view, id, property);
         }
     }
 
+
+    /**
+     * Redo this into one custom widget Multi CharacterProperty with Adaptergenerated character property list
+     *
+     * @param ofProperty
+     */
     @Override
-    public void onCharacterPropertChanged(CharacterProperty property) {
-        if (property == null) {
+    public void onUpdateRelativeProperties(CharacterProperty ofProperty) {
+        if (ofProperty == null) {
             return;
         }
         SkillView skillView = null;
         int id = -1;
-        String propName = property.getName();
+        String propName = ofProperty.getName();
         for (SkillView view : mCharacteristicsViewList) {
             if (view != null) {
                 String tag = (String) view.getTag();
@@ -237,13 +248,11 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
             }
         }
         if (skillView != null && id > 0) {
-            updateView(skillView, id, property);
+            updateView(skillView, id, ofProperty);
         }
     }
 
     private void updateView(SkillView view, int id, CharacterProperty property) {
-        view.setIntValue(property.getValue());
-        mSavedCharacter.notifyCoRelatives(property);
         CharacterPropertyAdapter adapter = mIdsToAdapters.get(id);
         if (adapter == null) {
             adapter = new CharacterPropertyAdapter(this);

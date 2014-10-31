@@ -86,6 +86,7 @@ public class CharacterProperty extends ObservableCharacterProperty
     }
 
     public void setActionGroup(Collection<ActionGroup> collection) {
+        setChanged();
         if (collection == null) {
             this.actionGroup = new ArrayList<ActionGroup>();
         } else {
@@ -94,11 +95,15 @@ public class CharacterProperty extends ObservableCharacterProperty
     }
 
     public Set<Relation> getRelations() {
+        if (relations == null) {
+            return Collections.emptySet();
+        }
         return relations;
     }
 
     public void setRelations(Collection<Relation> arg) {
         if (arg != null) {
+            setChanged();
             this.relations = new HashSet<Relation>(arg);
         }
     }
@@ -118,6 +123,7 @@ public class CharacterProperty extends ObservableCharacterProperty
     }
 
     public void setMaxValue(int maxValue) {
+        setChanged();
         this.maxValue = maxValue;
     }
 
@@ -126,6 +132,7 @@ public class CharacterProperty extends ObservableCharacterProperty
     }
 
     public void setMinValue(int minValue) {
+        setChanged();
         this.minValue = minValue;
     }
 
@@ -134,6 +141,7 @@ public class CharacterProperty extends ObservableCharacterProperty
     }
 
     public void setBaseValue(int baseValue) {
+        setChanged();
         this.baseValue = baseValue;
     }
 
@@ -142,6 +150,7 @@ public class CharacterProperty extends ObservableCharacterProperty
     }
 
     public void setType(PropertyType type) {
+        setChanged();
         this.type = type;
     }
 
@@ -154,6 +163,7 @@ public class CharacterProperty extends ObservableCharacterProperty
     }
 
     public int getValue() {
+        setChanged();
         return value;
     }
 
@@ -246,6 +256,7 @@ public class CharacterProperty extends ObservableCharacterProperty
     @JsonIgnore
     public boolean increaseValue() {
         if (value + 1 <= getMaxValue()) {
+            setChanged();
             value++;
             return true;
         }
@@ -255,6 +266,7 @@ public class CharacterProperty extends ObservableCharacterProperty
     @JsonIgnore
     public boolean decreaseValue() {
         if (value - 1 >= getMinValue()) {
+            setChanged();
             value--;
             return true;
         }

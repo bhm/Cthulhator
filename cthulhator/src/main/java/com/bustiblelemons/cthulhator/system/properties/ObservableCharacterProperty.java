@@ -2,6 +2,7 @@ package com.bustiblelemons.cthulhator.system.properties;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observer;
 
@@ -10,11 +11,11 @@ import java.util.Observer;
  */
 public class ObservableCharacterProperty {
 
-    private List<OnCharacterPropertChanged<CharacterProperty>> observers;
-    private boolean                                            changed;
-    private OnCharacterPropertChanged                          onCharacterPropertChanged;
+    private List<OnCorelativesChanged<CharacterProperty>> observers
+            = new ArrayList<OnCorelativesChanged<CharacterProperty>>();
+    private boolean changed;
 
-    public void registerObserver(OnCharacterPropertChanged observer) {
+    public void addCorelativesObserver(OnCorelativesChanged observer) {
         if (observer == null) {
             throw new NullPointerException("observer == null");
         }
@@ -74,20 +75,20 @@ public class ObservableCharacterProperty {
      * argument. Afterwards calls {@code clearChanged()}.
      */
     @SuppressWarnings("unchecked")
-    public void notifyObservers() {
+    public void notifyCorelatives() {
         int size = 0;
-        OnCharacterPropertChanged[] arrays = null;
+        OnCorelativesChanged[] arrays = null;
         synchronized (this) {
             if (hasChanged()) {
                 clearChanged();
                 size = observers.size();
-                arrays = new OnCharacterPropertChanged[size];
+                arrays = new OnCorelativesChanged[size];
                 observers.toArray(arrays);
             }
         }
         if (arrays != null) {
-            for (OnCharacterPropertChanged observer : arrays) {
-                observer.onCharacterPropertChanged(this);
+            for (OnCorelativesChanged observer : arrays) {
+                observer.onUpdateCorelatives(this);
             }
         }
     }
@@ -101,7 +102,11 @@ public class ObservableCharacterProperty {
     }
 
     @JsonIgnoreProperties
-    public interface OnCharacterPropertChanged<T extends ObservableCharacterProperty> {
-        void onCharacterPropertChanged(T property);
+    public interface OnCorelativesChanged<T extends ObservableCharacterProperty> {
+        void onUpdateCorelatives(T ofProperty);
+    }
+
+    public interface OnReltivesChanged<T extends ObservableCharacterProperty> {
+        void onUpdateRelativeProperties(T ofProperty);
     }
 }
