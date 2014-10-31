@@ -229,7 +229,13 @@ public class RippleButton extends Button {
             return true;
         case MotionEvent.ACTION_UP:
             clickIssued = true;
-            return this.performClick();
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    RippleButton.this.performClick();
+                }
+            }, 100l);
+            return true;
         }
         return true;
     }
