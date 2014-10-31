@@ -17,6 +17,21 @@ import java.util.List;
  */
 public enum BRPStatistic {
     STR {
+        public Relation damageRelation;
+        public List<Relation> relations;
+
+        @Override
+        public List<Relation> getRelations() {
+            if (relations == null) {
+                relations = new ArrayList<Relation>();
+                damageRelation = new Relation()
+                        .setPropertyName(DamageBonus.class.getSimpleName())
+                        .setModifierType(ModifierType.NONE);
+                relations.add(damageRelation);
+            }
+            return relations;
+        }
+
     }, DEX {
         public Relation dodgeRelation;
         public List<Relation> relations;

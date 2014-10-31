@@ -10,9 +10,9 @@ import java.util.Observer;
  */
 public class ObservableCharacterProperty {
 
-    private List<OnCharacterPropertChanged> observers;
-    private boolean                         changed;
-    private OnCharacterPropertChanged       onCharacterPropertChanged;
+    private List<OnCharacterPropertChanged<CharacterProperty>> observers;
+    private boolean                                            changed;
+    private OnCharacterPropertChanged                          onCharacterPropertChanged;
 
     public void registerObserver(OnCharacterPropertChanged observer) {
         if (observer == null) {
@@ -101,7 +101,7 @@ public class ObservableCharacterProperty {
     }
 
     @JsonIgnoreProperties
-    public interface OnCharacterPropertChanged {
-        <T extends ObservableCharacterProperty> void onCharacterPropertChanged(T property);
+    public interface OnCharacterPropertChanged<T extends ObservableCharacterProperty> {
+        void onCharacterPropertChanged(T property);
     }
 }

@@ -1,12 +1,15 @@
 package com.bustiblelemons.cthulhator.system.damage;
 
+import com.bustiblelemons.cthulhator.system.brp.statistics.BRPStatistic;
 import com.bustiblelemons.cthulhator.system.dice.PointPoolFromDiceBuilder;
 import com.bustiblelemons.cthulhator.system.dice.model.PointPool;
 import com.bustiblelemons.cthulhator.system.dice.model.PolyhedralDice;
 import com.bustiblelemons.cthulhator.system.properties.ActionGroup;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
+import com.bustiblelemons.cthulhator.system.properties.ModifierType;
 import com.bustiblelemons.cthulhator.system.properties.PropertyFormat;
 import com.bustiblelemons.cthulhator.system.properties.PropertyType;
+import com.bustiblelemons.cthulhator.system.properties.Relation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,6 +151,16 @@ enum DamageBonusCoC5 implements DamageBonus {
             return 10;
         }
     };
+    public static final Relation STR_RELATION = new Relation();
+    public static final Relation SIZ_RELATION = new Relation();
+
+    static {
+        STR_RELATION.setModifierType(ModifierType.NONE);
+        STR_RELATION.setPropertyName(BRPStatistic.STR.name());
+        SIZ_RELATION.setModifierType(ModifierType.NONE);
+        SIZ_RELATION.setPropertyName(BRPStatistic.SIZ.name());
+    }
+
     private int       mMax;
     private int       mMin;
     private PointPool mPointPool;
@@ -218,7 +231,6 @@ enum DamageBonusCoC5 implements DamageBonus {
     public int random() {
         return getPointPool().randomValue();
     }
-
 
     @Override
     public CharacterProperty asCharacterProperty() {
