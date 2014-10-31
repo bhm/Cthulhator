@@ -27,7 +27,6 @@ import com.bustiblelemons.bustiblelibs.R;
 public class RippleImageButton extends ImageButton {
 
     private static GestureDetector gestureDetector;
-    private static GestureDetector tapUpGestureDetector;
     private int WIDTH;
     private int HEIGHT;
     private int FRAME_RATE  = 10;
@@ -122,17 +121,6 @@ public class RippleImageButton extends ImageButton {
 
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
-                return false;
-            }
-        });
-        tapUpGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
-            @Override
-            public boolean onSingleTapConfirmed(MotionEvent e) {
-                return false;
-            }
-
-            @Override
-            public boolean onSingleTapUp(MotionEvent e) {
                 return true;
             }
         });
@@ -147,6 +135,7 @@ public class RippleImageButton extends ImageButton {
                 return;
             }
             if (DURATION <= timer * FRAME_RATE) {
+                clickIssued = false;
                 restoreView(canvas);
                 return;
             } else {
@@ -222,13 +211,12 @@ public class RippleImageButton extends ImageButton {
     }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-        case MotionEvent.ACTION_DOWN:
-            triggerDrawing(event);
-            return true;
-        case MotionEvent.ACTION_UP:
+        if (!clickIssued) {
             clickIssued = true;
-            return this.performClick();
+            this.performClick();
+        }
+        if (gestureDetector.onTouchEvent(event) && !animationRunning) {
+            triggerDrawing(event);
         }
         return true;
     }
@@ -261,7 +249,6 @@ public class RippleImageButton extends ImageButton {
         }
         invalidate();
     }
-
 
     private Bitmap getCircleBitmap(final int radius) {
         final Bitmap output = Bitmap.createBitmap(originBitmap.getWidth(), originBitmap.getHeight(), Bitmap.Config.ARGB_8888);
