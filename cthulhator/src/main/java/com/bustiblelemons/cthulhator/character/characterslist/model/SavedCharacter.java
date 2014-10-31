@@ -43,8 +43,7 @@ import java.util.TreeSet;
  */
 @JsonIgnoreProperties
 public class SavedCharacter implements
-                            Parcelable, Serializable,
-                            ObservableCharacterProperty.OnCharacterPropertChanged<CharacterProperty> {
+                            Parcelable, Serializable {
 
     @JsonIgnore
     public static final Parcelable.Creator<SavedCharacter>                  CREATOR                    = new Parcelable.Creator<SavedCharacter>() {
@@ -82,6 +81,9 @@ public class SavedCharacter implements
     @JsonIgnore
     private HitPoints hitPoints;
 
+    @JsonIgnore
+    private ObservableCharacterProperty.OnCharacterPropertChanged<CharacterProperty> propertiesObserver;
+
     public SavedCharacter() {
     }
 
@@ -107,6 +109,10 @@ public class SavedCharacter implements
         this.presentDate = in.readLong();
         this.age = in.readInt();
         this.suggestedDate = in.readLong();
+    }
+
+    public void setPropertiesObserver(ObservableCharacterProperty.OnCharacterPropertChanged<CharacterProperty> propertiesObserver) {
+        this.propertiesObserver = propertiesObserver;
     }
 
     public CthulhuEdition getEdition() {
@@ -239,21 +245,38 @@ public class SavedCharacter implements
         addCharacterProperty(pointsProperty);
     }
 
-    public void notifyCoRelatives(CharacterProperty ofProperty) {
-        if (ofProperty == null) {
-            return;
+    @JsonIgnore
+    public Set<CharacterProperty> getCorelatives(CharacterProperty property) {
+        Set<CharacterProperty> r = Collections.emptySet();
+        if (property == null) {
+            return r;
         }
+        Set<CharacterProperty> relatedProperties = getRelatedProperties(property);
+        for (CharacterProperty related : relatedProperties) {
+            if (related != null) {
+                Set<CharacterProperty> corelativesSet = getRelatedProperties(related);
+                r.addAll(corelativesSet);
+            }
+        }
+        return r;
+    }
 
+    @JsonIgnore
+    public void notifyCoRelatives(CharacterProperty ofProperty) {
+        Set<CharacterProperty> corelatives = getCorelatives(ofProperty);
+        if (corelatives != null) {
+            for (CharacterProperty property : corelatives) {
+                if (property != null) {
+                    property.notifyObservers();
+                }
+            }
+        }
     }
 
     @JsonIgnore
     public Set<CharacterProperty> getRelatedProperties(CharacterProperty toProperty) {
         Collection<Relation> relations = toProperty.getRelations();
-        Set<CharacterProperty> r = propertyToProperty.get(toProperty);
-        if (r != null) {
-            return r;
-        }
-        r = new HashSet<CharacterProperty>();
+        Set<CharacterProperty> r = new HashSet<CharacterProperty>();
         for (Relation relation : relations) {
             if (relation != null) {
                 String propName = relation.getPropertyName();
@@ -271,7 +294,6 @@ public class SavedCharacter implements
                 }
             }
         }
-        propertyToProperty.put(toProperty, r);
         return r;
     }
 
@@ -793,17 +815,6 @@ public class SavedCharacter implements
     @JsonIgnore
     public void setHitPoints(HitPoints hitPoints) {
         this.hitPoints = hitPoints;
-    }
-
-    @Override
-    public void onCharacterPropertChanged(CharacterProperty property) {
-        // propert param changed
-        // get relations
-        // resolve corelatives ( properties that have n similar properties
-    }
-
-    public interface CorelativesObserver {
-        void onCorelativePropertyChanged(CharacterProperty property);
     }
 
 }

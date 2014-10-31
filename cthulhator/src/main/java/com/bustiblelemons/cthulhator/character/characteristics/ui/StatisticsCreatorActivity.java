@@ -15,9 +15,9 @@ import com.bustiblelemons.cthulhator.character.creation.ui.AbsCharacterCreationA
 import com.bustiblelemons.cthulhator.system.CthulhuCharacter;
 import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
+import com.bustiblelemons.cthulhator.system.properties.ObservableCharacterProperty;
 import com.bustiblelemons.logging.Logger;
 import com.bustiblelemons.observablescrollview.ObservableScrollView;
-import com.bustiblelemons.observablescrollview.ScrollViewListener;
 import com.bustiblelemons.views.SkillView;
 
 import java.util.List;
@@ -33,7 +33,8 @@ import butterknife.OnClick;
  * Created by bhm on 31.08.14.
  */
 public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
-        implements SkillView.OnValueButtonsClicked, ScrollViewListener, View.OnClickListener {
+        implements SkillView.OnValueButtonsClicked, View.OnClickListener,
+                   ObservableCharacterProperty.OnCharacterPropertChanged<CharacterProperty> {
 
     public static final  int    REQUEST_CODE = 4;
     private static final Logger log          = new Logger(StatisticsCreatorActivity.class);
@@ -63,10 +64,11 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
             setSupportActionBar(mToolbar);
         }
         ButterKnife.inject(this);
-        mScrollView.setScrollViewListener(this);
         mSavedCharacter = getInstanceArgument();
+        mSavedCharacter.setPropertiesObserver(this);
         if (mSavedCharacter == null) {
             mSavedCharacter = CthulhuCharacter.forEdition(CthulhuEdition.CoC5);
+            mSavedCharacter.setPropertiesObserver(this);
             fillPropertyViews();
         } else if (mSavedCharacter != null && !mSavedCharacter.hasAssignedStatistics()) {
             distributeRandomPoints();
@@ -217,11 +219,31 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         }
     }
 
+    @Override
     public void onCharacterPropertChanged(CharacterProperty property) {
-
+        if (property == null) {
+            return;
+        }
+        SkillView skillView = null;
+        int id = -1;
+        String propName = property.getName();
+        for (SkillView view : mCharacteristicsViewList) {
+            if (view != null) {
+                String tag = (String) view.getTag();
+                if (tag.equals(propName)) {
+                    id = view.getId();
+                    break;
+                }
+            }
+        }
+        if (skillView != null && id > 0) {
+            updateView(skillView, id, property);
+        }
     }
 
     private void updateView(SkillView view, int id, CharacterProperty property) {
+        view.setIntValue(property.getValue());
+        mSavedCharacter.notifyCoRelatives(property);
         CharacterPropertyAdapter adapter = mIdsToAdapters.get(id);
         if (adapter == null) {
             adapter = new CharacterPropertyAdapter(this);
@@ -231,15 +253,6 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         view.setAdapter(adapter);
         mIdsToProperty.put(id, property);
         mIdsToAdapters.put(id, adapter);
-    }
-
-
-    @Override
-    public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
-//        if (mToolbar != null && mToolbar.getHeight() > 0) {
-//            int height = mToolbar.getHeight();
-//            mToolbar.sethe
-//        }
     }
 
     @Override
