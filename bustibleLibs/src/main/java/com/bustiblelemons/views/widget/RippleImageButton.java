@@ -26,6 +26,8 @@ import com.bustiblelemons.bustiblelibs.R;
  */
 public class RippleImageButton extends ImageButton {
 
+    private static GestureDetector gestureDetector;
+    private static GestureDetector tapUpGestureDetector;
     private int WIDTH;
     private int HEIGHT;
     private int FRAME_RATE  = 10;
@@ -45,11 +47,10 @@ public class RippleImageButton extends ImageButton {
     private boolean hasToZoom  = false;
     private boolean isCentered = true;
     private int     rippleType = 0;
-    private Paint           paint;
-    private Bitmap          originBitmap;
-    private int             rippleColor;
-    private int             ripplePadding;
-    private GestureDetector gestureDetector;
+    private Paint  paint;
+    private Bitmap originBitmap;
+    private int    rippleColor;
+    private int    ripplePadding;
     private Runnable runnable          = new Runnable() {
         @Override
         public void run() {
@@ -58,6 +59,7 @@ public class RippleImageButton extends ImageButton {
     };
     private boolean  passClickToParent = false;
     private boolean  clickIssued       = false;
+    private boolean resetCircle = false;
 
 
     public RippleImageButton(Context context) {
@@ -107,7 +109,11 @@ public class RippleImageButton extends ImageButton {
             paint.setAlpha(PAINT_ALPHA);
         }
         this.setWillNotDraw(false);
+        initializeGestureDetectors(context);
+        this.setDrawingCacheEnabled(true);
+    }
 
+    private void initializeGestureDetectors(Context context) {
         gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onSingleTapConfirmed(MotionEvent e) {
@@ -116,29 +122,32 @@ public class RippleImageButton extends ImageButton {
 
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
+                return false;
+            }
+        });
+        tapUpGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
                 return true;
             }
         });
-
-        this.setDrawingCacheEnabled(true);
     }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
         if (animationRunning) {
-            if (!clickIssued) {
-                clickIssued = true;
-                this.performClick();
+            if (resetCircle) {
+                restoreView(canvas);
+                return;
             }
             if (DURATION <= timer * FRAME_RATE) {
-                animationRunning = false;
-                timer = 0;
-                durationEmpty = -1;
-                timerEmpty = 0;
-                canvas.restore();
-                invalidate();
-                clickIssued = false;
+                restoreView(canvas);
                 return;
             } else {
                 canvasHandler.postDelayed(runnable, FRAME_RATE);
@@ -176,6 +185,16 @@ public class RippleImageButton extends ImageButton {
         }
     }
 
+    private void restoreView(Canvas canvas) {
+        resetCircle = false;
+        animationRunning = false;
+        timer = 0;
+        durationEmpty = -1;
+        timerEmpty = 0;
+        canvas.restore();
+        invalidate();
+    }
+
     private boolean hasParent() {
         return getParent() != null && (getParent() instanceof View);
     }
@@ -201,37 +220,48 @@ public class RippleImageButton extends ImageButton {
 
         radiusMax -= ripplePadding;
     }
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (gestureDetector.onTouchEvent(event) && !animationRunning) {
-            if (hasToZoom)
-                this.startAnimation(scaleAnimation);
-
-            if (isCentered || rippleType == 1) {
-                this.x = getMeasuredWidth() / 2;
-                this.y = getMeasuredHeight() / 2;
-            } else {
-                this.x = event.getX();
-                this.y = event.getY();
-            }
-
-            animationRunning = true;
-
-            if (rippleType == 1 && originBitmap == null)
-                originBitmap = getDrawingCache(true);
-
-            invalidate();
+        switch (event.getAction()) {
+        case MotionEvent.ACTION_DOWN:
+            triggerDrawing(event);
+            return true;
+        case MotionEvent.ACTION_UP:
+            clickIssued = true;
+            return this.performClick();
         }
-
         return true;
     }
 
-//    @Override
-//    public boolean onInterceptTouchEvent(MotionEvent event) {
-//        onTouchEvent(event);
-//        return false;
-//    }
+    private void triggerDrawing(MotionEvent event) {
+        if (hasToZoom) {
+            this.startAnimation(scaleAnimation);
+        }
+
+        radiusMax = Math.max(WIDTH, HEIGHT);
+
+        if (rippleType != 2) {
+            radiusMax /= 2;
+        }
+
+        radiusMax -= ripplePadding;
+
+        if (isCentered || rippleType == 1) {
+            this.x = getMeasuredWidth() / 2;
+            this.y = getMeasuredHeight() / 2;
+        } else {
+            this.x = event.getX();
+            this.y = event.getY();
+        }
+
+        animationRunning = true;
+
+        if (rippleType == 1 && originBitmap == null) {
+            originBitmap = getDrawingCache(true);
+        }
+        invalidate();
+    }
+
 
     private Bitmap getCircleBitmap(final int radius) {
         final Bitmap output = Bitmap.createBitmap(originBitmap.getWidth(), originBitmap.getHeight(), Bitmap.Config.ARGB_8888);
