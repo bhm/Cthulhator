@@ -38,4 +38,7 @@
     <item name="skillview_value" type="id"/>
     <item name="card_divider" type="id"/>
     <item name="ripple" type="id"/>
+    <item name="primary_list" type="id"/>
+    <item name="skills_list" type="id"/>
+    <item name="secondary_list" type="id"/>
 </resources>

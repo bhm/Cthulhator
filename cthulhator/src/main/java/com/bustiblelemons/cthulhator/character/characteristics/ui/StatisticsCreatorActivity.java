@@ -1,6 +1,8 @@
 package com.bustiblelemons.cthulhator.character.characteristics.ui;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.view.Menu;
@@ -11,15 +13,20 @@ import android.view.View;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.characteristics.logic.CharacterPropertyAdapter;
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
+import com.bustiblelemons.cthulhator.character.creation.logic.CreatorAdapter;
+import com.bustiblelemons.cthulhator.character.creation.logic.CreatorCardFactory;
+import com.bustiblelemons.cthulhator.character.creation.logic.RelatedPropertesRetreiver;
+import com.bustiblelemons.cthulhator.character.creation.model.CreatorCard;
 import com.bustiblelemons.cthulhator.character.creation.ui.AbsCharacterCreationActivity;
 import com.bustiblelemons.cthulhator.system.CthulhuCharacter;
 import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
-import com.bustiblelemons.cthulhator.system.properties.ObservableCharacterProperty;
 import com.bustiblelemons.logging.Logger;
 import com.bustiblelemons.observablescrollview.ObservableScrollView;
 import com.bustiblelemons.views.SkillView;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -28,18 +35,21 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.InjectViews;
 import butterknife.OnClick;
+import butterknife.Optional;
 
 /**
  * Created by bhm on 31.08.14.
  */
 public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         implements SkillView.OnValueButtonsClicked, View.OnClickListener,
-                   ObservableCharacterProperty.OnReltivesChanged<CharacterProperty> {
+                   RelatedPropertesRetreiver {
 
     public static final  int    REQUEST_CODE = 4;
     private static final Logger log          = new Logger(StatisticsCreatorActivity.class);
+    @Optional
     @InjectView(R.id.done)
     CircleButton         mFab;
+    @Optional
     @InjectViews({R.id.edu,
             R.id.intelligence,
             R.id.pow,
@@ -47,12 +57,21 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
             R.id.app,
             R.id.str, R.id.con, R.id.siz})
     List<SkillView>      mCharacteristicsViewList;
+    @Optional
     @InjectView(R.id.scroll)
     ObservableScrollView mScrollView;
+    @Optional
+    @InjectView(R.id.recycler)
+    RecyclerView         mRecyclerView;
+
     private SparseArray<CharacterProperty>        mIdsToProperty = new SparseArray<CharacterProperty>();
     private SparseArray<CharacterPropertyAdapter> mIdsToAdapters = new SparseArray<CharacterPropertyAdapter>();
-    private SavedCharacter mSavedCharacter;
-    private Toolbar        mToolbar;
+    private SavedCharacter             mSavedCharacter;
+    private Toolbar                    mToolbar;
+    private RecyclerView.LayoutManager mManager;
+    private CreatorAdapter             mRecyclerAdapter;
+    private CthulhuEdition mEdition = CthulhuEdition.CoC5;
+    private List<CreatorCard> mCreatorCards;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,16 +83,27 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
             setSupportActionBar(mToolbar);
         }
         ButterKnife.inject(this);
-        mSavedCharacter = getInstanceArgument();
+        if (mRecyclerView != null) {
+            mManager = new LinearLayoutManager(this);
+            mRecyclerView.setLayoutManager(mManager);
+            mRecyclerAdapter = new CreatorAdapter();
+            mRecyclerView.setAdapter(mRecyclerAdapter);
+            mSavedCharacter = getInstanceArgument();
+            if (mSavedCharacter == null) {
+                mSavedCharacter = CthulhuCharacter.forEdition(mEdition);
+            }
+            mCreatorCards = CreatorCardFactory.getCardsFrom(mEdition, this, mSavedCharacter.getStatistics());
+            mRecyclerAdapter.refreshData(mCreatorCards);
+        }
+    }
+
+    private void setupScrollView() {
         if (mSavedCharacter == null) {
             mSavedCharacter = CthulhuCharacter.forEdition(CthulhuEdition.CoC5);
-            mSavedCharacter.setPropertiesObserver(this);
             fillPropertyViews();
         } else if (mSavedCharacter != null && !mSavedCharacter.hasAssignedStatistics()) {
-            mSavedCharacter.setPropertiesObserver(this);
             distributeRandomPoints();
         } else {
-            mSavedCharacter.setPropertiesObserver(this);
             fillPropertyViews();
         }
     }
@@ -225,33 +255,6 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     }
 
 
-    /**
-     * Redo this into one custom widget Multi CharacterProperty with Adaptergenerated character property list
-     *
-     * @param ofProperty
-     */
-    @Override
-    public void onUpdateRelativeProperties(CharacterProperty ofProperty) {
-        if (ofProperty == null) {
-            return;
-        }
-        SkillView skillView = null;
-        int id = -1;
-        String propName = ofProperty.getName();
-        for (SkillView view : mCharacteristicsViewList) {
-            if (view != null) {
-                String tag = (String) view.getTag();
-                if (tag.equals(propName)) {
-                    id = view.getId();
-                    break;
-                }
-            }
-        }
-        if (skillView != null && id > 0) {
-            updateView(skillView, id, ofProperty);
-        }
-    }
-
     private void updateView(SkillView view, int id, CharacterProperty property) {
         CharacterPropertyAdapter adapter = mIdsToAdapters.get(id);
         if (adapter == null) {
@@ -267,5 +270,13 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     @Override
     public void onClick(View v) {
         onBackPressed();
+    }
+
+    @Override
+    public Collection<CharacterProperty> getRelatedPropertes(CharacterProperty property) {
+        if (property != null) {
+            return mSavedCharacter.getRelatedProperties(property);
+        }
+        return Collections.emptyList();
     }
 }

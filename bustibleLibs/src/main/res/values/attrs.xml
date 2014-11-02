@@ -119,6 +119,7 @@
         <attr name="card_hint_style" format="reference"/>
         <attr name="card_image" format="reference"/>
     </declare-styleable>
+    <declare-styleable name="CharacteristicCard"></declare-styleable>
 
     <attr name="progress_gravity">
         <flag name="bottom" value="80"/>

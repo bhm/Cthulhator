@@ -80,7 +80,7 @@
     <item name="app" type="id" />
     <item name="questionare" type="id" />
     <item name="preview_card" type="id" />
-    <item name="skills" type="id" />
+    <item name="secondary_list" type="id" />
     <item name="top_characteristics" type="id" />
     <item name="extra_info" type="id" />
     <item name="short_info" type="id" />
@@ -109,4 +109,5 @@
     <item name="characteristic_indicator" type="id" />
     <item name="location_indicator" type="id" />
     <item name="photos_indicator" type="id" />
+    <item name="recycler" type="id"/>
 </resources>

@@ -111,14 +111,11 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
     };
     private int             mJump     = 1;
     private OnValueButtonsClicked mOnValueButtonsClicked;
-
     public SkillView(Context context) {
         super(context);
         setSkillViewListener(mSkillViewListener);
         init(context, null);
     }
-
-
     public SkillView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
@@ -129,6 +126,22 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         super(context, attrs, defStyle);
         init(context, attrs);
         setSkillViewListener(mSkillViewListener);
+    }
+
+    public ListAdapter getAdapter() {
+        return mListAdapter;
+    }
+
+    public void setAdapter(ListAdapter listAdapter) {
+        if (isInEditMode()) {
+            return;
+        }
+        if (mListAdapter != null) {
+            mListAdapter.unregisterDataSetObserver(mObserver);
+        }
+        mListAdapter = listAdapter;
+        mListAdapter.registerDataSetObserver(mObserver);
+        rPopulateViews();
     }
 
     private void rRefreshViews() {
@@ -495,22 +508,6 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
 
     public void setIsPercentile(boolean percentile) {
         this.isPercentile = percentile;
-    }
-
-    public ListAdapter getAdapter() {
-        return mListAdapter;
-    }
-
-    public void setAdapter(ListAdapter listAdapter) {
-        if (isInEditMode()) {
-            return;
-        }
-        if (mListAdapter != null) {
-            mListAdapter.unregisterDataSetObserver(mObserver);
-        }
-        mListAdapter = listAdapter;
-        mListAdapter.registerDataSetObserver(mObserver);
-        rPopulateViews();
     }
 
     public void setOnValueButtonsClicked(OnValueButtonsClicked onValueButtonsClicked) {

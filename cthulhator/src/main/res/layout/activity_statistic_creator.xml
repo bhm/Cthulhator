@@ -22,11 +22,18 @@
 
     </android.support.v7.widget.Toolbar>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header"/>
+
     <com.bustiblelemons.observablescrollview.ObservableScrollView
         android:id="@id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/header">
+        android:layout_below="@id/header"
+        android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="match_parent"

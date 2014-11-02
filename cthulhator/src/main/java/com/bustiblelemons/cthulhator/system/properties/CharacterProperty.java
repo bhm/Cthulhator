@@ -24,10 +24,10 @@ public class CharacterProperty extends ObservableCharacterProperty
         implements Serializable, Parcelable {
 
     @JsonIgnore
-    public static final CharacterProperty                     EMPTY   = new CharacterProperty();
+    public static final CharacterProperty                     EMPTY = new CharacterProperty();
     @JsonIgnore
     public static final Parcelable.Creator<CharacterProperty> CREATOR
-            = new Parcelable.Creator<CharacterProperty>() {
+                                                                    = new Parcelable.Creator<CharacterProperty>() {
         public CharacterProperty createFromParcel(Parcel source) {
             return new CharacterProperty(source);
         }
@@ -326,5 +326,12 @@ public class CharacterProperty extends ObservableCharacterProperty
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    public boolean nameMatches(String name) {
+        if (name == null) {
+            return false;
+        }
+        return name.equals(this.name);
     }
 }

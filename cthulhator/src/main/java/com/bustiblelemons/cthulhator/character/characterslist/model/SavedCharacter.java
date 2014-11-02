@@ -17,7 +17,6 @@ import com.bustiblelemons.cthulhator.system.damage.DamageBonus;
 import com.bustiblelemons.cthulhator.system.damage.DamageBonusFactory;
 import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
-import com.bustiblelemons.cthulhator.system.properties.ObservableCharacterProperty;
 import com.bustiblelemons.cthulhator.system.properties.PropertyType;
 import com.bustiblelemons.cthulhator.system.properties.Relation;
 import com.bustiblelemons.cthulhator.system.time.CthulhuPeriod;
@@ -43,11 +42,10 @@ import java.util.TreeSet;
  */
 @JsonIgnoreProperties
 public class SavedCharacter implements
-                            Parcelable, Serializable,
-                            ObservableCharacterProperty.OnCorelativesChanged<CharacterProperty> {
+                            Parcelable, Serializable {
 
     @JsonIgnore
-    public static final Parcelable.Creator<SavedCharacter>                  CREATOR                    = new Parcelable.Creator<SavedCharacter>() {
+    public static final Parcelable.Creator<SavedCharacter>           CREATOR                    = new Parcelable.Creator<SavedCharacter>() {
         public SavedCharacter createFromParcel(Parcel source) {
             return new SavedCharacter(source);
         }
@@ -57,13 +55,10 @@ public class SavedCharacter implements
         }
     };
     @JsonIgnore
-    private static      LruCache<CharacterProperty, List<Possesion>>        cachedAffectedPossessions  =
+    private static      LruCache<CharacterProperty, List<Possesion>> cachedAffectedPossessions  =
             new LruCache<CharacterProperty, List<Possesion>>(20);
     @JsonIgnore
-    private static      LruCache<CharacterProperty, Set<CharacterProperty>> propertyToProperty         =
-            new LruCache<CharacterProperty, Set<CharacterProperty>>(BRPStatistic.values().length);
-    @JsonIgnore
-    private static      int                                                 sShouldHaveAssignedAtLeast = 2;
+    private static      int                                          sShouldHaveAssignedAtLeast = 2;
 
     static {
         sShouldHaveAssignedAtLeast = BRPStatistic.values().length / 5;
@@ -81,9 +76,6 @@ public class SavedCharacter implements
     private long          suggestedDate = Long.MIN_VALUE;
     @JsonIgnore
     private HitPoints hitPoints;
-
-    @JsonIgnore
-    private ObservableCharacterProperty.OnReltivesChanged<CharacterProperty> reltivesChanged;
 
     public SavedCharacter() {
     }
@@ -110,10 +102,6 @@ public class SavedCharacter implements
         this.presentDate = in.readLong();
         this.age = in.readInt();
         this.suggestedDate = in.readLong();
-    }
-
-    public void setPropertiesObserver(ObservableCharacterProperty.OnReltivesChanged<CharacterProperty> reltivesChanged) {
-        this.reltivesChanged = reltivesChanged;
     }
 
     public CthulhuEdition getEdition() {
@@ -264,32 +252,12 @@ public class SavedCharacter implements
     }
 
     @JsonIgnore
-    @Override
-    public void onUpdateCorelatives(CharacterProperty ofProperty) {
-        if (reltivesChanged == null) {
-            return;
-        }
-        Set<CharacterProperty> corelatives = getCorelatives(ofProperty);
-        if (corelatives != null) {
-            for (CharacterProperty property : corelatives) {
-                String ofPropertyName = ofProperty.getName();
-                if (property != null) {
-                    if (!ofPropertyName.equalsIgnoreCase(property.getName())) {
-                        reltivesChanged.onUpdateRelativeProperties(property);
-                    }
-                }
-            }
-        }
-    }
-
-    @JsonIgnore
     public Set<CharacterProperty> getRelatedProperties(CharacterProperty toProperty) {
         if (toProperty == null) {
             throw new IllegalArgumentException("Passed param was null");
         }
         Collection<Relation> relations = toProperty.getRelations();
         Set<CharacterProperty> r = new HashSet<CharacterProperty>();
-        toProperty.addCorelativesObserver(this);
         for (Relation relation : relations) {
             if (relation != null) {
                 String propName = relation.getPropertyName();
