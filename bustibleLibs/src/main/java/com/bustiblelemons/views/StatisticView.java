@@ -29,15 +29,15 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
     private boolean hideTitle    = false;
     private int valuePosition;
     private boolean showModifiers = false;
-    private ImageView       decView;
-    private ImageView       incView;
-    private int             defValSize;
-    private int             defTitleSize;
-    private int             titleSize;
-    private int             valueSize;
-    private Drawable        incDrawable;
-    private Drawable        decDrawable;
-    private OnClickListener cachedOnClick;
+    private ImageView             decView;
+    private ImageView             incView;
+    private int                   defValSize;
+    private int                   defTitleSize;
+    private int                   titleSize;
+    private int                   valueSize;
+    private Drawable              incDrawable;
+    private Drawable              decDrawable;
+    private OnClickListener       cachedOnClick;
     private StatisticViewListener listener;
     private int defaultStatValue = 99;
     private boolean valueBiggerIfTitleMissing;
@@ -242,9 +242,6 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
     }
 
     public void hideTitle() {
-        /**
-         * TODO Increase the value view by half of titleview font size
-         */
         if (titleView != null) {
             titleView.setVisibility(GONE);
         }

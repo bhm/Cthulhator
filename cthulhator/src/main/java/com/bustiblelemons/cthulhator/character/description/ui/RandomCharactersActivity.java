@@ -350,7 +350,6 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
             handleSettingsButton();
             break;
         case R.id.fab:
-            //TODO Save the set as a character properties set
             saveCharacter();
             onBackPressed();
             break;
