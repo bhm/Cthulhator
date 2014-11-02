@@ -17,7 +17,7 @@ public class CreatorCardHolder extends AbsRecyclerHolder<CreatorCard> {
     public CreatorCardHolder(View parent) {
         super(parent);
         characteristicCard = (CharacteristicCard)
-                getInflater().inflate(R.layout.single_chracteristic_card, (android.view.ViewGroup) parent, false);
+                getInflater().inflate(R.layout.single_chracteristic_card, null);
 
     }
 
