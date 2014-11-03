@@ -12,9 +12,11 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 
+import com.bustiblelemons.adapters.AbsListAdapter;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.creation.logic.RelatedPropertesRetreiver;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
+import com.bustiblelemons.holders.impl.ViewHolder;
 import com.bustiblelemons.utils.ResourceHelper;
 import com.bustiblelemons.views.SkillView;
 
@@ -26,9 +28,9 @@ import java.util.List;
  * Created by hiv on 02.11.14.
  */
 public class CharacteristicCard extends RelativeLayout {
-    private View           rootView;
-    private int            defValSize;
-    private int            defTitleSize;
+    private View rootView;
+    private int  defValSize;
+    private int  defTitleSize;
 
     private List<CharacterProperty> mPrimaryPropList;
     private ViewGroup               mPrimaryList;
@@ -39,14 +41,12 @@ public class CharacteristicCard extends RelativeLayout {
         @Override
         public void onChanged() {
             super.onChanged();
-            CharacteristicCard.this.refreshSecondaryListData();
             CharacteristicCard.this.populateSecondaryList();
         }
 
         @Override
         public void onInvalidated() {
             super.onInvalidated();
-            CharacteristicCard.this.refreshSecondaryListData();
             CharacteristicCard.this.populateSecondaryList();
         }
     };
@@ -104,17 +104,7 @@ public class CharacteristicCard extends RelativeLayout {
         }
         mListAdapter = adapter;
         mListAdapter.registerDataSetObserver(mSecondaryListObserver);
-    }
-
-    private void refreshSecondaryListData() {
-        if (mSecondaryPropList == null) {
-            mSecondaryPropList = new ArrayList<CharacterProperty>();
-        }
-        for (CharacterProperty property : mPrimaryPropList) {
-            if (property != null && mRelatedRetreiver != null) {
-                mSecondaryPropList.addAll(mRelatedRetreiver.getRelatedPropertes(property));
-            }
-        }
+        rPopulateSecondaryList();
     }
 
     public List<CharacterProperty> getProperties() {
@@ -122,17 +112,19 @@ public class CharacteristicCard extends RelativeLayout {
     }
 
     public void setProperties(Collection<CharacterProperty> properties) {
-        mPrimaryList.removeAllViews();
         this.mPrimaryPropList = new ArrayList<CharacterProperty>(properties);
+        mSecondaryPropList = new ArrayList<CharacterProperty>();
         rRefreshCharacterProperties();
         populateSecondaryList();
     }
 
     private int rRefreshCharacterProperties() {
         int r = 0;
+        mPrimaryList.removeAllViews();
         for (CharacterProperty property : mPrimaryPropList) {
             if (property != null) {
                 addCharacterPropertyView(property);
+                r++;
             }
         }
         return r;
@@ -144,25 +136,43 @@ public class CharacteristicCard extends RelativeLayout {
         }
         SkillView skillView = (SkillView)
                 LayoutInflater.from(getContext())
-                        .inflate(R.layout.single_chracteristic_card_secondary, mPrimaryList, false);
+                        .inflate(R.layout.single_chracteristic_card_primary, mPrimaryList, false);
         if (skillView != null) {
             skillView.setMinValue(property.getMinValue());
             skillView.setMaxValue(property.getMaxValue());
             int nameResId = ResourceHelper.from(getContext())
                     .getIdentifierForStringByNameParts("stat", property.getName());
-            property.setNameResId(nameResId);
-            skillView.setTitle(nameResId);
+            if (nameResId > 0) {
+                property.setNameResId(nameResId);
+                skillView.setTitle(nameResId);
+            } else {
+                skillView.setTitle(property.getName());
+            }
             int propValue = property.getValue() == 0 ? property.randomValue() : property.getValue();
             skillView.setIntValue(propValue);
-            if (skillView != null) {
-                mPrimaryList.addView(skillView);
-                mSecondaryListObserver.onChanged();
+            mPrimaryList.addView(skillView);
+            mSecondaryListObserver.onChanged();
+            addRelatedProperties(property);
+        }
+    }
+
+    private void addRelatedProperties(CharacterProperty property) {
+        if (mRelatedRetreiver != null) {
+            if (mSecondaryPropList == null) {
+                mSecondaryPropList = new ArrayList<CharacterProperty>();
             }
+            mSecondaryPropList.addAll(mRelatedRetreiver.getRelatedPropertes(property));
         }
     }
 
     private void populateSecondaryList() {
-        setAdapter(new CharacterCardAdapter(getContext()));
+        AbsListAdapter<CharacterProperty, ViewHolder<CharacterProperty>> adapter =
+                new CharacterCardAdapter(getContext());
+        adapter.addItems(mSecondaryPropList);
+        setAdapter(adapter);
+    }
+
+    private void rPopulateSecondaryList() {
         mSecondaryList.removeAllViews();
         if (mListAdapter != null && mSecondaryList != null) {
             for (int i = 0; i < mListAdapter.getCount(); i++) {

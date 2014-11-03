@@ -13,5 +13,6 @@
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@android:id/primary"
         android:orientation="vertical"/>
 </RelativeLayout>

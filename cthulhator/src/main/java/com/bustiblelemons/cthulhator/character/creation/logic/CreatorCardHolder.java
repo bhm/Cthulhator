@@ -23,8 +23,8 @@ public class CreatorCardHolder extends AbsRecyclerHolder<CreatorCard> {
     @Override
     public void bindData(CreatorCard item) {
         if (item != null && characteristicCard != null) {
-            characteristicCard.setProperties(item.getProperties());
             characteristicCard.setRelatedRetreiver(mRetreiver);
+            characteristicCard.setProperties(item.getProperties());
         }
     }
 }
