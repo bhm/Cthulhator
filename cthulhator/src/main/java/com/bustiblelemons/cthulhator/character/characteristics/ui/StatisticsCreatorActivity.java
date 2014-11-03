@@ -22,6 +22,7 @@ import com.bustiblelemons.cthulhator.character.creation.ui.AbsCharacterCreationA
 import com.bustiblelemons.cthulhator.system.CthulhuCharacter;
 import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
+import com.bustiblelemons.cthulhator.view.characteristiccard.CharacteristicCard;
 import com.bustiblelemons.logging.Logger;
 import com.bustiblelemons.observablescrollview.ObservableScrollView;
 import com.bustiblelemons.views.SkillView;
@@ -43,7 +44,7 @@ import butterknife.Optional;
  */
 public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         implements SkillView.OnValueButtonsClicked, View.OnClickListener,
-                   RelatedPropertesRetreiver {
+                   RelatedPropertesRetreiver, CharacteristicCard.OnPropertyChanged {
 
     public static final  int    REQUEST_CODE = 4;
     private static final Logger log          = new Logger(StatisticsCreatorActivity.class);
@@ -280,5 +281,10 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
             return mSavedCharacter.getRelatedProperties(property);
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public void onPropertyChanged(CharacterProperty property) {
+        mSavedCharacter.addCharacterProperty(property);
     }
 }

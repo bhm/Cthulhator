@@ -1,5 +1,6 @@
 package com.bustiblelemons.cthulhator.character.creation.logic;
 
+import android.content.Context;
 import android.view.View;
 
 import com.bustiblelemons.cthulhator.character.creation.model.CreatorCard;
@@ -11,20 +12,28 @@ import com.bustiblelemons.recycler.AbsRecyclerHolder;
  */
 public class CreatorCardHolder extends AbsRecyclerHolder<CreatorCard> {
 
-    private RelatedPropertesRetreiver mRetreiver;
-    private CharacteristicCard        characteristicCard;
+    private RelatedPropertesRetreiver            mRetreiver;
+    private CharacteristicCard.OnPropertyChanged mOnPropertyChanged;
+    private CharacteristicCard                   mCharacteristicCard;
 
-    public CreatorCardHolder(View itemView, RelatedPropertesRetreiver retreiver) {
+    public CreatorCardHolder(View itemView, Context context) {
         super(itemView);
-        characteristicCard = (CharacteristicCard) itemView;
-        this.mRetreiver = retreiver;
+        mCharacteristicCard = (CharacteristicCard) itemView;
+        if (context instanceof RelatedPropertesRetreiver) {
+            mRetreiver = (RelatedPropertesRetreiver) context;
+        }
+        mRetreiver = (RelatedPropertesRetreiver) context;
+        if (context instanceof CharacteristicCard.OnPropertyChanged) {
+            mOnPropertyChanged = (CharacteristicCard.OnPropertyChanged) context;
+        }
     }
 
     @Override
     public void bindData(CreatorCard item) {
-        if (item != null && characteristicCard != null) {
-            characteristicCard.setRelatedRetreiver(mRetreiver);
-            characteristicCard.setProperties(item.getProperties());
+        if (item != null && mCharacteristicCard != null) {
+            mCharacteristicCard.setOnPropertyChanged(mOnPropertyChanged);
+            mCharacteristicCard.setRelatedRetreiver(mRetreiver);
+            mCharacteristicCard.setProperties(item.getProperties());
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.bustiblelemons.cthulhator.character.creation.logic;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,18 +16,18 @@ import java.util.List;
  */
 public class CreatorAdapter extends AbsRecyclerAdapter<CreatorCard, CreatorCardHolder> {
 
-    private RelatedPropertesRetreiver mRetreiver;
+    private Context mContext;
 
-    public CreatorAdapter(List<CreatorCard> data, RelatedPropertesRetreiver mRetreiver) {
+    public CreatorAdapter(List<CreatorCard> data, Context context) {
         super(data);
-        this.mRetreiver = mRetreiver;
+        mContext = context;
     }
 
     @Override
     public CreatorCardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.single_chracteristic_card, parent, false);
-        return new CreatorCardHolder(view, mRetreiver);
+        return new CreatorCardHolder(view, mContext);
     }
 
     @Override
