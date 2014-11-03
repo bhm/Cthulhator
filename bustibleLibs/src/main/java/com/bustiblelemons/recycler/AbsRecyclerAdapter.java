@@ -17,8 +17,11 @@ public abstract class AbsRecyclerAdapter<I, VH extends AbsRecyclerHolder<I>>
         extends RecyclerView.Adapter<VH> {
 
     private List<I> mData;
-
     private Context context;
+
+    protected AbsRecyclerAdapter(List<I> data) {
+        this.mData = data;
+    }
 
     @Override
     public int getItemCount() {

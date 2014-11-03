@@ -3,6 +3,8 @@ package com.bustiblelemons.utils;
 import android.content.Context;
 import android.content.res.Resources;
 
+import java.util.Locale;
+
 /**
  * Created by bhm on 17.09.14.
  */
@@ -67,7 +69,7 @@ public class ResourceHelper {
         for (String part : parts) {
             if (part != null) {
                 b.append(fix);
-                b.append(part);
+                b.append(part.toLowerCase(Locale.ENGLISH));
                 fix = spliter;
             }
         }

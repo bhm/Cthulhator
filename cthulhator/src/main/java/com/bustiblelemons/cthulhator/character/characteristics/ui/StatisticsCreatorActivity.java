@@ -1,6 +1,7 @@
 package com.bustiblelemons.cthulhator.character.characteristics.ui;
 
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -86,14 +87,15 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         if (mRecyclerView != null) {
             mManager = new LinearLayoutManager(this);
             mRecyclerView.setLayoutManager(mManager);
-            mRecyclerAdapter = new CreatorAdapter();
-            mRecyclerView.setAdapter(mRecyclerAdapter);
+
             mSavedCharacter = getInstanceArgument();
             if (mSavedCharacter == null) {
                 mSavedCharacter = CthulhuCharacter.forEdition(mEdition);
             }
+            mRecyclerView.setItemAnimator(new DefaultItemAnimator());
             mCreatorCards = CreatorCardFactory.getCardsFrom(mEdition, this, mSavedCharacter.getStatistics());
-            mRecyclerAdapter.refreshData(mCreatorCards);
+            mRecyclerAdapter = new CreatorAdapter(mCreatorCards, this);
+            mRecyclerView.setAdapter(mRecyclerAdapter);
         }
     }
 

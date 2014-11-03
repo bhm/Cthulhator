@@ -5,4 +5,15 @@
     <string name="actiongroup_social">Social</string>
     <string name="actiongroup_magic">Magic</string>
     <string name="actiongroup_other">Other</string>
+
+
+    <string name="stat_str">Strength</string>
+    <string name="stat_con">Constitution</string>
+    <string name="stat_pow">Power</string>
+    <string name="stat_dex">Dexterity</string>
+    <string name="stat_app">Appearance</string>
+    <string name="stat_siz">Size</string>
+    <string name="stat_int">Intelligence</string>
+    <string name="stat_edu">Education</string>
+
 </resources>

@@ -3,6 +3,9 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion 21
     buildToolsVersion "21.0.1"
+    lintOptions {
+        abortOnError false
+    }
 
     defaultConfig {
         applicationId "com.andexert.library"

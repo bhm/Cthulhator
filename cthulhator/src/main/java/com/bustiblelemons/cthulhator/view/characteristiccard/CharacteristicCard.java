@@ -9,12 +9,13 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ListAdapter;
+import android.widget.RelativeLayout;
 
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.creation.logic.RelatedPropertesRetreiver;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
+import com.bustiblelemons.utils.ResourceHelper;
 import com.bustiblelemons.views.SkillView;
 
 import java.util.ArrayList;
@@ -24,8 +25,7 @@ import java.util.List;
 /**
  * Created by hiv on 02.11.14.
  */
-public class CharacteristicCard extends FrameLayout {
-    private LayoutInflater mInflater;
+public class CharacteristicCard extends RelativeLayout {
     private View           rootView;
     private int            defValSize;
     private int            defTitleSize;
@@ -75,16 +75,15 @@ public class CharacteristicCard extends FrameLayout {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        rootView = LayoutInflater.from(context).inflate(R.layout.characteristics_card, this, true);
+        rootView = LayoutInflater.from(context).inflate(R.layout.characteristics_card, this, false);
         mPrimaryList = (ViewGroup) rootView.findViewById(android.R.id.primary);
         mSecondaryList = (ViewGroup) rootView.findViewById(android.R.id.list);
-        mInflater = LayoutInflater.from(context);
         setupDefaultTextSize(context);
         if (attrs != null) {
             TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CharacteristicCard);
-
             array.recycle();
         }
+        addView(rootView);
     }
 
     private void setupDefaultTextSize(Context context) {
@@ -126,6 +125,7 @@ public class CharacteristicCard extends FrameLayout {
         mPrimaryList.removeAllViews();
         this.mPrimaryPropList = new ArrayList<CharacterProperty>(properties);
         rRefreshCharacterProperties();
+        populateSecondaryList();
     }
 
     private int rRefreshCharacterProperties() {
@@ -148,6 +148,10 @@ public class CharacteristicCard extends FrameLayout {
         if (skillView != null) {
             skillView.setMinValue(property.getMinValue());
             skillView.setMaxValue(property.getMaxValue());
+            int nameResId = ResourceHelper.from(getContext())
+                    .getIdentifierForStringByNameParts("stat", property.getName());
+            property.setNameResId(nameResId);
+            skillView.setTitle(nameResId);
             int propValue = property.getValue() == 0 ? property.randomValue() : property.getValue();
             skillView.setIntValue(propValue);
             if (skillView != null) {
@@ -173,7 +177,7 @@ public class CharacteristicCard extends FrameLayout {
         }
     }
 
-    private void setRelatedRetreiver(RelatedPropertesRetreiver relatedRetreiver) {
+    public void setRelatedRetreiver(RelatedPropertesRetreiver relatedRetreiver) {
         mRelatedRetreiver = relatedRetreiver;
     }
 
