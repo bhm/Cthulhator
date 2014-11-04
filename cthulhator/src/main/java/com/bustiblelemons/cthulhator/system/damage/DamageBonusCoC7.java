@@ -167,7 +167,7 @@ public enum DamageBonusCoC7 implements DamageBonus {
     @Override
     public CharacterProperty asCharacterProperty() {
         CharacterProperty r = new CharacterProperty();
-        r.setDisplayName(toString());
+        r.setDisplayValue(toString());
         r.setType(PropertyType.DAMAGE_BONUS);
         PointPool pointPool = getPointPool();
         r.setMaxValue(pointPool.getMax());

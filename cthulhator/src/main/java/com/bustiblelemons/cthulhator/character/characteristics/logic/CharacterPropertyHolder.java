@@ -40,7 +40,7 @@ public class CharacterPropertyHolder implements ViewHolder<CharacterProperty> {
             titleView.setIsPercentile(item.isPercentile());
             titleView.setIntValue(item.getValue());
             if (PropertyType.DAMAGE_BONUS.equals(item.getType())) {
-                titleView.setValue(item.getDisplayName());
+                titleView.setValue(item.getDisplayValue());
             }
         }
     }

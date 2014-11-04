@@ -235,7 +235,7 @@ enum DamageBonusCoC5 implements DamageBonus {
     @Override
     public CharacterProperty asCharacterProperty() {
         CharacterProperty r = new CharacterProperty();
-        r.setDisplayName(toString());
+        r.setDisplayValue(toString());
         r.setFormat(PropertyFormat.NUMBER);
         r.setType(PropertyType.DAMAGE_BONUS);
         PointPool pointPool = getPointPool();

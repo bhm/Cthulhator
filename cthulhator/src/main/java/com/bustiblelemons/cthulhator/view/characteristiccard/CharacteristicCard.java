@@ -154,6 +154,7 @@ public class CharacteristicCard extends RelativeLayout implements SkillView.OnVa
                 view.setTitle(property.getName());
                 view.setIsPercentile(property.isPercentile());
                 view.setIntValue(property.getValue());
+                view.setValue(property.getDisplayValue());
             }
         }
     }

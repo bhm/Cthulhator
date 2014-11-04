@@ -33,7 +33,7 @@ public class HitPoints {
 
     public CharacterProperty asCharacterProperty() {
         CharacterProperty r = new CharacterProperty();
-        r.setDisplayName(toString());
+        r.setDisplayValue(toString());
         r.setType(PropertyType.DAMAGE_BONUS);
         r.setMinValue(getMin());
         r.setMaxValue(getMax());

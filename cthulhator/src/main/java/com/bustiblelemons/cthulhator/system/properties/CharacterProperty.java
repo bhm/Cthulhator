@@ -51,14 +51,14 @@ public class CharacterProperty extends ObservableCharacterProperty
     private int         shortNameResId;
     @JsonIgnore
     private ActionGroup mMainActionGroup;
-    private String      displayName;
+    private String      displayValue;
 
     public CharacterProperty() {
     }
 
     private CharacterProperty(Parcel in) {
         this.name = in.readString();
-        this.displayName = in.readString();
+        this.displayValue = in.readString();
         this.value = in.readInt();
         this.maxValue = in.readInt();
         this.minValue = in.readInt();
@@ -287,7 +287,7 @@ public class CharacterProperty extends ObservableCharacterProperty
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.name);
-        dest.writeString(this.displayName);
+        dest.writeString(this.displayValue);
         dest.writeInt(this.value);
         dest.writeInt(this.maxValue);
         dest.writeInt(this.minValue);
@@ -317,15 +317,15 @@ public class CharacterProperty extends ObservableCharacterProperty
         return mMainActionGroup;
     }
 
-    public String getDisplayName() {
-        if (!TextUtils.isEmpty(displayName)) {
-            return displayName;
+    public String getDisplayValue() {
+        if (!TextUtils.isEmpty(displayValue)) {
+            return displayValue;
         }
-        return getName();
+        return String.valueOf(getValue());
     }
 
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
+    public void setDisplayValue(String displayValue) {
+        this.displayValue = displayValue;
     }
 
     public boolean nameMatches(String name) {
