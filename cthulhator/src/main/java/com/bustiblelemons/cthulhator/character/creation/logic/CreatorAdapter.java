@@ -28,7 +28,7 @@ public class CreatorAdapter extends AbsRecyclerAdapter<CreatorCard, CreatorCardH
     public CreatorCardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.single_chracteristic_card, parent, false);
-        CreatorCardHolder holder = new CreatorCardHolder(view, mContext);
+        CreatorCardHolder holder = new CreatorCardHolder(view);
         if (mContext instanceof RelatedPropertesRetreiver) {
             holder.setOnPropertyChanged((CharacteristicCard.OnPropertyChanged) mContext);
         }

@@ -1,6 +1,5 @@
 package com.bustiblelemons.cthulhator.character.creation.logic;
 
-import android.content.Context;
 import android.view.View;
 
 import com.bustiblelemons.cthulhator.character.creation.model.CreatorCard;
@@ -14,10 +13,11 @@ public class CreatorCardHolder extends AbsRecyclerHolder<CreatorCard> {
 
     private RelatedPropertesRetreiver            mRetreiver;
     private CharacteristicCard.OnPropertyChanged mOnPropertyChanged;
-    private CharacteristicCard mCharacteristicCard;
+    private CharacteristicCard                   mCharacteristicCard;
 
-    public CreatorCardHolder(View itemView, Context context) {
+    public CreatorCardHolder(View itemView) {
         super(itemView);
+        mCharacteristicCard = (CharacteristicCard) itemView;
     }
 
     public void setOnPropertyChanged(CharacteristicCard.OnPropertyChanged propertyChanged) {
