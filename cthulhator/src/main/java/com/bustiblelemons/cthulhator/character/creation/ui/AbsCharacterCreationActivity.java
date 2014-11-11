@@ -18,7 +18,7 @@ public abstract class AbsCharacterCreationActivity extends AbsArgActivity<SavedC
 
     @Override
     public int getBackResIconId() {
-        return R.drawable.ic_action_navigation_back;
+        return R.drawable.ic_action_navigation_back_teal;
     }
 
     protected void launchStatisticsCreator(SavedCharacter character) {

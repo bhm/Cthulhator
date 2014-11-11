@@ -34,9 +34,7 @@ public class CharacteristicCard extends RelativeLayout implements SkillView.OnVa
     private ViewGroup               mPrimaryList;
     private ViewGroup               mSecondaryList;
     private List<CharacterProperty> mSecondaryPropList;
-
     private Map<CharacterProperty, SkillView> mPropertyToView;
-
     private RelatedPropertesRetreiver mRelatedRetreiver;
     private OnPropertyChanged mOnPropertyChanged;
 
@@ -50,16 +48,30 @@ public class CharacteristicCard extends RelativeLayout implements SkillView.OnVa
         init(context, attrs);
     }
 
-
     public CharacteristicCard(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
 
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public CharacteristicCard(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context, attrs);
+    }
+
+    public List<CharacterProperty> getProperties() {
+        if (mPrimaryPropList == null) {
+            return new ArrayList<CharacterProperty>(0);
+        }
+        return mPrimaryPropList;
+    }
+
+    public void setProperties(Collection<CharacterProperty> properties) {
+        this.mPrimaryPropList = new ArrayList<CharacterProperty>(properties);
+        mSecondaryPropList = new ArrayList<CharacterProperty>();
+        rRefreshCharacterProperties();
+        refreshSecondaryList();
     }
 
     private void init(Context context, AttributeSet attrs) {
@@ -77,17 +89,6 @@ public class CharacteristicCard extends RelativeLayout implements SkillView.OnVa
     private void setupDefaultTextSize(Context context) {
         defTitleSize = context.getResources().getDimensionPixelSize(R.dimen.font_16);
         defValSize = context.getResources().getDimensionPixelSize(R.dimen.font_16);
-    }
-
-    public List<CharacterProperty> getProperties() {
-        return mPrimaryPropList;
-    }
-
-    public void setProperties(Collection<CharacterProperty> properties) {
-        this.mPrimaryPropList = new ArrayList<CharacterProperty>(properties);
-        mSecondaryPropList = new ArrayList<CharacterProperty>();
-        rRefreshCharacterProperties();
-        refreshSecondaryList();
     }
 
     private int rRefreshCharacterProperties() {
@@ -122,7 +123,11 @@ public class CharacteristicCard extends RelativeLayout implements SkillView.OnVa
             } else {
                 skillView.setTitle(property.getName());
             }
-            int propValue = property.getValue() == 0 ? property.randomValue() : property.getValue();
+            int propValue = property.getValue();
+            if (propValue <= 0) {
+                propValue = property.randomValue();
+                property.setValue(propValue);
+            }
             skillView.setIntValue(propValue);
             mPrimaryList.addView(skillView);
             addRelatedProperties(property);

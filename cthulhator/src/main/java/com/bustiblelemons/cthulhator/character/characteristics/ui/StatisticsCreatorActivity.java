@@ -23,6 +23,7 @@ import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 import com.bustiblelemons.cthulhator.view.characteristiccard.CharacteristicCard;
 import com.bustiblelemons.logging.Logger;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -44,16 +45,17 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     private static final Logger log          = new Logger(StatisticsCreatorActivity.class);
     @Optional
     @InjectView(R.id.done)
-    CircleButton         mFab;
+    CircleButton mFab;
     @Optional
     @InjectView(R.id.recycler)
-    RecyclerView         mRecyclerView;
+    RecyclerView mRecyclerView;
 
     private SavedCharacter             mSavedCharacter;
     private Toolbar                    mToolbar;
     private RecyclerView.LayoutManager mManager;
     private CreatorAdapter             mRecyclerAdapter;
     private CthulhuEdition mEdition = CthulhuEdition.CoC5;
+
     private List<CreatorCard> mCreatorCards;
 
     @Override
@@ -105,6 +107,8 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
 
     @OnClick(R.id.done)
     public void onDone(View button) {
+        Collection<CharacterProperty> stats = getStatistics();
+        mSavedCharacter.setStatistics(stats);
         setResult(RESULT_OK, mSavedCharacter);
         onBackPressed();
     }
@@ -115,6 +119,10 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         mSavedCharacter = arg;
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     public void onClick(View v) {
@@ -132,5 +140,17 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     @Override
     public void onPropertyChanged(CharacterProperty property) {
         mSavedCharacter.addCharacterProperty(property);
+    }
+
+    public Collection<CharacterProperty> getStatistics() {
+        List<CharacterProperty> r = new ArrayList<CharacterProperty>();
+        if (mCreatorCards != null) {
+            for (CreatorCard card : mCreatorCards) {
+                if (card != null && card.getProperties() != null) {
+                    r.addAll(card.getProperties());
+                }
+            }
+        }
+        return r;
     }
 }

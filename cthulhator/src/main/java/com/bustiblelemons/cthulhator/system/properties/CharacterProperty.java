@@ -36,8 +36,8 @@ public class CharacterProperty extends ObservableCharacterProperty
             return new CharacterProperty[size];
         }
     };
-    private String            name;
-    private int               value;
+    private String name;
+    private int value = 0;
     private int               maxValue;
     private int               minValue;
     private int               baseValue;

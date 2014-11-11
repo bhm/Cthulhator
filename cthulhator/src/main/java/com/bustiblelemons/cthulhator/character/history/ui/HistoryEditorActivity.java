@@ -26,6 +26,7 @@ import org.joda.time.DateTime;
 
 import java.util.Random;
 import java.util.Set;
+import java.util.TreeSet;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -82,6 +83,14 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
         long begin = mBirthDate.getMillis();
         long end = mSuggestedDate.getMillis();
         mSpan = new TimeSpan(begin, end);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Set<HistoryEvent> history = new TreeSet<HistoryEvent>();
+        mSavedCharacter.setFullHistory(history);
+        setResult(RESULT_OK, mSavedCharacter);
+        super.onBackPressed();
     }
 
     private void setBirthDayView() {

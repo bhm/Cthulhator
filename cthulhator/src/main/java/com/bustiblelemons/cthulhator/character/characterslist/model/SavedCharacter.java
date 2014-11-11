@@ -387,8 +387,11 @@ public class SavedCharacter implements
     }
 
     @JsonIgnore
-    public int setStatistics(List<CharacterProperty> statistics) {
+    public int setStatistics(Collection<CharacterProperty> statistics) {
         int r = 0;
+        if (statistics == null) {
+            return r;
+        }
         for (CharacterProperty s : statistics) {
             if (s != null) {
                 setPropertyValue(s.getName(), s.getValue());
