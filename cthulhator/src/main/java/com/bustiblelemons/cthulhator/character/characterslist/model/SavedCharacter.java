@@ -76,6 +76,7 @@ public class SavedCharacter implements
     private long          suggestedDate = Long.MIN_VALUE;
     @JsonIgnore
     private HitPoints hitPoints;
+    private int skillPointsAvaialable = -1;
 
     public SavedCharacter() {
     }
@@ -366,11 +367,9 @@ public class SavedCharacter implements
     @JsonIgnore
     protected boolean setPropertyValue(String name, int val) {
         for (CharacterProperty prop : getProperties()) {
-            if (prop != null) {
-                if (prop.getName().equalsIgnoreCase(name)) {
-                    prop.setValue(val);
-                    return true;
-                }
+            if (prop != null && prop.nameMatches(name)) {
+                prop.setValue(val);
+                return true;
             }
         }
         return false;
@@ -387,12 +386,12 @@ public class SavedCharacter implements
     }
 
     @JsonIgnore
-    public int setStatistics(Collection<CharacterProperty> statistics) {
+    public int setPropertyValues(Collection<CharacterProperty> propertyCollection) {
         int r = 0;
-        if (statistics == null) {
+        if (propertyCollection == null) {
             return r;
         }
-        for (CharacterProperty s : statistics) {
+        for (CharacterProperty s : propertyCollection) {
             if (s != null) {
                 setPropertyValue(s.getName(), s.getValue());
                 r++;
@@ -401,6 +400,7 @@ public class SavedCharacter implements
         updateSkills();
         return r;
     }
+
 
     @JsonIgnore
     public boolean setDexterity(int dex) {
@@ -664,6 +664,18 @@ public class SavedCharacter implements
         dest.writeLong(this.presentDate);
         dest.writeInt(this.age);
         dest.writeLong(this.suggestedDate);
+    }
+
+    public int getSkillPointsAvailable() {
+        if (skillPointsAvaialable < 0) {
+            skillPointsAvaialable += getHobbyPoints();
+            skillPointsAvaialable += getCareerPoints();
+        }
+        return skillPointsAvaialable;
+    }
+
+    public void setSkillPointsAvaialable(int skillPointsAvaialable) {
+        this.skillPointsAvaialable = skillPointsAvaialable;
     }
 
     @JsonIgnore

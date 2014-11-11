@@ -1,12 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/grey_white_1000">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/grey_white_1000">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/solid_background"
+        android:paddingBottom="@dimen/fab_offset_positive"
+        app:collapseIcon="@drawable/ic_overflow_dots"
+        app:contentInsetStart="0dp"
+        app:navigationIcon="@drawable/ic_action_navigation_back_dark"
+        app:subtitleTextAppearance="@style/statistic_creator_title"
+        app:title="@string/skills"
+        app:titleTextAppearance="@style/statistic_creator_title">
+
+    </android.support.v7.widget.Toolbar>
 
     <FrameLayout
         android:id="@id/skill_editor_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/header"/>
+
+    <at.markushi.ui.CircleButton
+        android:id="@id/done"
+        android:layout_width="@dimen/fab"
+        android:layout_height="@dimen/fab"
+        android:layout_alignBottom="@id/header"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/fab_offset"
+        android:layout_marginLeft="@dimen/padding_16"
+        android:layout_marginRight="@dimen/padding_16"
+        android:layout_marginTop="@dimen/fab_offset"
+        android:src="@drawable/ic_navigation_accept"
+        app:cb_color="@color/fab_done"/>
 </RelativeLayout>

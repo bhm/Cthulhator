@@ -2,38 +2,82 @@ package com.bustiblelemons.cthulhator.character.skills.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
 
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
 import com.bustiblelemons.cthulhator.character.creation.ui.AbsCharacterCreationActivity;
+import com.bustiblelemons.cthulhator.character.skills.logic.OnSaveSkills;
+import com.bustiblelemons.cthulhator.character.skills.logic.OnSkillPointsPoolChanged;
+import com.bustiblelemons.cthulhator.character.skills.model.SkillsPackage;
+import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
+
+import java.util.Collection;
 
 import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
 
 /**
  * Created by bhm on 31.08.14.
  */
-public class SkillsChooserActivity extends AbsCharacterCreationActivity {
+public class SkillsChooserActivity extends AbsCharacterCreationActivity
+        implements OnSkillPointsPoolChanged,
+                   OnSaveSkills {
 
     public static final int REQUEST_CODE = 6;
+    @InjectView(R.id.header)
+    Toolbar mToolbar;
     private SavedCharacter     mSavedCharacter;
     private SkillsListFragment mSkillEditorFragment;
+    private String mPoolPrefix = "";
+    private int mPointsAvailable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skill_chooser);
         ButterKnife.inject(this);
+        if (mToolbar != null) {
+            setSupportActionBar(mToolbar);
+        }
         mSavedCharacter = getInstanceArgument();
         attachSkillEditor();
     }
 
     private void attachSkillEditor() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        mSkillEditorFragment = SkillsListFragment.newInstance(mSavedCharacter);
+        SkillsPackage skillsPackage = getSkillsPackage();
+        mSkillEditorFragment = SkillsListFragment.newInstance(skillsPackage);
         transaction.replace(R.id.skill_editor_frame, mSkillEditorFragment, SkillsListFragment.TAG);
         transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right,
                 R.anim.slide_in_left, R.anim.slide_out_right);
         transaction.commit();
+    }
+
+    private SkillsPackage getSkillsPackage() {
+        SkillsPackage skillsPackage = new SkillsPackage();
+        skillsPackage.setData(mSavedCharacter.getSkills());
+        skillsPackage.setSkillPoints(mSavedCharacter.getSkillPointsAvailable());
+        return skillsPackage;
+    }
+
+
+    @Override
+    protected void onInstanceArgumentRead(SavedCharacter arg) {
+        mSavedCharacter = arg;
+    }
+
+    @OnClick(R.id.done)
+    public void onDone() {
+        if (mSavedCharacter != null) {
+            if (mSkillEditorFragment != null) {
+                mSavedCharacter.setPropertyValues(mSkillEditorFragment.getSkills());
+            }
+            mSavedCharacter.setSkillPointsAvaialable(mPointsAvailable);
+        }
+        setResult(RESULT_OK, mSavedCharacter);
+        onBackPressed();
     }
 
     private void detachSkillEditor() {
@@ -41,11 +85,6 @@ public class SkillsChooserActivity extends AbsCharacterCreationActivity {
         t.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right,
                 R.anim.slide_in_left, R.anim.slide_out_right);
         t.detach(mSkillEditorFragment).commitAllowingStateLoss();
-    }
-
-    @Override
-    protected void onInstanceArgumentRead(SavedCharacter arg) {
-        mSavedCharacter = arg;
     }
 
 
@@ -62,4 +101,18 @@ public class SkillsChooserActivity extends AbsCharacterCreationActivity {
         overridePendingTransition(R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom);
     }
 
+    @Override
+    public void onSaveSkills(Collection<CharacterProperty> skills) {
+        if (mSavedCharacter != null) {
+            mSavedCharacter.setPropertyValues(skills);
+        }
+    }
+
+    @Override
+    public void onSkillPointsPoolChanged(int pointsAvailable) {
+        if (mToolbar != null) {
+            mPointsAvailable = pointsAvailable;
+            mToolbar.setSubtitle(mPoolPrefix + mPointsAvailable);
+        }
+    }
 }

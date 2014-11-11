@@ -1,5 +1,6 @@
 package com.bustiblelemons.cthulhator.character.characteristics.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -108,20 +109,30 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     @OnClick(R.id.done)
     public void onDone(View button) {
         Collection<CharacterProperty> stats = getStatistics();
-        mSavedCharacter.setStatistics(stats);
+        mSavedCharacter.setPropertyValues(stats);
         setResult(RESULT_OK, mSavedCharacter);
         onBackPressed();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null) {
+            Bundle e = data.getExtras();
+            if (e != null && e.containsKey(INSTANCE_ARGUMENT)) {
+                SavedCharacter passedBack = e.getParcelable(INSTANCE_ARGUMENT);
+                log.d("passedback %s", passedBack);
+                if (passedBack != null) {
+                    onInstanceArgumentRead(passedBack);
+                }
+            }
+        }
     }
 
 
     @Override
     protected void onInstanceArgumentRead(SavedCharacter arg) {
         mSavedCharacter = arg;
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
     }
 
     @Override
