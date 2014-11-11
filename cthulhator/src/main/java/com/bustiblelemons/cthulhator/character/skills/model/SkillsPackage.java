@@ -10,17 +10,17 @@ public class SkillsPackage extends SerializableCollection<CharacterProperty> {
     private int hobbyPoints  = 0;
     private int careerPoints = 0;
 
-    private int skillPoints = -1;
+    private int availableSkillPoints = -1;
 
-    public int getSkillPoints() {
-        if (skillPoints < 0) {
-            skillPoints = careerPoints + hobbyPoints;
+    public int getAvailableSkillPoints() {
+        if (availableSkillPoints < 0) {
+            availableSkillPoints = careerPoints + hobbyPoints;
         }
-        return skillPoints;
+        return availableSkillPoints;
     }
 
-    public void setSkillPoints(int skillPoints) {
-        this.skillPoints = skillPoints;
+    public void setAvailableSkillPoints(int availableSkillPoints) {
+        this.availableSkillPoints = availableSkillPoints;
     }
 
     public int getHobbyPoints() {
