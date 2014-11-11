@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.creation.model.CreatorCard;
+import com.bustiblelemons.cthulhator.view.characteristiccard.CharacteristicCard;
 import com.bustiblelemons.recycler.AbsRecyclerAdapter;
 
 import java.util.List;
@@ -27,7 +28,14 @@ public class CreatorAdapter extends AbsRecyclerAdapter<CreatorCard, CreatorCardH
     public CreatorCardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.single_chracteristic_card, parent, false);
-        return new CreatorCardHolder(view, mContext);
+        CreatorCardHolder holder = new CreatorCardHolder(view, mContext);
+        if (mContext instanceof RelatedPropertesRetreiver) {
+            holder.setOnPropertyChanged((CharacteristicCard.OnPropertyChanged) mContext);
+        }
+        if (mContext instanceof CharacteristicCard.OnPropertyChanged) {
+            holder.setRetreiver((RelatedPropertesRetreiver) mContext);
+        }
+        return holder;
     }
 
     @Override

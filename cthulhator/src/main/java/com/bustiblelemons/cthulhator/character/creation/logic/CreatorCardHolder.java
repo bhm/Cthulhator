@@ -14,18 +14,18 @@ public class CreatorCardHolder extends AbsRecyclerHolder<CreatorCard> {
 
     private RelatedPropertesRetreiver            mRetreiver;
     private CharacteristicCard.OnPropertyChanged mOnPropertyChanged;
-    private CharacteristicCard                   mCharacteristicCard;
+    private CharacteristicCard mCharacteristicCard;
 
     public CreatorCardHolder(View itemView, Context context) {
         super(itemView);
-        mCharacteristicCard = (CharacteristicCard) itemView;
-        if (context instanceof RelatedPropertesRetreiver) {
-            mRetreiver = (RelatedPropertesRetreiver) context;
-        }
-        mRetreiver = (RelatedPropertesRetreiver) context;
-        if (context instanceof CharacteristicCard.OnPropertyChanged) {
-            mOnPropertyChanged = (CharacteristicCard.OnPropertyChanged) context;
-        }
+    }
+
+    public void setOnPropertyChanged(CharacteristicCard.OnPropertyChanged propertyChanged) {
+        this.mOnPropertyChanged = propertyChanged;
+    }
+
+    public void setRetreiver(RelatedPropertesRetreiver retreiver) {
+        this.mRetreiver = retreiver;
     }
 
     @Override
