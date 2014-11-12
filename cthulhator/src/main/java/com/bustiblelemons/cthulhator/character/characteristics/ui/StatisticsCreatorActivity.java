@@ -14,6 +14,8 @@ import android.view.View;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.characteristics.logic.LoadCreatorCardsAsyn;
 import com.bustiblelemons.cthulhator.character.characteristics.logic.OnCreatorCardsCreated;
+import com.bustiblelemons.cthulhator.character.characteristics.logic.OnStatisitcsRandomized;
+import com.bustiblelemons.cthulhator.character.characteristics.logic.RandomizeStatisitcsAsyn;
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
 import com.bustiblelemons.cthulhator.character.creation.logic.CreatorCardsAdapter;
 import com.bustiblelemons.cthulhator.character.creation.logic.RelatedPropertesRetreiver;
@@ -43,7 +45,7 @@ import butterknife.Optional;
 public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         implements View.OnClickListener,
                    RelatedPropertesRetreiver, CharacteristicCard.OnPropertyChanged,
-                   OnCreatorCardsCreated {
+                   OnCreatorCardsCreated, OnStatisitcsRandomized {
 
     public static final  int    REQUEST_CODE = 4;
     private static final Logger log          = new Logger(StatisticsCreatorActivity.class);
@@ -119,8 +121,9 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item != null && item.getItemId() == R.id.reroll) {
             if (mSavedCharacter != null) {
-                mStatisticsSet = mSavedCharacter.resetStatistics();
-                loadCardsAsync(mStatisticsSet);
+                RandomizeStatisitcsAsyn randomizeAsyn = new RandomizeStatisitcsAsyn(this)
+                        .withOnStatisticsRandomzied(this);
+                randomizeAsyn.executeCrossPlatform(mSavedCharacter);
             }
             return true;
         } else {
@@ -203,5 +206,11 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
             mRecyclerView.setAdapter(mCardsAdapter);
         }
         mCardsAdapter.refreshData(cards);
+    }
+
+    @Override
+    public void onStatisitcsRandomzied(SavedCharacter character) {
+        mStatisticsSet = mSavedCharacter.getStatistics();
+        loadCardsAsync(mStatisticsSet);
     }
 }
