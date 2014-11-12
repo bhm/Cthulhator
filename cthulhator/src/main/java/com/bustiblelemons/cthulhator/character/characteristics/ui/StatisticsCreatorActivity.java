@@ -12,9 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.bustiblelemons.cthulhator.R;
+import com.bustiblelemons.cthulhator.character.characteristics.logic.LoadCreatorCardsAsyn;
+import com.bustiblelemons.cthulhator.character.characteristics.logic.OnCreatorCardsCreated;
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
-import com.bustiblelemons.cthulhator.character.creation.logic.CreatorAdapter;
-import com.bustiblelemons.cthulhator.character.creation.logic.CreatorCardFactory;
+import com.bustiblelemons.cthulhator.character.creation.logic.CreatorCardsAdapter;
 import com.bustiblelemons.cthulhator.character.creation.logic.RelatedPropertesRetreiver;
 import com.bustiblelemons.cthulhator.character.creation.model.CreatorCard;
 import com.bustiblelemons.cthulhator.character.creation.ui.AbsCharacterCreationActivity;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import at.markushi.ui.CircleButton;
 import butterknife.ButterKnife;
@@ -40,7 +42,8 @@ import butterknife.Optional;
  */
 public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         implements View.OnClickListener,
-                   RelatedPropertesRetreiver, CharacteristicCard.OnPropertyChanged {
+                   RelatedPropertesRetreiver, CharacteristicCard.OnPropertyChanged,
+                   OnCreatorCardsCreated {
 
     public static final  int    REQUEST_CODE = 4;
     private static final Logger log          = new Logger(StatisticsCreatorActivity.class);
@@ -54,10 +57,12 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     private SavedCharacter             mSavedCharacter;
     private Toolbar                    mToolbar;
     private RecyclerView.LayoutManager mManager;
-    private CreatorAdapter             mRecyclerAdapter;
+    private CreatorCardsAdapter        mCardsAdapter;
     private CthulhuEdition mEdition = CthulhuEdition.CoC5;
 
-    private List<CreatorCard> mCreatorCards;
+    private List<CreatorCard>         mCreatorCards;
+    private Set<CharacterProperty>    mStatisticsSet;
+    private RecyclerView.ItemAnimator mAnimator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,17 +75,35 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         }
         ButterKnife.inject(this);
         if (mRecyclerView != null) {
-            mManager = new LinearLayoutManager(this);
-            mRecyclerView.setLayoutManager(mManager);
-
-            mSavedCharacter = getInstanceArgument();
+            initRecyclerViewer();
             if (mSavedCharacter == null) {
                 mSavedCharacter = CthulhuCharacter.forEdition(mEdition);
             }
-            mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-            mCreatorCards = CreatorCardFactory.getCardsFrom(mEdition, this, mSavedCharacter.getStatistics());
-            mRecyclerAdapter = new CreatorAdapter(mCreatorCards, this);
-            mRecyclerView.setAdapter(mRecyclerAdapter);
+            mStatisticsSet = mSavedCharacter.getStatistics();
+            loadCardsAsync(mStatisticsSet);
+        }
+    }
+
+    private void initRecyclerViewer() {
+        if (mManager == null) {
+            mManager = new LinearLayoutManager(this);
+        }
+        mRecyclerView.setLayoutManager(mManager);
+        if (mAnimator == null) {
+            mAnimator = new DefaultItemAnimator();
+        }
+        mRecyclerView.setItemAnimator(mAnimator);
+        mSavedCharacter = getInstanceArgument();
+        mCardsAdapter = new CreatorCardsAdapter(this);
+        mRecyclerView.setAdapter(mCardsAdapter);
+    }
+
+    private void loadCardsAsync(Set<CharacterProperty> statisticSet) {
+        if (statisticSet != null && statisticSet.size() > 0) {
+            LoadCreatorCardsAsyn loadAsyn = new LoadCreatorCardsAsyn(this);
+            loadAsyn.withEdition(mEdition).withRelatedRetreiver(this)
+                    .withCardsCreatedCallback(this);
+            loadAsyn.executeCrossPlatform(statisticSet);
         }
     }
 
@@ -95,6 +118,10 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item != null && item.getItemId() == R.id.reroll) {
+            if (mSavedCharacter != null) {
+                mStatisticsSet = mSavedCharacter.resetStatistics();
+                loadCardsAsync(mStatisticsSet);
+            }
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -108,10 +135,12 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
 
     @OnClick(R.id.done)
     public void onDone(View button) {
-        Collection<CharacterProperty> stats = getStatistics();
-        mSavedCharacter.setPropertyValues(stats);
-        setResult(RESULT_OK, mSavedCharacter);
-        onBackPressed();
+        if (mSavedCharacter != null) {
+            Collection<CharacterProperty> stats = getStatistics();
+            mSavedCharacter.setPropertyValues(stats);
+            setResult(RESULT_OK, mSavedCharacter);
+            onBackPressed();
+        }
     }
 
     @Override
@@ -150,7 +179,9 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
 
     @Override
     public void onPropertyChanged(CharacterProperty property) {
-        mSavedCharacter.addCharacterProperty(property);
+        if (mSavedCharacter != null) {
+            mSavedCharacter.addCharacterProperty(property);
+        }
     }
 
     public Collection<CharacterProperty> getStatistics() {
@@ -163,5 +194,14 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
             }
         }
         return r;
+    }
+
+    @Override
+    public void onCreatorCardsCreated(List<CreatorCard> cards) {
+        if (mCardsAdapter == null) {
+            mCardsAdapter = new CreatorCardsAdapter(this);
+            mRecyclerView.setAdapter(mCardsAdapter);
+        }
+        mCardsAdapter.refreshData(cards);
     }
 }
