@@ -58,6 +58,8 @@ public class SkillsChooserActivity extends AbsCharacterCreationActivity
     private SkillsPackage getSkillsPackage() {
         SkillsPackage skillsPackage = new SkillsPackage();
         skillsPackage.setData(mSavedCharacter.getSkills());
+        skillsPackage.setHobbyPoints(mSavedCharacter.getHobbyPoints());
+        skillsPackage.setCareerPoints(mSavedCharacter.getCareerPoints());
         skillsPackage.setAvailableSkillPoints(mSavedCharacter.getSkillPointsAvailable());
         return skillsPackage;
     }

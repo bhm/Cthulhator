@@ -96,8 +96,8 @@ public class SkillsListFragment extends AbsArgFragment<SkillsPackage>
 
     private void setupPoints() {
         mPointsAvailable = mSkillsPacakge.getAvailableSkillPoints();
-        mMaxPoints = mPointsAvailable;
-        setPointsAvailable(mMaxPoints);
+        mMaxPoints = mSkillsPacakge.getMaxPoints();
+        setPointsAvailable(mPointsAvailable);
     }
 
     private void setPointsAvailable(int points) {

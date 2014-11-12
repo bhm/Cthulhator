@@ -11,6 +11,7 @@ public class SkillsPackage extends SerializableCollection<CharacterProperty> {
     private int careerPoints = 0;
 
     private int availableSkillPoints = -1;
+    private int mMaxPoints = -1;
 
     public int getAvailableSkillPoints() {
         if (availableSkillPoints < 0) {
@@ -37,5 +38,16 @@ public class SkillsPackage extends SerializableCollection<CharacterProperty> {
 
     public void setCareerPoints(int careerPoints) {
         this.careerPoints = careerPoints;
+    }
+
+    public int getMaxPoints() {
+        if (mMaxPoints < 0) {
+            mMaxPoints = getCareerPoints() + getHobbyPoints();
+        }
+        return mMaxPoints;
+    }
+
+    public void setMaxPoints(int maxPoints) {
+        this.mMaxPoints = maxPoints;
     }
 }

@@ -668,8 +668,7 @@ public class SavedCharacter implements
 
     public int getSkillPointsAvailable() {
         if (skillPointsAvaialable < 0) {
-            skillPointsAvaialable += getHobbyPoints();
-            skillPointsAvaialable += getCareerPoints();
+            skillPointsAvaialable = getHobbyPoints() + getCareerPoints();
         }
         return skillPointsAvaialable;
     }
@@ -813,4 +812,12 @@ public class SavedCharacter implements
         this.hitPoints = hitPoints;
     }
 
+    @JsonIgnore
+    public void resetStatistics() {
+        for (CharacterProperty property : getStatistics()) {
+            if (property != null) {
+                property.setValue(0);
+            }
+        }
+    }
 }
