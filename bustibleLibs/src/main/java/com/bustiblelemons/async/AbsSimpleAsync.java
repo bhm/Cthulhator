@@ -31,6 +31,9 @@ public abstract class AbsSimpleAsync<P, R extends Object> extends AsyncTask<P, P
 
     @Override
     protected R doInBackground(P... arg0) {
+        if (arg0 == null) {
+            throw new NullPointerException("params cannot be null");
+        }
         try {
             return call(arg0);
         } catch (Exception e) {
