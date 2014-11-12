@@ -76,7 +76,11 @@ public class SavedCharacter implements
     private long          suggestedDate = Long.MIN_VALUE;
     @JsonIgnore
     private HitPoints hitPoints;
+    @JsonIgnore
     private int skillPointsAvaialable = -1;
+    @JsonIgnore
+    private int careerPoints          = -1;
+    private int hobbyPoints           = -1;
 
     public SavedCharacter() {
     }
@@ -103,6 +107,7 @@ public class SavedCharacter implements
         this.presentDate = in.readLong();
         this.age = in.readInt();
         this.suggestedDate = in.readLong();
+        this.skillPointsAvaialable = in.readInt();
     }
 
     public CthulhuEdition getEdition() {
@@ -315,9 +320,9 @@ public class SavedCharacter implements
         int modified = 0;
         for (CharacterProperty skill : getSkills()) {
             if (skill != null) {
-                for (Relation r : skill.getRelations()) {
-                    if (r != null) {
-                        int newBaseValue = r.getBaseValueByRelation(skill.getValue());
+                for (Relation relation : skill.getRelations()) {
+                    if (relation != null) {
+                        int newBaseValue = relation.getBaseValueByRelation(skill.getValue());
                         skill.setBaseValue(newBaseValue);
                         modified++;
                     }
@@ -664,6 +669,7 @@ public class SavedCharacter implements
         dest.writeLong(this.presentDate);
         dest.writeInt(this.age);
         dest.writeLong(this.suggestedDate);
+        dest.writeInt(this.skillPointsAvaialable);
     }
 
     public int getSkillPointsAvailable() {
@@ -679,22 +685,26 @@ public class SavedCharacter implements
 
     @JsonIgnore
     public int getHobbyPoints() {
-        CharacterProperty _int = getPropertyByName(BRPStatistic.INT.name());
-        if (_int != null) {
-            int intVal = _int.getValue();
-            return edition.getHobbySkillPointMultiplier() * intVal;
+        if (hobbyPoints < 0) {
+            CharacterProperty _int = getPropertyByName(BRPStatistic.INT.name());
+            if (_int != null) {
+                int intVal = _int.getValue();
+                hobbyPoints = edition.getHobbySkillPointMultiplier() * intVal;
+            }
         }
-        return 0;
+        return hobbyPoints;
     }
 
     @JsonIgnore
     public int getCareerPoints() {
-        CharacterProperty _int = getPropertyByName(BRPStatistic.EDU.name());
-        if (_int != null) {
-            int intVal = _int.getValue();
-            return edition.getCareerSkillPointMultiplier() * intVal;
+        if (careerPoints < 0) {
+            CharacterProperty _int = getPropertyByName(BRPStatistic.EDU.name());
+            if (_int != null) {
+                int intVal = _int.getValue();
+                careerPoints = edition.getCareerSkillPointMultiplier() * intVal;
+            }
         }
-        return 0;
+        return careerPoints;
     }
 
     @Override
@@ -813,11 +823,17 @@ public class SavedCharacter implements
     }
 
     @JsonIgnore
-    public void resetStatistics() {
+    public Set<CharacterProperty> randomizeStatistics() {
+        careerPoints = -1;
+        skillPointsAvaialable = -1;
+        hobbyPoints = -1;
         for (CharacterProperty property : getStatistics()) {
             if (property != null) {
-                property.setValue(0);
+                int newRand = property.randomValue();
+                property.setValue(newRand);
             }
         }
+        updateSkills();
+        return getStatistics();
     }
 }
