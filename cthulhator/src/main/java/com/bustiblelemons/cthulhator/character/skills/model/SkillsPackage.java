@@ -42,7 +42,7 @@ public class SkillsPackage extends SerializableCollection<CharacterProperty> {
 
     public int getMaxPoints() {
         if (mMaxPoints < 0) {
-            mMaxPoints = getCareerPoints() + getHobbyPoints();
+            mMaxPoints = careerPoints + hobbyPoints;
         }
         return mMaxPoints;
     }
