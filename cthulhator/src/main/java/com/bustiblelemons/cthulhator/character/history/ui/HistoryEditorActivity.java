@@ -22,6 +22,7 @@ import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDi
 
 import org.joda.time.DateTime;
 
+import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
 
@@ -91,7 +92,10 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
 
     private void setBirthDayView() {
         if (mToolbar != null) {
-            mToolbar.setSubtitle(mBirthDate.toString(sDateFormat));
+            String bornPrefix = getString(R.string.born);
+            String formatedDate = mBirthDate.toString(sDateFormat);
+            String formated = String.format(Locale.ENGLISH, "%s %s", bornPrefix, formatedDate);
+            mToolbar.setSubtitle(formated);
         }
     }
 
