@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang.WordUtils;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Location implements LocationInfo, Parcelable, Serializable {
@@ -111,6 +112,22 @@ public class Location implements LocationInfo, Parcelable, Serializable {
         }
 
         return true;
+    }
+
+    @Override
+    public String toString() {
+        Locale l = Locale.getDefault();
+        final StringBuilder sb = new StringBuilder();
+        sb.append(street);
+        if ("pl".equalsIgnoreCase(l.getLanguage())) {
+            sb.append(zip)
+                    .append(city);
+        } else {
+            sb.append(city)
+                    .append(state)
+                    .append(zip);
+        }
+        return sb.toString();
     }
 
     @Override
