@@ -27,7 +27,6 @@ import org.joda.time.DateTime;
 
 import java.util.Random;
 import java.util.Set;
-import java.util.TreeSet;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -70,7 +69,6 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
             setSupportActionBar(mToolbar);
         }
         ButterKnife.inject(this);
-        onSetActionBarToClosable();
         mSavedCharacter = getInstanceArgument();
         if (listView != null) {
             mHistoryAdapter = new HistoryAdapter(this, this);
@@ -82,13 +80,15 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
         long begin = mBirthDate.getMillis();
         long end = mSuggestedDate.getMillis();
         mSpan = new TimeSpan(begin, end);
+        loadHistoryAsyn();
     }
 
     @Override
     public void onBackPressed() {
-        Set<HistoryEvent> history = new TreeSet<HistoryEvent>();
-        mSavedCharacter.setFullHistory(history);
-        setResult(RESULT_OK, mSavedCharacter);
+        if (mSavedCharacter == null) {
+            mSavedCharacter.setFullHistory(mHistoryAdapter.getData());
+            setResult(RESULT_OK, mSavedCharacter);
+        }
         super.onBackPressed();
     }
 
@@ -125,11 +125,6 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
     @Override
     protected void onInstanceArgumentRead(SavedCharacter arg) {
         mSavedCharacter = arg;
-        setupHistory();
-    }
-
-    private void setupHistory() {
-        loadHistoryAsyn();
     }
 
     @Override
@@ -190,7 +185,7 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
             BirthData birthData = mSavedCharacter.getBirth();
             mBirthDate = new DateTime(birthData.getDate());
         } else {
-            CharacterSettings s = Settings.getLastPortratiSettings(this);
+            CharacterSettings s = Settings.getLastPortraitSettings(this);
             int defaultYear = s.getCthulhuPeriod().getDefaultYear();
             int edu = mSavedCharacter.getStatisticValue(BRPStatistic.EDU.name());
             int suggestedAge = edu + 6;
@@ -204,14 +199,13 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
             birth.setDate(mBirthDate.getMillis());
             mSavedCharacter.setBirth(birth);
         }
-        long suggestedEpoch = mSavedCharacter.getSuggestedDate();
+        long suggestedEpoch = mSavedCharacter.getSuggestedBirthDateEpoch();
         mSuggestedDate = new DateTime(suggestedEpoch);
     }
 
-
     @Override
     public CharacterSettings onGetCharacterSettings() {
-        return Settings.getLastPortratiSettings(this);
+        return Settings.getLastPortraitSettings(this);
     }
 
     @Override

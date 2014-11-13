@@ -2,24 +2,24 @@ package com.bustiblelemons.cthulhator.character.history.logic;
 
 import android.content.Context;
 
+import com.bustiblelemons.async.AbsSimpleAsync;
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
 import com.bustiblelemons.cthulhator.character.history.model.HistoryEvent;
 import com.bustiblelemons.cthulhator.character.history.model.TimeSpan;
 
+import java.util.Collection;
 import java.util.Set;
 import java.util.TreeSet;
-
-import io.github.scottmaclure.character.traits.asyn.AbsAsynTask;
 
 /**
  * Created by bhm on 29.09.14.
  */
 public class LoadHistoryEventsAsyn
-        extends AbsAsynTask<TimeSpan, Set<HistoryEvent>> {
+        extends AbsSimpleAsync<TimeSpan, Set<HistoryEvent>> {
 
     private final SavedCharacter        mSavedCharacter;
     private       OnHistoryEventsLoaded onHistoryEventsLoaded;
-    private TimeSpan mTimespan;
+    private       TimeSpan              mTimespan;
 
     public LoadHistoryEventsAsyn(Context context, SavedCharacter savedCharacter) {
         super(context);
@@ -47,8 +47,10 @@ public class LoadHistoryEventsAsyn
 //                }
 //                publishProgress(timespan, result);
 //            } else {
-                Set<HistoryEvent> result = new TreeSet<HistoryEvent>(HistoryComparators.DATE_DES);
-        result.addAll(mSavedCharacter.getFullHistory());
+        Set<HistoryEvent> result = new TreeSet<HistoryEvent>(HistoryComparators.DATE_DES);
+        Collection<HistoryEvent> fullHistory = mSavedCharacter.getFullHistory();
+        HistoryEventFactory.from(getContext()).withCharacter(mSavedCharacter).buildBirthEvent();
+        result.addAll(fullHistory);
         publishProgress(mTimespan, result);
 //            }
 //        }

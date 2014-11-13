@@ -109,7 +109,7 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
         super.onCreate(savedInstanceState);
         FadingActionBarHelper helper = setupFadingBar();
         setContentView(helper.createView(this));
-        mCharacterSettings = Settings.getLastPortratiSettings(this);
+        mCharacterSettings = Settings.getLastPortraitSettings(this);
         attachPortraitSettings();
         onSetActionBarToClosable();
         helper.initActionBar(this);
