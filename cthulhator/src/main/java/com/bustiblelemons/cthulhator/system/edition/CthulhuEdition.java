@@ -3,7 +3,6 @@ package com.bustiblelemons.cthulhator.system.edition;
 import android.support.v4.util.LruCache;
 
 import com.bustiblelemons.cthulhator.system.brp.skills.BRPSkill;
-import com.bustiblelemons.cthulhator.system.brp.statistics.BRPCharacterProperties;
 import com.bustiblelemons.cthulhator.system.brp.statistics.BRPStatistic;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 
@@ -47,16 +46,16 @@ public enum CthulhuEdition {
     public Set<CharacterProperty> getCharacteristics() {
         if (cache.get(this) == null) {
             Set<CharacterProperty> r = new HashSet<CharacterProperty>();
-            r.add(BRPCharacterProperties.STR);
-            r.add(BRPCharacterProperties.CON);
-            r.add(BRPCharacterProperties.POW);
-            r.add(BRPCharacterProperties.DEX);
-            r.add(BRPCharacterProperties.APP);
+            r.add(BRPStatistic.STR.asCharacterProperty());
+            r.add(BRPStatistic.CON.asCharacterProperty());
+            r.add(BRPStatistic.POW.asCharacterProperty());
+            r.add(BRPStatistic.DEX.asCharacterProperty());
+            r.add(BRPStatistic.APP.asCharacterProperty());
 
-            r.add(BRPCharacterProperties.INT);
-            r.add(BRPCharacterProperties.SIZ);
+            r.add(BRPStatistic.INT.asCharacterProperty());
+            r.add(BRPStatistic.SIZ.asCharacterProperty());
 
-            r.add(BRPCharacterProperties.EDU);
+            r.add(BRPStatistic.EDU.asCharacterProperty());
 
             r.add(BRPStatistic.SAN.asCharacterProperty());
             r.add(BRPStatistic.LUCK.asCharacterProperty());

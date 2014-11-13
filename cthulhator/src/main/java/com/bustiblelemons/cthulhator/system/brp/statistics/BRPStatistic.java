@@ -2,10 +2,14 @@ package com.bustiblelemons.cthulhator.system.brp.statistics;
 
 import com.bustiblelemons.cthulhator.system.brp.skills.BRPSkill;
 import com.bustiblelemons.cthulhator.system.damage.DamageBonus;
+import com.bustiblelemons.cthulhator.system.dice.PointPoolFromDiceBuilder;
+import com.bustiblelemons.cthulhator.system.dice.model.PointPool;
+import com.bustiblelemons.cthulhator.system.dice.model.PolyhedralDice;
 import com.bustiblelemons.cthulhator.system.properties.ActionGroup;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 import com.bustiblelemons.cthulhator.system.properties.ModifierType;
 import com.bustiblelemons.cthulhator.system.properties.PropertyFormat;
+import com.bustiblelemons.cthulhator.system.properties.PropertyType;
 import com.bustiblelemons.cthulhator.system.properties.Relation;
 
 import java.util.ArrayList;
@@ -219,9 +223,44 @@ public enum BRPStatistic {
     }
 
     public CharacterProperty asCharacterProperty() {
-        CharacterProperty r = BRPStatCharacterProperty.fromStatistic(this);
+        CharacterProperty r = fromBRPStatistic(this);
         r.setRelations(getRelations());
         r.setActionGroup(getActionGroups());
         return r;
+    }
+
+    private CharacterProperty fromBRPStatistic(BRPStatistic statistic) {
+        PointPoolFromDiceBuilder fromDice;
+        switch (statistic) {
+        case CON:
+        case DEX:
+        case STR:
+        case APP:
+        case POW:
+            fromDice = new PointPoolFromDiceBuilder();
+            fromDice.addDicePool(3, PolyhedralDice.D6);
+            return fromPointPool(fromDice.build());
+        case INT:
+        case SIZ:
+            fromDice = new PointPoolFromDiceBuilder();
+            fromDice.addDicePool(2, PolyhedralDice.D6).addModifiers(6);
+            return fromPointPool(fromDice.build());
+        case EDU:
+            fromDice = new PointPoolFromDiceBuilder();
+            fromDice.addDicePool(3, PolyhedralDice.D6).addModifiers(3);
+            return fromPointPool(fromDice.build());
+        default:
+            return new CharacterProperty();
+        }
+    }
+
+    private CharacterProperty fromPointPool(PointPool p) {
+
+        CharacterProperty property = new CharacterProperty();
+        property.setMaxValue(p.getMax());
+        property.setMinValue(p.getMin());
+        property.setFormat(PropertyFormat.NUMBER);
+        property.setType(PropertyType.STATISTIC);
+        return property;
     }
 }
