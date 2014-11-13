@@ -19,13 +19,13 @@ import java.io.IOException;
  */
 public class Settings extends BaseSettings {
 
-    public static final String CACHE_FOLDER = "cache_folder";
-    private static final String EDITION = "edition";
-    private static String sPortraitSettingsFilename = "portraits.settings";
-    private static String sRandomCharSettingsFilename = "random.char.settings";
+    public static final  String CACHE_FOLDER                = "cache_folder";
+    private static final String EDITION                     = "edition";
+    private static       String sPortraitSettingsFilename   = "portraits.settings";
+    private static       String sRandomCharSettingsFilename = "random.char.settings";
 
 
-    public static CharacterSettings getLastPortratiSettings(Context context) {
+    public static CharacterSettings getLastPortraitSettings(Context context) {
         ObjectMapper mapper = new ObjectMapper();
         try {
             File file = Storage.getStorageFile(context, sPortraitSettingsFilename);
