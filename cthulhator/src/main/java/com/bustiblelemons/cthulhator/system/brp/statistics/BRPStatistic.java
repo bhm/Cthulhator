@@ -255,10 +255,10 @@ public enum BRPStatistic {
     }
 
     private CharacterProperty fromPointPool(PointPool p) {
-
         CharacterProperty property = new CharacterProperty();
         property.setMaxValue(p.getMax());
         property.setMinValue(p.getMin());
+        property.setName(this.name());
         property.setFormat(PropertyFormat.NUMBER);
         property.setType(PropertyType.STATISTIC);
         return property;
