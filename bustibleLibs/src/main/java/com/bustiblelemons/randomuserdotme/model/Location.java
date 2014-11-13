@@ -118,13 +118,18 @@ public class Location implements LocationInfo, Parcelable, Serializable {
     public String toString() {
         Locale l = Locale.getDefault();
         final StringBuilder sb = new StringBuilder();
-        sb.append(street);
+        sb.append(street)
+                .append("\n");
         if ("pl".equalsIgnoreCase(l.getLanguage())) {
             sb.append(zip)
+                    .append(" ")
                     .append(city);
         } else {
             sb.append(city)
+                    .append(" ")
+                    .append("\n")
                     .append(state)
+                    .append(" ")
                     .append(zip);
         }
         return sb.toString();
