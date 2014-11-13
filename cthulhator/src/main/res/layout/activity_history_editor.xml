@@ -7,22 +7,18 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@id/header"
+        style="@style/header_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/solid_background"
-        android:paddingBottom="@dimen/fab_offset_positive"
-        app:collapseIcon="@drawable/ic_overflow_dots"
-        app:contentInsetStart="0dp"
-        app:navigationIcon="@drawable/ic_action_navigation_back_dark"
-        app:title="@string/placeholder_proverb"
-        app:titleTextAppearance="@style/statistic_creator_title">
+        app:title="@string/placeholder_proverb">
 
     </android.support.v7.widget.Toolbar>
 
     <se.emilsjolander.stickylistheaders.StickyListHeadersListView
         android:id="@id/list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/header"/>
 
     <at.markushi.ui.CircleButton

@@ -141,7 +141,7 @@
     </style>
 
     <style name="AppTheme.TranslucentActionBar" parent="Base.Theme.AppCompat.Light.DarkActionBar">
-    <item name="android:actionBarStyle">@style/Widget.ActionBar.Transparent</item>
+        <item name="android:actionBarStyle">@style/Widget.ActionBar.Transparent</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="actionBarStyle">@style/Widget.ActionBar.Transparent</item>
         <item name="windowActionBarOverlay">true</item>
@@ -154,6 +154,20 @@
         <item name="actionBarStyle">@style/Widget.Light.ActionBar.Transparent</item>
         <item name="windowActionBarOverlay">true</item>
         <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="header_toolbar">
+        <item name="android:background">@color/solid_background</item>
+        <item name="android:paddingBottom">@dimen/fab_offset_positive</item>
+        <item name="contentInsetStart">0dp</item>
+        <item name="android:actionOverflowButtonStyle">@style/toolbar_overflow</item>
+        <item name="navigationIcon">@drawable/ic_action_navigation_back</item>
+        <item name="titleTextAppearance">@style/toolbar_title</item>
+        <item name="subtitleTextAppearance">@style/toolbar_subtitle</item>
+    </style>
+
+    <style name="toolbar_overflow" parent="Base.Widget.AppCompat.ActionButton.Overflow">
+        <item name="src">@drawable/ic_overflow_dots</item>
     </style>
 
 </resources>
