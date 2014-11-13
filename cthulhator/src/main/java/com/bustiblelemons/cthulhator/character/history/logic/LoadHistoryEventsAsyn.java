@@ -34,10 +34,12 @@ public class LoadHistoryEventsAsyn
     protected Set<HistoryEvent> call(TimeSpan... params) throws Exception {
         Set<HistoryEvent> result = new TreeSet<HistoryEvent>(HistoryComparators.DATE_DES);
         Collection<HistoryEvent> fullHistory = mSavedCharacter.getFullHistory();
-        HistoryEvent birthEvent = HistoryEventFactory.from(getContext())
-                .withCharacter(mSavedCharacter)
-                .buildBirthEvent();
-        fullHistory.add(birthEvent);
+        if (fullHistory.isEmpty()) {
+            HistoryEvent birthEvent = HistoryEventFactory.from(getContext())
+                    .withCharacter(mSavedCharacter)
+                    .buildBirthEvent();
+            fullHistory.add(birthEvent);
+        }
         result.addAll(fullHistory);
         publishProgress(mTimespan, result);
         return null;
