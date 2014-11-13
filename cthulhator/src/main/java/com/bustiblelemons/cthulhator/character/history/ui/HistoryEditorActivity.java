@@ -116,7 +116,7 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item != null && item.getItemId() == R.id.pick_birth) {
-            //        onShowDatePickerCallback(mBirthDate, this);
+            onShowDatePickerCallback(mBirthDate, this);
             return true;
         }
         return super.onOptionsItemSelected(item);

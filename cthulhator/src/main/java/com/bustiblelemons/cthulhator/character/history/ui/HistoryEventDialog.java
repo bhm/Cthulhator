@@ -11,7 +11,7 @@ import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.history.logic.OnShowDatePicker;
 import com.bustiblelemons.cthulhator.character.history.model.HistoryEvent;
 import com.bustiblelemons.fragments.dialog.AbsArgDialogFragment;
-//import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
+import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 import com.micromobs.android.floatlabel.FloatLabelEditText;
 
 import org.joda.time.DateTime;
@@ -20,11 +20,12 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
+
 /**
  * Created by bhm on 29.09.14.
  */
-public class HistoryEventDialog extends AbsArgDialogFragment<HistoryEvent> {
-//        implements CalendarDatePickerDialog.OnDateSetListener {
+public class HistoryEventDialog extends AbsArgDialogFragment<HistoryEvent>
+        implements CalendarDatePickerDialog.OnDateSetListener {
 
     public static final String TAG = HistoryEventDialog.class.getSimpleName();
     @InjectView(android.R.id.title)
@@ -113,7 +114,7 @@ public class HistoryEventDialog extends AbsArgDialogFragment<HistoryEvent> {
     public void onPickDate(View view) {
         if (mOnShowDatePicker != null) {
             DateTime dateTime = new DateTime(mEvent.getDate());
-//            mOnShowDatePicker.onShowDatePickerCallback(dateTime, this);
+            mOnShowDatePicker.onShowDatePickerCallback(dateTime, this);
         }
     }
 
@@ -127,16 +128,16 @@ public class HistoryEventDialog extends AbsArgDialogFragment<HistoryEvent> {
         setupView();
     }
 
-//    @Override
-//    public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog,
-//                          int year, int monthOfYear, int dayOfMonth) {
-//        int hour = mDate.getHourOfDay();
-//        int minute = mDate.getMinuteOfHour();
-//        mDate = new DateTime(year, monthOfYear, dayOfMonth, hour, minute);
-//        long epochDate = mDate.getMillis();
-//        mEvent.setDate(epochDate);
-//        setDateView();
-//    }
+    @Override
+    public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog,
+                          int year, int monthOfYear, int dayOfMonth) {
+        int hour = mDate.getHourOfDay();
+        int minute = mDate.getMinuteOfHour();
+        mDate = new DateTime(year, monthOfYear, dayOfMonth, hour, minute);
+        long epochDate = mDate.getMillis();
+        mEvent.setDate(epochDate);
+        setDateView();
+    }
 
     public interface OnHistoryEventPassedBack {
         void onHistoryEventEdited(HistoryEvent old, HistoryEvent newEvent);
