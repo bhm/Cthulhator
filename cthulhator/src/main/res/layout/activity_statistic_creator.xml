@@ -9,15 +9,10 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@id/header"
+        style="@style/header_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/solid_background"
-        android:paddingBottom="@dimen/fab_offset_positive"
-        app:collapseIcon="@drawable/ic_overflow_dots"
-        app:contentInsetStart="0dp"
-        app:navigationIcon="@drawable/ic_action_navigation_back_dark"
-        app:title="@string/statistics"
-        app:titleTextAppearance="@style/statistic_creator_title">
+        app:title="@string/statistics">
 
     </android.support.v7.widget.Toolbar>
 

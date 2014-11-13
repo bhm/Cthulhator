@@ -69,15 +69,12 @@
     </style>
 
     <style name="ToolbarTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:actionBarStyle">@null</item>
         <item name="rv_color">@color/ripple_color</item>
         <item name="colorPrimary">@color/main_button_color</item>
         <item name="colorAccent">@color/white_87</item>
         <item name="colorPrimaryDark">@color/black_87</item>
-        <item name="android:actionOverflowButtonStyle">
-            @style/Widget.AppCompat.ActionButton.Overflow
-        </item>
-        <item name="actionBarStyle">@null</item>
+        <item name="android:actionOverflowButtonStyle">@style/toolbar_overflow</item>
+        <item name="actionOverflowButtonStyle">@style/toolbar_overflow</item>
         <item name="windowActionBar">false</item>
         <item name="windowActionModeOverlay">false</item>
     </style>
@@ -148,10 +145,10 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="AppTheme.Light.TranslucentActionBar" parent="Theme.AppCompat.Light">
-        <item name="android:actionBarStyle">@style/Widget.Light.ActionBar.Transparent</item>
+    <style name="AppTheme.Light.TranslucentActionBar" parent="Theme.AppCompat">
+        <item name="android:actionBarStyle">@style/Widget.ActionBar.Transparent</item>
         <item name="android:windowActionBarOverlay">true</item>
-        <item name="actionBarStyle">@style/Widget.Light.ActionBar.Transparent</item>
+        <item name="actionBarStyle">@style/Widget.ActionBar.Transparent</item>
         <item name="windowActionBarOverlay">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
@@ -161,13 +158,14 @@
         <item name="android:paddingBottom">@dimen/fab_offset_positive</item>
         <item name="contentInsetStart">0dp</item>
         <item name="android:actionOverflowButtonStyle">@style/toolbar_overflow</item>
+        <item name="actionOverflowButtonStyle">@style/toolbar_overflow</item>
         <item name="navigationIcon">@drawable/ic_action_navigation_back</item>
         <item name="titleTextAppearance">@style/toolbar_title</item>
         <item name="subtitleTextAppearance">@style/toolbar_subtitle</item>
     </style>
 
-    <style name="toolbar_overflow" parent="Base.Widget.AppCompat.ActionButton.Overflow">
-        <item name="android:src">@drawable/ic_overflow_dots</item>
+    <style name="toolbar_overflow" parent="Widget.AppCompat.Light.ActionButton.Overflow">
+    <item name="android:src">@drawable/ic_overflow_dots</item>
     </style>
 
 </resources>
