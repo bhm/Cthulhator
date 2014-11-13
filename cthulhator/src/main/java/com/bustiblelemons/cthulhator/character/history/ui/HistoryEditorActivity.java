@@ -2,9 +2,6 @@ package com.bustiblelemons.cthulhator.character.history.ui;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.bustiblelemons.cthulhator.R;
@@ -104,22 +101,6 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
             loadHistoryAsyn.setOnHistoryEventsLoaded(this);
             loadHistoryAsyn.executeCrossPlatform(mSpan);
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = new MenuInflater(this);
-        inflater.inflate(R.menu.history_editor, menu);
-        return menu != null && menu.size() > 0;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item != null && item.getItemId() == R.id.pick_birth) {
-            onShowDatePickerCallback(mBirthDate, this);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
