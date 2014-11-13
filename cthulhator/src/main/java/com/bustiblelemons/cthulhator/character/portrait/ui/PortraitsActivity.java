@@ -55,7 +55,7 @@ public class PortraitsActivity extends AbsActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_portraits);
-        mCharacterSettings = Settings.getLastPortratiSettings(this);
+        mCharacterSettings = Settings.getLastPortraitSettings(this);
         mGender = mCharacterSettings.getGender();
         mYear = mCharacterSettings.getYear();
         mCharacterSettings = CharacterSettingsImpl.create(mYear, mGender);

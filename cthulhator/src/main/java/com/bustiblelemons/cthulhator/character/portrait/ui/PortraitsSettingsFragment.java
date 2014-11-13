@@ -98,7 +98,7 @@ public class PortraitsSettingsFragment extends AbsArgFragment<CharacterSettings>
     }
 
     public void readLastSettings() {
-        mCharacterSettings = Settings.getLastPortratiSettings(getActivity());
+        mCharacterSettings = Settings.getLastPortraitSettings(getActivity());
         if (mCharacterSettings != null) {
             mSelectedYear = mCharacterSettings.getYear();
             mGoogleSearchGender = mCharacterSettings.getGender();
