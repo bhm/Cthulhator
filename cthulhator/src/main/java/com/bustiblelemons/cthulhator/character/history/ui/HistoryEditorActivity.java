@@ -13,6 +13,7 @@ import com.bustiblelemons.cthulhator.character.creation.ui.AbsCharacterCreationA
 import com.bustiblelemons.cthulhator.character.history.logic.HistoryAdapter;
 import com.bustiblelemons.cthulhator.character.history.logic.LoadHistoryEventsAsyn;
 import com.bustiblelemons.cthulhator.character.history.logic.OnOpenHistoryEventDetails;
+import com.bustiblelemons.cthulhator.character.history.logic.OnShowDatePicker;
 import com.bustiblelemons.cthulhator.character.history.logic.ReportCharacterSettings;
 import com.bustiblelemons.cthulhator.character.history.model.BirthData;
 import com.bustiblelemons.cthulhator.character.history.model.HistoryEvent;
@@ -20,7 +21,7 @@ import com.bustiblelemons.cthulhator.character.history.model.TimeSpan;
 import com.bustiblelemons.cthulhator.settings.Settings;
 import com.bustiblelemons.cthulhator.settings.character.CharacterSettings;
 import com.bustiblelemons.cthulhator.system.brp.statistics.BRPStatistic;
-import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarHelper;
+import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 
 import org.joda.time.DateTime;
 
@@ -33,8 +34,6 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
-//import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
-
 /**
  * Created by bhm on 22.09.14.
  */
@@ -42,14 +41,14 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
         implements OnOpenHistoryEventDetails,
                    LoadHistoryEventsAsyn.OnHistoryEventsLoaded,
                    HistoryEventDialog.OnHistoryEventPassedBack,
-//        OnShowDatePicker,
-//                   ReportCharacterSettings,
-//                   CalendarDatePickerDialog.OnDateSetListener {
+                   OnShowDatePicker,
+                   CalendarDatePickerDialog.OnDateSetListener,
                    ReportCharacterSettings, View.OnClickListener {
 
-    public static final  int    REQUEST_CODE = 8;
-    private static final String sDateFormat  = "MMM dd, yyyy";
-    //    private static final String sCalendarDialogTag = CalendarDatePickerDialog.class.getSimpleName();
+    public static final  int    REQUEST_CODE       = 8;
+    private static final String sDateFormat        = "MMM dd, yyyy";
+    private static final String sCalendarDialogTag = CalendarDatePickerDialog.class.getSimpleName();
+
     @InjectView(R.id.list)
     StickyListHeadersListView listView;
 
@@ -105,17 +104,6 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
             loadHistoryAsyn.setOnHistoryEventsLoaded(this);
             loadHistoryAsyn.executeCrossPlatform(mSpan);
         }
-    }
-
-    private FadingActionBarHelper setupFadingBar() {
-        FadingActionBarHelper helper = new FadingActionBarHelper()
-                .actionBarBackground(R.drawable.actionbar_brp)
-                .headerLayout(R.layout.header_history)
-                .headerOverlayLayout(R.layout.header_history_overlay)
-                .contentLayout(R.layout.activity_history_editor)
-                .parallax(false)
-                .lightActionBar(false);
-        return helper;
     }
 
     @Override
@@ -182,19 +170,19 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
         loadHistoryAsyn();
     }
 
-//    @Override
-//    public void onShowDatePickerCallback(DateTime forDateTime, CalendarDatePickerDialog.OnDateSetListener callback) {
-//        if (forDateTime != null) {
-//            CalendarDatePickerDialog d = CalendarDatePickerDialog.newInstance(callback,
-//                    forDateTime.getYear(),
-//                    forDateTime.getMonthOfYear(),
-//                    forDateTime.getDayOfMonth());
-//            int startYear = forDateTime.getYear() - 100;
-//            int endYear = forDateTime.getYear() + 100;
-//            d.setYearRange(startYear, endYear);
-//            d.show(getSupportFragmentManager(), sCalendarDialogTag);
-//        }
-//    }
+    @Override
+    public void onShowDatePickerCallback(DateTime forDateTime, CalendarDatePickerDialog.OnDateSetListener callback) {
+        if (forDateTime != null) {
+            CalendarDatePickerDialog d = CalendarDatePickerDialog.newInstance(callback,
+                    forDateTime.getYear(),
+                    forDateTime.getMonthOfYear(),
+                    forDateTime.getDayOfMonth());
+            int startYear = forDateTime.getYear() - 100;
+            int endYear = forDateTime.getYear() + 100;
+            d.setYearRange(startYear, endYear);
+            d.show(getSupportFragmentManager(), sCalendarDialogTag);
+        }
+    }
 
 
     private void setupBirthDate() {
@@ -231,12 +219,12 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
         onBackPressed();
     }
 
-//    @Override
-//    public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog,
-//                          int year, int monthOfYear, int yearOfMonth) {
-//        int hour = mBirthDate.getHourOfDay();
-//        int minute = mBirthDate.getMinuteOfHour();
-//        mBirthDate = new DateTime(year, monthOfYear, yearOfMonth, hour, minute);
-//        setBirthDayView();
-//    }
+    @Override
+    public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog,
+                          int year, int monthOfYear, int yearOfMonth) {
+        int hour = mBirthDate.getHourOfDay();
+        int minute = mBirthDate.getMinuteOfHour();
+        mBirthDate = new DateTime(year, monthOfYear, yearOfMonth, hour, minute);
+        setBirthDayView();
+    }
 }
