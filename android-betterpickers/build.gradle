@@ -10,6 +10,11 @@ android {
         targetSdkVersion 21
     }
 
+    lintOptions {
+        abortOnError false
+    }
+
+
     buildTypes {
         release {
             runProguard false
@@ -40,16 +45,5 @@ android {
 dependencies {
     provided('com.android.support:appcompat-v7:21.0.+')
 
-    provided 'com.nostra13.universalimageloader:universal-image-loader:1.9.+'
-    provided 'com.jayway.maven.plugins.android.generation2:maven-android-plugin:2.8.4'
     provided 'com.nineoldandroids:library:2.4.0'
-
-
-    provided 'org.apache.httpcomponents:httpmime:4.2.5'
-    provided 'com.jakewharton:butterknife:5.1.1'
-    provided 'commons-io:commons-io:2.4'
-    provided 'com.android.support:recyclerview-v7:+'
-
-//    provided 'com.github.traex.rippleeffect:library:1.2.+'
-    provided project(':RippleEffect')
 }
