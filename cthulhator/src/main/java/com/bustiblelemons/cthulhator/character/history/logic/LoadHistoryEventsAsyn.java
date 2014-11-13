@@ -32,28 +32,14 @@ public class LoadHistoryEventsAsyn
 
     @Override
     protected Set<HistoryEvent> call(TimeSpan... params) throws Exception {
-//        for (TimeSpan timespan : params) {
-//            if (timespan != null) {
-//                Set<HistoryEvent> result = new TreeSet<HistoryEvent>(HistoryComparators.DATE_DES);
-//                Set<HistoryEvent> sorted = new TreeSet<HistoryEvent>(HistoryComparators.DATE_DES);
-//                sorted.addAll(mSavedCharacter.getFullHistory());
-//                for (HistoryEvent event : sorted) {
-//                    if (event != null) {
-//                        if (event.getDate() >= timespan.getBeginEpoch()
-//                                && event.getDate() <= timespan.getEndEpoch()) {
-//                            result.add(event);
-//                        }
-//                    }
-//                }
-//                publishProgress(timespan, result);
-//            } else {
         Set<HistoryEvent> result = new TreeSet<HistoryEvent>(HistoryComparators.DATE_DES);
         Collection<HistoryEvent> fullHistory = mSavedCharacter.getFullHistory();
-        HistoryEventFactory.from(getContext()).withCharacter(mSavedCharacter).buildBirthEvent();
+        HistoryEvent birthEvent = HistoryEventFactory.from(getContext())
+                .withCharacter(mSavedCharacter)
+                .buildBirthEvent();
+        fullHistory.add(birthEvent);
         result.addAll(fullHistory);
         publishProgress(mTimespan, result);
-//            }
-//        }
         return null;
     }
 
