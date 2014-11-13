@@ -167,7 +167,7 @@
     </style>
 
     <style name="toolbar_overflow" parent="Base.Widget.AppCompat.ActionButton.Overflow">
-        <item name="src">@drawable/ic_overflow_dots</item>
+        <item name="android:src">@drawable/ic_overflow_dots</item>
     </style>
 
 </resources>
