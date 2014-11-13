@@ -73,6 +73,7 @@ public class SavedCharacter implements
     private long                 presentDate;
     private int                  age;
     private CthulhuPeriod period        = CthulhuPeriod.JAZZAGE;
+    @JsonIgnore
     private long          suggestedDate = Long.MIN_VALUE;
     @JsonIgnore
     private HitPoints hitPoints;
@@ -130,16 +131,16 @@ public class SavedCharacter implements
         setupAgeAndBirth();
     }
 
+    private void updateDamageBonus() {
+        CharacterProperty damageBonus = getDamageBonus().asCharacterProperty();
+        addCharacterProperty(damageBonus);
+    }
+
     @JsonIgnore
     public DamageBonus getDamageBonus() {
         int con = getStatisticValue(BRPStatistic.CON.name());
         int siz = getStatisticValue(BRPStatistic.SIZ.name());
         return DamageBonusFactory.forEdition(getEdition(), con, siz);
-    }
-
-    private void updateDamageBonus() {
-        CharacterProperty damageBonus = getDamageBonus().asCharacterProperty();
-        addCharacterProperty(damageBonus);
     }
 
     public CthulhuPeriod getPeriod() {
@@ -603,11 +604,14 @@ public class SavedCharacter implements
     }
 
     public Set<HistoryEvent> getFullHistory() {
+        if (fullHistory == null) {
+            fullHistory = new HashSet<HistoryEvent>(5);
+        }
         return fullHistory;
     }
 
-    public void setFullHistory(Set<HistoryEvent> fullHistory) {
-        this.fullHistory = fullHistory;
+    public void setFullHistory(Collection<HistoryEvent> fullHistory) {
+        this.fullHistory = new HashSet<HistoryEvent>(fullHistory);
     }
 
     public int getAge() {
@@ -772,7 +776,8 @@ public class SavedCharacter implements
         return count >= sShouldHaveAssignedAtLeast;
     }
 
-    public long getSuggestedDate() {
+    @JsonIgnore
+    public long getSuggestedBirthDateEpoch() {
         if (Long.MIN_VALUE == suggestedDate) {
             DateTime now = new DateTime();
             int year = getAge() + getPeriod().getDefaultYear();
@@ -786,6 +791,7 @@ public class SavedCharacter implements
         return suggestedDate;
     }
 
+    @JsonIgnore
     public void setSuggestedDate(long suggestedDate) {
         this.suggestedDate = suggestedDate;
     }
