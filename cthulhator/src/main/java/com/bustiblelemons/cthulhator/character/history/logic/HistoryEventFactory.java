@@ -48,13 +48,13 @@ public class HistoryEventFactory {
         DateTime dateTime = getBirthDateTime();
         HistoryEvent birthEvent = new HistoryEvent();
         birthEvent.setDate(dateTime.getMillis());
+        String name = mContext.getResources().getString(R.string.born);
+        birthEvent.setName(name);
         if (mSavedCharacter != null && mSavedCharacter.getDescription() != null) {
             Location birthLocation = mSavedCharacter.getDescription().getLocation();
             if (birthLocation != null) {
                 birthEvent.setLocation(birthLocation);
-                String name = mContext.getResources().getString(R.string.born);
                 String description = birthLocation.toString();
-                birthEvent.setName(name);
                 birthEvent.setDescription(description);
             }
         }
