@@ -154,7 +154,7 @@
     </style>
 
     <style name="header_toolbar">
-        <item name="android:background">@color/solid_background</item>
+        <item name="android:background">@drawable/toolbar_background</item>
         <item name="android:paddingBottom">@dimen/fab_offset_positive</item>
         <item name="contentInsetStart">0dp</item>
         <item name="android:actionOverflowButtonStyle">@style/toolbar_overflow</item>
@@ -162,6 +162,7 @@
         <item name="navigationIcon">@drawable/ic_action_navigation_back</item>
         <item name="titleTextAppearance">@style/toolbar_title</item>
         <item name="subtitleTextAppearance">@style/toolbar_subtitle</item>
+        <item name="android:layout_marginBottom">@dimen/padding_8</item>
     </style>
 
     <style name="toolbar_overflow" parent="Widget.AppCompat.Light.ActionButton.Overflow">

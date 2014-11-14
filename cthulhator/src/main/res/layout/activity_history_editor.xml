@@ -10,8 +10,7 @@
         style="@style/header_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/solid_background"
-        app:title="@string/placeholder_proverb">
+        app:title="@string/history">
 
     </android.support.v7.widget.Toolbar>
 
