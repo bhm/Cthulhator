@@ -162,11 +162,10 @@
         <item name="navigationIcon">@drawable/ic_action_navigation_back</item>
         <item name="titleTextAppearance">@style/toolbar_title</item>
         <item name="subtitleTextAppearance">@style/toolbar_subtitle</item>
-        <item name="android:layout_marginBottom">@dimen/padding_8</item>
     </style>
 
     <style name="toolbar_overflow" parent="Widget.AppCompat.Light.ActionButton.Overflow">
-    <item name="android:src">@drawable/ic_overflow_dots</item>
+        <item name="android:src">@drawable/ic_overflow_dots</item>
     </style>
 
 </resources>

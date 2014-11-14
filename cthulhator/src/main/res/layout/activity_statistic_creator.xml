@@ -7,6 +7,14 @@
                 android:layout_height="match_parent"
                 tools:context=".StatisticsCreatorActivity">
 
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/assign_skills"
+        android:layout_below="@id/header"/>
+
     <android.support.v7.widget.Toolbar
         android:id="@id/header"
         style="@style/header_toolbar"
@@ -15,14 +23,6 @@
         app:title="@string/statistics">
 
     </android.support.v7.widget.Toolbar>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@id/recycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/assign_skills"
-        android:layout_below="@id/header"
-        android:layout_marginTop="@dimen/fab_offset_positive"/>
 
     <com.bustiblelemons.views.widget.RippleButton
         android:id="@id/assign_skills"
@@ -45,19 +45,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <FrameLayout
-        android:id="@id/fab_pivot"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/fab_pivot"
-        android:layout_below="@id/header"
-        tools:background="@color/orange_100"/>
-
     <at.markushi.ui.CircleButton
         android:id="@id/done"
         android:layout_width="@dimen/fab"
         android:layout_height="@dimen/fab"
-        android:layout_above="@id/fab_pivot"
         android:layout_alignParentRight="true"
+        android:layout_below="@id/header"
         android:layout_marginBottom="@dimen/fab_offset"
         android:layout_marginLeft="@dimen/padding_16"
         android:layout_marginRight="@dimen/padding_16"
