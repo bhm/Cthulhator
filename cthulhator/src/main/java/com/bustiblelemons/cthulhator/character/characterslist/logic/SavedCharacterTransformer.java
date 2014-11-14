@@ -73,7 +73,7 @@ public class SavedCharacterTransformer {
             }
             prefix = ", ";
         }
-        b.append("\n");
+        prefix = "\n";
         for (CharacterProperty p : savedCharacter.getTopSkills(3)) {
             b.append(prefix);
             String name = p.getName();
