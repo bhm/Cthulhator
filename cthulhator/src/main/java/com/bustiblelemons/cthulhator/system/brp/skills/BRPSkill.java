@@ -642,6 +642,8 @@ public enum BRPSkill {
     }
 
     private List<ActionGroup> mActionGroups;
+    private int nameResId      = -1;
+    private int shortNameResId = -1;
 
     public Set<Relation> getRelations() {
         return Collections.emptySet();
@@ -650,6 +652,8 @@ public enum BRPSkill {
     public CharacterProperty asCharacterProperty(CthulhuEdition edition) {
         CharacterProperty r = new CharacterProperty();
         r.setName(name());
+        r.setNameResId(getNameResId());
+        r.setShortNameResId(getShortNameResId());
         r.setFormat(PropertyFormat.PERCENTILE);
         r.setType(PropertyType.SKILL);
         r.setMaxValue(100);
@@ -683,5 +687,21 @@ public enum BRPSkill {
             mActionGroups.add(ActionGroup.OTHER);
         }
         return mActionGroups;
+    }
+
+    public int getNameResId() {
+        return nameResId;
+    }
+
+    public void setNameResId(int nameResId) {
+        this.nameResId = nameResId;
+    }
+
+    public int getShortNameResId() {
+        return shortNameResId;
+    }
+
+    public void setShortNameResId(int shortNameResId) {
+        this.shortNameResId = shortNameResId;
     }
 }

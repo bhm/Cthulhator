@@ -213,6 +213,8 @@ public enum BRPStatistic {
             return r;
         }
     };
+    private int nameResId      = -1;
+    private int shortNameResId = -1;
 
     public List<Relation> getRelations() {
         return Collections.emptyList();
@@ -254,13 +256,32 @@ public enum BRPStatistic {
         }
     }
 
+
     private CharacterProperty fromPointPool(PointPool p) {
         CharacterProperty property = new CharacterProperty();
         property.setMaxValue(p.getMax());
         property.setMinValue(p.getMin());
-        property.setName(this.name());
+        property.setName(name());
+        property.setNameResId(getNameResId());
+        property.setShortNameResId(getShortNameResId());
         property.setFormat(PropertyFormat.NUMBER);
         property.setType(PropertyType.STATISTIC);
         return property;
+    }
+
+    public int getNameResId() {
+        return nameResId;
+    }
+
+    public void setNameResId(int nameResId) {
+        this.nameResId = nameResId;
+    }
+
+    public int getShortNameResId() {
+        return shortNameResId;
+    }
+
+    public void setShortNameResId(int shortNameResId) {
+        this.shortNameResId = shortNameResId;
     }
 }
