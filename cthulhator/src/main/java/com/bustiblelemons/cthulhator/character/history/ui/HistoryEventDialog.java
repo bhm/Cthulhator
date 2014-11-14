@@ -27,22 +27,26 @@ import butterknife.OnClick;
 public class HistoryEventDialog extends AbsArgDialogFragment<HistoryEvent>
         implements CalendarDatePickerDialog.OnDateSetListener {
 
-    public static final String TAG = HistoryEventDialog.class.getSimpleName();
+    public static final String TAG     = HistoryEventDialog.class.getSimpleName();
+    public static final String EDITING = "editing";
+
     @InjectView(android.R.id.title)
     FloatLabelEditText titleView;
+
     @InjectView(R.id.short_info)
     FloatLabelEditText descriptionView;
+
     @InjectView(R.id.date)
-    TextView           dateView;
+    TextView dateView;
 
     private HistoryEvent             mEvent;
     private OnHistoryEventPassedBack mCallback;
     private OnShowDatePicker         mOnShowDatePicker;
-    private DateTime mDate;
+    private DateTime                 mDate;
 
     public static HistoryEventDialog newInstance(HistoryEvent event) {
         HistoryEventDialog r = new HistoryEventDialog();
-        r.setNoTitle(true);
+        r.setHasTitle(true);
         r.setNewInstanceArgument(event);
         return r;
     }
@@ -67,8 +71,12 @@ public class HistoryEventDialog extends AbsArgDialogFragment<HistoryEvent>
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void onInstanceArgumentRead(HistoryEvent instanceArgument) {
+        if (instanceArgument != null) {
+            mEvent = instanceArgument;
+            mDate = new DateTime(mEvent.getDate());
+            setupView();
+        }
     }
 
     private void setupView() {
@@ -89,7 +97,7 @@ public class HistoryEventDialog extends AbsArgDialogFragment<HistoryEvent>
         }
     }
 
-    @OnClick(R.id.add)
+    @OnClick(R.id.done)
     public void onSave(View view) {
         try {
             if (mCallback != null) {
@@ -104,28 +112,18 @@ public class HistoryEventDialog extends AbsArgDialogFragment<HistoryEvent>
         }
     }
 
+
     @OnClick(android.R.id.closeButton)
     public void onCancel(View view) {
         dismiss();
     }
 
-
     @OnClick(R.id.date)
     public void onPickDate(View view) {
-        if (mOnShowDatePicker != null) {
+        if (mOnShowDatePicker != null && mEvent != null) {
             DateTime dateTime = new DateTime(mEvent.getDate());
             mOnShowDatePicker.onShowDatePickerCallback(dateTime, this);
         }
-    }
-
-    @Override
-    protected void onInstanceArgumentRead(HistoryEvent instanceArgument) {
-        mEvent = instanceArgument;
-        if (mEvent == null) {
-            mEvent = new HistoryEvent();
-        }
-        mDate = new DateTime(mEvent.getDate());
-        setupView();
     }
 
     @Override

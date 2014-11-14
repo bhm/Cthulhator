@@ -97,5 +97,6 @@
     <string name="hint_assign_name">Descirbe your character</string>
     <string name="hint_equipment">What\'s in the bag, man.</string>
     <string name="hint_history">Tell character\'s story</string>
+    <string name="done">Done</string>
 
 </resources>

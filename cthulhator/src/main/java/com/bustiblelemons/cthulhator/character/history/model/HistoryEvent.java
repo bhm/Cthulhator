@@ -20,7 +20,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HistoryEvent implements Serializable, Parcelable, Comparable<HistoryEvent> {
     @JsonIgnore
-    public static final Parcelable.Creator<HistoryEvent> CREATOR = new Parcelable.Creator<HistoryEvent>() {
+    public static final  Parcelable.Creator<HistoryEvent> CREATOR            = new Parcelable.Creator<HistoryEvent>() {
         public HistoryEvent createFromParcel(Parcel source) {
             return new HistoryEvent(source);
         }
@@ -30,17 +30,17 @@ public class HistoryEvent implements Serializable, Parcelable, Comparable<Histor
         }
     };
     @JsonIgnore
-    private static java.lang.String sFormat = "MMMM dd, yyyy";
+    private static       java.lang.String                 sFormat            = "MMMM dd, yyyy";
     @JsonIgnore
-    private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat(
+    private static final SimpleDateFormat                 SIMPLE_DATE_FORMAT = new SimpleDateFormat(
             sFormat);
-    private String name;
-    private String description;
-    private long date;
+    private String   name;
+    private String   description;
+    private long     date;
     private Location location;
     private List<Relation> affected = new ArrayList<Relation>();
     @JsonIgnore
-    private String formatedDate;
+    private String  formatedDate;
     @JsonIgnore
     private boolean dateChanged;
 
@@ -63,7 +63,6 @@ public class HistoryEvent implements Serializable, Parcelable, Comparable<Histor
         }
         return formatedDate;
     }
-
 
     public long getDate() {
         return date;
