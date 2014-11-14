@@ -1,6 +1,7 @@
 package com.bustiblelemons.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,6 @@ import com.bustiblelemons.holders.impl.ViewHolder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -26,7 +26,7 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
         TAG = getClass().getSimpleName();
     }
 
-    private List<T> mData = new ArrayList<T>();
+    private List<T> mData = new ArrayList<T>(0);
     private Context        context;
     private LayoutInflater inflater;
 
@@ -35,9 +35,9 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public AbsListAdapter(Context context, List<T> data) {
+    public AbsListAdapter(Context context, Collection<T> data) {
         this(context);
-        this.mData = new LinkedList<T>(data);
+        this.mData = new ArrayList<T>(data);
     }
 
 
@@ -72,7 +72,7 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
 
     @Override
     public int getCount() {
-        return mData.size();
+        return mData != null ? mData.size() : 0;
     }
 
     @Override
@@ -82,6 +82,9 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
 
     @Override
     public T getItem(int position) {
+        if (mData == null) {
+            return null;
+        }
         return mData.get(position);
     }
 
@@ -96,12 +99,24 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
     }
 
     public boolean addItems(Collection<T> items) {
+        if (items == null) {
+            throw new NullPointerException("params cannot be null");
+        }
+        if (mData == null) {
+            mData = new ArrayList<T>(items.size());
+        }
         boolean ret = this.mData.addAll(items);
         notifyDataSetChanged();
         return ret;
     }
 
-    public boolean addItems(T... items) {
+    public boolean addItems(@NonNull T... items) {
+        if (items == null) {
+            throw new NullPointerException("params cannot be null");
+        }
+        if (mData == null) {
+            mData = new ArrayList<T>(items.length);
+        }
         boolean ret = Collections.addAll(mData, items);
         notifyDataSetChanged();
         return ret;
@@ -112,18 +127,30 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
     }
 
     public boolean removeItem(T item) {
+        if (mData == null) {
+            return false;
+        }
         boolean ret = this.mData.remove(item);
         notifyDataSetChanged();
         return ret;
     }
 
     public boolean removeItems(Collection<T> items) {
+        if (mData == null) {
+            return false;
+        }
         boolean r = this.mData.removeAll(items);
         notifyDataSetChanged();
         return r;
     }
 
     public List<T> getSelectedItems(SparseBooleanArray checkedItems) {
+        if (checkedItems == null) {
+            throw new NullPointerException("params cannot be null");
+        }
+        if (mData == null) {
+            return Collections.emptyList();
+        }
         List<T> result = new ArrayList<T>();
         if (checkedItems != null) {
             for (int i = 0; i < mData.size(); i++) {
@@ -151,7 +178,7 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
     }
 
     protected void setData(Collection<T> data) {
-        this.mData = new LinkedList<T>(data);
+        this.mData = new ArrayList<T>(data);
     }
 
     public void removeItem(int pos) {
@@ -174,6 +201,9 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
     }
 
     public void removeAll() {
+        if (mData == null) {
+            return;
+        }
         mData.clear();
         notifyDataSetChanged();
     }
