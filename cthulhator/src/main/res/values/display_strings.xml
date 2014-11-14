@@ -16,4 +16,13 @@
     <string name="stat_int">Intelligence</string>
     <string name="stat_edu">Education</string>
 
+    <string name="stat_short_str">Strength</string>
+    <string name="stat_short_con">Constitution</string>
+    <string name="stat_short_pow">Power</string>
+    <string name="stat_short_dex">Dexterity</string>
+    <string name="stat_short_app">Appearance</string>
+    <string name="stat_short_siz">Size</string>
+    <string name="stat_short_int">Intelligence</string>
+    <string name="stat_short_edu">Education</string>
+
 </resources>
