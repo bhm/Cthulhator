@@ -21,7 +21,7 @@ import java.util.Set;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CharacterProperty extends ObservableCharacterProperty
-        implements Serializable, Parcelable {
+        implements Serializable, Parcelable, Comparable<CharacterProperty> {
 
     @JsonIgnore
     public static final CharacterProperty                     EMPTY = new CharacterProperty();
@@ -333,5 +333,15 @@ public class CharacterProperty extends ObservableCharacterProperty
             return false;
         }
         return name.equals(this.name);
+    }
+
+    @Override
+    public int compareTo(CharacterProperty another) {
+        if (another == null || this.getValue() > another.getValue()) {
+            return 1;
+        } else if (this.getValue() < another.getValue()) {
+            return -1;
+        }
+        return 0;
     }
 }

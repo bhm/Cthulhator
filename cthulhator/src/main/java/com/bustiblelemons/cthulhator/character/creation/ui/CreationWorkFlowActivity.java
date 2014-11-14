@@ -105,8 +105,9 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
     protected void onInstanceArgumentRead(SavedCharacter arg) {
         mSavedCharacter = arg;
         if (mSavedCharacter != null && mCharacterCardView != null) {
-            CharacterInfo characterInfo = SavedCharacterTransformer.getInstance().transform(
-                    mSavedCharacter);
+            CharacterInfo characterInfo = SavedCharacterTransformer.getInstance()
+                    .withContext(this)
+                    .transform(mSavedCharacter);
             mCharacterCardView.setCardInfo(characterInfo);
         }
     }

@@ -1,5 +1,8 @@
 package com.bustiblelemons.cthulhator.character.characterslist.logic;
 
+import android.content.Context;
+import android.text.TextUtils;
+
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
 import com.bustiblelemons.cthulhator.character.description.model.CharacterDescription;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
@@ -13,6 +16,8 @@ import java.util.Locale;
  */
 public class SavedCharacterTransformer {
 
+    private Context mContext;
+
     private SavedCharacterTransformer() {
     }
 
@@ -20,22 +25,29 @@ public class SavedCharacterTransformer {
         return LazyHolder.INSTANCE;
     }
 
+    public SavedCharacterTransformer withContext(Context context) {
+        this.mContext = context;
+        return this;
+    }
+
     public CharacterInfo transform(final SavedCharacter savedCharacter) {
         if (savedCharacter != null) {
             CharacterInfoImpl impl = new CharacterInfoImpl();
             impl.setName(savedCharacter.getName());
             impl.setUrl(savedCharacter.getPhotoUrl());
-            String extrainfo = getExtraInfo(savedCharacter);
+            String extrainfo = getMainCharacteristics(savedCharacter);
             impl.setExtrainfo(extrainfo);
-            String mainInfo = getMainInfo(savedCharacter);
+            String mainInfo = getLocationInfo(savedCharacter);
             impl.setMainInfo(mainInfo);
             impl.setHashCode(savedCharacter.hashCode());
+            mContext = null;
             return impl;
         }
+        mContext = null;
         return null;
     }
 
-    private String getMainInfo(SavedCharacter savedCharacter) {
+    private String getLocationInfo(SavedCharacter savedCharacter) {
         String location = "";
         CharacterDescription des = savedCharacter.getDescription();
         if (des != null && des.getLocation() != null) {
@@ -47,17 +59,31 @@ public class SavedCharacterTransformer {
         return String.format(Locale.ENGLISH, "%s", location);
     }
 
-    private String getExtraInfo(SavedCharacter savedCharacter) {
+    private String getMainCharacteristics(SavedCharacter savedCharacter) {
         StringBuilder b = new StringBuilder();
         String prefix = "";
         for (CharacterProperty p : savedCharacter.getTopCharacteristics(3)) {
             b.append(prefix);
-            b.append(p.getName());
+            String name = p.getName();
+            if (mContext != null && p.getNameResId() > 0) {
+                name = mContext.getString(p.getNameResId());
+            }
+            if (!TextUtils.isEmpty(name)) {
+                b.append(name);
+            }
             prefix = ", ";
         }
+        b.append("\n");
         for (CharacterProperty p : savedCharacter.getTopSkills(3)) {
             b.append(prefix);
-            b.append(p.getName());
+            String name = p.getName();
+            if (mContext != null && p.getNameResId() > 0) {
+                name = mContext.getString(p.getNameResId());
+            }
+            if (!TextUtils.isEmpty(name)) {
+                b.append(name);
+            }
+            prefix = ", ";
         }
         return b.toString();
     }

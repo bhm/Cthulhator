@@ -20,8 +20,13 @@ public enum CharacterPropertyComparators implements Comparator<CharacterProperty
                 return super.compare(lhs, rhs);
             }
         }
-    },
-    VALUE {
+    }, VALUE_DESC {
+        @Override
+        public int compare(CharacterProperty lhs, CharacterProperty rhs) {
+            return 0 - VALUE.compare(lhs, rhs);
+        }
+
+    }, VALUE {
         @Override
         public int compare(CharacterProperty lhs, CharacterProperty rhs) {
             if (lhs != null && rhs != null) {
@@ -32,7 +37,7 @@ public enum CharacterPropertyComparators implements Comparator<CharacterProperty
                 } else if (lVal < rVal) {
                     return -1;
                 } else {
-                    return 0;
+                    return ALPHABETICAL.compare(lhs, rhs);
                 }
             } else {
                 return super.compare(lhs, rhs);
@@ -71,7 +76,7 @@ public enum CharacterPropertyComparators implements Comparator<CharacterProperty
                 } else if (lGroup == null && rGroup == null) {
                     return 0;
                 } else {
-                    int byGroup = lGroup.compareTo(rGroup);
+                    int byGroup = ACTION_GROUP.compare(lhs, rhs);
                     return byGroup == 0 ? VALUE.compare(lhs, rhs) : byGroup;
                 }
             } else {

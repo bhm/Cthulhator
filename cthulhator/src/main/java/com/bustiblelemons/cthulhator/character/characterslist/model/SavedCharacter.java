@@ -41,8 +41,7 @@ import java.util.TreeSet;
  * Created by bhm on 12.08.14.
  */
 @JsonIgnoreProperties
-public class SavedCharacter implements
-                            Parcelable, Serializable {
+public class SavedCharacter implements Parcelable, Serializable {
 
     @JsonIgnore
     public static final Parcelable.Creator<SavedCharacter>           CREATOR                    = new Parcelable.Creator<SavedCharacter>() {
@@ -170,19 +169,32 @@ public class SavedCharacter implements
     }
 
     @JsonIgnore
-    public Set<CharacterProperty> getTopCharacteristics() {
-        Set<CharacterProperty> r = new TreeSet<CharacterProperty>(
-                CharacterPropertyComparators.VALUE);
+    public Collection<CharacterProperty> getTopCharacteristics(int max) {
+        List<CharacterProperty> r = new ArrayList<CharacterProperty>();
+        int i = 0;
+        for (CharacterProperty property : getTopStatistics()) {
+            r.add(property);
+            i++;
+            if (i == max) {
+                return r;
+            }
+        }
+        return r;
+    }
+
+    @JsonIgnore
+    public Collection<CharacterProperty> getTopStatistics() {
+        Set<CharacterProperty> r =
+                new TreeSet<CharacterProperty>(CharacterPropertyComparators.VALUE_DESC);
         r.addAll(getStatistics());
         return r;
     }
 
     @JsonIgnore
-    public Set<CharacterProperty> getTopCharacteristics(int max) {
-        Set<CharacterProperty> r = new TreeSet<CharacterProperty>(
-                CharacterPropertyComparators.VALUE);
+    public Collection<CharacterProperty> getTopSkills(int max) {
+        List<CharacterProperty> r = new ArrayList<CharacterProperty>();
         int i = 0;
-        for (CharacterProperty property : getStatistics()) {
+        for (CharacterProperty property : getTopSkills()) {
             r.add(property);
             i++;
             if (i == max) {
@@ -193,25 +205,10 @@ public class SavedCharacter implements
     }
 
     @JsonIgnore
-    public Set<CharacterProperty> getTopSkills() {
-        Set<CharacterProperty> r = new TreeSet<CharacterProperty>(
-                CharacterPropertyComparators.VALUE);
+    public Collection<CharacterProperty> getTopSkills() {
+        Set<CharacterProperty> r =
+                new TreeSet<CharacterProperty>(CharacterPropertyComparators.VALUE_DESC);
         r.addAll(getSkills());
-        return r;
-    }
-
-    @JsonIgnore
-    public Set<CharacterProperty> getTopSkills(int max) {
-        Set<CharacterProperty> r = new TreeSet<CharacterProperty>(
-                CharacterPropertyComparators.VALUE);
-        int i = 0;
-        for (CharacterProperty property : getSkills()) {
-            r.add(property);
-            i++;
-            if (i == max) {
-                return r;
-            }
-        }
         return r;
     }
 
