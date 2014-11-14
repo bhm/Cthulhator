@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -9,7 +10,7 @@
         android:id="@id/photos_pager"
         android:layout_width="match_parent"
         android:layout_height="@dimen/photos_pager"
-        android:minHeight="@dimen/photos_pager" />
+        android:minHeight="@dimen/photos_pager"/>
 
     <com.viewpagerindicator.CirclePageIndicator
         android:id="@id/photos_indicator"
@@ -17,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/bottom_card"
-        android:layout_marginBottom="-10dp" />
+        android:layout_marginBottom="-10dp"/>
 
     <RelativeLayout
         android:id="@id/bottom_card"
@@ -25,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/transparent"></RelativeLayout>
+        android:background="@color/transparent"/>
 
     <at.markushi.ui.CircleButton
         android:id="@id/fab"
@@ -36,5 +37,5 @@
         android:layout_marginBottom="-40dp"
         android:layout_marginLeft="@dimen/padding_16"
         android:src="@drawable/ic_navigation_accept"
-        app:cb_color="@color/fab_done" />
+        app:cb_color="@color/fab_done"/>
 </RelativeLayout>

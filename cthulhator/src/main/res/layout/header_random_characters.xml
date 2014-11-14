@@ -1,17 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout
+<FrameLayout
+    android:id="@id/dummy_photos_pager"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <com.bustiblelemons.views.LoadMoreViewPager
-        android:id="@id/dummy_photos_pager"
-        android:visibility="invisible"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/photos_pager"
-        android:minHeight="@dimen/photos_pager" />
-
-</RelativeLayout>
+    android:layout_height="@dimen/photos_pager"
+    android:minHeight="@dimen/photos_pager"
+    android:visibility="invisible"/>
