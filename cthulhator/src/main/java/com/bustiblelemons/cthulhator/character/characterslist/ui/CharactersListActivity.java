@@ -67,6 +67,7 @@ public class CharactersListActivity extends AbsActionBarActivity
         }
         ButterKnife.inject(this);
         if (listView != null) {
+            listAdapter = new SavedCharactersAdapter(this);
             listView.setOnLoadMoreListener(this);
             listView.setAdapter(listAdapter);
             listView.setOnItemClickListener(listAdapter);
