@@ -145,6 +145,7 @@ public class CharactersListActivity extends AbsActionBarActivity
                 listView.setAdapter(listAdapter);
             }
             listAdapter.refreshData(characters);
+            listView.onLoadMoreComplete();
             hideProgressbar();
             showListView();
 //            listAdapter.addItems(characters);

@@ -92,7 +92,7 @@ public class LoadMoreListView extends ListView implements AbsListView.OnScrollLi
 		 * .findViewById(R.id.load_more_lab_view);
 		 */
             mProgressBarLoadMore = (ProgressBar) mFooterView.findViewById(android.R.id.progress);
-            addFooterView(mFooterView);
+            addFooterView(mFooterView, null, false);
         }
 
         super.setOnScrollListener(this);

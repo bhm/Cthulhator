@@ -26,7 +26,7 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
         TAG = getClass().getSimpleName();
     }
 
-    private List<T> mData = new ArrayList<T>(0);
+    private List<T> mData;
     private Context        context;
     private LayoutInflater inflater;
 
@@ -39,7 +39,6 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
         this(context);
         this.mData = new ArrayList<T>(data);
     }
-
 
     public LayoutInflater getInflater() {
         return inflater;
@@ -88,8 +87,10 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
         return mData.get(position);
     }
 
-
     public boolean addItem(T item) {
+        if (mData == null) {
+            mData = new ArrayList<T>();
+        }
         if (item == null) {
             return false;
         }
@@ -120,10 +121,6 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
         boolean ret = Collections.addAll(mData, items);
         notifyDataSetChanged();
         return ret;
-    }
-
-    public List<T> getItems() {
-        return this.mData;
     }
 
     public boolean removeItem(T item) {
@@ -194,8 +191,13 @@ public abstract class AbsListAdapter<T, H extends ViewHolder<T>> extends BaseAda
     }
 
     public void removeItems(int... positions) {
+        if (mData == null) {
+            return;
+        }
         for (int position : positions) {
-            getData().remove(position);
+            if (mData.size() < position) {
+                mData.remove(position);
+            }
         }
         notifyDataSetChanged();
     }
