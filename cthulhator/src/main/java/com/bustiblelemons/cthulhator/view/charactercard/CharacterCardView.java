@@ -32,9 +32,9 @@ public class CharacterCardView extends RelativeLayout implements
     @InjectView(R.id.extra_info)
     TextView    mExtraInfoView;
     @InjectView(android.R.id.icon)
-    RemoteImage remoteImage;
+    RemoteImage mRemoteImage;
     @InjectView(R.id.menu)
-    ImageButton menuButton;
+    ImageButton mMenuButton;
     private View rootView;
     private boolean mShowMenu       = true;
     private int     mNoImageRes     = R.drawable.lemons;
@@ -52,6 +52,7 @@ public class CharacterCardView extends RelativeLayout implements
     private View                      mMainInfoBackground;
     private int     mMenuIcon         = R.drawable.ic_overflow_dots;
     private boolean mUsePaletteColors = true;
+    private OnMenuClicked mOnMenuClicked;
 
     public CharacterCardView(Context context) {
         super(context);
@@ -90,9 +91,10 @@ public class CharacterCardView extends RelativeLayout implements
         mMainInfoView = (TextView) rootView.findViewById(R.id.main_info);
         mShortInfoView = (TextView) rootView.findViewById(R.id.short_info);
         mExtraInfoView = (TextView) rootView.findViewById(R.id.extra_info_text);
-        remoteImage = (RemoteImage) rootView.findViewById(android.R.id.icon);
-        menuButton = (ImageButton) rootView.findViewById(R.id.menu);
-        setOnClickListeners(this, mMainInfoView, mShortInfoView, mExtraInfoView, remoteImage);
+        mRemoteImage = (RemoteImage) rootView.findViewById(android.R.id.icon);
+        mMenuButton = (ImageButton) rootView.findViewById(R.id.menu);
+        setOnClickListeners(this, mMainInfoView, mShortInfoView, mExtraInfoView,
+                mRemoteImage, mMenuButton);
         if (attrs != null) {
             TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CharacterCardView);
             mMainInfoColor = array.getColor(R.styleable.CharacterCardView_mainInfoColor,
@@ -103,16 +105,16 @@ public class CharacterCardView extends RelativeLayout implements
                     mExtraInfoColor);
             mUsePaletteColors = array.getBoolean(R.styleable.CharacterCardView_usePaletteColors,
                     mUsePaletteColors);
-            if (mUsePaletteColors && remoteImage != null) {
-                remoteImage.setPaletteColorsGeneratedSelective(this);
+            if (mUsePaletteColors && mRemoteImage != null) {
+                mRemoteImage.setPaletteColorsGeneratedSelective(this);
             }
             mShowMenu = array.getBoolean(R.styleable.CharacterCardView_show_menu, mShowMenu);
             mMenuIcon = array.getResourceId(R.styleable.CharacterCardView_menuIcon, mMenuIcon);
-            menuButton.setImageResource(mMenuIcon);
+            mMenuButton.setImageResource(mMenuIcon);
             mNoImageRes = array.getResourceId(R.styleable.CharacterCardView_no_image,
                     R.drawable.lemons);
-            remoteImage.setImageDrawable(mNoImageRes);
-            menuButton.setVisibility(mShowMenu ? VISIBLE : INVISIBLE);
+            mRemoteImage.setImageDrawable(mNoImageRes);
+            mMenuButton.setVisibility(mShowMenu ? VISIBLE : INVISIBLE);
             setNameColor(mMainInfoColor);
             setShortInfoColor(mShortInfoColor);
             setExtraInfoColor(mExtraInfoColor);
@@ -125,6 +127,10 @@ public class CharacterCardView extends RelativeLayout implements
             array.recycle();
         }
         addView(rootView);
+    }
+
+    public void setMenuClickListener(OnMenuClicked listener) {
+        mOnMenuClicked = listener;
     }
 
     private void setOnClickListeners(OnClickListener listener, View... views) {
@@ -169,8 +175,8 @@ public class CharacterCardView extends RelativeLayout implements
         setMainText(provider.getName());
         setShortText(provider.getMainInfo());
         setExtraText(provider.getExtraInfo());
-        if (remoteImage != null && provider.getPortraitUrl() != null) {
-            remoteImage.forceLoadFrom(provider.getPortraitUrl());
+        if (mRemoteImage != null && provider.getPortraitUrl() != null) {
+            mRemoteImage.forceLoadFrom(provider.getPortraitUrl());
         }
     }
 
@@ -200,40 +206,45 @@ public class CharacterCardView extends RelativeLayout implements
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.name:
-                if (onMainInfoClick != null) {
-                    onMainInfoClick.onMainInfoClick(this);
-                }
-                if (onCharacterCardViewClick != null) {
-                    onCharacterCardViewClick.onMainInfoClick(this);
-                }
-                break;
-            case R.id.short_info:
-                if (onShortInfoClick != null) {
-                    onShortInfoClick.onShortInfoClick(this);
-                }
-                if (onCharacterCardViewClick != null) {
-                    onCharacterCardViewClick.onShortInfoClick(this);
-                }
-                break;
-            case R.id.extra_info_text:
-                if (onExtraInfoClick != null) {
-                    onExtraInfoClick.onExtraInfoClick(this);
-                }
-                if (onCharacterCardViewClick != null) {
-                    onCharacterCardViewClick.onExtraInfoClick(this);
-                }
-                break;
-            case android.R.id.icon:
-                if (onCharacterCardImageClick != null) {
-                    onCharacterCardImageClick.onImageClick(this);
-                }
-                if (onCharacterCardViewClick != null) {
-                    onCharacterCardViewClick.onImageClick(this);
-                }
-                break;
-            default:
-                break;
+        case R.id.name:
+            if (onMainInfoClick != null) {
+                onMainInfoClick.onMainInfoClick(this);
+            }
+            if (onCharacterCardViewClick != null) {
+                onCharacterCardViewClick.onMainInfoClick(this);
+            }
+            break;
+        case R.id.short_info:
+            if (onShortInfoClick != null) {
+                onShortInfoClick.onShortInfoClick(this);
+            }
+            if (onCharacterCardViewClick != null) {
+                onCharacterCardViewClick.onShortInfoClick(this);
+            }
+            break;
+        case R.id.extra_info_text:
+            if (onExtraInfoClick != null) {
+                onExtraInfoClick.onExtraInfoClick(this);
+            }
+            if (onCharacterCardViewClick != null) {
+                onCharacterCardViewClick.onExtraInfoClick(this);
+            }
+            break;
+        case android.R.id.icon:
+            if (onCharacterCardImageClick != null) {
+                onCharacterCardImageClick.onImageClick(this);
+            }
+            if (onCharacterCardViewClick != null) {
+                onCharacterCardViewClick.onImageClick(this);
+            }
+            break;
+        case R.id.menu:
+            if (mOnMenuClicked != null) {
+                mOnMenuClicked.onMeneButtonClicked(this, mMenuButton);
+            }
+            break;
+        default:
+            break;
         }
     }
 
@@ -286,5 +297,9 @@ public class CharacterCardView extends RelativeLayout implements
 
     public interface OnCharacterCardImageClick {
         void onImageClick(CharacterCardView view);
+    }
+
+    public interface OnMenuClicked {
+        void onMeneButtonClicked(CharacterCardView cardView, View mMenuButton);
     }
 }
