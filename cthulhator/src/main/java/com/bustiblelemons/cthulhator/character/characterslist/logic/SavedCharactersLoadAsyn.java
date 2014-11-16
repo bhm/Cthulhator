@@ -2,7 +2,7 @@ package com.bustiblelemons.cthulhator.character.characterslist.logic;
 
 import android.content.Context;
 
-import com.bustiblelemons.async.AbsAsynTask;
+import com.bustiblelemons.async.AbsSimpleAsync;
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharactersSet;
 import com.bustiblelemons.cthulhator.system.Grouping;
@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by bhm on 13.08.14.
  */
-public class SavedCharactersLoadAsyn extends AbsAsynTask<Grouping, List<CharacterInfo>> {
+public class SavedCharactersLoadAsyn extends AbsSimpleAsync<Grouping, List<CharacterInfo>> {
 
     private final CharacterCache.OnCharactersInfoLoaded callBack;
 
@@ -32,7 +32,9 @@ public class SavedCharactersLoadAsyn extends AbsAsynTask<Grouping, List<Characte
                 List<CharacterInfo> infos = new ArrayList<CharacterInfo>();
                 for (SavedCharacter savedCharacter : set.getCharacters()) {
                     CharacterInfo characterInfo =
-                            SavedCharacterTransformer.getInstance().transform(savedCharacter);
+                            SavedCharacterTransformer.getInstance()
+                                    .withContext(getContext())
+                                    .transform(savedCharacter);
                     infos.add(characterInfo);
                 }
                 publishProgress(g, infos);
