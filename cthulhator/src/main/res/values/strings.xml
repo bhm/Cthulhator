@@ -98,5 +98,8 @@
     <string name="hint_equipment">What\'s in the bag, man.</string>
     <string name="hint_history">Tell character\'s story</string>
     <string name="done">Done</string>
+    <string name="unknown_name">No name</string>
+    <string name="unknown_statistics">No statistics</string>
+    <string name="unknonw_location">Unknown location</string>
 
 </resources>

@@ -1,37 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <attr name="disableInput" format="boolean" />
-    <attr name="_textSize" format="dimension" />
+    <attr name="disableInput" format="boolean"/>
+    <attr name="_textSize" format="dimension"/>
     <declare-styleable name="LocationWidget">
-        <attr name="_textSize" />
-        <attr name="enableMapPicker" format="boolean" />
-        <attr name="pickerDrawable" format="reference" />
-        <attr name="disableInput" />
+        <attr name="_textSize"/>
+        <attr name="enableMapPicker" format="boolean"/>
+        <attr name="pickerDrawable" format="reference"/>
+        <attr name="disableInput"/>
     </declare-styleable>
     <declare-styleable name="NameWidget">
-        <attr name="hideTitle" />
-        <attr name="disableInput" />
+        <attr name="hideTitle"/>
+        <attr name="disableInput"/>
     </declare-styleable>
-    <attr name="show_menu" format="boolean" />
-    <attr name="mainInfoColor" format="color" />
-    <attr name="shortInfoColor" format="color" />
-    <attr name="extraInfoColor" format="color" />
-    <attr name="mainText" format="string" />
-    <attr name="extraText" format="string" />
-    <attr name="shortText" format="string" />
-    <attr name="menuIcon" format="reference" />
-    <attr name="usePaletteColors" format="boolean" />
+    <attr name="show_menu" format="boolean"/>
+    <attr name="mainInfoColor" format="color"/>
+    <attr name="shortInfoColor" format="color"/>
+    <attr name="extraInfoColor" format="color"/>
+    <attr name="mainText" format="string"/>
+    <attr name="extraText" format="string"/>
+    <attr name="shortText" format="string"/>
+    <attr name="menuIcon" format="reference"/>
+    <attr name="usePaletteColors" format="boolean"/>
     <declare-styleable name="CharacterCardView">
-        <attr name="no_image" />
-        <attr name="usePaletteColors" />
-        <attr name="menuIcon" />
-        <attr name="mainInfoColor" />
-        <attr name="shortInfoColor" />
-        <attr name="extraInfoColor" />
-        <attr name="show_menu" />
-        <attr name="mainText" />
-        <attr name="extraText" />
-        <attr name="shortText" />
+        <attr name="no_image"/>
+        <attr name="usePaletteColors"/>
+        <attr name="menuIcon"/>
+        <attr name="mainInfoColor"/>
+        <attr name="shortInfoColor"/>
+        <attr name="extraInfoColor"/>
+        <attr name="show_menu"/>
+        <attr name="mainText"/>
+        <attr name="extraText"/>
+        <attr name="shortText"/>
+        <attr name="layoutType"/>
     </declare-styleable>
+
+    <attr name="layoutType" format="enum">
+        <enum name="horizontal" value="0"/>
+        <enum name="vertical" value="1"/>
+    </attr>
 </resources>

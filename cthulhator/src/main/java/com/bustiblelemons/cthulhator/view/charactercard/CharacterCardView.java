@@ -54,6 +54,8 @@ public class CharacterCardView extends RelativeLayout implements
     private boolean mUsePaletteColors = true;
     private OnMenuClicked mOnMenuClicked;
 
+    private LayoutType mLayoutType;
+
     public CharacterCardView(Context context) {
         super(context);
         init(context, null);
@@ -67,6 +69,10 @@ public class CharacterCardView extends RelativeLayout implements
     public CharacterCardView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs);
+    }
+
+    public LayoutType getLayoutType() {
+        return mLayoutType = mLayoutType;
     }
 
     public void setOnMainInfoClick(OnMainInfoClick onMainInfoClick) {
@@ -86,7 +92,15 @@ public class CharacterCardView extends RelativeLayout implements
     }
 
     private void init(Context context, AttributeSet attrs) {
-        rootView = LayoutInflater.from(context).inflate(R.layout.character_card, this, false);
+        TypedArray array = null;
+        if (attrs != null) {
+            array = context.obtainStyledAttributes(attrs, R.styleable.CharacterCardView);
+            int layoutTypeOrdinal = array.getInt(R.styleable.CharacterCardView_layoutType,
+                    LayoutType.HORIZONTAL.ordinal());
+            mLayoutType = LayoutType.values()[layoutTypeOrdinal];
+
+        }
+        rootView = LayoutInflater.from(context).inflate(mLayoutType.getLayoutId(), this, false);
         mMainInfoBackground = rootView.findViewById(android.R.id.background);
         mMainInfoView = (TextView) rootView.findViewById(R.id.main_info);
         mShortInfoView = (TextView) rootView.findViewById(R.id.short_info);
@@ -95,8 +109,8 @@ public class CharacterCardView extends RelativeLayout implements
         mMenuButton = (ImageButton) rootView.findViewById(R.id.menu);
         setOnClickListeners(this, mMainInfoView, mShortInfoView, mExtraInfoView,
                 mRemoteImage, mMenuButton);
-        if (attrs != null) {
-            TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CharacterCardView);
+        if (array != null) {
+            array = context.obtainStyledAttributes(attrs, R.styleable.CharacterCardView);
             mMainInfoColor = array.getColor(R.styleable.CharacterCardView_mainInfoColor,
                     mMainInfoColor);
             mShortInfoColor = array.getColor(R.styleable.CharacterCardView_shortInfoColor,
@@ -270,6 +284,22 @@ public class CharacterCardView extends RelativeLayout implements
         if (vibrant != null && mShortInfoView != null) {
             mShortInfoView.setTextColor(vibrant.getBodyTextColor());
         }
+    }
+
+    public enum LayoutType {
+        VERTICAL {
+            @Override
+            public int getLayoutId() {
+                return R.layout.character_card_vertical;
+            }
+        }, HORIZONTAL {
+            @Override
+            public int getLayoutId() {
+                return R.layout.character_card;
+            }
+        };
+
+        public abstract int getLayoutId();
     }
 
     public interface OnMenuItemSelected {

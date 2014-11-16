@@ -7,10 +7,16 @@
 
     <com.bustiblelemons.cthulhator.view.charactercard.CharacterCardView
         android:id="@id/card"
+        style="@style/card"
         android:layout_width="match_parent"
         android:layout_height="@dimen/small_character_card"
-        custom:mainInfoColor="@color/white_87"
+        custom:extraText="@string/unknown_statistics"
+        custom:layoutType="horizontal"
+        custom:mainInfoColor="@color/black_87"
+        custom:mainText="@string/unknown_name"
         custom:menuIcon="@drawable/ic_overflow_dots"
-        custom:shortInfoColor="@color/white_54" />
+        custom:no_image="@drawable/no_face_poly"
+        custom:shortInfoColor="@color/black_54"
+        custom:shortText="@string/unknonw_location"/>
 
 </RelativeLayout>

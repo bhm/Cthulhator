@@ -1,5 +1,7 @@
 package com.bustiblelemons.cthulhator.character.characterslist.logic;
 
+import android.content.Context;
+import android.support.v7.widget.PopupMenu;
 import android.view.View;
 
 import com.bustiblelemons.cthulhator.R;
@@ -14,12 +16,15 @@ import butterknife.InjectView;
  * Created by bhm on 13.08.14.
  */
 @LayoutResId(R.layout.single_saved_character)
-public class SavedCharacterHolder extends AbsRecyclerHolder<CharacterInfo> {
+public class SavedCharacterHolder extends AbsRecyclerHolder<CharacterInfo>
+        implements CharacterCardView.OnMenuClicked {
 
     @InjectView(R.id.card)
     CharacterCardView cardView;
 
-    private OnOpenSavedCharacter mOnOpneSavedCharcter;
+    private OnOpenSavedCharacter              mOnOpneSavedCharcter;
+    private PopupMenu.OnMenuItemClickListener mMenuClickListener;
+    private PopupMenu                         mPopupMenu;
 
     public SavedCharacterHolder(View itemView) {
         super(itemView);
@@ -30,10 +35,22 @@ public class SavedCharacterHolder extends AbsRecyclerHolder<CharacterInfo> {
         if (cardView != null && item != null) {
             cardView.setCardInfo(item);
         }
+        cardView.setMenuClickListener(this);
     }
 
     public SavedCharacterHolder withOnOpenSavedCharacter(OnOpenSavedCharacter onOpenSavedCharacter) {
         mOnOpneSavedCharcter = onOpenSavedCharacter;
         return this;
+    }
+
+    @Override
+    public void onMeneButtonClicked(CharacterCardView cardView, View menuButton) {
+        Context context = cardView.getContext();
+        if (mPopupMenu == null) {
+            mPopupMenu = new PopupMenu(context, menuButton);
+            mPopupMenu.setOnMenuItemClickListener(mMenuClickListener);
+            mPopupMenu.inflate(R.menu.saved_character);
+        }
+        mPopupMenu.show();
     }
 }
