@@ -4,6 +4,9 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,22 +19,33 @@ import java.util.List;
 public abstract class AbsRecyclerAdapter<I, VH extends AbsRecyclerHolder<I>>
         extends RecyclerView.Adapter<VH> {
 
+    private final LayoutInflater inflater;
     private List<I> mData = new ArrayList<I>(0);
-    private Context context;
 
-    protected AbsRecyclerAdapter(List<I> mData, Context context) {
-        this.mData = mData;
-        this.context = context;
+    public AbsRecyclerAdapter(Context context) {
+        inflater = LayoutInflater.from(context);
     }
 
-    protected AbsRecyclerAdapter(Context context) {
-        this.context = context;
-    }
+    public abstract int getLayoutId(int viewType);
 
+    public abstract VH getViewHolder(View view);
+
+    @Override
+    public VH onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        View view = inflater.inflate(getLayoutId(viewType), viewGroup, false);
+        return getViewHolder(view);
+    }
 
     @Override
     public int getItemCount() {
         return mData != null ? mData.size() : 0;
+    }
+
+    @Override
+    public void onBindViewHolder(VH vh, int position) {
+        if (vh != null) {
+            vh.onBindData(getItem(position));
+        }
     }
 
     @Override
@@ -186,9 +200,5 @@ public abstract class AbsRecyclerAdapter<I, VH extends AbsRecyclerHolder<I>>
         }
         mData.clear();
         notifyDataSetChanged();
-    }
-
-    public Context getContext() {
-        return context;
     }
 }
