@@ -39,7 +39,7 @@ public class SavedCharacterTransformer {
             impl.setExtrainfo(extrainfo);
             String mainInfo = getLocationInfo(savedCharacter);
             impl.setMainInfo(mainInfo);
-            impl.setHashCode(savedCharacter.hashCode());
+            impl.setId(savedCharacter.getId());
             mContext = null;
             return impl;
         }
@@ -97,7 +97,7 @@ public class SavedCharacterTransformer {
         private String extrainfo;
         private String mainInfo;
         private String url;
-        private int    hashCode;
+        private int    id;
 
         @Override
         public String getName() {
@@ -136,12 +136,12 @@ public class SavedCharacterTransformer {
         }
 
         @Override
-        public int getHashCode() {
-            return hashCode;
+        public int getId() {
+            return id;
         }
 
-        public void setHashCode(int hashCode) {
-            this.hashCode = hashCode;
+        public void setId(int id) {
+            this.id = id;
         }
     }
 }

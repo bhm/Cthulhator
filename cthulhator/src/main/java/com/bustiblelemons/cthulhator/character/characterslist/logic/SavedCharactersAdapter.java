@@ -14,7 +14,7 @@ import com.bustiblelemons.recycler.AbsRecyclerAdapter;
 public class SavedCharactersAdapter extends AbsRecyclerAdapter<CharacterInfo, SavedCharacterHolder>
         implements AdapterView.OnItemClickListener {
 
-    private OnOpenSavedCharacter onOpenSavedCharacter;
+    private OnOpenSavedCharacter mOnOpenSavedCharacter;
 
     public SavedCharactersAdapter(Context context) {
         super(context);
@@ -27,15 +27,22 @@ public class SavedCharactersAdapter extends AbsRecyclerAdapter<CharacterInfo, Sa
 
     @Override
     public SavedCharacterHolder getViewHolder(View view) {
-        return new SavedCharacterHolder(view).withOnOpenSavedCharacter(onOpenSavedCharacter);
+        SavedCharacterHolder h = new SavedCharacterHolder(view)
+                .withOnOpenSavedCharacter(mOnOpenSavedCharacter);
+        view.setOnClickListener(h);
+        return h;
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         CharacterInfo i = getItem(position);
-        if (onOpenSavedCharacter != null && i != null) {
-            onOpenSavedCharacter.onOpenSavedCharacter(i.getHashCode());
+        if (mOnOpenSavedCharacter != null && i != null) {
+            mOnOpenSavedCharacter.onOpenSavedCharacter(i.getId());
         }
     }
 
+    public SavedCharactersAdapter withOpenSaveCharacter(OnOpenSavedCharacter callback) {
+        mOnOpenSavedCharacter = callback;
+        return this;
+    }
 }

@@ -12,9 +12,9 @@ import com.bustiblelemons.logging.Logger;
  */
 public class RetreiveCharacterAsyn extends AbsAsynTask<Integer, SavedCharacter> {
     private static final Logger log = new Logger(RetreiveCharacterAsyn.class);
-    private CharacterCache.OnRetreiveCharacter onRetreiveCharacter;
+    private SavedCharactersProvider.OnRetreiveCharacter onRetreiveCharacter;
 
-    public RetreiveCharacterAsyn(Context context, CharacterCache.OnRetreiveCharacter onRetreiveCharacter) {
+    public RetreiveCharacterAsyn(Context context, SavedCharactersProvider.OnRetreiveCharacter onRetreiveCharacter) {
         super(context);
         this.onRetreiveCharacter = onRetreiveCharacter;
     }
@@ -23,7 +23,7 @@ public class RetreiveCharacterAsyn extends AbsAsynTask<Integer, SavedCharacter> 
     protected SavedCharacter call(Integer... params) throws Exception {
         for (Integer hashCode : params) {
             if (hashCode != null) {
-                SavedCharacter s = CharacterCache.getSavedCharacterByHashCode(getContext(), hashCode.intValue());
+                SavedCharacter s = SavedCharactersProvider.getSavedCharacterById(getContext(), hashCode.intValue());
                 publishProgress(hashCode, s);
             }
         }

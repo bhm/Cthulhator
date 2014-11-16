@@ -7,8 +7,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.character.characterslist.logic.CharacterCache;
 import com.bustiblelemons.cthulhator.character.characterslist.logic.SavedCharacterTransformer;
+import com.bustiblelemons.cthulhator.character.characterslist.logic.SavedCharactersProvider;
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
 import com.bustiblelemons.cthulhator.settings.Settings;
 import com.bustiblelemons.cthulhator.system.CthulhuCharacter;
@@ -82,7 +82,7 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
 
     @OnClick(R.id.done)
     public void onSaveCharacter(View view) {
-        CharacterCache.saveCharacter(this, mSavedCharacter);
+        SavedCharactersProvider.saveCharacter(this, mSavedCharacter);
         onBackPressed();
     }
 

@@ -13,9 +13,9 @@ import android.widget.ProgressBar;
 import com.bustiblelemons.activities.AbsActionBarActivity;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.activities.CharacterViewerActivity;
-import com.bustiblelemons.cthulhator.character.characterslist.logic.CharacterCache;
 import com.bustiblelemons.cthulhator.character.characterslist.logic.OnOpenSavedCharacter;
 import com.bustiblelemons.cthulhator.character.characterslist.logic.SavedCharactersAdapter;
+import com.bustiblelemons.cthulhator.character.characterslist.logic.SavedCharactersProvider;
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
 import com.bustiblelemons.cthulhator.character.creation.ui.CreationWorkFlowActivity;
 import com.bustiblelemons.cthulhator.system.Grouping;
@@ -36,11 +36,11 @@ import butterknife.Optional;
  */
 public class CharactersListActivity extends AbsActionBarActivity
         implements View.OnClickListener,
-                   CharacterCache.OnCharactersInfoLoaded,
+                   SavedCharactersProvider.OnCharactersInfoLoaded,
                    LoadMoreListView.OnLoadMoreListener,
                    SearchView.OnQueryTextListener,
                    OnOpenSavedCharacter,
-                   CharacterCache.OnRetreiveCharacter {
+                   SavedCharactersProvider.OnRetreiveCharacter {
 
     @InjectView(R.id.add_character)
     CircleButton addFab;
@@ -93,7 +93,7 @@ public class CharactersListActivity extends AbsActionBarActivity
         }
         showProgressBar();
         grouping = new Grouping();
-        CharacterCache.loadSavedCharactersAsync(this, grouping);
+        SavedCharactersProvider.loadSavedCharactersAsync(this, grouping);
     }
 
     private void showProgressBar() {
@@ -142,7 +142,8 @@ public class CharactersListActivity extends AbsActionBarActivity
     public void onCharactersInfoLoaded(Grouping grouping, List<CharacterInfo> characters) {
         if (characters != null) {
             if (listAdapter == null) {
-                listAdapter = new SavedCharactersAdapter(this);
+                listAdapter = new SavedCharactersAdapter(this)
+                        .withOpenSaveCharacter(this);
                 recyclerView.setAdapter(listAdapter);
             }
             listAdapter.refreshData(characters);
@@ -165,8 +166,9 @@ public class CharactersListActivity extends AbsActionBarActivity
     }
 
     @Override
-    public void onOpenSavedCharacter(int characterHashCode) {
-        CharacterCache.getSavedCharacterByHashCode(this, characterHashCode);
+    public void onOpenSavedCharacter(int id) {
+        SavedCharacter character = SavedCharactersProvider.getSavedCharacterById(this, id);
+
     }
 
     @Override

@@ -18,20 +18,20 @@ import java.util.List;
 /**
  * Created by bhm on 20.07.14.
  */
-public class CharacterCache {
+public class SavedCharactersProvider {
 
-    private static final Logger log = new Logger(CharacterCache.class);
-    private static String sCharactersCacheFile = "saved.characters.json";
-    private static CharacterCache instance;
+    private static final Logger log                  = new Logger(SavedCharactersProvider.class);
+    private static       String sCharactersCacheFile = "saved.characters.json";
+    private static SavedCharactersProvider instance;
 
-    protected CharacterCache() {
+    protected SavedCharactersProvider() {
     }
 
     public static final ObjectMapper getMapper() {
         return LazyMapperHolder.INSTANCE;
     }
 
-    public static CharacterCache getInstance() {
+    public static SavedCharactersProvider getInstance() {
         return LazyHolder.INSTANCE;
     }
 
@@ -55,8 +55,8 @@ public class CharacterCache {
         return getInstance()._getCharacterSet(context);
     }
 
-    public static SavedCharacter getSavedCharacterByHashCode(Context context, int characterHashCode) {
-        return getInstance()._getSavedByHashCode(context, characterHashCode);
+    public static SavedCharacter getSavedCharacterById(Context context, int characterId) {
+        return getInstance()._getCharacterById(context, characterId);
     }
 
     public static void loadCharacterAsyn(Context context, int characterHashCode) {
@@ -69,7 +69,7 @@ public class CharacterCache {
 
     public synchronized SavedCharactersSet _getCharacterSet(Context context) {
         ObjectMapper m = getMapper();
-        File savedCharacters = CharacterCache.getSavedCharactersFile(context);
+        File savedCharacters = SavedCharactersProvider.getSavedCharactersFile(context);
         SavedCharactersSet r = null;
         try {
             r = m.readValue(savedCharacters, SavedCharactersSet.class);
@@ -89,7 +89,7 @@ public class CharacterCache {
         }
         set.add(character);
         ObjectMapper mapper = getMapper();
-        File f = CharacterCache.getSavedCharactersFile(context);
+        File f = SavedCharactersProvider.getSavedCharactersFile(context);
         try {
             mapper.writeValue(f, set);
         } catch (IOException e) {
@@ -97,13 +97,13 @@ public class CharacterCache {
         }
     }
 
-    private SavedCharacter _getSavedByHashCode(Context context, int characterHashCode) {
-        SavedCharactersSet set = getCharacterSet(context);
+    private SavedCharacter _getCharacterById(Context context, int id) {
+        SavedCharactersSet set = _getCharacterSet(context);
         if (set == null) {
             return null;
         }
         for (SavedCharacter character : set.getCharacters()) {
-            if (character != null && character.hashCode() == characterHashCode) {
+            if (character != null && character.getId() == id) {
                 return character;
             }
         }
@@ -123,6 +123,6 @@ public class CharacterCache {
     }
 
     private static final class LazyHolder {
-        private static final CharacterCache INSTANCE = new CharacterCache();
+        private static final SavedCharactersProvider INSTANCE = new SavedCharactersProvider();
     }
 }

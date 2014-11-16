@@ -24,6 +24,7 @@ import com.bustiblelemons.randomuserdotme.model.Location;
 import com.bustiblelemons.randomuserdotme.model.Name;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.joda.time.DateTime;
 
@@ -66,10 +67,11 @@ public class SavedCharacter implements Parcelable, Serializable {
     protected Set<CharacterProperty> properties  = new HashSet<CharacterProperty>();
     protected List<Possesion>        possesions  = new ArrayList<Possesion>();
     protected Set<HistoryEvent>      fullHistory = new HashSet<HistoryEvent>();
-    private   CthulhuEdition         edition     = CthulhuEdition.CoC5;
+    @JsonProperty("id")
+    private int id;
+    private CthulhuEdition edition = CthulhuEdition.CoC5;
     private CharacterDescription description;
     private BirthData            birth;
-    private long                 presentDate;
     private int                  age;
     private CthulhuPeriod period        = CthulhuPeriod.JAZZAGE;
     @JsonIgnore
@@ -105,10 +107,19 @@ public class SavedCharacter implements Parcelable, Serializable {
         this.period = tmpPeriod == -1 ? null : CthulhuPeriod.values()[tmpPeriod];
         this.description = in.readParcelable(CharacterDescription.class.getClassLoader());
         this.birth = in.readParcelable(BirthData.class.getClassLoader());
-        this.presentDate = in.readLong();
         this.age = in.readInt();
         this.suggestedDate = in.readLong();
         this.skillPointsAvailable = in.readInt();
+    }
+
+    @JsonProperty("id")
+    public int getId() {
+        return id = hashCode();
+    }
+
+    @JsonProperty("id")
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setFullHistory(Set<HistoryEvent> fullHistory) {
@@ -638,7 +649,6 @@ public class SavedCharacter implements Parcelable, Serializable {
                 ", edition=" + edition +
                 ", description=" + description +
                 ", birth=" + birth +
-                ", presentDate=" + presentDate +
                 ", cachedAffectedPossessions=" + cachedAffectedPossessions +
                 ", age=" + age +
                 '}';
@@ -672,7 +682,6 @@ public class SavedCharacter implements Parcelable, Serializable {
         dest.writeInt(this.period == null ? -1 : this.period.ordinal());
         dest.writeParcelable(this.description, flags);
         dest.writeParcelable(this.birth, flags);
-        dest.writeLong(this.presentDate);
         dest.writeInt(this.age);
         dest.writeLong(this.suggestedDate);
         dest.writeInt(this.skillPointsAvailable);
@@ -715,41 +724,18 @@ public class SavedCharacter implements Parcelable, Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-        SavedCharacter that = (SavedCharacter) o;
+        SavedCharacter character = (SavedCharacter) o;
 
-        if (age != that.age) {
+        if (birth != null ? !birth.equals(character.birth) : character.birth != null) return false;
+        if (description != null ? !description.equals(character.description) : character.description != null)
             return false;
-        }
-        if (presentDate != that.presentDate) {
+        if (edition != character.edition) return false;
+        if (period != character.period) return false;
+        if (properties != null ? !properties.equals(character.properties) : character.properties != null)
             return false;
-        }
-        if (birth != null ? !birth.equals(that.birth) : that.birth != null) {
-            return false;
-        }
-        if (description != null ? !description.equals(
-                that.description) : that.description != null) {
-            return false;
-        }
-        if (edition != that.edition) {
-            return false;
-        }
-        if (fullHistory != null ? !fullHistory.equals(
-                that.fullHistory) : that.fullHistory != null) {
-            return false;
-        }
-        if (possesions != null ? !possesions.equals(that.possesions) : that.possesions != null) {
-            return false;
-        }
-        if (properties != null ? !properties.equals(that.properties) : that.properties != null) {
-            return false;
-        }
 
         return true;
     }
@@ -757,13 +743,12 @@ public class SavedCharacter implements Parcelable, Serializable {
     @Override
     public int hashCode() {
         int result = properties != null ? properties.hashCode() : 0;
-        result = 31 * result + (possesions != null ? possesions.hashCode() : 0);
-        result = 31 * result + (fullHistory != null ? fullHistory.hashCode() : 0);
         result = 31 * result + (edition != null ? edition.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
+
+        //TODO birth data does not rapport correctly
         result = 31 * result + (birth != null ? birth.hashCode() : 0);
-        result = 31 * result + (int) (presentDate ^ (presentDate >>> 32));
-        result = 31 * result + age;
+        result = 31 * result + (period != null ? period.hashCode() : 0);
         return result;
     }
 

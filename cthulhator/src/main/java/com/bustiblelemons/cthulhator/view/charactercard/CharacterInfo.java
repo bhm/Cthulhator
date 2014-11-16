@@ -12,5 +12,5 @@ public interface CharacterInfo {
 
     String getPortraitUrl();
 
-    int getHashCode();
+    int getId();
 }

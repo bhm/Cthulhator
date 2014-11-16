@@ -17,9 +17,9 @@ import java.util.List;
  */
 public class SavedCharactersLoadAsyn extends AbsSimpleAsync<Grouping, List<CharacterInfo>> {
 
-    private final CharacterCache.OnCharactersInfoLoaded callBack;
+    private final SavedCharactersProvider.OnCharactersInfoLoaded callBack;
 
-    public SavedCharactersLoadAsyn(Context context, CharacterCache.OnCharactersInfoLoaded callBack) {
+    public SavedCharactersLoadAsyn(Context context, SavedCharactersProvider.OnCharactersInfoLoaded callBack) {
         super(context);
         this.callBack = callBack;
     }
@@ -27,7 +27,7 @@ public class SavedCharactersLoadAsyn extends AbsSimpleAsync<Grouping, List<Chara
     @Override
     protected List<CharacterInfo> call(Grouping... groupings) throws Exception {
         for (Grouping g : groupings) {
-            SavedCharactersSet set = CharacterCache.getCharacterSet(context);
+            SavedCharactersSet set = SavedCharactersProvider.getCharacterSet(context);
             if (set != null) {
                 List<CharacterInfo> infos = new ArrayList<CharacterInfo>();
                 for (SavedCharacter savedCharacter : set.getCharacters()) {

@@ -5,5 +5,5 @@ package com.bustiblelemons.cthulhator.character.characterslist.logic;
  * @origin com.bustiblelemons.cthulhator.character.characterslist.logic
  */
 public interface OnOpenSavedCharacter {
-    void onOpenSavedCharacter(int characterHashCode);
+    void onOpenSavedCharacter(int id);
 }
