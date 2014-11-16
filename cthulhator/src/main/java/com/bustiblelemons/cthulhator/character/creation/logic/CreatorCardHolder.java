@@ -29,7 +29,7 @@ public class CreatorCardHolder extends AbsRecyclerHolder<CreatorCard> {
     }
 
     @Override
-    public void bindData(CreatorCard item) {
+    public void onBindData(CreatorCard item) {
         if (item != null && mCharacteristicCard != null) {
             mCharacteristicCard.setOnPropertyChanged(mOnPropertyChanged);
             mCharacteristicCard.setRelatedRetreiver(mRetreiver);

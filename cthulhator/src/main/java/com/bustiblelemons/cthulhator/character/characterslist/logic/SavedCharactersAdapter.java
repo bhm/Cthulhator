@@ -4,13 +4,14 @@ import android.content.Context;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.bustiblelemons.adapters.AbsListAdapter;
+import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
+import com.bustiblelemons.recycler.AbsRecyclerAdapter;
 
 /**
  * Created by bhm on 13.08.14.
  */
-public class SavedCharactersAdapter extends AbsListAdapter<CharacterInfo, SavedCharacterHolder>
+public class SavedCharactersAdapter extends AbsRecyclerAdapter<CharacterInfo, SavedCharacterHolder>
         implements AdapterView.OnItemClickListener {
 
     private OnOpenSavedCharacter onOpenSavedCharacter;
@@ -20,8 +21,13 @@ public class SavedCharactersAdapter extends AbsListAdapter<CharacterInfo, SavedC
     }
 
     @Override
-    protected SavedCharacterHolder getViewHolder(int position) {
-        return new SavedCharacterHolder(getContext());
+    public int getLayoutId(int viewType) {
+        return R.layout.single_saved_character;
+    }
+
+    @Override
+    public SavedCharacterHolder getViewHolder(View view) {
+        return new SavedCharacterHolder(view).withOnOpenSavedCharacter(onOpenSavedCharacter);
     }
 
     @Override
@@ -30,6 +36,6 @@ public class SavedCharactersAdapter extends AbsListAdapter<CharacterInfo, SavedC
         if (onOpenSavedCharacter != null && i != null) {
             onOpenSavedCharacter.onOpenSavedCharacter(i.getHashCode());
         }
-
     }
+
 }

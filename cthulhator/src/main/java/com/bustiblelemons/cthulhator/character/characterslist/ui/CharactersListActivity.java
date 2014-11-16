@@ -2,6 +2,7 @@ package com.bustiblelemons.cthulhator.character.characterslist.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -17,8 +18,8 @@ import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharact
 import com.bustiblelemons.cthulhator.character.creation.ui.CreationWorkFlowActivity;
 import com.bustiblelemons.cthulhator.system.Grouping;
 import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
+import com.bustiblelemons.recycler.LoadMoreOnScrollWrapper;
 import com.bustiblelemons.views.LoadMoreListView;
-import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarHelper;
 
 import java.util.List;
 
@@ -39,17 +40,19 @@ public class CharactersListActivity extends AbsActionBarActivity
                    OnOpenSavedCharacter,
                    CharacterCache.OnRetreiveCharacter {
 
-    @InjectView(R.id.list)
-    LoadMoreListView listView;
     @InjectView(R.id.add_character)
-    CircleButton     addFab;
+    CircleButton addFab;
     @Optional
     @InjectView(android.R.id.progress)
-    ProgressBar      progressBar;
+    ProgressBar  progressBar;
 
     private SavedCharactersAdapter listAdapter;
     private Grouping               grouping;
-    private Toolbar mToolbar;
+    private Toolbar                mToolbar;
+
+    @InjectView(R.id.list)
+    private RecyclerView            recyclerView;
+    private LoadMoreOnScrollWrapper loadMoreScrollWrapper;
 
     @Override
     public int getBackResIconId() {
@@ -66,11 +69,11 @@ public class CharactersListActivity extends AbsActionBarActivity
             setSupportActionBar(mToolbar);
         }
         ButterKnife.inject(this);
-        if (listView != null) {
+        if (recyclerView != null) {
             listAdapter = new SavedCharactersAdapter(this);
-            listView.setOnLoadMoreListener(this);
-            listView.setAdapter(listAdapter);
-            listView.setOnItemClickListener(listAdapter);
+            loadMoreScrollWrapper = new LoadMoreOnScrollWrapper();
+            recyclerView.setOnScrollListener(loadMoreScrollWrapper);
+            recyclerView.setAdapter(listAdapter);
         }
     }
 
@@ -87,17 +90,6 @@ public class CharactersListActivity extends AbsActionBarActivity
         if (progressBar != null) {
             progressBar.setVisibility(View.VISIBLE);
         }
-    }
-
-    private FadingActionBarHelper setupFadingBar() {
-        FadingActionBarHelper helper = new FadingActionBarHelper()
-                .actionBarBackground(R.drawable.actionbar_brp)
-                .headerLayout(R.layout.header_characters_list)
-                .headerOverlayLayout(R.layout.header_characters_list_overlay)
-                .contentLayout(R.layout.activity_characters_list)
-                .parallax(false)
-                .lightActionBar(false);
-        return helper;
     }
 
     @Override
@@ -141,11 +133,9 @@ public class CharactersListActivity extends AbsActionBarActivity
         if (characters != null) {
             if (listAdapter == null) {
                 listAdapter = new SavedCharactersAdapter(this);
-                listView.setOnItemClickListener(listAdapter);
-                listView.setAdapter(listAdapter);
+                recyclerView.setAdapter(listAdapter);
             }
             listAdapter.refreshData(characters);
-            listView.onLoadMoreComplete();
             hideProgressbar();
             showListView();
 //            listAdapter.addItems(characters);
@@ -153,8 +143,8 @@ public class CharactersListActivity extends AbsActionBarActivity
     }
 
     private void showListView() {
-        if (listView != null) {
-            listView.setVisibility(View.VISIBLE);
+        if (recyclerView != null) {
+            recyclerView.setVisibility(View.VISIBLE);
         }
     }
 

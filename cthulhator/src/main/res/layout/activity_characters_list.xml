@@ -16,6 +16,14 @@
 
     </android.support.v7.widget.Toolbar>
 
+    < android.support.v7.widget.RecyclerView
+        android:id="@id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
+
     <at.markushi.ui.CircleButton
         android:id="@id/add_character"
         android:layout_width="@dimen/fab"
@@ -26,12 +34,4 @@
         android:layout_marginTop="@dimen/fab_offset"
         android:src="@drawable/ic_inc_selected"
         app:cb_color="@color/fab_done"/>
-
-    <com.bustiblelemons.views.LoadMoreListView
-        android:id="@id/list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/header"
-        android:visibility="invisible"
-        tools:visibility="visible"/>
 </RelativeLayout>
