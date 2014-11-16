@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.bustiblelemons.cthulhator.view.charactercard.CharacterCardView
+    android:id="@id/card"
+    style="@style/card"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <com.bustiblelemons.cthulhator.view.charactercard.CharacterCardView
-        android:id="@id/card"
-        style="@style/card"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/small_character_card"
-        custom:extraText="@string/unknown_statistics"
-        custom:layoutType="horizontal"
-        custom:mainInfoColor="@color/black_87"
-        custom:mainText="@string/unknown_name"
-        custom:menuIcon="@drawable/ic_overflow_dots"
-        custom:no_image="@drawable/no_face_poly"
-        custom:shortInfoColor="@color/black_54"
-        custom:shortText="@string/unknonw_location"/>
-
-</RelativeLayout>
+    android:layout_height="@dimen/small_character_card"
+    custom:extraText="@string/unknown_statistics"
+    custom:layoutType="horizontal"
+    custom:mainInfoColor="@color/black_87"
+    custom:mainText="@string/unknown_name"
+    custom:menuIcon="@drawable/ic_overflow_dots"
+    custom:no_image="@drawable/no_face_poly"
+    custom:shortInfoColor="@color/black_54"
+    custom:shortText="@string/unknonw_location"/>

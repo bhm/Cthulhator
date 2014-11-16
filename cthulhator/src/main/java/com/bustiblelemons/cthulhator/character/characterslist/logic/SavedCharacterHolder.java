@@ -11,13 +11,14 @@ import com.bustiblelemons.recycler.AbsRecyclerHolder;
 import com.bustiblelemons.recycler.LayoutResId;
 
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 /**
  * Created by bhm on 13.08.14.
  */
 @LayoutResId(R.layout.single_saved_character)
 public class SavedCharacterHolder extends AbsRecyclerHolder<CharacterInfo>
-        implements CharacterCardView.OnMenuClicked {
+        implements CharacterCardView.OnMenuClicked, View.OnClickListener {
 
     @InjectView(R.id.card)
     CharacterCardView cardView;
@@ -36,11 +37,19 @@ public class SavedCharacterHolder extends AbsRecyclerHolder<CharacterInfo>
             cardView.setCardInfo(item);
         }
         cardView.setMenuClickListener(this);
+        cardView.setOnClickListener(this);
     }
 
     public SavedCharacterHolder withOnOpenSavedCharacter(OnOpenSavedCharacter onOpenSavedCharacter) {
         mOnOpneSavedCharcter = onOpenSavedCharacter;
         return this;
+    }
+
+    @OnClick(R.id.card)
+    public void onCardClick() {
+        if (mOnOpneSavedCharcter != null) {
+            mOnOpneSavedCharcter.onOpenSavedCharacter(0);
+        }
     }
 
     @Override
@@ -52,5 +61,10 @@ public class SavedCharacterHolder extends AbsRecyclerHolder<CharacterInfo>
             mPopupMenu.inflate(R.menu.saved_character);
         }
         mPopupMenu.show();
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }
