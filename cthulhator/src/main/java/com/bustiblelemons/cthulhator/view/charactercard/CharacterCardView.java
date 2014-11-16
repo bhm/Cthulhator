@@ -9,9 +9,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.andexert.library.RippleView;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.views.loadingimage.RemoteImage;
 
@@ -21,7 +21,7 @@ import butterknife.OnClick;
 /**
  * Created by bhm on 21.09.14.
  */
-public class CharacterCardView extends RelativeLayout implements
+public class CharacterCardView extends RippleView implements
                                                       View.OnClickListener,
                                                       RemoteImage.PaletteColorsGeneratedSelective {
 
