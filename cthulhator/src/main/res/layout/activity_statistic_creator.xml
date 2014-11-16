@@ -7,14 +7,6 @@
                 android:layout_height="match_parent"
                 tools:context=".StatisticsCreatorActivity">
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@id/recycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/assign_skills"
-        android:layout_below="@id/header"/>
-
     <android.support.v7.widget.Toolbar
         android:id="@id/header"
         style="@style/header_toolbar"
@@ -23,6 +15,15 @@
         app:title="@string/statistics">
 
     </android.support.v7.widget.Toolbar>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/assign_skills"
+        android:layout_below="@id/header"/>
+
+
 
     <com.bustiblelemons.views.widget.RippleButton
         android:id="@id/assign_skills"

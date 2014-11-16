@@ -2,6 +2,8 @@ package com.bustiblelemons.cthulhator.character.characterslist.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -45,14 +47,15 @@ public class CharactersListActivity extends AbsActionBarActivity
     @Optional
     @InjectView(android.R.id.progress)
     ProgressBar  progressBar;
-
-    private SavedCharactersAdapter listAdapter;
-    private Grouping               grouping;
-    private Toolbar                mToolbar;
-
+    @InjectView(R.id.header)
+    Toolbar      mToolbar;
     @InjectView(R.id.list)
-    private RecyclerView            recyclerView;
-    private LoadMoreOnScrollWrapper loadMoreScrollWrapper;
+    RecyclerView recyclerView;
+    private SavedCharactersAdapter    listAdapter;
+    private Grouping                  grouping;
+    private LoadMoreOnScrollWrapper   mLoadMoreScrollWrapper;
+    private LinearLayoutManager       mManager;
+    private RecyclerView.ItemAnimator mAnimator;
 
     @Override
     public int getBackResIconId() {
@@ -63,17 +66,24 @@ public class CharactersListActivity extends AbsActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_characters_list);
-        mToolbar = (Toolbar) findViewById(R.id.header);
+        ButterKnife.inject(this);
         if (mToolbar != null) {
             mToolbar.setNavigationOnClickListener(this);
             setSupportActionBar(mToolbar);
         }
-        ButterKnife.inject(this);
+        initRecycler();
+    }
+
+    private void initRecycler() {
         if (recyclerView != null) {
-            listAdapter = new SavedCharactersAdapter(this);
-            loadMoreScrollWrapper = new LoadMoreOnScrollWrapper();
-            recyclerView.setOnScrollListener(loadMoreScrollWrapper);
-            recyclerView.setAdapter(listAdapter);
+            if (mManager == null) {
+                mManager = new LinearLayoutManager(this);
+            }
+            recyclerView.setLayoutManager(mManager);
+            if (mAnimator == null) {
+                mAnimator = new DefaultItemAnimator();
+            }
+            recyclerView.setItemAnimator(mAnimator);
         }
     }
 
