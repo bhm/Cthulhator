@@ -76,7 +76,7 @@ public class SkillsChooserActivity extends AbsCharacterCreationActivity
             if (mSkillEditorFragment != null) {
                 mSavedCharacter.setPropertyValues(mSkillEditorFragment.getSkills());
             }
-            mSavedCharacter.setSkillPointsAvaialable(mPointsAvailable);
+            mSavedCharacter.setSkillPointsAvailable(mPointsAvailable);
         }
         setResult(RESULT_OK, mSavedCharacter);
         onBackPressed();

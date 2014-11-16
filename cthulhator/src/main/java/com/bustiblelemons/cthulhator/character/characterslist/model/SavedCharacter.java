@@ -40,7 +40,7 @@ import java.util.TreeSet;
 /**
  * Created by bhm on 12.08.14.
  */
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SavedCharacter implements Parcelable, Serializable {
 
     @JsonIgnore
@@ -77,10 +77,11 @@ public class SavedCharacter implements Parcelable, Serializable {
     @JsonIgnore
     private HitPoints hitPoints;
     @JsonIgnore
-    private int skillPointsAvaialable = -1;
+    private int skillPointsAvailable = -1;
     @JsonIgnore
-    private int careerPoints          = -1;
-    private int hobbyPoints           = -1;
+    private int careerPoints         = -1;
+    @JsonIgnore
+    private int hobbyPoints          = -1;
 
     public SavedCharacter() {
     }
@@ -107,7 +108,11 @@ public class SavedCharacter implements Parcelable, Serializable {
         this.presentDate = in.readLong();
         this.age = in.readInt();
         this.suggestedDate = in.readLong();
-        this.skillPointsAvaialable = in.readInt();
+        this.skillPointsAvailable = in.readInt();
+    }
+
+    public void setFullHistory(Set<HistoryEvent> fullHistory) {
+        setFullHistory(fullHistory);
     }
 
     public CthulhuEdition getEdition() {
@@ -670,18 +675,18 @@ public class SavedCharacter implements Parcelable, Serializable {
         dest.writeLong(this.presentDate);
         dest.writeInt(this.age);
         dest.writeLong(this.suggestedDate);
-        dest.writeInt(this.skillPointsAvaialable);
+        dest.writeInt(this.skillPointsAvailable);
     }
 
     public int getSkillPointsAvailable() {
-        if (skillPointsAvaialable < 0) {
-            skillPointsAvaialable = getHobbyPoints() + getCareerPoints();
+        if (skillPointsAvailable < 0) {
+            skillPointsAvailable = getHobbyPoints() + getCareerPoints();
         }
-        return skillPointsAvaialable;
+        return skillPointsAvailable;
     }
 
-    public void setSkillPointsAvaialable(int skillPointsAvaialable) {
-        this.skillPointsAvaialable = skillPointsAvaialable;
+    public void setSkillPointsAvailable(int skillPointsAvailable) {
+        this.skillPointsAvailable = skillPointsAvailable;
     }
 
     @JsonIgnore
@@ -828,7 +833,7 @@ public class SavedCharacter implements Parcelable, Serializable {
     @JsonIgnore
     public Set<CharacterProperty> randomizeStatistics() {
         careerPoints = -1;
-        skillPointsAvaialable = -1;
+        skillPointsAvailable = -1;
         hobbyPoints = -1;
         for (CharacterProperty property : getStatistics()) {
             if (property != null) {
