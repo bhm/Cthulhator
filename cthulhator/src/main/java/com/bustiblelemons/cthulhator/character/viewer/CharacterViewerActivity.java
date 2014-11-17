@@ -1,4 +1,4 @@
-package com.bustiblelemons.cthulhator.activities;
+package com.bustiblelemons.cthulhator.character.viewer;
 
 import android.content.Intent;
 import android.os.Bundle;
