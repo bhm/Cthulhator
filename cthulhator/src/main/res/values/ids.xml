@@ -111,4 +111,6 @@
     <item name="photos_indicator" type="id"/>
     <item name="recycler" type="id"/>
     <item name="tag_property" type="id"/>
+    <item name="expand" type="id"/>
+    <item name="go_back" type="id"/>
 </resources>

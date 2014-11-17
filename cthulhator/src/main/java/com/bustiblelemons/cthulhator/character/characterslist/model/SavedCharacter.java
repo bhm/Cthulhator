@@ -24,7 +24,6 @@ import com.bustiblelemons.randomuserdotme.model.Location;
 import com.bustiblelemons.randomuserdotme.model.Name;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.joda.time.DateTime;
 
@@ -37,6 +36,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by bhm on 12.08.14.
@@ -64,10 +64,12 @@ public class SavedCharacter implements Parcelable, Serializable {
         sShouldHaveAssignedAtLeast = BRPStatistic.values().length / 5;
     }
 
-    protected Set<CharacterProperty> properties  = new HashSet<CharacterProperty>();
-    protected List<Possesion>        possesions  = new ArrayList<Possesion>();
-    protected Set<HistoryEvent>      fullHistory = new HashSet<HistoryEvent>();
-    @JsonProperty("id")
+    @JsonIgnore
+    private static AtomicInteger          sAtomicId   = new AtomicInteger(-1);
+    protected      Set<CharacterProperty> properties  = new HashSet<CharacterProperty>();
+    protected      List<Possesion>        possesions  = new ArrayList<Possesion>();
+    protected      Set<HistoryEvent>      fullHistory = new HashSet<HistoryEvent>();
+    @JsonIgnore
     private int id;
     private CthulhuEdition edition = CthulhuEdition.CoC5;
     private CharacterDescription description;
@@ -86,6 +88,7 @@ public class SavedCharacter implements Parcelable, Serializable {
     private int hobbyPoints          = -1;
 
     public SavedCharacter() {
+        this.id = sAtomicId.incrementAndGet();
     }
 
     private SavedCharacter(Parcel in) {
@@ -112,14 +115,9 @@ public class SavedCharacter implements Parcelable, Serializable {
         this.skillPointsAvailable = in.readInt();
     }
 
-    @JsonProperty("id")
+    @JsonIgnore
     public int getId() {
-        return id = hashCode();
-    }
-
-    @JsonProperty("id")
-    public void setId(int id) {
-        this.id = id;
+        return id;
     }
 
     public void setFullHistory(Set<HistoryEvent> fullHistory) {

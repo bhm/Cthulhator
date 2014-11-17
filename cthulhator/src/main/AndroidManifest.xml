@@ -20,7 +20,7 @@
             android:label="@string/activity_portraits"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activities.CharacterViewerActivity"
+            android:name=".character.viewer.CharacterViewerActivity"
             android:label="@string/activity_character"
             android:screenOrientation="portrait"/>
         <activity

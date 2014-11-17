@@ -164,8 +164,16 @@
         <item name="subtitleTextAppearance">@style/toolbar_subtitle</item>
     </style>
 
+    <style name="toolbar_character_viewer">
+        <item name="android:background">@color/solid_background</item>
+        <item name="android:actionOverflowButtonStyle">@style/toolbar_overflow</item>
+        <item name="actionOverflowButtonStyle">@style/toolbar_overflow</item>
+        <item name="titleTextAppearance">@style/toolbar_title</item>
+        <item name="subtitleTextAppearance">@style/toolbar_subtitle</item>
+    </style>
+
     <style name="toolbar_overflow" parent="Widget.AppCompat.Light.ActionButton.Overflow">
-        <item name="android:src">@drawable/ic_overflow_dots</item>
+        <item name="android:src">@drawable/ic_inc_selected</item>
     </style>
 
 </resources>

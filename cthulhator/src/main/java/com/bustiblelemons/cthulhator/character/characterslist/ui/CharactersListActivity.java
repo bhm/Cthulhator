@@ -12,12 +12,12 @@ import android.widget.ProgressBar;
 
 import com.bustiblelemons.activities.AbsActionBarActivity;
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.activities.CharacterViewerActivity;
 import com.bustiblelemons.cthulhator.character.characterslist.logic.OnOpenSavedCharacter;
 import com.bustiblelemons.cthulhator.character.characterslist.logic.SavedCharactersAdapter;
 import com.bustiblelemons.cthulhator.character.characterslist.logic.SavedCharactersProvider;
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
 import com.bustiblelemons.cthulhator.character.creation.ui.CreationWorkFlowActivity;
+import com.bustiblelemons.cthulhator.character.viewer.CharacterViewerActivity;
 import com.bustiblelemons.cthulhator.system.Grouping;
 import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
 import com.bustiblelemons.recycler.LoadMoreOnScrollWrapper;
@@ -168,7 +168,7 @@ public class CharactersListActivity extends AbsActionBarActivity
     @Override
     public void onOpenSavedCharacter(int id) {
         SavedCharacter character = SavedCharactersProvider.getSavedCharacterById(this, id);
-
+        onRetreiveCharacter(character, id);
     }
 
     @Override

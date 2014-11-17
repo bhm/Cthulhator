@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@color/red_500">
+
+    <FrameLayout
+        android:id="@id/fab__content_top_margin"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbar_height"
+        android:layout_above="@id/fab_pivot"/>
+
+    <RelativeLayout
+        android:id="@id/fab_pivot"
+        style="@style/card.peeking.bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/recycler"
+        android:layout_alignParentBottom="true"
+        android:layout_alignWithParentIfMissing="true">
+
+        <TextView
+            android:id="@id/main_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:paddingBottom="@dimen/padding_8"
+            android:paddingLeft="@dimen/padding_16"
+            android:paddingRight="@dimen/padding_16"
+            android:paddingTop="@dimen/padding_16"
+            android:textColor="@color/black_87"
+            android:textSize="@dimen/font_22"
+            android:textStyle="bold"
+            tools:text="@string/placeholder_name"/>
+
+        <TextView
+            android:id="@id/short_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/main_info"
+            android:ellipsize="end"
+            android:maxLength="@integer/twit_length"
+            android:paddingBottom="@dimen/padding_16"
+            android:paddingLeft="@dimen/padding_16"
+            android:paddingRight="@dimen/padding_16"
+            android:textColor="@color/black_54"
+            android:textSize="@dimen/font_14"
+            tools:text="@string/placeholder_short_info"/>
+
+        <TextView
+            android:id="@id/extra_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/short_info"
+            android:ellipsize="end"
+            android:maxLength="@integer/twit_length"
+            android:paddingBottom="@dimen/padding_16"
+            android:paddingLeft="@dimen/padding_16"
+            android:paddingRight="@dimen/padding_16"
+            android:paddingTop="@dimen/padding_16"
+            android:textColor="@color/black_54"
+            android:textSize="@dimen/font_12"
+            tools:text="@string/placeholder_top_stats"/>
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/light_background"
+        android:visibility="gone"/>
+
+    <at.markushi.ui.CircleButton
+        android:id="@id/expand"
+
+        android:layout_width="@dimen/fab"
+        android:layout_height="@dimen/fab"
+        android:layout_above="@id/fab_pivot"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/fab_offset"
+        android:layout_marginLeft="@dimen/padding_16"
+        android:layout_marginRight="@dimen/padding_16"
+        android:layout_marginTop="@dimen/fab_offset"
+        android:src="@drawable/ic_navigation_accept"
+        app:cb_color="@color/fab_done"/>
+
+</RelativeLayout>

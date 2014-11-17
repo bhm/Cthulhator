@@ -1,6 +1,7 @@
 package com.bustiblelemons.cthulhator.character.characterslist.logic;
 
 import android.content.Context;
+import android.util.LruCache;
 
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharactersSet;
@@ -20,9 +21,12 @@ import java.util.List;
  */
 public class SavedCharactersProvider {
 
-    private static final Logger log                  = new Logger(SavedCharactersProvider.class);
-    private static       String sCharactersCacheFile = "saved.characters.json";
+    private static final Logger                            log                  = new Logger(SavedCharactersProvider.class);
+    private static final LruCache<Integer, SavedCharacter> sCharactersLRU       =
+            new LruCache<Integer, SavedCharacter>(4);
+    private static       String                            sCharactersCacheFile = "saved.characters.json";
     private static SavedCharactersProvider instance;
+    private        SavedCharactersSet      mCharacterSet;
 
     protected SavedCharactersProvider() {
     }
@@ -68,43 +72,50 @@ public class SavedCharactersProvider {
     }
 
     public synchronized SavedCharactersSet _getCharacterSet(Context context) {
-        ObjectMapper m = getMapper();
-        File savedCharacters = SavedCharactersProvider.getSavedCharactersFile(context);
-        SavedCharactersSet r = null;
-        try {
-            r = m.readValue(savedCharacters, SavedCharactersSet.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-            r = new SavedCharactersSet();
-            r.setCharacters(new ArrayList<SavedCharacter>());
+        if (mCharacterSet == null) {
+            ObjectMapper m = getMapper();
+            File savedCharacters = SavedCharactersProvider.getSavedCharactersFile(context);
+            try {
+                mCharacterSet = m.readValue(savedCharacters, SavedCharactersSet.class);
+            } catch (IOException e) {
+                e.printStackTrace();
+                mCharacterSet = new SavedCharactersSet();
+                mCharacterSet.setCharacters(new ArrayList<SavedCharacter>());
+            }
         }
-        return r;
+        return mCharacterSet;
 
     }
 
     private void _saveCharacter(Context context, SavedCharacter character) {
-        SavedCharactersSet set = _getCharacterSet(context);
-        if (set == null) {
-            set = new SavedCharactersSet();
+        if (mCharacterSet == null) {
+            mCharacterSet = _getCharacterSet(context);
         }
-        set.add(character);
+        if (mCharacterSet == null) {
+            mCharacterSet = new SavedCharactersSet();
+        }
+        mCharacterSet.add(character);
         ObjectMapper mapper = getMapper();
         File f = SavedCharactersProvider.getSavedCharactersFile(context);
         try {
-            mapper.writeValue(f, set);
+            mapper.writeValue(f, mCharacterSet);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private SavedCharacter _getCharacterById(Context context, int id) {
-        SavedCharactersSet set = _getCharacterSet(context);
-        if (set == null) {
-            return null;
-        }
-        for (SavedCharacter character : set.getCharacters()) {
-            if (character != null && character.getId() == id) {
-                return character;
+        if (sCharactersLRU.get(id) == null) {
+            if (mCharacterSet == null) {
+                mCharacterSet = _getCharacterSet(context);
+                if (mCharacterSet == null) {
+                    return null;
+                }
+            }
+            for (SavedCharacter character : mCharacterSet.getCharacters()) {
+                if (character != null && character.getId() == id) {
+                    return character;
+                }
             }
         }
         return null;

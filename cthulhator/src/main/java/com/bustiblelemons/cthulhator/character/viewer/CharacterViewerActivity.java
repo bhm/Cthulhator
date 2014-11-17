@@ -2,48 +2,74 @@ package com.bustiblelemons.cthulhator.character.viewer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 
 import com.bustiblelemons.activities.AbsArgActivity;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
+import com.bustiblelemons.cthulhator.character.portrait.model.Portrait;
 import com.bustiblelemons.cthulhator.character.portrait.ui.PortraitsActivity;
+import com.bustiblelemons.cthulhator.character.viewer.logic.OnExpandCharacterViewer;
+import com.bustiblelemons.cthulhator.character.viewer.ui.CharacterViewerFragment;
 import com.bustiblelemons.cthulhator.test.BRPCharacterFragment;
+import com.bustiblelemons.views.loadingimage.RemoteImage;
 import com.kbeanie.imagechooser.api.ChosenImage;
 import com.kbeanie.imagechooser.api.ImageChooserListener;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
+import butterknife.Optional;
 
 /**
  * Created by bhm on 20.07.14.
  */
 public class CharacterViewerActivity extends AbsArgActivity<SavedCharacter>
         implements BRPCharacterFragment.BRPCharacterListener,
-                   ImageChooserListener {
+                   ImageChooserListener,
+                   OnExpandCharacterViewer {
 
     public static final String CHARCTER_ID = "character_id";
-    private BRPCharacterFragment brpCharacterFragment;
-    private SavedCharacter       mSavedCharacter;
+    @InjectView(android.R.id.icon)
+    RemoteImage mPortraitView;
+    private SavedCharacter          mSavedCharacter;
+    private CharacterViewerFragment mCharacterViewerFragment;
+    private Portrait                mMainPortrait;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character_viewer);
+        ButterKnife.inject(this);
+        mSavedCharacter = getInstanceArgument();
         attachCharacterViewer();
-        getSupportActionBar();
+        loadIcon();
+    }
+
+    private void attachCharacterViewer() {
+        if (mCharacterViewerFragment == null) {
+            mCharacterViewerFragment = CharacterViewerFragment.newInstance(mSavedCharacter);
+        }
+        addFragment(android.R.id.content, mCharacterViewerFragment);
     }
 
     @Override
     protected void onInstanceArgumentRead(SavedCharacter arg) {
-        mSavedCharacter = arg;
+        if (arg != null) {
+            mSavedCharacter = arg;
+            loadIcon();
+            attachCharacterViewer();
+        }
     }
 
-    private void attachCharacterViewer() {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        if (brpCharacterFragment == null) {
-            brpCharacterFragment = BRPCharacterFragment.newInstance(getIntent().getExtras());
+    private void loadIcon() {
+        if (mSavedCharacter != null && mPortraitView != null) {
+            mMainPortrait = mSavedCharacter.getMainPortrait();
+            if (mMainPortrait != null) {
+                mPortraitView.loadFrom(mMainPortrait.getUrl());
+            }
         }
-        transaction.add(android.R.id.content, brpCharacterFragment);
-        transaction.commit();
     }
+
 
     @Override
     public boolean onPickPicture(int characterId) {
@@ -57,8 +83,25 @@ public class CharacterViewerActivity extends AbsArgActivity<SavedCharacter>
 
     }
 
+    @Optional
+    @OnClick(R.id.go_back)
+    public void onGoBack() {
+        onBackPressed();
+    }
+
+
     @Override
     public void onError(String s) {
+
+    }
+
+    @Override
+    public void onExpandCharacterViewer() {
+
+    }
+
+    @Override
+    public void onCollapseCharacterViewer() {
 
     }
 }

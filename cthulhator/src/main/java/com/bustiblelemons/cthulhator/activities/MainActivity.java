@@ -10,6 +10,7 @@ import com.bustiblelemons.activities.AbsActionBarActivity;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.description.ui.RandomCharactersActivity;
 import com.bustiblelemons.cthulhator.character.portrait.ui.PortraitsActivity;
+import com.bustiblelemons.cthulhator.character.viewer.CharacterViewerActivity;
 
 public class MainActivity extends AbsActionBarActivity {
 
