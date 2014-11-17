@@ -165,7 +165,7 @@
     </style>
 
     <style name="toolbar_character_viewer">
-        <item name="android:background">@color/solid_background</item>
+        <item name="android:background">@color/transparent</item>
         <item name="android:actionOverflowButtonStyle">@style/toolbar_overflow</item>
         <item name="actionOverflowButtonStyle">@style/toolbar_overflow</item>
         <item name="titleTextAppearance">@style/toolbar_title</item>

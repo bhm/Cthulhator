@@ -13,13 +13,24 @@
         android:layout_height="match_parent"
         app:no_image="@drawable/no_face_poly"/>
 
+    <FrameLayout
+        android:id="@android:id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/header"
+        tools:layout_height="120dp"
+        tools:style="@style/card.peeking.bottom">
+    </FrameLayout>
+
     <android.support.v7.widget.Toolbar
         android:id="@id/header"
         style="@style/toolbar_character_viewer"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/actionbar_height">
+        android:layout_height="@dimen/actionbar_height"
+        app:contentInsetLeft="0dp">
 
-        <android.widget.IconTextView
+    <android.widget.IconTextView
             android:id="@id/go_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,16 +41,4 @@
             android:textColor="@color/main_color_active"
             android:textSize="@dimen/font_24"/>
     </android.support.v7.widget.Toolbar>
-
-    <FrameLayout
-        android:id="@android:id/content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@id/header"
-        android:layout_marginTop="-6dp"
-        tools:layout_height="120dp"
-        tools:style="@style/card.peeking.bottom">
-    </FrameLayout>
-
 </RelativeLayout>

@@ -30,7 +30,7 @@ import butterknife.Optional;
  * Created by hiv on 17.11.14.
  */
 public class CharacterViewerFragment extends AbsArgFragment<SavedCharacter> {
-    private static Animation sSlideUpAnimation;
+    private static Animation sSlideInAnimation;
     private static Animation sSlideOutAnimation;
     @InjectView(R.id.recycler)
     RecyclerView mRecyclerView;
@@ -47,6 +47,30 @@ public class CharacterViewerFragment extends AbsArgFragment<SavedCharacter> {
     private RecyclerView.LayoutManager mManager;
     private RecyclerView.ItemAnimator  mAnimator;
     private OnExpandCharacterViewer    mExpandCallback;
+    private final Animation.AnimationListener sAnimationListener = new Animation.AnimationListener() {
+        @Override
+        public void onAnimationStart(Animation animation) {
+
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            if (animation != null && animation.equals(sSlideOutAnimation)) {
+                if (mExpandCallback != null) {
+                    mExpandCallback.onFinishCollapseAnimation();
+                }
+            } else if (animation != null && animation.equals(sSlideInAnimation)) {
+                if (mExpandCallback != null) {
+                    mExpandCallback.onFinishExpandAnimation();
+                }
+            }
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+
+        }
+    };
 
     public static CharacterViewerFragment newInstance(SavedCharacter savedCharacter) {
         CharacterViewerFragment r = new CharacterViewerFragment();
@@ -57,11 +81,13 @@ public class CharacterViewerFragment extends AbsArgFragment<SavedCharacter> {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (sSlideUpAnimation == null) {
-            sSlideUpAnimation = AnimationUtils.loadAnimation(activity, R.anim.abc_slide_in_bottom);
+        if (sSlideInAnimation == null) {
+            sSlideInAnimation = AnimationUtils.loadAnimation(activity, R.anim.abc_slide_in_bottom);
+            sSlideInAnimation.setAnimationListener(sAnimationListener);
         }
         if (sSlideOutAnimation == null) {
             sSlideOutAnimation = AnimationUtils.loadAnimation(activity, R.anim.abc_slide_out_bottom);
+            sSlideOutAnimation.setAnimationListener(sAnimationListener);
         }
         if (mManager == null) {
             mManager = new LinearLayoutManager(activity);
@@ -134,8 +160,8 @@ public class CharacterViewerFragment extends AbsArgFragment<SavedCharacter> {
             boolean expand = mRecyclerView.getVisibility() != View.VISIBLE;
             if (expand) {
                 mRecyclerView.setVisibility(View.VISIBLE);
-                mRecyclerView.setAnimation(sSlideUpAnimation);
-                sSlideUpAnimation.start();
+                mRecyclerView.setAnimation(sSlideInAnimation);
+                sSlideInAnimation.start();
             } else {
                 mRecyclerView.setAnimation(sSlideOutAnimation);
                 sSlideOutAnimation.start();

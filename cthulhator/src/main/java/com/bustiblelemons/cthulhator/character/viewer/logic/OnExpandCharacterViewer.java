@@ -7,4 +7,8 @@ public interface OnExpandCharacterViewer {
     void onExpandCharacterViewer();
 
     void onCollapseCharacterViewer();
+
+    void onFinishExpandAnimation();
+
+    void onFinishCollapseAnimation();
 }

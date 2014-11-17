@@ -2,10 +2,12 @@ package com.bustiblelemons.cthulhator.character.viewer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 
 import com.bustiblelemons.activities.AbsArgActivity;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
+import com.bustiblelemons.cthulhator.character.description.model.CharacterDescription;
 import com.bustiblelemons.cthulhator.character.portrait.model.Portrait;
 import com.bustiblelemons.cthulhator.character.portrait.ui.PortraitsActivity;
 import com.bustiblelemons.cthulhator.character.viewer.logic.OnExpandCharacterViewer;
@@ -31,9 +33,12 @@ public class CharacterViewerActivity extends AbsArgActivity<SavedCharacter>
     public static final String CHARCTER_ID = "character_id";
     @InjectView(android.R.id.icon)
     RemoteImage mPortraitView;
+    @InjectView(R.id.header)
+    Toolbar mToolbar;
     private SavedCharacter          mSavedCharacter;
     private CharacterViewerFragment mCharacterViewerFragment;
     private Portrait                mMainPortrait;
+    private CharacterDescription mDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,5 +108,20 @@ public class CharacterViewerActivity extends AbsArgActivity<SavedCharacter>
     @Override
     public void onCollapseCharacterViewer() {
 
+    }
+
+    @Override
+    public void onFinishExpandAnimation() {
+        mDescription = mSavedCharacter.getDescription();
+        if (mToolbar != null && mDescription != null && mDescription.getName() != null) {
+            mToolbar.setTitle(mDescription.getName().getFullName());
+        }
+    }
+
+    @Override
+    public void onFinishCollapseAnimation() {
+        if (mToolbar != null) {
+            mToolbar.setTitle(null);
+        }
     }
 }
