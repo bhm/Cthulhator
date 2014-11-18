@@ -1,5 +1,6 @@
 package com.bustiblelemons.cthulhator.system.brp.statistics;
 
+import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
 import com.bustiblelemons.cthulhator.system.properties.ActionGroup;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 import com.bustiblelemons.cthulhator.system.properties.PropertyType;
@@ -11,9 +12,31 @@ import java.util.List;
  * Created by bhm on 20.07.14.
  */
 public class HitPoints {
-    private int max;
-    private int current;
-    private int min;
+    private int max     = 0;
+    private int current = 0;
+    private int min     = -2;
+
+    public static HitPoints forProperties(CthulhuEdition edition, float con, float siz) {
+        HitPoints hitPoints = new HitPoints();
+        int value = getValue(con, siz, edition);
+        hitPoints.setMax(value);
+        hitPoints.setCurrent(value);
+        hitPoints.setMin(-2);
+        return hitPoints;
+    }
+
+    private static int getValue(float con, float siz, CthulhuEdition edition) {
+        float sum;
+        int value;
+        switch (edition) {
+        default:
+        case CoC5:
+        case CoC6:
+            sum = con + siz;
+            value = Math.round(sum / 2);
+        }
+        return value;
+    }
 
     public int getMax() {
         return max;
@@ -33,10 +56,10 @@ public class HitPoints {
 
     public CharacterProperty asCharacterProperty() {
         CharacterProperty r = new CharacterProperty();
-        r.setDisplayValue(toString());
-        r.setType(PropertyType.DAMAGE_BONUS);
+        r.setType(PropertyType.HIT_POINTS);
         r.setMinValue(getMin());
         r.setMaxValue(getMax());
+        r.setValue(getMax());
         r.setName(HitPoints.class.getSimpleName());
         List<ActionGroup> g = new ArrayList<ActionGroup>();
         g.add(ActionGroup.COMBAT);

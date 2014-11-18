@@ -69,6 +69,21 @@ public enum BRPStatistic {
             return relations;
         }
     }, CON {
+        public Relation damageRelation;
+        public List<Relation> relations;
+
+        @Override
+        public List<Relation> getRelations() {
+            if (relations == null) {
+                relations = new ArrayList<Relation>();
+                damageRelation = new Relation()
+                        .setPropertyName(HitPoints.class.getSimpleName())
+                        .setModifierType(ModifierType.NONE);
+                relations.add(damageRelation);
+            }
+            return relations;
+        }
+
     }, APP {
     }, POW {
         public Relation sanityRelation;

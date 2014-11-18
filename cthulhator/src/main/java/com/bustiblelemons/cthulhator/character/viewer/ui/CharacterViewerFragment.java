@@ -30,8 +30,6 @@ import butterknife.Optional;
  * Created by hiv on 17.11.14.
  */
 public class CharacterViewerFragment extends AbsArgFragment<SavedCharacter> {
-    private static Animation sSlideInAnimation;
-    private static Animation sSlideOutAnimation;
     @InjectView(R.id.recycler)
     RecyclerView mRecyclerView;
     @Optional
@@ -43,6 +41,8 @@ public class CharacterViewerFragment extends AbsArgFragment<SavedCharacter> {
     @Optional
     @InjectView(R.id.extra_info)
     TextView     mExtraInfoView;
+    private Animation                  sSlideInAnimation;
+    private Animation                  sSlideOutAnimation;
     private SavedCharacter             mSavedCharacter;
     private RecyclerView.LayoutManager mManager;
     private RecyclerView.ItemAnimator  mAnimator;

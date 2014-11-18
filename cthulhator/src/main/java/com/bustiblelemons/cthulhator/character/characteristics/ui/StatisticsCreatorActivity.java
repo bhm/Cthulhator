@@ -80,9 +80,11 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
             initRecyclerViewer();
             if (mSavedCharacter == null) {
                 mSavedCharacter = CthulhuCharacter.forEdition(mEdition);
+                randomizStatsAsyn();
+            } else {
+                mStatisticsSet = mSavedCharacter.getStatistics();
+                loadCardsAsync(mStatisticsSet);
             }
-            mStatisticsSet = mSavedCharacter.getStatistics();
-            loadCardsAsync(mStatisticsSet);
         }
     }
 
@@ -123,14 +125,18 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item != null && item.getItemId() == R.id.reroll) {
             if (mSavedCharacter != null) {
-                RandomizeStatisitcsAsyn randomizeAsyn = new RandomizeStatisitcsAsyn(this)
-                        .withOnStatisticsRandomzied(this);
-                randomizeAsyn.executeCrossPlatform(mSavedCharacter);
+                randomizStatsAsyn();
             }
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void randomizStatsAsyn() {
+        RandomizeStatisitcsAsyn randomizeAsyn = new RandomizeStatisitcsAsyn(this)
+                .withOnStatisticsRandomzied(this);
+        randomizeAsyn.executeCrossPlatform(mSavedCharacter);
     }
 
     @OnClick(R.id.assign_skills)

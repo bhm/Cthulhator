@@ -67,8 +67,9 @@ public class CharacterProperty extends ObservableCharacterProperty
         this.format = tmpFormat == -1 ? null : PropertyFormat.values()[tmpFormat];
         int tmpType = in.readInt();
         this.type = tmpType == -1 ? null : PropertyType.values()[tmpType];
-        this.actionGroup = new ArrayList<ActionGroup>();
-        in.readList(this.actionGroup, List.class.getClassLoader());
+
+        readActionGroups(in);
+
         int relationsSize = in.readInt();
         Relation[] rel = new Relation[relationsSize];
         in.readTypedArray(rel, Relation.CREATOR);
@@ -76,6 +77,20 @@ public class CharacterProperty extends ObservableCharacterProperty
         Collections.addAll(relations, rel);
         this.nameResId = in.readInt();
         this.shortNameResId = in.readInt();
+    }
+
+    private void readActionGroups(Parcel in) {
+        int actionGroupOrdinalsSize = in.readInt();
+        int[] actionGroupOrdinals = new int[actionGroupOrdinalsSize];
+        in.readIntArray(actionGroupOrdinals);
+        this.actionGroup = new ArrayList<ActionGroup>(shortNameResId);
+        for (int ordinal : actionGroupOrdinals) {
+            ActionGroup group = null;
+            if (ordinal >= 0) {
+                group = ActionGroup.values()[ordinal];
+            }
+            this.actionGroup.add(group);
+        }
     }
 
     public List<ActionGroup> getActionGroup() {
@@ -294,7 +309,7 @@ public class CharacterProperty extends ObservableCharacterProperty
         dest.writeInt(this.baseValue);
         dest.writeInt(this.format == null ? -1 : this.format.ordinal());
         dest.writeInt(this.type == null ? -1 : this.type.ordinal());
-        dest.writeList(this.actionGroup);
+        parcelizeActionGroups(dest);
         int relationsSize = this.relations != null ? this.relations.size() : 0;
         dest.writeInt(relationsSize);
         Relation[] rel = new Relation[relationsSize];
@@ -304,6 +319,27 @@ public class CharacterProperty extends ObservableCharacterProperty
         dest.writeTypedArray(rel, flags);
         dest.writeInt(this.nameResId);
         dest.writeInt(this.shortNameResId);
+    }
+
+    private void parcelizeActionGroups(Parcel dest) {
+        if (this.actionGroup == null) {
+            dest.writeInt(0);
+            dest.writeIntArray(new int[0]);
+        } else {
+            int size = this.actionGroup.size();
+            int[] oridnals = new int[size];
+            int pos = 0;
+            for (ActionGroup group : this.actionGroup) {
+                int ordinal = -1;
+                if (group != null) {
+                    ordinal = group.ordinal();
+                }
+                oridnals[pos] = ordinal;
+                pos++;
+            }
+            dest.writeInt(size);
+            dest.writeIntArray(oridnals);
+        }
     }
 
     public ActionGroup getMainActionGroup() {

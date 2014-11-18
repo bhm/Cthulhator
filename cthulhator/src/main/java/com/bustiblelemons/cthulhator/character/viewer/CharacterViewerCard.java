@@ -2,6 +2,7 @@ package com.bustiblelemons.cthulhator.character.viewer;
 
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.system.brp.statistics.BRPStatistic;
+import com.bustiblelemons.cthulhator.system.brp.statistics.HitPoints;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * Created by hiv on 17.11.14.
  */
-public enum CharacterViewerCards {
+public enum CharacterViewerCard {
     COMBAT {
         private List<String> mNames;
 
@@ -27,6 +28,7 @@ public enum CharacterViewerCards {
                 mNames.add(BRPStatistic.SIZ.name());
                 mNames.add(BRPStatistic.STR.name());
                 mNames.add(BRPStatistic.DEX.name());
+                mNames.add(HitPoints.class.getSimpleName());
             }
             return mNames;
         }
@@ -42,8 +44,8 @@ public enum CharacterViewerCards {
         public Collection<String> getPropertyNames() {
             if (mNames == null) {
                 mNames = new ArrayList<String>(2);
-                mNames.add(BRPStatistic.INT.name());
-                mNames.add(BRPStatistic.EDU.name());
+                mNames.add(BRPStatistic.POW.name());
+                mNames.add(BRPStatistic.LUCK.name());
             }
             return mNames;
         }

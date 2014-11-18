@@ -13,6 +13,7 @@ import com.bustiblelemons.cthulhator.character.possessions.model.Possesion;
 import com.bustiblelemons.cthulhator.system.brp.skills.BRPSkillPointPools;
 import com.bustiblelemons.cthulhator.system.brp.statistics.BRPStatistic;
 import com.bustiblelemons.cthulhator.system.brp.statistics.HitPoints;
+import com.bustiblelemons.cthulhator.system.brp.statistics.Sanity;
 import com.bustiblelemons.cthulhator.system.damage.DamageBonus;
 import com.bustiblelemons.cthulhator.system.damage.DamageBonusFactory;
 import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
@@ -86,6 +87,8 @@ public class SavedCharacter implements Parcelable, Serializable {
     private int careerPoints         = -1;
     @JsonIgnore
     private int hobbyPoints          = -1;
+    @JsonIgnore
+    private Sanity sanity;
 
     public SavedCharacter() {
         this.id = sAtomicId.incrementAndGet();
@@ -138,11 +141,25 @@ public class SavedCharacter implements Parcelable, Serializable {
         this.edition = edition;
         this.properties.clear();
         fillStatistics();
+        updatSecondaryStatistics();
         fillSkillsList();
         updateDamageBonus();
+        updateHitpoints();
         updateSkillPointPools();
         setupAgeAndBirth();
     }
+
+    @JsonIgnore
+    public int updatSecondaryStatistics() {
+        return updateRelatedProperties(getStatistics());
+    }
+
+
+    private void updateHitpoints() {
+        CharacterProperty hitPoints = getHitPoints().asCharacterProperty();
+        addCharacterProperty(hitPoints);
+    }
+
 
     private void updateDamageBonus() {
         CharacterProperty damageBonus = getDamageBonus().asCharacterProperty();
@@ -151,7 +168,7 @@ public class SavedCharacter implements Parcelable, Serializable {
 
     @JsonIgnore
     public DamageBonus getDamageBonus() {
-        int con = getStatisticValue(BRPStatistic.CON.name());
+        int con = getStatisticValue(BRPStatistic.STR.name());
         int siz = getStatisticValue(BRPStatistic.SIZ.name());
         return DamageBonusFactory.forEdition(getEdition(), con, siz);
     }
@@ -281,10 +298,13 @@ public class SavedCharacter implements Parcelable, Serializable {
                 String propName = relation.getPropertyName();
                 CharacterProperty relatedProperty = getPropertyByName(propName);
                 if (relatedProperty != null) {
-                    if (PropertyType.DAMAGE_BONUS.equals(relatedProperty.getType())) {
+                    PropertyType type = relatedProperty.getType();
+                    if (PropertyType.DAMAGE_BONUS.equals(type)) {
                         relatedProperty = getDamageBonus().asCharacterProperty();
-                    } else if (PropertyType.HIT_POINTS.equals(relatedProperty.getType())) {
+                    } else if (PropertyType.HIT_POINTS.equals(type)) {
                         relatedProperty = getHitPoints().asCharacterProperty();
+                    } else if (PropertyType.SANITY.equals(type)) {
+                        relatedProperty = getSanity(true).asCharacterProperty();
                     } else {
                         int value = relation.getBaseValueByRelation(toProperty.getValue());
                         relatedProperty.setValue(value);
@@ -329,8 +349,13 @@ public class SavedCharacter implements Parcelable, Serializable {
 
     @JsonIgnore
     public int updateSkills() {
+        return updateRelatedProperties(getSkills());
+    }
+
+    @JsonIgnore
+    public int updateRelatedProperties(Collection<CharacterProperty> ofProperties) {
         int modified = 0;
-        for (CharacterProperty skill : getSkills()) {
+        for (CharacterProperty skill : ofProperties) {
             if (skill != null) {
                 for (Relation relation : skill.getRelations()) {
                     if (relation != null) {
@@ -394,12 +419,12 @@ public class SavedCharacter implements Parcelable, Serializable {
 
     @JsonIgnore
     public int getCurrentSanity() {
-        return 0;
+        return getSanity().getCurrent();
     }
 
     @JsonIgnore
     public int getMaxSanity() {
-        return 0;
+        return getSanity().getMax();
     }
 
     @JsonIgnore
@@ -805,7 +830,9 @@ public class SavedCharacter implements Parcelable, Serializable {
 
     @JsonIgnore
     public HitPoints getHitPoints() {
-        return hitPoints;
+        int con = getStatisticValue(BRPStatistic.CON.name());
+        int siz = getStatisticValue(BRPStatistic.SIZ.name());
+        return HitPoints.forProperties(getEdition(), con, siz);
     }
 
     @JsonIgnore
@@ -826,5 +853,20 @@ public class SavedCharacter implements Parcelable, Serializable {
         }
         updateSkills();
         return getStatistics();
+    }
+
+    public Sanity getSanity() {
+        return getSanity(false);
+    }
+
+    public Sanity getSanity(boolean fresh) {
+        if (sanity == null || fresh) {
+            sanity = new Sanity();
+            int pow = getStatisticValue(BRPStatistic.POW.name());
+            int max = pow * 5;
+            sanity.setMax(max);
+            sanity.setCurrent(max);
+        }
+        return sanity;
     }
 }

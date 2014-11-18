@@ -1,6 +1,7 @@
 package com.bustiblelemons.cthulhator.character.viewer;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
@@ -30,19 +31,24 @@ public class CharacterViewerActivity extends AbsArgActivity<SavedCharacter>
                    ImageChooserListener,
                    OnExpandCharacterViewer {
 
-    public static final String CHARCTER_ID = "character_id";
+    public static final String CHARCTER_ID       = "character_id";
+    private static      int    sTransparentColor = Color.TRANSPARENT;
+    private static      int    sSolidColor       = Color.TRANSPARENT;
     @InjectView(android.R.id.icon)
     RemoteImage mPortraitView;
     @InjectView(R.id.header)
-    Toolbar mToolbar;
+    Toolbar     mToolbar;
     private SavedCharacter          mSavedCharacter;
     private CharacterViewerFragment mCharacterViewerFragment;
     private Portrait                mMainPortrait;
-    private CharacterDescription mDescription;
+    private CharacterDescription    mDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (sSolidColor == Color.TRANSPARENT) {
+            sSolidColor = getResources().getColor(R.color.solid_background);
+        }
         setContentView(R.layout.activity_character_viewer);
         ButterKnife.inject(this);
         mSavedCharacter = getInstanceArgument();
@@ -115,13 +121,16 @@ public class CharacterViewerActivity extends AbsArgActivity<SavedCharacter>
         mDescription = mSavedCharacter.getDescription();
         if (mToolbar != null && mDescription != null && mDescription.getName() != null) {
             mToolbar.setTitle(mDescription.getName().getFullName());
+            mToolbar.setBackgroundColor(sSolidColor);
         }
     }
 
     @Override
     public void onFinishCollapseAnimation() {
+
         if (mToolbar != null) {
             mToolbar.setTitle(null);
+            mToolbar.setBackgroundColor(sTransparentColor);
         }
     }
 }
