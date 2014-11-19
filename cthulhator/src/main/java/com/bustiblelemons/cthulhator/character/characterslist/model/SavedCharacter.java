@@ -349,12 +349,12 @@ public class SavedCharacter implements Parcelable, Serializable, Relation.Retrei
     @JsonIgnore
     public int updateRelatedProperties(Collection<CharacterProperty> ofProperties) {
         int modified = 0;
-        for (CharacterProperty skill : ofProperties) {
-            if (skill != null) {
-                for (Relation relation : skill.getRelations()) {
+        for (CharacterProperty property : ofProperties) {
+            if (property != null) {
+                for (Relation relation : property.getRelations()) {
                     if (relation != null) {
-                        int newBaseValue = relation.getCalculatedValue(skill.getValue());
-                        skill.setBaseValue(newBaseValue);
+                        int val = relation.getValueByRelation(this);
+                        property.setBaseValue(val);
                         modified++;
                     }
                 }
