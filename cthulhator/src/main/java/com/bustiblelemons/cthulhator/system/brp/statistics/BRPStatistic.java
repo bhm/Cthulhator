@@ -29,7 +29,7 @@ public enum BRPStatistic {
             if (relations == null) {
                 relations = new ArrayList<Relation>();
                 damageRelation = new Relation()
-                        .setPropertyName(DamageBonus.class.getSimpleName())
+                        .addPropertyName(DamageBonus.class.getSimpleName())
                         .setModifierType(ModifierType.NONE);
                 relations.add(damageRelation);
             }
@@ -45,7 +45,7 @@ public enum BRPStatistic {
             if (relations == null) {
                 relations = new ArrayList<Relation>();
                 dodgeRelation = new Relation()
-                        .setPropertyName(BRPSkill.Dodge.name())
+                        .addPropertyName(BRPSkill.Dodge.name())
                         .setModifier(2)
                         .setModifierType(ModifierType.MULTIPLY);
                 relations.add(dodgeRelation);
@@ -61,7 +61,7 @@ public enum BRPStatistic {
             if (relations == null) {
                 relations = new ArrayList<Relation>();
                 ideaReloation = new Relation()
-                        .setPropertyName(IDEA.name())
+                        .addPropertyName(IDEA.name())
                         .setModifier(5)
                         .setModifierType(ModifierType.MULTIPLY);
                 relations.add(ideaReloation);
@@ -77,7 +77,7 @@ public enum BRPStatistic {
             if (relations == null) {
                 relations = new ArrayList<Relation>();
                 damageRelation = new Relation()
-                        .setPropertyName(HitPoints.class.getSimpleName())
+                        .addPropertyName(HitPoints.class.getSimpleName())
                         .setModifierType(ModifierType.NONE);
                 relations.add(damageRelation);
             }
@@ -95,12 +95,12 @@ public enum BRPStatistic {
             if (relations == null) {
                 relations = new ArrayList<Relation>();
                 sanityRelation = new Relation()
-                        .setPropertyName(SAN.name())
+                        .addPropertyName(SAN.name())
                         .setModifier(5)
                         .setModifierType(ModifierType.MULTIPLY);
                 relations.add(sanityRelation);
                 luckRelation = new Relation()
-                        .setPropertyName(LUCK.name())
+                        .addPropertyName(LUCK.name())
                         .setModifier(5)
                         .setModifierType(ModifierType.MULTIPLY);
                 relations.add(luckRelation);
@@ -116,7 +116,7 @@ public enum BRPStatistic {
             if (relations == null) {
                 relations = new ArrayList<Relation>();
                 damageRelation = new Relation()
-                        .setPropertyName(DamageBonus.class.getSimpleName())
+                        .addPropertyName(DamageBonus.class.getSimpleName())
                         .setModifierType(ModifierType.NONE);
                 relations.add(damageRelation);
             }
@@ -133,7 +133,7 @@ public enum BRPStatistic {
             if (relations == null) {
                 relations = new ArrayList<Relation>();
                 powRelation = new Relation()
-                        .setPropertyName(POW.name())
+                        .addPropertyName(POW.name())
                         .setModifier(5)
                         .setModifierType(ModifierType.MULTIPLY);
                 relations.add(powRelation);
@@ -149,7 +149,7 @@ public enum BRPStatistic {
             if (relations == null) {
                 relations = new ArrayList<Relation>();
                 knowledgeRelation = new Relation()
-                        .setPropertyName(KNOW.name())
+                        .addPropertyName(KNOW.name())
                         .setModifier(5)
                         .setModifierType(ModifierType.MULTIPLY);
                 relations.add(knowledgeRelation);
@@ -165,7 +165,7 @@ public enum BRPStatistic {
             if (relations == null) {
                 relations = new ArrayList<Relation>();
                 intRelation = new Relation()
-                        .setPropertyName(INT.name())
+                        .addPropertyName(INT.name())
                         .setModifier(5)
                         .setModifierType(ModifierType.MULTIPLY);
                 relations.add(intRelation);
@@ -188,7 +188,7 @@ public enum BRPStatistic {
             if (relations == null) {
                 relations = new ArrayList<Relation>();
                 eduRelation = new Relation()
-                        .setPropertyName(EDU.name())
+                        .addPropertyName(EDU.name())
                         .setModifier(5)
                         .setModifierType(ModifierType.MULTIPLY);
                 relations.add(eduRelation);
@@ -212,7 +212,7 @@ public enum BRPStatistic {
             if (relations == null) {
                 relations = new ArrayList<Relation>();
                 powRelation = new Relation()
-                        .setPropertyName(POW.name())
+                        .addPropertyName(POW.name())
                         .setModifier(5)
                         .setModifierType(ModifierType.MULTIPLY);
 

@@ -8,7 +8,6 @@ import com.bustiblelemons.cthulhator.character.history.model.HistoryEvent;
 import com.bustiblelemons.cthulhator.character.possessions.model.Possesion;
 import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
-import com.bustiblelemons.cthulhator.system.properties.Relation;
 import com.bustiblelemons.randomuserdotme.model.Location;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -41,26 +40,6 @@ public class CthulhuCharacter extends SavedCharacter {
         }
         return _prop;
     }
-
-    public List<Possesion> extractPoseesions(CharacterProperty characterProperty) {
-        List<Possesion> _prop = new ArrayList<Possesion>();
-        if (this.possesions != null) {
-            for (Possesion possesion : possesions) {
-                if (possesion != null) {
-                    List<Relation> relations = possesion.getRelations();
-                    for (Relation relation : relations) {
-                        String propertyName = relation.getPropertyName();
-                        String soughtPropName = characterProperty.getName();
-                        if (propertyName != null && propertyName.equals(soughtPropName)) {
-                            _prop.add(possesion);
-                        }
-                    }
-                }
-            }
-        }
-        return _prop;
-    }
-
 
     public List<HistoryEvent> getHistoryEvents(long tillDate) {
         List<HistoryEvent> events = new ArrayList<HistoryEvent>();

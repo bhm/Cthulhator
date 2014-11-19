@@ -169,7 +169,7 @@ public enum BRPSkill {
             if (relations == null) {
                 relations = new HashSet<Relation>();
                 dexRelation = new Relation()
-                        .setPropertyName(BRPStatistic.DEX.name())
+                        .addPropertyName(BRPStatistic.DEX.name())
                         .setModifier(2)
                         .setModifierType(ModifierType.MULTIPLY);
                 relations.add(dexRelation);
@@ -379,7 +379,7 @@ public enum BRPSkill {
             if (relations == null) {
                 relations = new HashSet<Relation>();
                 eduRelation = new Relation()
-                        .setPropertyName(BRPStatistic.EDU.name())
+                        .addPropertyName(BRPStatistic.EDU.name())
                         .setModifier(5)
                         .setModifierType(ModifierType.MULTIPLY);
                 relations.add(eduRelation);

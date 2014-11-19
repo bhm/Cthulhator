@@ -2,6 +2,7 @@ package com.bustiblelemons.cthulhator.character.characterslist.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v4.util.LruCache;
 
 import com.bustiblelemons.cthulhator.character.characteristics.logic.CharacterPropertyComparators;
@@ -43,7 +44,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Created by bhm on 12.08.14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SavedCharacter implements Parcelable, Serializable {
+public class SavedCharacter implements Parcelable, Serializable, Relation.Retreiver {
 
     @JsonIgnore
     public static final Parcelable.Creator<SavedCharacter>           CREATOR                    = new Parcelable.Creator<SavedCharacter>() {
@@ -287,29 +288,22 @@ public class SavedCharacter implements Parcelable, Serializable {
     }
 
     @JsonIgnore
-    public Set<CharacterProperty> getRelatedProperties(CharacterProperty toProperty) {
+    public Set<CharacterProperty> getRelatedProperties(@NonNull CharacterProperty toProperty) {
         if (toProperty == null) {
-            throw new IllegalArgumentException("Passed param was null");
+            throw new IllegalArgumentException("Passed param cannot be null");
         }
-        Collection<Relation> relations = toProperty.getRelations();
         Set<CharacterProperty> r = new HashSet<CharacterProperty>();
+        Collection<Relation> relations = toProperty.getRelations();
         for (Relation relation : relations) {
             if (relation != null) {
-                String propName = relation.getPropertyName();
-                CharacterProperty relatedProperty = getPropertyByName(propName);
-                if (relatedProperty != null) {
-                    PropertyType type = relatedProperty.getType();
-                    if (PropertyType.DAMAGE_BONUS.equals(type)) {
-                        relatedProperty = getDamageBonus().asCharacterProperty();
-                    } else if (PropertyType.HIT_POINTS.equals(type)) {
-                        relatedProperty = getHitPoints().asCharacterProperty();
-                    } else if (PropertyType.SANITY.equals(type)) {
-                        relatedProperty = getSanity(true).asCharacterProperty();
-                    } else {
-                        int value = relation.getBaseValueByRelation(toProperty.getValue());
+                List<String> propNames = relation.getPropertyNames();
+                for (String propName : propNames) {
+                    CharacterProperty relatedProperty = getPropertyByName(propName);
+                    if (relatedProperty != null) {
+                        int value = relation.getValueByRelation(this);
                         relatedProperty.setValue(value);
+                        r.add(relatedProperty);
                     }
-                    r.add(relatedProperty);
                 }
             }
         }
@@ -359,7 +353,7 @@ public class SavedCharacter implements Parcelable, Serializable {
             if (skill != null) {
                 for (Relation relation : skill.getRelations()) {
                     if (relation != null) {
-                        int newBaseValue = relation.getBaseValueByRelation(skill.getValue());
+                        int newBaseValue = relation.getCalculatedValue(skill.getValue());
                         skill.setBaseValue(newBaseValue);
                         modified++;
                     }
@@ -569,10 +563,12 @@ public class SavedCharacter implements Parcelable, Serializable {
                 if (possesion != null) {
                     List<Relation> relations = possesion.getRelations();
                     for (Relation relation : relations) {
-                        String propertyName = relation.getPropertyName();
-                        String soughtPropName = characterProperty.getName();
-                        if (propertyName != null && propertyName.equals(soughtPropName)) {
-                            _prop.add(possesion);
+                        List<String> propertyNames = relation.getPropertyNames();
+                        for (String propertyName : propertyNames) {
+                            String soughtPropName = characterProperty.getName();
+                            if (propertyName != null && propertyName.equals(soughtPropName)) {
+                                _prop.add(possesion);
+                            }
                         }
                     }
                 }
@@ -868,5 +864,15 @@ public class SavedCharacter implements Parcelable, Serializable {
             sanity.setCurrent(max);
         }
         return sanity;
+    }
+
+    @Override
+    public int retreivePropertValue(String propertyName) {
+        for (CharacterProperty property : properties) {
+            if (property != null && property.nameMatches(propertyName)) {
+                return property.getValue();
+            }
+        }
+        return 0;
     }
 }

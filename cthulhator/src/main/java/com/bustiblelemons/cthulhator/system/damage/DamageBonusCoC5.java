@@ -156,9 +156,9 @@ enum DamageBonusCoC5 implements DamageBonus {
 
     static {
         STR_RELATION.setModifierType(ModifierType.NONE);
-        STR_RELATION.setPropertyName(BRPStatistic.STR.name());
+        STR_RELATION.addPropertyName(BRPStatistic.STR.name());
         SIZ_RELATION.setModifierType(ModifierType.NONE);
-        SIZ_RELATION.setPropertyName(BRPStatistic.SIZ.name());
+        SIZ_RELATION.addPropertyName(BRPStatistic.SIZ.name());
     }
 
     private int       mMax;
