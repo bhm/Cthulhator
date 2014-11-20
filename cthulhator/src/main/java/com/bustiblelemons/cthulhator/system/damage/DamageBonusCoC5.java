@@ -12,6 +12,7 @@ import com.bustiblelemons.cthulhator.system.properties.PropertyType;
 import com.bustiblelemons.cthulhator.system.properties.Relation;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -151,14 +152,18 @@ enum DamageBonusCoC5 implements DamageBonus {
             return 10;
         }
     };
+
+    private static Collection<Relation> sRelations = new ArrayList<Relation>();
     public static final Relation STR_RELATION = new Relation();
     public static final Relation SIZ_RELATION = new Relation();
 
     static {
-        STR_RELATION.setModifierType(ModifierType.NONE);
-        STR_RELATION.addPropertyName(BRPStatistic.STR.name());
-        SIZ_RELATION.setModifierType(ModifierType.NONE);
-        SIZ_RELATION.addPropertyName(BRPStatistic.SIZ.name());
+        STR_RELATION.withModifierType(ModifierType.EXACT)
+                .withRelation(BRPStatistic.STR.name());
+        SIZ_RELATION.withModifierType(ModifierType.EXACT)
+                .addPropertyName(BRPStatistic.SIZ.name());
+        sRelations.add(SIZ_RELATION);
+        sRelations.add(STR_RELATION);
     }
 
     private int       mMax;
@@ -245,6 +250,7 @@ enum DamageBonusCoC5 implements DamageBonus {
         List<ActionGroup> g = new ArrayList<ActionGroup>();
         g.add(ActionGroup.COMBAT);
         r.setActionGroup(g);
+        r.setRelations(sRelations);
         return r;
     }
 

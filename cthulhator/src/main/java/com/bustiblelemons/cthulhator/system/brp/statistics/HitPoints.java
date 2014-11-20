@@ -4,6 +4,7 @@ import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
 import com.bustiblelemons.cthulhator.system.properties.ActionGroup;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 import com.bustiblelemons.cthulhator.system.properties.ModifierType;
+import com.bustiblelemons.cthulhator.system.properties.PropertyFormat;
 import com.bustiblelemons.cthulhator.system.properties.PropertyType;
 import com.bustiblelemons.cthulhator.system.properties.Relation;
 
@@ -79,6 +80,7 @@ public class HitPoints {
         List<ActionGroup> g = new ArrayList<ActionGroup>();
         g.add(ActionGroup.COMBAT);
         r.setActionGroup(g);
+        r.setFormat(PropertyFormat.NUMBER);
         return r;
     }
 

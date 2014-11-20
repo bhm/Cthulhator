@@ -1,13 +1,17 @@
 package com.bustiblelemons.cthulhator.system.damage;
 
+import com.bustiblelemons.cthulhator.system.brp.statistics.BRPStatistic;
 import com.bustiblelemons.cthulhator.system.dice.PointPoolFromDiceBuilder;
 import com.bustiblelemons.cthulhator.system.dice.model.PointPool;
 import com.bustiblelemons.cthulhator.system.dice.model.PolyhedralDice;
 import com.bustiblelemons.cthulhator.system.properties.ActionGroup;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
+import com.bustiblelemons.cthulhator.system.properties.ModifierType;
 import com.bustiblelemons.cthulhator.system.properties.PropertyType;
+import com.bustiblelemons.cthulhator.system.properties.Relation;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -93,6 +97,20 @@ public enum DamageBonusCoC7 implements DamageBonus {
             return 1;
         }
     };
+
+    private static      Collection<Relation> sRelations   = new ArrayList<Relation>();
+    public static final Relation             STR_RELATION = new Relation();
+    public static final Relation             SIZ_RELATION = new Relation();
+
+    static {
+        STR_RELATION.withModifierType(ModifierType.EXACT)
+                .withRelation(BRPStatistic.STR.name());
+        SIZ_RELATION.withModifierType(ModifierType.EXACT)
+                .addPropertyName(BRPStatistic.SIZ.name());
+        sRelations.add(SIZ_RELATION);
+        sRelations.add(STR_RELATION);
+    }
+
     private int       mMax;
     private int       mMin;
     private PointPool mPointPool;
@@ -176,6 +194,7 @@ public enum DamageBonusCoC7 implements DamageBonus {
         List<ActionGroup> g = new ArrayList<ActionGroup>();
         g.add(ActionGroup.COMBAT);
         r.setActionGroup(g);
+        r.setRelations(sRelations);
         return r;
     }
 

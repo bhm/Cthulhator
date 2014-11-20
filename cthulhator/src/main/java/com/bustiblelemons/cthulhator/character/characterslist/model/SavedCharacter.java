@@ -299,9 +299,13 @@ public class SavedCharacter implements Parcelable, Serializable, Relation.Retrei
                 List<String> propNames = relation.getPropertyNames();
                 for (String propName : propNames) {
                     CharacterProperty relatedProperty = getPropertyByName(propName);
-                    if (relatedProperty != null) {
-                        int value = relation.getValueByRelation(this);
-                        relatedProperty.setValue(value);
+                    if (relatedProperty != null && relatedProperty.getRelations() != null) {
+                        for (Relation relatedPropRelation : relatedProperty.getRelations()) {
+                            int value = relatedPropRelation.getValueByRelation(this);
+                            relatedProperty.setBaseValue(value);
+                            relatedProperty.setMaxValue(value);
+                            relatedProperty.setValue(value);
+                        }
                         r.add(relatedProperty);
                     }
                 }
@@ -354,6 +358,7 @@ public class SavedCharacter implements Parcelable, Serializable, Relation.Retrei
                 for (Relation relation : property.getRelations()) {
                     if (relation != null) {
                         int val = relation.getValueByRelation(this);
+                        property.setValue(val);
                         property.setBaseValue(val);
                         modified++;
                     }
