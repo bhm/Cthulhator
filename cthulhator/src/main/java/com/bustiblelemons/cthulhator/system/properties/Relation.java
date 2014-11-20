@@ -120,20 +120,21 @@ public class Relation implements Parcelable, Serializable {
 
     @JsonIgnore
     public int getValueByRelation(@NonNull Relation.Retreiver retreiver) {
-        if (ModifierType.AVERAGE.equals(this.modifierType)) {
-            if (retreiver != null) {
-                int sum = 0;
-                int mod = 0;
-                for (String propertyName : propertyNames) {
-                    if (propertyName != null) {
-                        int value = retreiver.retreivePropertValue(propertyName);
-                        sum = sum + value;
-                        mod++;
-                    }
+        if (retreiver != null) {
+            int sum = 0;
+            int mod = 0;
+            for (String propertyName : propertyNames) {
+                if (propertyName != null) {
+                    int value = retreiver.retreivePropertValue(propertyName);
+                    sum = sum + value;
+                    mod++;
                 }
-                modifier = mod;
-                return getCalculatedValue(sum);
             }
+            if (ModifierType.AVERAGE.equals(this.modifierType)) {
+                modifier = mod;
+                return sum / mod;
+            }
+            return getCalculatedValue(sum);
         }
         return 0;
     }
