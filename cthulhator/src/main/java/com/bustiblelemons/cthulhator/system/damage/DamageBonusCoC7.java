@@ -97,6 +97,7 @@ public enum DamageBonusCoC7 implements DamageBonus {
             return 1;
         }
     };
+    private static Collection<Relation> sRelations = new ArrayList<Relation>();
     public static final Relation STR_RELATION = new Relation();
     public static final Relation SIZ_RELATION = new Relation();
 
@@ -108,8 +109,6 @@ public enum DamageBonusCoC7 implements DamageBonus {
         sRelations.add(SIZ_RELATION);
         sRelations.add(STR_RELATION);
     }
-
-    private static Collection<Relation> sRelations = new ArrayList<Relation>();
     private int       mMax;
     private int       mMin;
     private PointPool mPointPool;
