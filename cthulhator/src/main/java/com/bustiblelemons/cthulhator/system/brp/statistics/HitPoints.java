@@ -3,15 +3,29 @@ package com.bustiblelemons.cthulhator.system.brp.statistics;
 import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
 import com.bustiblelemons.cthulhator.system.properties.ActionGroup;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
+import com.bustiblelemons.cthulhator.system.properties.ModifierType;
 import com.bustiblelemons.cthulhator.system.properties.PropertyType;
+import com.bustiblelemons.cthulhator.system.properties.Relation;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
  * Created by bhm on 20.07.14.
  */
 public class HitPoints {
+    private final static Collection<Relation> sRelations      = new ArrayList<Relation>();
+    private static final Relation             sConStrRelation = new Relation()
+            .withModifier(0)
+            .withRelation(BRPStatistic.CON.name())
+            .withRelation(BRPStatistic.STR.name())
+            .withModifierType(ModifierType.AVERAGE);
+
+    static {
+        sRelations.add(sConStrRelation);
+    }
+
     private int max     = 0;
     private int current = 0;
     private int min     = -2;
@@ -60,6 +74,7 @@ public class HitPoints {
         r.setMinValue(getMin());
         r.setMaxValue(getMax());
         r.setValue(getMax());
+        r.setRelations(sRelations);
         r.setName(HitPoints.class.getSimpleName());
         List<ActionGroup> g = new ArrayList<ActionGroup>();
         g.add(ActionGroup.COMBAT);

@@ -41,6 +41,7 @@ public class Relation implements Parcelable, Serializable {
     private Relation(Parcel in) {
         this.modifier = in.readInt();
         int tmpModifierType = in.readInt();
+        this.propertyNames = new ArrayList<String>();
         in.readStringList(propertyNames);
         this.modifierType = tmpModifierType == -1 ? null : ModifierType.values()[tmpModifierType];
         this.max = in.readInt();
@@ -170,6 +171,22 @@ public class Relation implements Parcelable, Serializable {
         dest.writeByte(modifiesMaximum ? (byte) 1 : (byte) 0);
         dest.writeByte(modifiesMinimum ? (byte) 1 : (byte) 0);
     }
+
+    public Relation withModifier(int mod) {
+        this.modifier = mod;
+        return this;
+    }
+
+    public Relation withRelation(String name) {
+        addPropertyName(name);
+        return this;
+    }
+
+    public Relation withModifierType(ModifierType type) {
+        setModifierType(type);
+        return this;
+    }
+
 
     public interface Retreiver {
         int retreivePropertValue(String propertyName);
