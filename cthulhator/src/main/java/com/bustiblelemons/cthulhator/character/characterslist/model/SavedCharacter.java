@@ -316,6 +316,9 @@ public class SavedCharacter implements Parcelable, Serializable, Relation.Retrei
 
     @JsonIgnore
     private CharacterProperty getPropertyByName(String propertyName) {
+        if (propertyName != null && propertyName.equalsIgnoreCase(DamageBonus.class.getSimpleName())) {
+            return getDamageBonus().asCharacterProperty();
+        }
         for (CharacterProperty prop : properties) {
             if (prop != null && prop.getName() != null) {
                 if (prop.getName().equalsIgnoreCase(propertyName)) {
