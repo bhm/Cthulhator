@@ -97,20 +97,19 @@ public enum DamageBonusCoC7 implements DamageBonus {
             return 1;
         }
     };
-
-    private static      Collection<Relation> sRelations   = new ArrayList<Relation>();
-    public static final Relation             STR_RELATION = new Relation();
-    public static final Relation             SIZ_RELATION = new Relation();
+    public static final Relation STR_RELATION = new Relation();
+    public static final Relation SIZ_RELATION = new Relation();
 
     static {
-        STR_RELATION.withModifierType(ModifierType.EXACT)
+        STR_RELATION.withModifierType(ModifierType.NONE)
                 .withRelation(BRPStatistic.STR.name());
-        SIZ_RELATION.withModifierType(ModifierType.EXACT)
+        SIZ_RELATION.withModifierType(ModifierType.NONE)
                 .addPropertyName(BRPStatistic.SIZ.name());
         sRelations.add(SIZ_RELATION);
         sRelations.add(STR_RELATION);
     }
 
+    private static Collection<Relation> sRelations = new ArrayList<Relation>();
     private int       mMax;
     private int       mMin;
     private PointPool mPointPool;

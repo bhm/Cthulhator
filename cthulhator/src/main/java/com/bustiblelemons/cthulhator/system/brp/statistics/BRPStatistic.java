@@ -30,7 +30,7 @@ public enum BRPStatistic {
                 relations = new ArrayList<Relation>();
                 damageRelation = new Relation()
                         .addPropertyName(DamageBonus.class.getSimpleName())
-                        .setModifierType(ModifierType.EXACT);
+                        .setModifierType(ModifierType.NONE);
                 relations.add(damageRelation);
             }
             return relations;
@@ -78,7 +78,7 @@ public enum BRPStatistic {
                 relations = new ArrayList<Relation>();
                 damageRelation = new Relation()
                         .addPropertyName(HitPoints.class.getSimpleName())
-                        .setModifierType(ModifierType.EXACT);
+                        .setModifierType(ModifierType.NONE);
                 relations.add(damageRelation);
             }
             return relations;
@@ -117,7 +117,7 @@ public enum BRPStatistic {
                 relations = new ArrayList<Relation>();
                 damageRelation = new Relation()
                         .addPropertyName(DamageBonus.class.getSimpleName())
-                        .setModifierType(ModifierType.EXACT);
+                        .setModifierType(ModifierType.NONE);
                 relations.add(damageRelation);
             }
             return relations;

@@ -152,20 +152,18 @@ enum DamageBonusCoC5 implements DamageBonus {
             return 10;
         }
     };
-
-    private static Collection<Relation> sRelations = new ArrayList<Relation>();
     public static final Relation STR_RELATION = new Relation();
     public static final Relation SIZ_RELATION = new Relation();
-
     static {
-        STR_RELATION.withModifierType(ModifierType.EXACT)
+        STR_RELATION.withModifierType(ModifierType.NONE)
                 .withRelation(BRPStatistic.STR.name());
-        SIZ_RELATION.withModifierType(ModifierType.EXACT)
+        SIZ_RELATION.withModifierType(ModifierType.NONE)
                 .addPropertyName(BRPStatistic.SIZ.name());
-        sRelations.add(SIZ_RELATION);
-        sRelations.add(STR_RELATION);
+//        sRelations.add(SIZ_RELATION);
+//        sRelations.add(STR_RELATION);
     }
 
+    private static Collection<Relation> sRelations = new ArrayList<Relation>();
     private int       mMax;
     private int       mMin;
     private PointPool mPointPool;
@@ -180,9 +178,9 @@ enum DamageBonusCoC5 implements DamageBonus {
     }
 
     private static DamageBonus fromPropertySum(int i) {
-        for (DamageBonusCoC5 bonusCoC5 : values()) {
-            if (i <= bonusCoC5.getMax() && i >= bonusCoC5.getMin()) {
-                return bonusCoC5;
+        for (DamageBonusCoC5 damageBonusCoC5 : values()) {
+            if (i <= damageBonusCoC5.getMax() && i >= damageBonusCoC5.getMin()) {
+                return damageBonusCoC5;
             }
         }
         return Scanty;

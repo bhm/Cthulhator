@@ -29,7 +29,7 @@ public class Relation implements Parcelable, Serializable {
     };
     private List<String> propertyNames;
     private int          modifier;
-    private ModifierType modifierType;
+    private ModifierType modifierType = ModifierType.NONE;
     private int          max;
     private int          min;
     private boolean      modifiesMaximum;
