@@ -3,8 +3,8 @@ package com.bustiblelemons.cthulhator.system.brp.statistics;
 import com.bustiblelemons.cthulhator.system.brp.skills.BRPSkill;
 import com.bustiblelemons.cthulhator.system.damage.DamageBonus;
 import com.bustiblelemons.cthulhator.system.dice.PointPoolFromDiceBuilder;
-import com.bustiblelemons.cthulhator.system.dice.model.PointPool;
 import com.bustiblelemons.cthulhator.system.dice.model.PolyhedralDice;
+import com.bustiblelemons.cthulhator.system.dice.model.ValueSpace;
 import com.bustiblelemons.cthulhator.system.properties.ActionGroup;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 import com.bustiblelemons.cthulhator.system.properties.ModifierType;
@@ -272,7 +272,7 @@ public enum BRPStatistic {
     }
 
 
-    private CharacterProperty fromPointPool(PointPool p) {
+    private CharacterProperty fromPointPool(ValueSpace p) {
         CharacterProperty property = new CharacterProperty();
         property.setMaxValue(p.getMax());
         property.setMinValue(p.getMin());

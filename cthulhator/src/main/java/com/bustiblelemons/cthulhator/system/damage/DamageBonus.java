@@ -1,6 +1,6 @@
 package com.bustiblelemons.cthulhator.system.damage;
 
-import com.bustiblelemons.cthulhator.system.dice.model.PointPool;
+import com.bustiblelemons.cthulhator.system.dice.model.ValueSpace;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 
 /**
@@ -8,7 +8,7 @@ import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
  */
 public interface DamageBonus {
 
-    PointPool getPointPool();
+    ValueSpace getPointPool();
 
     int random();
 

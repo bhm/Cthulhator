@@ -2,8 +2,8 @@ package com.bustiblelemons.cthulhator.system.damage;
 
 import com.bustiblelemons.cthulhator.system.brp.statistics.BRPStatistic;
 import com.bustiblelemons.cthulhator.system.dice.PointPoolFromDiceBuilder;
-import com.bustiblelemons.cthulhator.system.dice.model.PointPool;
 import com.bustiblelemons.cthulhator.system.dice.model.PolyhedralDice;
+import com.bustiblelemons.cthulhator.system.dice.model.ValueSpace;
 import com.bustiblelemons.cthulhator.system.properties.ActionGroup;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 import com.bustiblelemons.cthulhator.system.properties.ModifierType;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 public enum DamageBonusCoC7 implements DamageBonus {
     Scanty(2, 64) {
-        private PointPool mPointPool;
+        private ValueSpace mValueSpace;
 
         @Override
         int getDiceCount() {
@@ -27,13 +27,13 @@ public enum DamageBonusCoC7 implements DamageBonus {
         }
 
         @Override
-        public PointPool getPointPool() {
-            if (mPointPool == null) {
-                mPointPool = new PointPool.Builder()
+        public ValueSpace getPointPool() {
+            if (mValueSpace == null) {
+                mValueSpace = new ValueSpace.Builder()
                         .setMax(-2).setMax(0)
                         .build();
             }
-            return mPointPool;
+            return mValueSpace;
         }
 
         @Override
@@ -42,7 +42,7 @@ public enum DamageBonusCoC7 implements DamageBonus {
         }
     },
     Meagre(65, 64) {
-        private PointPool mPointPool;
+        private ValueSpace mValueSpace;
 
         @Override
         int getDiceCount() {
@@ -50,13 +50,13 @@ public enum DamageBonusCoC7 implements DamageBonus {
         }
 
         @Override
-        public PointPool getPointPool() {
-            if (mPointPool == null) {
-                mPointPool = new PointPool.Builder()
+        public ValueSpace getPointPool() {
+            if (mValueSpace == null) {
+                mValueSpace = new ValueSpace.Builder()
                         .setMax(-1).setMax(0)
                         .build();
             }
-            return mPointPool;
+            return mValueSpace;
         }
 
         @Override
@@ -71,8 +71,8 @@ public enum DamageBonusCoC7 implements DamageBonus {
         }
 
         @Override
-        public PointPool getPointPool() {
-            return PointPool.ZERO;
+        public ValueSpace getPointPool() {
+            return ValueSpace.ZERO;
         }
 
         @Override
@@ -97,7 +97,6 @@ public enum DamageBonusCoC7 implements DamageBonus {
             return 1;
         }
     };
-    private static Collection<Relation> sRelations = new ArrayList<Relation>();
     public static final Relation STR_RELATION = new Relation();
     public static final Relation SIZ_RELATION = new Relation();
 
@@ -109,9 +108,11 @@ public enum DamageBonusCoC7 implements DamageBonus {
         sRelations.add(SIZ_RELATION);
         sRelations.add(STR_RELATION);
     }
-    private int       mMax;
-    private int       mMin;
-    private PointPool mPointPool;
+
+    private static Collection<Relation> sRelations = new ArrayList<Relation>();
+    private int        mMax;
+    private int        mMin;
+    private ValueSpace mValueSpace;
 
     DamageBonusCoC7(int mMax, int mMin) {
         this.mMax = mMax;
@@ -146,9 +147,9 @@ public enum DamageBonusCoC7 implements DamageBonus {
     }
 
     @Override
-    public PointPool getPointPool() {
-        if (mPointPool == null) {
-            mPointPool = new PointPool();
+    public ValueSpace getPointPool() {
+        if (mValueSpace == null) {
+            mValueSpace = new ValueSpace();
             PointPoolFromDiceBuilder b = new PointPoolFromDiceBuilder();
             int count = getDiceCount();
             PolyhedralDice dice = getDice();
@@ -161,9 +162,9 @@ public enum DamageBonusCoC7 implements DamageBonus {
                 count = lastEnum.getDiceCount() + mod;
             }
             b.addDicePool(count, dice);
-            mPointPool = b.build();
+            mValueSpace = b.build();
         }
-        return mPointPool;
+        return mValueSpace;
     }
 
     private int getFraction() {
@@ -185,9 +186,9 @@ public enum DamageBonusCoC7 implements DamageBonus {
         CharacterProperty r = new CharacterProperty();
         r.setDisplayValue(toString());
         r.setType(PropertyType.DAMAGE_BONUS);
-        PointPool pointPool = getPointPool();
-        r.setMaxValue(pointPool.getMax());
-        r.setMinValue(pointPool.getMin());
+        ValueSpace valueSpace = getPointPool();
+        r.setMaxValue(valueSpace.getMax());
+        r.setMinValue(valueSpace.getMin());
         r.setName(DamageBonus.class.getSimpleName());
         List<ActionGroup> g = new ArrayList<ActionGroup>();
         g.add(ActionGroup.COMBAT);

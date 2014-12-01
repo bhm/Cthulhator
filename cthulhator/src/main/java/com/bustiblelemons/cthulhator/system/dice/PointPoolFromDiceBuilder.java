@@ -1,7 +1,7 @@
 package com.bustiblelemons.cthulhator.system.dice;
 
-import com.bustiblelemons.cthulhator.system.dice.model.PointPool;
 import com.bustiblelemons.cthulhator.system.dice.model.PolyhedralDice;
+import com.bustiblelemons.cthulhator.system.dice.model.ValueSpace;
 
 /**
  * Created by bhm on 09.09.14.
@@ -28,7 +28,7 @@ public class PointPoolFromDiceBuilder {
         return this;
     }
 
-    public PointPool build() {
-        return new PointPool.Builder().setMax(currentMax).setMin(min).build();
+    public ValueSpace build() {
+        return new ValueSpace.Builder().setMax(currentMax).setMin(min).build();
     }
 }

@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -53,6 +54,9 @@ public class CharacterProperty extends ObservableCharacterProperty
     private ActionGroup mMainActionGroup;
     private String      displayValue;
 
+    @JsonProperty("value_space")
+    private ValueSpaceSet valueSpaceSet;
+
     public CharacterProperty() {
     }
 
@@ -77,6 +81,19 @@ public class CharacterProperty extends ObservableCharacterProperty
         Collections.addAll(relations, rel);
         this.nameResId = in.readInt();
         this.shortNameResId = in.readInt();
+    }
+
+    @JsonProperty("value_space")
+    public ValueSpaceSet getValueSpaceSet() {
+        if (valueSpaceSet == null) {
+            valueSpaceSet = new ValueSpaceSet(getMinValue(), getMaxValue());
+        }
+        return valueSpaceSet;
+    }
+
+    @JsonProperty("value_space")
+    public void setValueSpaceSet(ValueSpaceSet valueSpaceSet) {
+        this.valueSpaceSet = valueSpaceSet;
     }
 
     private void readActionGroups(Parcel in) {

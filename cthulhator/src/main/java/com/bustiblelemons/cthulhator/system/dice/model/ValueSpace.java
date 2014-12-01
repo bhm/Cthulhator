@@ -1,9 +1,11 @@
 package com.bustiblelemons.cthulhator.system.dice.model;
 
+import com.bustiblelemons.cthulhator.system.properties.QualifierPair;
 import com.bustiblelemons.patterns.ObservedObjectImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Random;
 
@@ -11,36 +13,56 @@ import java.util.Random;
  * Created by bhm on 09.09.14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PointPool extends ObservedObjectImpl<Integer> {
-    public static final PointPool EMPTY = new PointPool(Integer.MAX_VALUE);
-    public static final PointPool ZERO  = new PointPool(0, 0);
+public class ValueSpace extends ObservedObjectImpl<Integer> {
+    public static final ValueSpace EMPTY = new ValueSpace(Integer.MAX_VALUE);
+    public static final ValueSpace ZERO  = new ValueSpace(0, 0);
+
+    @JsonProperty("qualifier")
+    public  QualifierPair qualifierPair;
+    @JsonIgnore
     private Random mRandom;
+    @JsonProperty("max")
     private int mMax   = Integer.MAX_VALUE;
+    @JsonProperty("points")
     private int points = mMax;
+    @JsonProperty("min")
     private int mMin   = 0;
 
-    private PointPool(int max) {
+    private ValueSpace(int max) {
         this(0, max);
     }
 
-    private PointPool(int min, int max) {
+    private ValueSpace(int min, int max) {
         this(min, max, System.currentTimeMillis());
     }
 
-    private PointPool(int min, int max, long mSeed) {
+    private ValueSpace(int min, int max, long mSeed) {
         this.mMin = min;
         this.mMax = max;
         this.points = max;
         mRandom = new Random(mSeed);
     }
 
-    public PointPool() {
+    public ValueSpace() {
 
     }
 
-    public static PointPool random(int max) {
-        PointPool r = new PointPool(max);
+    public static ValueSpace random(int max) {
+        ValueSpace r = new ValueSpace(max);
         return r;
+    }
+
+    @JsonProperty("qualifier")
+    public QualifierPair getQualifierPair() {
+        if (qualifierPair == null) {
+            qualifierPair = QualifierPair.create(getMin(), getMax());
+        }
+        return qualifierPair;
+    }
+
+    @JsonProperty("qualifier")
+    public void setQualifierPair(QualifierPair qualifierPair) {
+        this.qualifierPair = qualifierPair;
     }
 
     public int randomValue() {
@@ -60,31 +82,38 @@ public class PointPool extends ObservedObjectImpl<Integer> {
         return ret;
     }
 
+    @JsonProperty("max")
     public int getMax() {
         return mMax;
     }
 
+    @JsonProperty("max")
     public void setMax(int mMax) {
         this.mMax = mMax;
     }
 
+    @JsonProperty("min")
     public int getMin() {
         return mMin;
     }
 
+    @JsonProperty("min")
     public void setMin(int mMin) {
         this.mMin = mMin;
     }
 
+    @JsonProperty("points")
     public int getPoints() {
         return points;
     }
 
+    @JsonProperty("points")
     public void setPoints(int points) {
         this.points = points;
         notifyObservers(this.points);
     }
 
+    @JsonIgnore
     public synchronized boolean increase() {
         if (points + 1 <= mMax) {
             points++;
@@ -93,6 +122,7 @@ public class PointPool extends ObservedObjectImpl<Integer> {
         return false;
     }
 
+    @JsonIgnore
     public synchronized boolean decrease() {
         if (points - 1 >= mMin) {
             points--;
@@ -101,16 +131,19 @@ public class PointPool extends ObservedObjectImpl<Integer> {
         return false;
     }
 
+    @JsonIgnore
     public synchronized int decreaseByRandom() {
         return decreaseByRandom(getPoints());
     }
 
+    @JsonIgnore
     public synchronized int decreaseByRandom(int max) {
         int r = decreaseByRandom(1, max);
         notifyObservers(r);
         return r;
     }
 
+    @JsonIgnore
     public synchronized int decreaseByRandom(int min, int max) {
         int mod = min;
         int _max = max;
@@ -124,6 +157,7 @@ public class PointPool extends ObservedObjectImpl<Integer> {
         return mod;
     }
 
+    @JsonIgnore
     public synchronized int increaseBy(int value) {
         if (points + value <= mMax) {
             points += value;
@@ -134,6 +168,7 @@ public class PointPool extends ObservedObjectImpl<Integer> {
         return points;
     }
 
+    @JsonIgnore
     public synchronized int decreaseBy(int value) {
         if (points - value >= mMin) {
             points -= value;
@@ -144,18 +179,22 @@ public class PointPool extends ObservedObjectImpl<Integer> {
         return points;
     }
 
+    @JsonIgnore
     public synchronized boolean canIncrease() {
         return canIncrease(1);
     }
 
+    @JsonIgnore
     public synchronized boolean canIncrease(int by) {
         return getPoints() + by <= getMax();
     }
 
+    @JsonIgnore
     public synchronized boolean canDecrease() {
         return canDecrease(1);
     }
 
+    @JsonIgnore
     public synchronized boolean canDecrease(int by) {
         return getPoints() - by >= getMax();
     }
@@ -175,6 +214,20 @@ public class PointPool extends ObservedObjectImpl<Integer> {
         return getPoints() > getMin();
     }
 
+    @JsonIgnore
+    public boolean matches(QualifierPair qualifier) {
+        if (this.qualifierPair == null) {
+            this.qualifierPair = QualifierPair.create(getMin(), getMax());
+        }
+        return qualifier.getMin() >= this.qualifierPair.getMin()
+                && qualifier.getMax() <= this.qualifierPair.getMax();
+    }
+
+    @JsonIgnore
+    public boolean qualifiesFor(int value) {
+        return getQualifierPair().qualifiesFor(value);
+    }
+
     @JsonIgnoreType
     public static class Builder {
         private long mSeed = System.currentTimeMillis();
@@ -191,8 +244,8 @@ public class PointPool extends ObservedObjectImpl<Integer> {
             return this;
         }
 
-        public PointPool build() {
-            return new PointPool(this.mMin, this.mMax, this.mSeed);
+        public ValueSpace build() {
+            return new ValueSpace(this.mMin, this.mMax, this.mSeed);
         }
 
         public Builder setMin(int min) {

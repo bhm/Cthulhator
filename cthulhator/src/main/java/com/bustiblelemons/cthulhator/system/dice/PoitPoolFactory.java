@@ -1,6 +1,6 @@
 package com.bustiblelemons.cthulhator.system.dice;
 
-import com.bustiblelemons.cthulhator.system.dice.model.PointPool;
+import com.bustiblelemons.cthulhator.system.dice.model.ValueSpace;
 import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 
@@ -12,7 +12,7 @@ import java.util.Collections;
  */
 public class PoitPoolFactory {
 
-    public static PointPool characteristicPoolFromEdition(CthulhuEdition edition) {
+    public static ValueSpace characteristicPoolFromEdition(CthulhuEdition edition) {
         Collection<CharacterProperty> list = Collections.emptyList();
         if (edition != null) {
             list = edition.getCharacteristics();
@@ -20,7 +20,7 @@ public class PoitPoolFactory {
         return fromCharacterProperties(list);
     }
 
-    public static PointPool fromCharacterProperties(Collection<CharacterProperty> characteristics) {
+    public static ValueSpace fromCharacterProperties(Collection<CharacterProperty> characteristics) {
         int min = 0;
         int max = 0;
         for (CharacterProperty prop : characteristics) {
@@ -32,11 +32,11 @@ public class PoitPoolFactory {
         if (max == 0) {
             max = Integer.MAX_VALUE;
         }
-        PointPool r = new PointPool.Builder().setMax(max).setMin(min).build();
+        ValueSpace r = new ValueSpace.Builder().setMax(max).setMin(min).build();
         return r;
     }
 
-    public static PointPool randomPoolFromEdition(CthulhuEdition edition) {
+    public static ValueSpace randomPoolFromEdition(CthulhuEdition edition) {
         Collection<CharacterProperty> list = Collections.emptyList();
         if (edition != null) {
             list = edition.getCharacteristics();
@@ -44,7 +44,7 @@ public class PoitPoolFactory {
         return randomPoolFromCharacterPropertyList(list);
     }
 
-    public static PointPool randomPoolFromCharacterPropertyList(Collection<CharacterProperty> list) {
+    public static ValueSpace randomPoolFromCharacterPropertyList(Collection<CharacterProperty> list) {
         int min = 0;
         int max = 0;
         for (CharacterProperty prop : list) {
@@ -56,7 +56,7 @@ public class PoitPoolFactory {
         if (max == 0) {
             max = Integer.MAX_VALUE;
         }
-        PointPool r = new PointPool.Builder().setMax(max).setMin(min).build();
+        ValueSpace r = new ValueSpace.Builder().setMax(max).setMin(min).build();
         return r;
     }
 }
