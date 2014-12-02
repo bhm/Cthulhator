@@ -198,10 +198,6 @@ public class CharacterProperty extends ObservableCharacterProperty
 
     public int getValue() {
         setChanged();
-        if (valueSpaceSet != null && !valueSpaceSet.isEmpty()) {
-            ValueSpace space = valueSpaceSet.getPointPoolByValue(value);
-            return space.getValue();
-        }
         return value;
     }
 

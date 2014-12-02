@@ -57,13 +57,9 @@ public class QualifierPair implements Parcelable {
         return this.max;
     }
 
-    public boolean matches(int value) {
-        return getMin() >= value && value <= getMax();
-    }
-
     @JsonIgnore
     public boolean qualifiesFor(int value) {
-        return getMin() >= value && value <= getMax();
+        return value >= getMin() && value <= getMax();
     }
 
     @Override

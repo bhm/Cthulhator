@@ -159,7 +159,7 @@ public enum DamageBonusCoC5 implements DamageBonus {
             .withModifier(0)
             .withRelation(BRPStatistic.SIZ.name())
             .withRelation(BRPStatistic.STR.name())
-            .withModifierType(ModifierType.AVERAGE);
+            .withModifierType(ModifierType.NONE);
 
     static {
 
