@@ -100,6 +100,8 @@ public enum DamageBonusCoC7 implements DamageBonus {
     public static final Relation STR_RELATION = new Relation();
     public static final Relation SIZ_RELATION = new Relation();
 
+    private static Collection<Relation> sRelations = new ArrayList<Relation>();
+
     static {
         STR_RELATION.withModifierType(ModifierType.NONE)
                 .withRelation(BRPStatistic.STR.name());
@@ -108,8 +110,6 @@ public enum DamageBonusCoC7 implements DamageBonus {
         sRelations.add(SIZ_RELATION);
         sRelations.add(STR_RELATION);
     }
-
-    private static Collection<Relation> sRelations = new ArrayList<Relation>();
     private int        mMax;
     private int        mMin;
     private ValueSpace mValueSpace;

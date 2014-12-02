@@ -2,12 +2,29 @@ package com.bustiblelemons.cthulhator.system.properties;
 
 import com.bustiblelemons.cthulhator.system.dice.model.ValueSpace;
 
+import java.util.Collection;
 import java.util.HashSet;
 
 /**
  * Created by hiv on 01.12.14.
  */
 public class ValueSpaceSet extends HashSet<ValueSpace> {
+
+    public ValueSpaceSet() {
+
+    }
+
+    public ValueSpaceSet(int capacity) {
+        super(capacity);
+    }
+
+    public ValueSpaceSet(int capacity, float loadFactor) {
+        super(capacity, loadFactor);
+    }
+
+    public ValueSpaceSet(Collection<? extends ValueSpace> collection) {
+        super(collection);
+    }
 
     public ValueSpaceSet(int minValue, int maxValue) {
         ValueSpace valueSpace = new ValueSpace();

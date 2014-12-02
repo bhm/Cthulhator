@@ -10,6 +10,7 @@ import com.bustiblelemons.cthulhator.system.properties.ModifierType;
 import com.bustiblelemons.cthulhator.system.properties.PropertyFormat;
 import com.bustiblelemons.cthulhator.system.properties.PropertyType;
 import com.bustiblelemons.cthulhator.system.properties.Relation;
+import com.bustiblelemons.cthulhator.system.properties.ValueSpaceSet;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,7 +19,7 @@ import java.util.List;
 /**
  * Created by hiv on 26.10.14.
  */
-enum DamageBonusCoC5 implements DamageBonus {
+public enum DamageBonusCoC5 implements DamageBonus {
     Scanty(2, 12) {
         private ValueSpace mValueSpace;
 
@@ -165,9 +166,10 @@ enum DamageBonusCoC5 implements DamageBonus {
     }
 
     private static Collection<Relation> sRelations = new ArrayList<Relation>();
-    private int        mMax;
-    private int        mMin;
-    private ValueSpace mValueSpace;
+    private int           mMax;
+    private int           mMin;
+    private ValueSpace    mValueSpace;
+    private ValueSpaceSet mSpaceSet;
 
     DamageBonusCoC5(int min, int max) {
         this.mMin = min;
@@ -259,5 +261,20 @@ enum DamageBonusCoC5 implements DamageBonus {
             return "0";
         }
         return getDiceCount() + getDice().name();
+    }
+
+    public ValueSpaceSet asSpaceSet() {
+        if (mSpaceSet == null) {
+            mSpaceSet = new ValueSpaceSet();
+            for (DamageBonusCoC5 dmg : values()) {
+                if (dmg != null) {
+                    ValueSpace space = new ValueSpace();
+                    space.setMax(dmg.getMax());
+                    space.setMin(dmg.getMin());
+                    mSpaceSet.add(space);
+                }
+            }
+        }
+        return mSpaceSet;
     }
 }
