@@ -56,11 +56,11 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     @InjectView(R.id.recycler)
     RecyclerView mRecyclerView;
 
+    private CthulhuEdition mEdition = CthulhuEdition.CoC5;
     private SavedCharacter             mSavedCharacter;
     private Toolbar                    mToolbar;
     private RecyclerView.LayoutManager mManager;
     private CreatorCardsAdapter        mCardsAdapter;
-    private CthulhuEdition mEdition = CthulhuEdition.CoC5;
 
     private List<CreatorCard>         mCreatorCards;
     private Set<CharacterProperty>    mStatisticsSet;

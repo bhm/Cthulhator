@@ -15,7 +15,6 @@ import com.bustiblelemons.cthulhator.system.brp.skills.BRPSkillPointPools;
 import com.bustiblelemons.cthulhator.system.brp.statistics.BRPStatistic;
 import com.bustiblelemons.cthulhator.system.brp.statistics.HitPoints;
 import com.bustiblelemons.cthulhator.system.brp.statistics.Sanity;
-import com.bustiblelemons.cthulhator.system.damage.DamageBonus;
 import com.bustiblelemons.cthulhator.system.damage.DamageBonusFactory;
 import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
@@ -81,8 +80,6 @@ public class SavedCharacter implements Parcelable, Serializable, Relation.Retrei
     @JsonIgnore
     private long          suggestedDate = Long.MIN_VALUE;
     @JsonIgnore
-    private HitPoints hitPoints;
-    @JsonIgnore
     private int skillPointsAvailable = -1;
     @JsonIgnore
     private int careerPoints         = -1;
@@ -142,36 +139,33 @@ public class SavedCharacter implements Parcelable, Serializable, Relation.Retrei
         this.edition = edition;
         this.properties.clear();
         fillStatistics();
+        addDamageBonus();
+        addHitPoints();
         updatSecondaryStatistics();
         fillSkillsList();
-        updateDamageBonus();
-        updateHitpoints();
         updateSkillPointPools();
         setupAgeAndBirth();
+    }
+
+    private void addHitPoints() {
+        int con = getStatisticValue(BRPStatistic.CON.name());
+        int siz = getStatisticValue(BRPStatistic.SIZ.name());
+        CharacterProperty property = HitPoints.forProperties(getEdition(), con, siz)
+                .asCharacterProperty();
+        addCharacterProperty(property);
+    }
+
+    private void addDamageBonus() {
+        int con = getStatisticValue(BRPStatistic.CON.name());
+        int siz = getStatisticValue(BRPStatistic.SIZ.name());
+        CharacterProperty damageBonus = DamageBonusFactory.forEdition(this.edition, con, siz)
+                .asCharacterProperty();
+        addCharacterProperty(damageBonus);
     }
 
     @JsonIgnore
     public int updatSecondaryStatistics() {
         return updateRelatedProperties(getStatistics());
-    }
-
-
-    private void updateHitpoints() {
-        CharacterProperty hitPoints = getHitPoints().asCharacterProperty();
-        addCharacterProperty(hitPoints);
-    }
-
-
-    private void updateDamageBonus() {
-        CharacterProperty damageBonus = getDamageBonus().asCharacterProperty();
-        addCharacterProperty(damageBonus);
-    }
-
-    @JsonIgnore
-    public DamageBonus getDamageBonus() {
-        int con = getStatisticValue(BRPStatistic.STR.name());
-        int siz = getStatisticValue(BRPStatistic.SIZ.name());
-        return DamageBonusFactory.forEdition(getEdition(), con, siz);
     }
 
     public CthulhuPeriod getPeriod() {
@@ -316,9 +310,6 @@ public class SavedCharacter implements Parcelable, Serializable, Relation.Retrei
 
     @JsonIgnore
     private CharacterProperty getPropertyByName(String propertyName) {
-        if (propertyName != null && propertyName.equalsIgnoreCase(DamageBonus.class.getSimpleName())) {
-            return getDamageBonus().asCharacterProperty();
-        }
         for (CharacterProperty prop : properties) {
             if (prop != null && prop.getName() != null) {
                 if (prop.getName().equalsIgnoreCase(propertyName)) {
@@ -830,18 +821,6 @@ public class SavedCharacter implements Parcelable, Serializable, Relation.Retrei
         }
         fullHistory.add(event);
         return true;
-    }
-
-    @JsonIgnore
-    public HitPoints getHitPoints() {
-        int con = getStatisticValue(BRPStatistic.CON.name());
-        int siz = getStatisticValue(BRPStatistic.SIZ.name());
-        return HitPoints.forProperties(getEdition(), con, siz);
-    }
-
-    @JsonIgnore
-    public void setHitPoints(HitPoints hitPoints) {
-        this.hitPoints = hitPoints;
     }
 
     @JsonIgnore

@@ -2,13 +2,16 @@ package com.bustiblelemons.cthulhator.character.creation.logic;
 
 import android.view.View;
 
+import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.creation.model.CreatorCard;
 import com.bustiblelemons.cthulhator.view.characteristiccard.CharacteristicCard;
 import com.bustiblelemons.recycler.AbsRecyclerHolder;
+import com.bustiblelemons.recycler.LayoutResId;
 
 /**
  * Created by hiv on 02.11.14.
  */
+@LayoutResId(R.layout.single_chracteristic_card)
 public class CreatorCardHolder extends AbsRecyclerHolder<CreatorCard> {
 
     private RelatedPropertesRetreiver            mRetreiver;

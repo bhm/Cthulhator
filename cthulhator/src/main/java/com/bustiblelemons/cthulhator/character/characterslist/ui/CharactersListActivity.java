@@ -44,13 +44,17 @@ public class CharactersListActivity extends AbsActionBarActivity
 
     @InjectView(R.id.add_character)
     CircleButton addFab;
+
     @Optional
     @InjectView(android.R.id.progress)
-    ProgressBar  progressBar;
+    ProgressBar progressBar;
+
     @InjectView(R.id.header)
-    Toolbar      mToolbar;
+    Toolbar mToolbar;
+
     @InjectView(R.id.list)
     RecyclerView recyclerView;
+
     private SavedCharactersAdapter    listAdapter;
     private Grouping                  grouping;
     private LoadMoreOnScrollWrapper   mLoadMoreScrollWrapper;

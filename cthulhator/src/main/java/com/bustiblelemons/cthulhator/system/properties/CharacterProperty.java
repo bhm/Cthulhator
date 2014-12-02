@@ -2,8 +2,8 @@ package com.bustiblelemons.cthulhator.system.properties;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.text.TextUtils;
 
+import com.bustiblelemons.cthulhator.system.dice.model.ValueSpace;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -63,6 +63,8 @@ public class CharacterProperty extends ObservableCharacterProperty
     private CharacterProperty(Parcel in) {
         this.name = in.readString();
         this.displayValue = in.readString();
+        Collection<ValueSpace> spaces = in.createTypedArrayList(ValueSpace.CREATOR);
+        this.valueSpaceSet = new ValueSpaceSet(spaces);
         this.value = in.readInt();
         this.maxValue = in.readInt();
         this.minValue = in.readInt();
@@ -85,7 +87,7 @@ public class CharacterProperty extends ObservableCharacterProperty
 
     @JsonProperty("value_space")
     public ValueSpaceSet getValueSpaceSet() {
-        if (valueSpaceSet == null) {
+        if (valueSpaceSet != null && !valueSpaceSet.isEmpty()) {
             valueSpaceSet = new ValueSpaceSet(getMinValue(), getMaxValue());
         }
         return valueSpaceSet;
@@ -195,10 +197,10 @@ public class CharacterProperty extends ObservableCharacterProperty
     }
 
     public int getValue() {
-        if (valueSpaceSet != null) {
-            int val = 0;
-            valueSpaceSet.getPointPoolByValue(value);
-            return val;
+        setChanged();
+        if (valueSpaceSet != null && !valueSpaceSet.isEmpty()) {
+            ValueSpace space = valueSpaceSet.getPointPoolByValue(value);
+            return space.getValue();
         }
         return value;
     }
@@ -231,12 +233,19 @@ public class CharacterProperty extends ObservableCharacterProperty
 
     @JsonIgnore
     public int randomValue() {
-        Random r = new Random();
-        int n = getMaxValue() - getMinValue();
-        int roll = r.nextInt(n);
-        int ret = roll + getMinValue() + 1;
-        setValue(ret);
-        return ret;
+        if (valueSpaceSet != null && !valueSpaceSet.isEmpty()) {
+            ValueSpace space = valueSpaceSet.getPointPoolByValue(this.value);
+            int ret = space.randomValue();
+            setValue(ret);
+            return ret;
+        } else {
+            Random r = new Random();
+            int n = getMaxValue() - getMinValue();
+            int roll = r.nextInt(n);
+            int ret = roll + getMinValue() + 1;
+            setValue(ret);
+            return ret;
+        }
     }
 
     @Override
@@ -324,6 +333,13 @@ public class CharacterProperty extends ObservableCharacterProperty
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.name);
         dest.writeString(this.displayValue);
+        List<ValueSpace> spaces;
+        if (this.valueSpaceSet != null) {
+            spaces = new ArrayList<ValueSpace>(this.valueSpaceSet);
+        } else {
+            spaces = new ArrayList<ValueSpace>(0);
+        }
+        dest.writeTypedList(spaces);
         dest.writeInt(this.value);
         dest.writeInt(this.maxValue);
         dest.writeInt(this.minValue);
@@ -348,18 +364,18 @@ public class CharacterProperty extends ObservableCharacterProperty
             dest.writeIntArray(new int[0]);
         } else {
             int size = this.actionGroup.size();
-            int[] oridnals = new int[size];
+            int[] ordinals = new int[size];
             int pos = 0;
             for (ActionGroup group : this.actionGroup) {
                 int ordinal = -1;
                 if (group != null) {
                     ordinal = group.ordinal();
                 }
-                oridnals[pos] = ordinal;
+                ordinals[pos] = ordinal;
                 pos++;
             }
             dest.writeInt(size);
-            dest.writeIntArray(oridnals);
+            dest.writeIntArray(ordinals);
         }
     }
 
@@ -375,8 +391,8 @@ public class CharacterProperty extends ObservableCharacterProperty
     }
 
     public String getDisplayValue() {
-        if (!TextUtils.isEmpty(displayValue)) {
-            return displayValue;
+        if (valueSpaceSet != null && !valueSpaceSet.isEmpty()) {
+            return valueSpaceSet.getPointPoolByValue(this.value).getDisplayValue();
         }
         return String.valueOf(getValue());
     }

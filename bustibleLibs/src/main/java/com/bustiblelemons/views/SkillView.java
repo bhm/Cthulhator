@@ -111,11 +111,13 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
     };
     private int             mJump     = 1;
     private OnValueButtonsClicked mOnValueButtonsClicked;
+
     public SkillView(Context context) {
         super(context);
         setSkillViewListener(mSkillViewListener);
         init(context, null);
     }
+
     public SkillView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
@@ -457,7 +459,7 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
     }
 
     public void setValue(CharSequence s) {
-        if (valueView != null) {
+        if (valueView != null && s != null) {
             String val = isPercentile ? String.format(Locale.ENGLISH, "%s%%", s) : s.toString();
             valueView.setText(val);
         }

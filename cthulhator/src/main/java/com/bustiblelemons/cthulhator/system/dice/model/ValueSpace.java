@@ -1,5 +1,8 @@
 package com.bustiblelemons.cthulhator.system.dice.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.bustiblelemons.cthulhator.system.properties.QualifierPair;
 import com.bustiblelemons.patterns.ObservedObjectImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,20 +16,24 @@ import java.util.Random;
  * Created by bhm on 09.09.14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ValueSpace extends ObservedObjectImpl<Integer> {
+public class ValueSpace extends ObservedObjectImpl<Integer> implements Parcelable {
     public static final ValueSpace EMPTY = new ValueSpace(Integer.MAX_VALUE);
     public static final ValueSpace ZERO  = new ValueSpace(0, 0);
 
     @JsonProperty("qualifier")
     public  QualifierPair qualifierPair;
     @JsonIgnore
-    private Random mRandom;
+    private Random        mRandom;
     @JsonProperty("max")
     private int mMax   = Integer.MAX_VALUE;
     @JsonProperty("points")
     private int points = mMax;
     @JsonProperty("min")
     private int mMin   = 0;
+    @JsonProperty("display")
+    private String displayValue;
+    @JsonProperty("value")
+    private int    value;
 
     private ValueSpace(int max) {
         this(0, max);
@@ -228,6 +235,26 @@ public class ValueSpace extends ObservedObjectImpl<Integer> {
         return getQualifierPair().qualifiesFor(value);
     }
 
+    @JsonProperty("display")
+    public void setDisplayValue(String displayValue) {
+        this.displayValue = displayValue;
+    }
+
+    @JsonProperty("display")
+    public String getDisplayValue() {
+        return displayValue;
+    }
+
+    @JsonProperty("value")
+    public int getValue() {
+        return value;
+    }
+
+    @JsonProperty("value")
+    public void setValue(int value) {
+        this.value = value;
+    }
+
     @JsonIgnoreType
     public static class Builder {
         private long mSeed = System.currentTimeMillis();
@@ -253,4 +280,40 @@ public class ValueSpace extends ObservedObjectImpl<Integer> {
             return this;
         }
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(this.qualifierPair, flags);
+        dest.writeSerializable(this.mRandom);
+        dest.writeInt(this.mMax);
+        dest.writeInt(this.points);
+        dest.writeInt(this.mMin);
+        dest.writeString(this.displayValue);
+        dest.writeInt(this.value);
+    }
+
+    private ValueSpace(Parcel in) {
+        this.qualifierPair = in.readParcelable(QualifierPair.class.getClassLoader());
+        this.mRandom = (Random) in.readSerializable();
+        this.mMax = in.readInt();
+        this.points = in.readInt();
+        this.mMin = in.readInt();
+        this.displayValue = in.readString();
+        this.value = in.readInt();
+    }
+
+    public static final Parcelable.Creator<ValueSpace> CREATOR = new Parcelable.Creator<ValueSpace>() {
+        public ValueSpace createFromParcel(Parcel source) {
+            return new ValueSpace(source);
+        }
+
+        public ValueSpace[] newArray(int size) {
+            return new ValueSpace[size];
+        }
+    };
 }

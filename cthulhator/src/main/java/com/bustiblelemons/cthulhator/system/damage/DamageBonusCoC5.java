@@ -153,19 +153,20 @@ public enum DamageBonusCoC5 implements DamageBonus {
             return 10;
         }
     };
-    public static final Relation STR_RELATION = new Relation();
-    public static final Relation SIZ_RELATION = new Relation();
+
+    private static Collection<Relation> sRelations;
+    private static final Relation sSizStrRelation = new Relation()
+            .withModifier(0)
+            .withRelation(BRPStatistic.SIZ.name())
+            .withRelation(BRPStatistic.STR.name())
+            .withModifierType(ModifierType.AVERAGE);
 
     static {
-        STR_RELATION.withModifierType(ModifierType.NONE)
-                .withRelation(BRPStatistic.STR.name());
-        SIZ_RELATION.withModifierType(ModifierType.NONE)
-                .addPropertyName(BRPStatistic.SIZ.name());
-//        sRelations.add(SIZ_RELATION);
-//        sRelations.add(STR_RELATION);
+
+        sRelations = new ArrayList<Relation>();
+        sRelations.add(sSizStrRelation);
     }
 
-    private static Collection<Relation> sRelations = new ArrayList<Relation>();
     private int           mMax;
     private int           mMin;
     private ValueSpace    mValueSpace;
@@ -241,7 +242,6 @@ public enum DamageBonusCoC5 implements DamageBonus {
     @Override
     public CharacterProperty asCharacterProperty() {
         CharacterProperty r = new CharacterProperty();
-        r.setDisplayValue(toString());
         r.setFormat(PropertyFormat.NUMBER);
         r.setType(PropertyType.DAMAGE_BONUS);
         ValueSpace valueSpace = getPointPool();
@@ -251,6 +251,7 @@ public enum DamageBonusCoC5 implements DamageBonus {
         List<ActionGroup> g = new ArrayList<ActionGroup>();
         g.add(ActionGroup.COMBAT);
         r.setActionGroup(g);
+        r.setValueSpaceSet(asSpaceSet());
         r.setRelations(sRelations);
         return r;
     }
@@ -271,6 +272,7 @@ public enum DamageBonusCoC5 implements DamageBonus {
                     ValueSpace space = new ValueSpace();
                     space.setMax(dmg.getMax());
                     space.setMin(dmg.getMin());
+                    space.setDisplayValue(dmg.toString());
                     mSpaceSet.add(space);
                 }
             }

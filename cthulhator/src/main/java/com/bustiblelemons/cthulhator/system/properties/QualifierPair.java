@@ -1,12 +1,15 @@
 package com.bustiblelemons.cthulhator.system.properties;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by hiv on 01.12.14.
  */
-public class QualifierPair {
+public class QualifierPair implements Parcelable {
 
     private final int min;
     private final int max;
@@ -62,4 +65,30 @@ public class QualifierPair {
     public boolean qualifiesFor(int value) {
         return getMin() >= value && value <= getMax();
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.min);
+        dest.writeInt(this.max);
+    }
+
+    private QualifierPair(Parcel in) {
+        this.min = in.readInt();
+        this.max = in.readInt();
+    }
+
+    public static final Parcelable.Creator<QualifierPair> CREATOR = new Parcelable.Creator<QualifierPair>() {
+        public QualifierPair createFromParcel(Parcel source) {
+            return new QualifierPair(source);
+        }
+
+        public QualifierPair[] newArray(int size) {
+            return new QualifierPair[size];
+        }
+    };
 }
