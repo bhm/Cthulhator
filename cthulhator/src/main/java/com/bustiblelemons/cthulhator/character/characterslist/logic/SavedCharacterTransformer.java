@@ -22,7 +22,7 @@ public class SavedCharacterTransformer {
     }
 
     public static SavedCharacterTransformer getInstance() {
-        return LazyHolder.INSTANCE;
+        return new SavedCharacterTransformer();
     }
 
     public SavedCharacterTransformer withContext(Context context) {
@@ -86,10 +86,6 @@ public class SavedCharacterTransformer {
             prefix = ", ";
         }
         return b.toString();
-    }
-
-    private static final class LazyHolder {
-        public static final SavedCharacterTransformer INSTANCE = new SavedCharacterTransformer();
     }
 
     private class CharacterInfoImpl implements CharacterInfo {

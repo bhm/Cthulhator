@@ -1,6 +1,5 @@
 package com.bustiblelemons.cthulhator.character.viewer;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -10,10 +9,8 @@ import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
 import com.bustiblelemons.cthulhator.character.description.model.CharacterDescription;
 import com.bustiblelemons.cthulhator.character.portrait.model.Portrait;
-import com.bustiblelemons.cthulhator.character.portrait.ui.PortraitsActivity;
 import com.bustiblelemons.cthulhator.character.viewer.logic.OnExpandCharacterViewer;
 import com.bustiblelemons.cthulhator.character.viewer.ui.CharacterViewerFragment;
-import com.bustiblelemons.cthulhator.test.BRPCharacterFragment;
 import com.bustiblelemons.views.loadingimage.RemoteImage;
 import com.kbeanie.imagechooser.api.ChosenImage;
 import com.kbeanie.imagechooser.api.ImageChooserListener;
@@ -27,7 +24,7 @@ import butterknife.Optional;
  * Created by bhm on 20.07.14.
  */
 public class CharacterViewerActivity extends AbsArgActivity<SavedCharacter>
-        implements BRPCharacterFragment.BRPCharacterListener,
+        implements
                    ImageChooserListener,
                    OnExpandCharacterViewer {
 
@@ -83,13 +80,6 @@ public class CharacterViewerActivity extends AbsArgActivity<SavedCharacter>
 
 
     @Override
-    public boolean onPickPicture(int characterId) {
-        Intent i = new Intent(this, PortraitsActivity.class);
-        startActivityForResult(i, characterId);
-        return false;
-    }
-
-    @Override
     public void onImageChosen(ChosenImage chosenImage) {
 
     }
@@ -119,15 +109,16 @@ public class CharacterViewerActivity extends AbsArgActivity<SavedCharacter>
     @Override
     public void onFinishExpandAnimation() {
         mDescription = mSavedCharacter.getDescription();
-        if (mToolbar != null && mDescription != null && mDescription.getName() != null) {
-            mToolbar.setTitle(mDescription.getName().getFullName());
+        if (mToolbar != null) {
             mToolbar.setBackgroundColor(sSolidColor);
+            if (mDescription != null && mDescription.getName() != null) {
+                mToolbar.setTitle(mDescription.getName().getFullName());
+            }
         }
     }
 
     @Override
     public void onFinishCollapseAnimation() {
-
         if (mToolbar != null) {
             mToolbar.setTitle(null);
             mToolbar.setBackgroundColor(sTransparentColor);
