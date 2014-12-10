@@ -8,7 +8,6 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.andexert.library"
         minSdkVersion 9
         targetSdkVersion 21
         versionCode 7
@@ -16,7 +15,7 @@ android {
     }
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

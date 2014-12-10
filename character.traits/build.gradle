@@ -5,14 +5,13 @@ android {
     buildToolsVersion '21.0.1'
 
     defaultConfig {
-        applicationId "io.github.scottmaclure.character.traits"
         minSdkVersion 14
         targetSdkVersion 19
     }
 
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
