@@ -25,8 +25,6 @@ public class MainActivity extends AbsActionBarActivity {
         switch (item.getItemId()) {
         case R.id.action_character:
             return launchCharacterViewer(-1);
-        case R.id.action_test:
-            return launchTestActivity();
         case R.id.action_portriats:
             return launchPortraitsChooser();
         case R.id.action_random_user:
@@ -47,12 +45,6 @@ public class MainActivity extends AbsActionBarActivity {
         i.putExtra(CharacterViewerActivity.CHARCTER_ID, characterId);
         startActivity(i);
         return true;
-    }
-
-    private boolean launchTestActivity() {
-        Intent i = new Intent(this, TestActivity.class);
-        startActivity(i);
-        return false;
     }
 
     private boolean launchPortraitsChooser() {

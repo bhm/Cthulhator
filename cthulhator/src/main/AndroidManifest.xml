@@ -29,9 +29,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.TranslucentActionBar"/>
         <activity
-            android:name=".activities.TestActivity"
-            android:label="@string/activity_test"/>
-        <activity
             android:name=".character.characteristics.ui.StatisticsCreatorActivity"
             android:label="@string/add_character_statistics"
             android:screenOrientation="portrait"
