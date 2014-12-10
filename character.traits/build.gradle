@@ -34,14 +34,17 @@ android {
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/ASL2.0'
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_6
+        targetCompatibility JavaVersion.VERSION_1_6
+    }
 }
 
 dependencies {
-    provided('com.android.support:appcompat-v7:21.0.+')
+    provided 'com.android.support:appcompat-v7:21.0.+'
     provided 'com.fasterxml.jackson.core:jackson-databind:2.4.3'
     provided 'com.fasterxml.jackson.core:jackson-annotations:2.4.3'
     provided 'com.fasterxml.jackson.core:jackson-core:2.4.3'
-
     provided 'org.apache.httpcomponents:httpmime:4.2.5'
     provided 'com.jakewharton:butterknife:5.1.1'
     provided 'commons-io:commons-io:2.4'

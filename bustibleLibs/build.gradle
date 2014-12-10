@@ -38,25 +38,26 @@ android {
     lintOptions {
         abortOnError false
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_6
+        targetCompatibility JavaVersion.VERSION_1_6
+    }
 }
 
 dependencies {
     provided project(':circle-button')
     provided project(':floatlabel')
-    provided('com.android.support:appcompat-v7:21.0.+')
+    provided 'com.android.support:appcompat-v7:21.0.+'
     provided 'commons-lang:commons-lang:2.6'
-
     provided 'com.fasterxml.jackson.core:jackson-databind:2.4.3'
     provided 'com.fasterxml.jackson.core:jackson-annotations:2.4.3'
     provided 'com.fasterxml.jackson.core:jackson-core:2.4.3'
     provided 'com.android.support:palette-v7:+'
-
     provided 'com.nostra13.universalimageloader:universal-image-loader:1.9.+'
     provided 'org.apache.httpcomponents:httpmime:4.2.5'
     provided 'com.jakewharton:butterknife:5.1.1'
     provided 'commons-io:commons-io:2.4'
     provided 'com.android.support:recyclerview-v7:+'
-
-//    provided 'com.github.traex.rippleeffect:library:1.2.+'
+    //    provided 'com.github.traex.rippleeffect:library:1.2.+'
     provided project(':RippleEffect')
 }
