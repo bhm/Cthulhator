@@ -30,13 +30,13 @@ public class CharacteristicCard extends RelativeLayout implements SkillView.OnVa
     private int  defValSize;
     private int  defTitleSize;
 
-    private List<CharacterProperty> mPrimaryPropList;
-    private ViewGroup               mPrimaryList;
-    private ViewGroup               mSecondaryList;
-    private List<CharacterProperty> mSecondaryPropList;
+    private List<CharacterProperty>           mPrimaryPropList;
+    private ViewGroup                         mPrimaryList;
+    private ViewGroup                         mSecondaryList;
+    private List<CharacterProperty>           mSecondaryPropList;
     private Map<CharacterProperty, SkillView> mPropertyToView;
-    private RelatedPropertesRetreiver mRelatedRetreiver;
-    private OnPropertyChanged mOnPropertyChanged;
+    private RelatedPropertesRetreiver         mRelatedRetreiver;
+    private OnPropertyChanged                 mOnPropertyChanged;
 
     public CharacteristicCard(Context context) {
         super(context);

@@ -17,8 +17,9 @@ import java.util.Random;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ValueSpace extends ObservedObjectImpl<Integer> implements Parcelable {
-    public static final ValueSpace EMPTY = new ValueSpace(Integer.MAX_VALUE);
-    public static final ValueSpace ZERO  = new ValueSpace(0, 0);
+    public static final ValueSpace EMPTY     = new ValueSpace(Integer.MAX_VALUE);
+    public static final ValueSpace ZERO      = new ValueSpace(0, 0);
+    public static final ValueSpace STATISTIC = new ValueSpace(0, 100);
 
     @JsonProperty("qualifier")
     public  QualifierPair qualifierPair;

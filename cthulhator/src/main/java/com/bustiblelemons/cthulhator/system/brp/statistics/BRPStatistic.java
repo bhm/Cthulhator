@@ -53,18 +53,18 @@ public enum BRPStatistic {
             return relations;
         }
     }, INT {
-        public Relation ideaReloation;
+        public Relation udeaRelation;
         public List<Relation> relations;
 
         @Override
         public List<Relation> getRelations() {
             if (relations == null) {
                 relations = new ArrayList<Relation>();
-                ideaReloation = new Relation()
+                udeaRelation = new Relation()
                         .addPropertyName(IDEA.name())
                         .setModifier(5)
                         .setModifierType(ModifierType.MULTIPLY);
-                relations.add(ideaReloation);
+                relations.add(udeaRelation);
             }
             return relations;
         }
@@ -256,23 +256,23 @@ public enum BRPStatistic {
         case POW:
             fromDice = new PointPoolFromDiceBuilder();
             fromDice.addDicePool(3, PolyhedralDice.D6);
-            return fromPointPool(fromDice.build());
+            return fromValueSpace(fromDice.build());
         case INT:
         case SIZ:
             fromDice = new PointPoolFromDiceBuilder();
             fromDice.addDicePool(2, PolyhedralDice.D6).addModifiers(6);
-            return fromPointPool(fromDice.build());
+            return fromValueSpace(fromDice.build());
         case EDU:
             fromDice = new PointPoolFromDiceBuilder();
             fromDice.addDicePool(3, PolyhedralDice.D6).addModifiers(3);
-            return fromPointPool(fromDice.build());
+            return fromValueSpace(fromDice.build());
         default:
-            return new CharacterProperty();
+            return fromValueSpace(ValueSpace.STATISTIC);
         }
     }
 
 
-    private CharacterProperty fromPointPool(ValueSpace p) {
+    private CharacterProperty fromValueSpace(ValueSpace p) {
         CharacterProperty property = new CharacterProperty();
         property.setMaxValue(p.getMax());
         property.setMinValue(p.getMin());
