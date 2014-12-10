@@ -25,6 +25,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_6
         targetCompatibility JavaVersion.VERSION_1_6
     }
+    dexOptions {
+        incremental true
+    }
 }
 dependencies {
     provided 'com.android.support:appcompat-v7:21.0.+'
