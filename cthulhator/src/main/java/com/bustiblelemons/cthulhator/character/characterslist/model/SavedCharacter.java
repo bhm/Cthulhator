@@ -19,6 +19,7 @@ import com.bustiblelemons.cthulhator.system.damage.DamageBonusFactory;
 import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 import com.bustiblelemons.cthulhator.system.properties.PropertyType;
+import com.bustiblelemons.cthulhator.system.properties.PropertyValueRetreiver;
 import com.bustiblelemons.cthulhator.system.properties.Relation;
 import com.bustiblelemons.cthulhator.system.time.CthulhuPeriod;
 import com.bustiblelemons.randomuserdotme.model.Location;
@@ -43,7 +44,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Created by bhm on 12.08.14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SavedCharacter implements Parcelable, Serializable, Relation.Retreiver {
+public class SavedCharacter implements Parcelable, Serializable, PropertyValueRetreiver {
 
     @JsonIgnore
     public static final Parcelable.Creator<SavedCharacter>           CREATOR                    = new Parcelable.Creator<SavedCharacter>() {
@@ -854,7 +855,7 @@ public class SavedCharacter implements Parcelable, Serializable, Relation.Retrei
     }
 
     @Override
-    public int retreivePropertValue(String propertyName) {
+    public int onRetreivePropertValue(String propertyName) {
         for (CharacterProperty property : properties) {
             if (property != null && property.nameMatches(propertyName)) {
                 return property.getValue();

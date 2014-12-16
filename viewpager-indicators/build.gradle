@@ -2,7 +2,7 @@ apply plugin: 'android-library'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion '21.0.1'
+    buildToolsVersion '21.1.2'
 
     defaultConfig {
         minSdkVersion 8
@@ -26,7 +26,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_6
     }
     dexOptions {
-        incremental true
+        incremental false
     }
 }
 dependencies {

@@ -85,7 +85,7 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
             int value = statArray.getInteger(R.styleable.StatisticView_statValue, defaultStatValue);
             setValue(value + "");
             String title = statArray.getString(R.styleable.StatisticView_statTitle);
-            setTtitle(title);
+            setTitle(title);
             statArray.recycle();
         }
     }
@@ -225,7 +225,7 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
         valueView.setLayoutParams(params);
     }
 
-    public void setTtitle(String title) {
+    public void setTitle(String title) {
         if (titleView != null) {
             titleView.setText(title);
         }

@@ -16,7 +16,7 @@ public enum CharacterViewerCard {
         private List<String> mNames;
 
         @Override
-        public int getLayout() {
+        public int getLayoutId() {
             return R.layout.card_brp_combat;
         }
 
@@ -36,7 +36,7 @@ public enum CharacterViewerCard {
         private List<String> mNames;
 
         @Override
-        public int getLayout() {
+        public int getLayoutId() {
             return R.layout.card_brp_magic;
         }
 
@@ -53,7 +53,7 @@ public enum CharacterViewerCard {
         private List<String> mNames;
 
         @Override
-        public int getLayout() {
+        public int getLayoutId() {
             return R.layout.card_brp_mind;
         }
 
@@ -69,7 +69,7 @@ public enum CharacterViewerCard {
         private List<String> mNames;
 
         @Override
-        public int getLayout() {
+        public int getLayoutId() {
             return R.layout.card_brp_mythos;
         }
 
@@ -85,7 +85,7 @@ public enum CharacterViewerCard {
         private List<String> mNames;
 
         @Override
-        public int getLayout() {
+        public int getLayoutId() {
             return R.layout.card_brp_social;
         }
 
@@ -99,7 +99,7 @@ public enum CharacterViewerCard {
         }
     }, SKILLS {
         @Override
-        public int getLayout() {
+        public int getLayoutId() {
             return R.layout.card_brp_skills;
         }
 
@@ -109,7 +109,7 @@ public enum CharacterViewerCard {
         }
     },;
 
-    public abstract int getLayout();
+    public abstract int getLayoutId();
 
     public abstract Collection<String> getPropertyNames();
 }

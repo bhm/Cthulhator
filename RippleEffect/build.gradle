@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.0.1"
+    buildToolsVersion '21.1.2'
     lintOptions {
         abortOnError false
     }
@@ -24,7 +24,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_6
     }
     dexOptions {
-        incremental true
+        incremental false
     }
 }
 

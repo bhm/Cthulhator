@@ -24,8 +24,7 @@ import butterknife.Optional;
  * Created by bhm on 20.07.14.
  */
 public class CharacterViewerActivity extends AbsArgActivity<SavedCharacter>
-        implements
-                   ImageChooserListener,
+        implements ImageChooserListener,
                    OnExpandCharacterViewer {
 
     public static final String CHARCTER_ID       = "character_id";
@@ -35,6 +34,7 @@ public class CharacterViewerActivity extends AbsArgActivity<SavedCharacter>
     RemoteImage mPortraitView;
     @InjectView(R.id.header)
     Toolbar     mToolbar;
+
     private SavedCharacter          mSavedCharacter;
     private CharacterViewerFragment mCharacterViewerFragment;
     private Portrait                mMainPortrait;

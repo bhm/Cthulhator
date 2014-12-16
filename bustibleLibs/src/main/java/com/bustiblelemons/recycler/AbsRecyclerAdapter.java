@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -135,15 +136,19 @@ public abstract class AbsRecyclerAdapter<I, VH extends AbsRecyclerHolder<I>>
         return null;
     }
 
-    public boolean refreshData() {
+    public void refreshData() {
         notifyDataSetChanged();
-        return false;
     }
 
-    public boolean refreshData(Collection<I> data) {
+    public void refreshData(Collection<I> data) {
         setData(data);
         notifyDataSetChanged();
-        return false;
+    }
+
+    public void refreshData(I[] items) {
+        if (items != null && items.length > 0) {
+            refreshData(Arrays.asList(items));
+        }
     }
 
     public List<I> getData() {

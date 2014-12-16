@@ -16,8 +16,11 @@ import android.widget.TextView;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.characterslist.logic.SavedCharacterTransformer;
 import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
+import com.bustiblelemons.cthulhator.character.viewer.CharacterViewerCard;
+import com.bustiblelemons.cthulhator.character.viewer.logic.CharacterViewerAdapter;
 import com.bustiblelemons.cthulhator.character.viewer.logic.OnExpandCharacterViewer;
 import com.bustiblelemons.cthulhator.fragments.AbsArgFragment;
+import com.bustiblelemons.cthulhator.system.properties.PropertyValueRetreiver;
 import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
 
 import at.markushi.ui.CircleButton;
@@ -47,6 +50,9 @@ public class CharacterViewerFragment extends AbsArgFragment<SavedCharacter> {
     private RecyclerView.LayoutManager mManager;
     private RecyclerView.ItemAnimator  mAnimator;
     private OnExpandCharacterViewer    mExpandCallback;
+
+    private CharacterViewerAdapter mAdapter;
+
     private final Animation.AnimationListener sAnimationListener = new Animation.AnimationListener() {
         @Override
         public void onAnimationStart(Animation animation) {
@@ -71,6 +77,7 @@ public class CharacterViewerFragment extends AbsArgFragment<SavedCharacter> {
 
         }
     };
+    private PropertyValueRetreiver mRetreiver;
 
     public static CharacterViewerFragment newInstance(SavedCharacter savedCharacter) {
         CharacterViewerFragment r = new CharacterViewerFragment();
@@ -95,6 +102,10 @@ public class CharacterViewerFragment extends AbsArgFragment<SavedCharacter> {
 
         if (activity instanceof OnExpandCharacterViewer) {
             mExpandCallback = (OnExpandCharacterViewer) activity;
+        }
+
+        if (activity instanceof PropertyValueRetreiver) {
+            mRetreiver = (PropertyValueRetreiver) activity;
         }
     }
 
@@ -161,6 +172,12 @@ public class CharacterViewerFragment extends AbsArgFragment<SavedCharacter> {
             if (expand) {
                 mRecyclerView.setVisibility(View.VISIBLE);
                 mRecyclerView.setAnimation(mSlideInAnimation);
+                if (mAdapter == null) {
+                    mAdapter = new CharacterViewerAdapter(getActivity());
+                    mAdapter.withPropertyValueRetreiver(mRetreiver);
+                    mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.refreshData(CharacterViewerCard.values());
+                }
                 mSlideInAnimation.start();
             } else {
                 mRecyclerView.setAnimation(mSlideOutAnimation);

@@ -119,13 +119,13 @@ public class Relation implements Parcelable, Serializable {
     }
 
     @JsonIgnore
-    public int getValueByRelation(@NonNull Relation.Retreiver retreiver) {
-        if (retreiver != null) {
+    public int getValueByRelation(@NonNull PropertyValueRetreiver propertyValueRetreiver) {
+        if (propertyValueRetreiver != null) {
             int sum = 0;
             int mod = 0;
             for (String propertyName : propertyNames) {
                 if (propertyName != null) {
-                    int value = retreiver.retreivePropertValue(propertyName);
+                    int value = propertyValueRetreiver.onRetreivePropertValue(propertyName);
                     sum = sum + value;
                     mod++;
                 }
@@ -188,10 +188,5 @@ public class Relation implements Parcelable, Serializable {
     public Relation withModifierType(ModifierType type) {
         setModifierType(type);
         return this;
-    }
-
-
-    public interface Retreiver {
-        int retreivePropertValue(String propertyName);
     }
 }
