@@ -72,25 +72,24 @@ public class SavedCharacter implements Parcelable, Serializable, PropertyValueRe
     protected      List<Possesion>        possesions  = new ArrayList<Possesion>();
     protected      Set<HistoryEvent>      fullHistory = new HashSet<HistoryEvent>();
     @JsonIgnore
-    private int id;
+    private Integer mId;
     private CthulhuEdition edition = CthulhuEdition.CoC5;
     private CharacterDescription description;
     private BirthData            birth;
     private int                  age;
-    private CthulhuPeriod period        = CthulhuPeriod.JAZZAGE;
+    private CthulhuPeriod period               = CthulhuPeriod.JAZZAGE;
     @JsonIgnore
-    private long          suggestedDate = Long.MIN_VALUE;
+    private long          suggestedDate        = Long.MIN_VALUE;
     @JsonIgnore
-    private int skillPointsAvailable = -1;
+    private int           skillPointsAvailable = -1;
     @JsonIgnore
-    private int careerPoints         = -1;
+    private int           careerPoints         = -1;
     @JsonIgnore
-    private int hobbyPoints          = -1;
+    private int           hobbyPoints          = -1;
     @JsonIgnore
     private Sanity sanity;
 
     public SavedCharacter() {
-        this.id = sAtomicId.incrementAndGet();
     }
 
     private SavedCharacter(Parcel in) {
@@ -119,7 +118,10 @@ public class SavedCharacter implements Parcelable, Serializable, PropertyValueRe
 
     @JsonIgnore
     public int getId() {
-        return id;
+        if (mId == null) {
+            mId = new Integer(sAtomicId.getAndIncrement());
+        }
+        return mId;
     }
 
     public void setFullHistory(Set<HistoryEvent> fullHistory) {
