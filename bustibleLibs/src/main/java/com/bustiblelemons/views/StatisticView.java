@@ -21,26 +21,26 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
     public static final int VALUE_RIGHT  = 2;
     public static final int VALUE_BOTTOM = 3;
     public static final int VALUE_LEFT   = 4;
-    private View     rootView;
-    private TextView titleView;
-    private TextView valueView;
-    private boolean isPercentile = false;
-    private boolean valueBelow   = false;
-    private boolean hideTitle    = false;
+    private static int sDefValSize;
+    private static int sDefTitleSize;
+    private static int sDefaultStatValue = 99;
+    private View     mRootView;
+    private TextView mTitleView;
+    private TextView mValueView;
+    private boolean mIsPercentile = false;
+    private boolean mValueIsBelow = false;
+    private boolean mHideTitle    = false;
     private int valuePosition;
     private boolean showModifiers = false;
-    private ImageView             decView;
-    private ImageView             incView;
-    private int                   defValSize;
-    private int                   defTitleSize;
-    private int                   titleSize;
-    private int                   valueSize;
-    private Drawable              incDrawable;
-    private Drawable              decDrawable;
-    private OnClickListener       cachedOnClick;
+    private ImageView             mDecView;
+    private ImageView             mIncView;
+    private int                   mTitleSize;
+    private int                   mValueSize;
+    private Drawable              mIncDrawable;
+    private Drawable              mDecDrawable;
+    private OnClickListener       mCachedOnClick;
     private StatisticViewListener listener;
-    private int defaultStatValue = 99;
-    private boolean valueBiggerIfTitleMissing;
+    private boolean               mValueBiggerIfTitleMissing;
 
     public StatisticView(Context context) {
         super(context);
@@ -58,31 +58,31 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
     }
 
     public void setValueBiggerIfTitleMissing(boolean valueBiggerIfTitleMissing) {
-        this.valueBiggerIfTitleMissing = valueBiggerIfTitleMissing;
+        this.mValueBiggerIfTitleMissing = valueBiggerIfTitleMissing;
     }
 
     private void init(Context context, AttributeSet attrs) {
         setupDefaultTextSize(context);
-        rootView = LayoutInflater.from(context).inflate(R.layout.statistic_view, this, true);
-        valueView = (TextView) rootView.findViewById(android.R.id.custom);
-        titleView = (TextView) rootView.findViewById(android.R.id.title);
-        incView = (ImageView) rootView.findViewById(R.id.inc);
-        decView = (ImageView) rootView.findViewById(R.id.dec);
-        setOnClick(valueView, titleView, incView, decView);
+        mRootView = LayoutInflater.from(context).inflate(R.layout.statistic_view, this, true);
+        mValueView = (TextView) mRootView.findViewById(android.R.id.custom);
+        mTitleView = (TextView) mRootView.findViewById(android.R.id.title);
+        mIncView = (ImageView) mRootView.findViewById(R.id.inc);
+        mDecView = (ImageView) mRootView.findViewById(R.id.dec);
+        setOnClick(mValueView, mTitleView, mIncView, mDecView);
         if (attrs != null) {
             TypedArray statArray = context.obtainStyledAttributes(attrs, R.styleable.StatisticView);
             positionValues(statArray);
             setupModifiers(statArray);
-            isPercentile = statArray.getBoolean(R.styleable.StatisticView_percentile, false);
-            hideTitle = statArray.getBoolean(R.styleable.StatisticView_hideTitle, hideTitle);
-            valueBiggerIfTitleMissing =
+            mIsPercentile = statArray.getBoolean(R.styleable.StatisticView_percentile, false);
+            mHideTitle = statArray.getBoolean(R.styleable.StatisticView_hideTitle, mHideTitle);
+            mValueBiggerIfTitleMissing =
                     statArray.getBoolean(R.styleable.StatisticView_valueBiggerIfTitleMissing,
-                            valueBiggerIfTitleMissing);
+                            mValueBiggerIfTitleMissing);
             setUpTextSize(statArray);
-            if (hideTitle) {
+            if (mHideTitle) {
                 hideTitle();
             }
-            int value = statArray.getInteger(R.styleable.StatisticView_statValue, defaultStatValue);
+            int value = statArray.getInteger(R.styleable.StatisticView_statValue, sDefaultStatValue);
             setValue(value + "");
             String title = statArray.getString(R.styleable.StatisticView_statTitle);
             setTitle(title);
@@ -102,9 +102,8 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
 
     private void setupModifiers(TypedArray skillArray) {
         showModifiers = skillArray.getBoolean(R.styleable.SkillView_showModifiers, false);
-        setupIncreaseModifier(skillArray);
-
-//        setupDecreaseDrawablew(skillArray);
+//        setupIncreaseModifier(skillArray);
+//        setupDecreaseDrawable(skillArray);
         if (showModifiers) {
             showModifers();
         } else {
@@ -112,67 +111,67 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
         }
     }
 
-    private void setupDecreaseDrawablew(TypedArray skillArray) {
-        decDrawable = skillArray.getDrawable(R.styleable.SkillView_decreaseSrc);
-        if (decDrawable == null) {
-            decDrawable = getResources().getDrawable(R.drawable.decrease_selector);
+    private void setupIncreaseModifier(TypedArray array) {
+        mIncDrawable = array.getDrawable(R.styleable.SkillView_increaseSrc);
+        if (mIncDrawable == null) {
+            mIncDrawable = getResources().getDrawable(R.drawable.increase_selector);
         }
-        setDecreaseDrawable(decDrawable);
-    }
-
-    private void setupIncreaseModifier(TypedArray skillArray) {
-        incDrawable = skillArray.getDrawable(R.styleable.SkillView_increaseSrc);
-        if (incDrawable == null) {
-            incDrawable = getResources().getDrawable(R.drawable.increase_selector);
-        }
-        setIncreaseDrawable(incDrawable);
-    }
-
-    public void setDecreaseDrawable(Drawable drawable) {
-        if (decView != null) {
-            decView.setImageDrawable(drawable);
-        }
+        setIncreaseDrawable(mIncDrawable);
     }
 
     public void setIncreaseDrawable(Drawable drawable) {
-        if (incView != null) {
-            incView.setImageDrawable(drawable);
+        if (mIncView != null) {
+            mIncView.setImageDrawable(drawable);
+        }
+    }
+
+    private void setupDecreaseDrawable(TypedArray skillArray) {
+        mDecDrawable = skillArray.getDrawable(R.styleable.SkillView_decreaseSrc);
+        if (mDecDrawable == null) {
+            mDecDrawable = getResources().getDrawable(R.drawable.decrease_selector);
+        }
+        setDecreaseDrawable(mDecDrawable);
+    }
+
+    public void setDecreaseDrawable(Drawable drawable) {
+        if (mDecView != null) {
+            mDecView.setImageDrawable(drawable);
         }
     }
 
     private void positionValues(TypedArray statArray) {
-        valueBelow = statArray.getBoolean(R.styleable.StatisticView_valueBelow, valueBelow);
-        if (valueBelow) {
+        mValueIsBelow = statArray.getBoolean(R.styleable.StatisticView_valueBelow, mValueIsBelow);
+        if (mValueIsBelow) {
             setValueParams();
         } else {
             setTitleParams();
         }
     }
 
-    private void setUpTextSize(TypedArray propArray) {
-        valueSize = propArray.getDimensionPixelSize(R.styleable.StatisticView_valueSize,
-                defValSize);
-        titleSize = propArray.getDimensionPixelSize(R.styleable.StatisticView_titleSize,
-                defTitleSize);
-        setValueSize(valueSize);
-        setTitleSize(titleSize);
+    private void setUpTextSize(TypedArray array) {
+        mValueSize = array.getDimensionPixelSize(R.styleable.StatisticView_valueSize,
+                sDefValSize);
+        mTitleSize = array.getDimensionPixelSize(R.styleable.StatisticView_titleSize,
+                sDefTitleSize);
+        setValueSize(mValueSize);
+        setTitleSize(mTitleSize);
     }
 
     public void setValueSize(int size) {
-        if (valueView != null) {
-            valueView.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+        if (mValueView != null) {
+            mValueView.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
         }
     }
 
     public void setTitleSize(int size) {
-        if (titleView != null) {
-            titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+        if (mTitleView != null) {
+            mTitleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
         }
     }
 
     private void setupDefaultTextSize(Context context) {
-        defTitleSize = context.getResources().getDimensionPixelSize(R.dimen.font_16);
-        defValSize = context.getResources().getDimensionPixelSize(R.dimen.font_16);
+        sDefTitleSize = context.getResources().getDimensionPixelSize(R.dimen.font_16);
+        sDefValSize = context.getResources().getDimensionPixelSize(R.dimen.font_16);
     }
 
     public void showModifers() {
@@ -186,86 +185,86 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
     }
 
     public void showDecreaser() {
-        if (decView != null) {
-            decView.setVisibility(VISIBLE);
-            decView.setClickable(true);
+        if (mDecView != null) {
+            mDecView.setVisibility(VISIBLE);
+            mDecView.setClickable(true);
         }
     }
 
     public void showIncreaser() {
-        if (incView != null) {
-            incView.setVisibility(VISIBLE);
-            incView.setClickable(true);
+        if (mIncView != null) {
+            mIncView.setVisibility(VISIBLE);
+            mIncView.setClickable(true);
         }
     }
 
     public void hideDecreaser() {
-        if (decView != null) {
-            decView.setVisibility(INVISIBLE);
-            decView.setClickable(false);
+        if (mDecView != null) {
+            mDecView.setVisibility(INVISIBLE);
+            mDecView.setClickable(false);
         }
     }
 
     public void hideIncreaser() {
-        if (incView != null) {
-            incView.setVisibility(INVISIBLE);
-            incView.setClickable(false);
+        if (mIncView != null) {
+            mIncView.setVisibility(INVISIBLE);
+            mIncView.setClickable(false);
         }
     }
 
     private void setTitleParams() {
-        LayoutParams params = new LayoutParams(titleView.getLayoutParams());
-        params.addRule(RelativeLayout.BELOW, valueView.getId());
-        titleView.setLayoutParams(params);
+        LayoutParams params = new LayoutParams(mTitleView.getLayoutParams());
+        params.addRule(RelativeLayout.BELOW, mValueView.getId());
+        mTitleView.setLayoutParams(params);
     }
 
     private void setValueParams() {
-        LayoutParams params = new LayoutParams(valueView.getLayoutParams());
-        params.addRule(RelativeLayout.BELOW, titleView.getId());
-        valueView.setLayoutParams(params);
+        LayoutParams params = new LayoutParams(mValueView.getLayoutParams());
+        params.addRule(RelativeLayout.BELOW, mTitleView.getId());
+        mValueView.setLayoutParams(params);
     }
 
     public void setTitle(String title) {
-        if (titleView != null) {
-            titleView.setText(title);
+        if (mTitleView != null) {
+            mTitleView.setText(title);
         }
     }
 
     public void setValue(CharSequence charSequence) {
-        if (valueView != null) {
-            if (isPercentile) {
-                valueView.setText(String.format("%s%%", charSequence));
+        if (mValueView != null) {
+            if (mIsPercentile) {
+                mValueView.setText(String.format("%s%%", charSequence));
             } else {
-                valueView.setText(charSequence);
+                mValueView.setText(charSequence);
             }
         }
     }
 
     public void hideTitle() {
-        if (titleView != null) {
-            titleView.setVisibility(GONE);
+        if (mTitleView != null) {
+            mTitleView.setVisibility(GONE);
         }
-        if (valueBiggerIfTitleMissing) {
-            float titleSize = titleView.getTextSize();
+        if (mValueBiggerIfTitleMissing) {
+            float titleSize = mTitleView.getTextSize();
             float halfTitle = titleSize / 2f;
-            float resizedValueSize = valueSize + halfTitle;
+            float resizedValueSize = mValueSize + halfTitle;
             setValueSize((int) resizedValueSize);
 
         }
     }
 
     public void showTitle() {
-        if (titleView != null) {
-            titleView.setVisibility(VISIBLE);
-            if (valueBiggerIfTitleMissing) {
-                setValueSize(valueSize);
+        if (mTitleView != null) {
+            mTitleView.setVisibility(VISIBLE);
+            if (mValueBiggerIfTitleMissing) {
+                setValueSize(mValueSize);
             }
         }
     }
 
     @Override
     public void setOnClickListener(OnClickListener l) {
-        cachedOnClick = l;
+        mCachedOnClick = l;
         super.setOnClickListener(this);
     }
 
@@ -282,11 +281,11 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
             } else if (id == android.R.id.title) {
                 listener.onSkillTitleClick(this);
             } else {
-                cachedOnClick.onClick(view);
+                mCachedOnClick.onClick(view);
             }
         } else {
-            if (cachedOnClick != null) {
-                cachedOnClick.onClick(view);
+            if (mCachedOnClick != null) {
+                mCachedOnClick.onClick(view);
             }
         }
     }
