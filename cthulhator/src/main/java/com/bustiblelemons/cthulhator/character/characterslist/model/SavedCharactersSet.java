@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,31 +34,32 @@ public class SavedCharactersSet implements Serializable, Parcelable {
         sEmpty.setCharacters(new ArrayList<SavedCharacter>());
     }
 
-    private List<SavedCharacter> characters;
+    private List<SavedCharacter> mCharacters;
 
     public SavedCharactersSet() {
+        mCharacters = new ArrayList<SavedCharacter>();
     }
 
     private SavedCharactersSet(Parcel in) {
-        in.readTypedList(characters, SavedCharacter.CREATOR);
+        in.readTypedList(mCharacters, SavedCharacter.CREATOR);
     }
 
     public List<SavedCharacter> getCharacters() {
-        return characters;
+        return mCharacters;
     }
 
-    public void setCharacters(List<SavedCharacter> characters) {
-        this.characters = characters;
+    public void setCharacters(Collection<SavedCharacter> characters) {
+        this.mCharacters = new ArrayList<SavedCharacter>(characters);
     }
 
     public List<SavedCharacter> get(int offset, int limit) {
         int offsetEnd = offset + limit;
-        if (offset > characters.size() || offsetEnd > characters.size()) {
+        if (offset > mCharacters.size() || offsetEnd > mCharacters.size()) {
             return Collections.emptyList();
         }
         int start = offset;
-        int end = characters.size() > offsetEnd ? offsetEnd : characters.size();
-        return this.characters.subList(start, end);
+        int end = mCharacters.size() > offsetEnd ? offsetEnd : mCharacters.size();
+        return this.mCharacters.subList(start, end);
     }
 
     @JsonIgnore
@@ -69,16 +71,16 @@ public class SavedCharactersSet implements Serializable, Parcelable {
     @JsonIgnore
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeTypedList(characters);
+        dest.writeTypedList(mCharacters);
     }
 
     public void add(SavedCharacter character) {
         if (character == null) {
             return;
         }
-        if (characters == null) {
-            characters = new ArrayList<SavedCharacter>();
+        if (mCharacters == null) {
+            mCharacters = new ArrayList<SavedCharacter>();
         }
-        characters.add(character);
+        mCharacters.add(character);
     }
 }

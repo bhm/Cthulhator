@@ -63,14 +63,6 @@ public class SavedCharactersProvider {
         return getInstance()._getCharacterById(context, characterId);
     }
 
-    public static void loadCharacterAsyn(Context context, int characterHashCode) {
-        if (context instanceof OnRetreiveCharacter) {
-            OnRetreiveCharacter onRetreiveCharacter = (OnRetreiveCharacter) context;
-            RetreiveCharacterAsyn asyn = new RetreiveCharacterAsyn(context, onRetreiveCharacter);
-            asyn.executeCrossPlatform(characterHashCode);
-        }
-    }
-
     private synchronized SavedCharactersSet _getCharacterSet(Context context) {
         if (mCharacterSet == null) {
             ObjectMapper m = getMapper();
