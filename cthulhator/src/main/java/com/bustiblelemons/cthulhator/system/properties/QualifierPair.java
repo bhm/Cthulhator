@@ -12,13 +12,27 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class QualifierPair implements Parcelable {
 
     @JsonProperty("min")
-    private final int min;
+    private int mMin;
     @JsonProperty("max")
-    private final int max;
+    private int mMax;
+
+    @JsonProperty("min")
+    public void setMin(int min) {
+        this.mMin = min;
+    }
+
+    @JsonProperty("max")
+    public void setMax(int max) {
+        this.mMax = max;
+    }
+
+    public QualifierPair() {
+
+    }
 
     public QualifierPair(int min, int max) {
-        this.min = min;
-        this.max = max;
+        this.mMin = min;
+        this.mMax = max;
     }
 
     private static boolean objectsEqual(Object a, Object b) {
@@ -36,27 +50,27 @@ public class QualifierPair implements Parcelable {
 
         QualifierPair that = (QualifierPair) o;
 
-        if (max != that.max) return false;
-        if (min != that.min) return false;
+        if (mMax != that.mMax) return false;
+        if (mMin != that.mMin) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = min;
-        result = 31 * result + max;
+        int result = mMin;
+        result = 31 * result + mMax;
         return result;
     }
 
     @JsonProperty("min")
     public int getMin() {
-        return this.min;
+        return this.mMin;
     }
 
     @JsonProperty("max")
     public int getMax() {
-        return this.max;
+        return this.mMax;
     }
 
     @JsonIgnore
@@ -71,13 +85,13 @@ public class QualifierPair implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.min);
-        dest.writeInt(this.max);
+        dest.writeInt(this.mMin);
+        dest.writeInt(this.mMax);
     }
 
     private QualifierPair(Parcel in) {
-        this.min = in.readInt();
-        this.max = in.readInt();
+        this.mMin = in.readInt();
+        this.mMax = in.readInt();
     }
 
     public static final Parcelable.Creator<QualifierPair> CREATOR = new Parcelable.Creator<QualifierPair>() {
