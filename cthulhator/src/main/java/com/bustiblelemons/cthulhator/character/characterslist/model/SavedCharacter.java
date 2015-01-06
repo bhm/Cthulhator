@@ -43,6 +43,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by bhm on 12.08.14.
  */
+
+//TODO move JSONIgnore parts into a retreiver/wrapper class
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SavedCharacter implements Parcelable, Serializable, PropertyValueRetreiver {
 
