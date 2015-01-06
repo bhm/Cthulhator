@@ -125,7 +125,7 @@ public class SavedCharacter implements Parcelable, Serializable, PropertyValueRe
     }
 
     public void setFullHistory(Set<HistoryEvent> fullHistory) {
-        setFullHistory(fullHistory);
+        this.fullHistory = fullHistory;
     }
 
     public CthulhuEdition getEdition() {
