@@ -11,7 +11,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class QualifierPair implements Parcelable {
 
+    @JsonProperty("min")
     private final int min;
+    @JsonProperty("max")
     private final int max;
 
     public QualifierPair(int min, int max) {
@@ -47,7 +49,7 @@ public class QualifierPair implements Parcelable {
         return result;
     }
 
-    @JsonProperty("max")
+    @JsonProperty("min")
     public int getMin() {
         return this.min;
     }
