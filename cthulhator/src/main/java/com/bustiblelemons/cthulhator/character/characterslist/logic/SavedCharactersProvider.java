@@ -71,7 +71,7 @@ public class SavedCharactersProvider {
         }
     }
 
-    public synchronized SavedCharactersSet _getCharacterSet(Context context) {
+    private synchronized SavedCharactersSet _getCharacterSet(Context context) {
         if (mCharacterSet == null) {
             ObjectMapper m = getMapper();
             File savedCharacters = SavedCharactersProvider.getSavedCharactersFile(context);
@@ -87,7 +87,7 @@ public class SavedCharactersProvider {
 
     }
 
-    private void _saveCharacter(Context context, SavedCharacter character) {
+    private synchronized void _saveCharacter(Context context, SavedCharacter character) {
         if (mCharacterSet == null) {
             mCharacterSet = _getCharacterSet(context);
         }
@@ -104,7 +104,7 @@ public class SavedCharactersProvider {
         }
     }
 
-    private SavedCharacter _getCharacterById(Context context, int id) {
+    private synchronized SavedCharacter _getCharacterById(Context context, int id) {
         if (sCharactersLRU.get(id) == null) {
             if (mCharacterSet == null) {
                 mCharacterSet = _getCharacterSet(context);
