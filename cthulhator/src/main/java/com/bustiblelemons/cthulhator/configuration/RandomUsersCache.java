@@ -1,8 +1,8 @@
-package com.bustiblelemons.cthulhator.character.characterslist.logic;
+package com.bustiblelemons.cthulhator.configuration;
 
 import android.content.Context;
 
-import com.bustiblelemons.cthulhator.character.characterslist.model.RandomUserSaveModel;
+import com.bustiblelemons.cthulhator.configuration.model.RandomUserSaveModel;
 import com.bustiblelemons.randomuserdotme.model.User;
 import com.bustiblelemons.storage.Storage;
 import com.fasterxml.jackson.databind.ObjectMapper;

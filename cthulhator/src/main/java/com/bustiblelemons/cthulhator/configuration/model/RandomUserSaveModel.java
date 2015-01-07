@@ -1,4 +1,4 @@
-package com.bustiblelemons.cthulhator.character.characterslist.model;
+package com.bustiblelemons.cthulhator.configuration.model;
 
 import com.bustiblelemons.randomuserdotme.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

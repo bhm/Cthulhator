@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.bustiblelemons.activities.AbsActionBarActivity;
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.character.characterslist.logic.RandomUsersCache;
 import com.bustiblelemons.cthulhator.character.characterslist.ui.CharactersListActivity;
 import com.bustiblelemons.model.Gender;
 import com.bustiblelemons.model.OnlinePhotoUrl;
