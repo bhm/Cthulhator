@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<RelativeLayout
     style="@style/card"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -12,10 +12,10 @@
     tools:context=".AppClass">
 
     <com.bustiblelemons.views.StatisticView
+        android:id="@id/hit_points"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:tag="@string/hit_points"
-        app:showModifiers="true"
+        android:tag="@string/hit_points_tag"
         app:statTitle="@string/hit_points"
         app:statValue="@string/placholder_value"
         app:titleSize="@dimen/font_16"
@@ -23,21 +23,25 @@
         app:valueSize="@dimen/font_24"/>
 
     <View
+        android:id="@id/___divider_1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/full_bleed_divider"
+        android:layout_below="@id/hit_points"
         android:background="@drawable/full_bleed_divider"/>
 
     <LinearLayout
+        android:id="@id/str"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:tag="@string/mythos">
+        android:layout_below="@id/___divider_1"
+        android:orientation="horizontal">
 
         <com.bustiblelemons.views.StatisticView
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="6"
+            android:tag="@string/str"
             app:statTitle="@string/str"
             app:statValue="@integer/placeholder_perc_val"
             app:titleSize="@dimen/font_16"
@@ -48,6 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="5"
+            android:tag="@string/siz"
             app:statTitle="@string/siz"
             app:statValue="@integer/placeholder_perc_val"
             app:titleSize="@dimen/font_16"
@@ -56,12 +61,15 @@
     </LinearLayout>
 
     <View
+        android:id="@id/___divider_2"
         style="@style/inset_divider"
-        android:layout_width="match_parent"/>
+        android:layout_width="match_parent"
+        android:layout_below="@id/str"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/___divider_2"
         android:orientation="horizontal"
         android:tag="@string/mythos">
 
@@ -87,4 +95,4 @@
             app:valueSize="@dimen/font_24"/>
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

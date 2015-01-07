@@ -113,4 +113,6 @@
     <item name="tag_property" type="id"/>
     <item name="expand" type="id"/>
     <item name="go_back" type="id"/>
+    <item name="___divider_1" type="id"/>
+    <item name="___divider_2" type="id"/>
 </resources>

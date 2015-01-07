@@ -39,7 +39,7 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
     private Drawable              mIncDrawable;
     private Drawable              mDecDrawable;
     private OnClickListener       mCachedOnClick;
-    private StatisticViewListener listener;
+    private StatisticViewListener mStatisticViewListener;
     private boolean               mValueBiggerIfTitleMissing;
 
     public StatisticView(Context context) {
@@ -62,31 +62,35 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
     }
 
     private void init(Context context, AttributeSet attrs) {
-        setupDefaultTextSize(context);
-        mRootView = LayoutInflater.from(context).inflate(R.layout.statistic_view, this, true);
-        mValueView = (TextView) mRootView.findViewById(android.R.id.custom);
-        mTitleView = (TextView) mRootView.findViewById(android.R.id.title);
-        mIncView = (ImageView) mRootView.findViewById(R.id.inc);
-        mDecView = (ImageView) mRootView.findViewById(R.id.dec);
-        setOnClick(mValueView, mTitleView, mIncView, mDecView);
-        if (attrs != null) {
-            TypedArray statArray = context.obtainStyledAttributes(attrs, R.styleable.StatisticView);
-            positionValues(statArray);
-            setupModifiers(statArray);
-            mIsPercentile = statArray.getBoolean(R.styleable.StatisticView_percentile, false);
-            mHideTitle = statArray.getBoolean(R.styleable.StatisticView_hideTitle, mHideTitle);
-            mValueBiggerIfTitleMissing =
-                    statArray.getBoolean(R.styleable.StatisticView_valueBiggerIfTitleMissing,
-                            mValueBiggerIfTitleMissing);
-            setUpTextSize(statArray);
-            if (mHideTitle) {
-                hideTitle();
+        setupDefaultTextSize();
+        mRootView = LayoutInflater.from(context).inflate(R.layout.statistic_view, this, false);
+        if (mRootView != null) {
+            mValueView = (TextView) mRootView.findViewById(R.id.statistic_view_value);
+            mTitleView = (TextView) mRootView.findViewById(android.R.id.title);
+            mIncView = (ImageView) mRootView.findViewById(R.id.inc);
+            mDecView = (ImageView) mRootView.findViewById(R.id.dec);
+            setOnClick(mValueView, mTitleView, mIncView, mDecView);
+            if (attrs != null) {
+                TypedArray statArray = context.obtainStyledAttributes(attrs, R.styleable.StatisticView);
+                positionValues(statArray);
+                setupModifiers(statArray);
+                mIsPercentile = statArray.getBoolean(R.styleable.StatisticView_percentile, false);
+                mHideTitle = statArray.getBoolean(R.styleable.StatisticView_hideTitle, mHideTitle);
+                mValueBiggerIfTitleMissing =
+                        statArray.getBoolean(R.styleable.StatisticView_valueBiggerIfTitleMissing,
+                                mValueBiggerIfTitleMissing);
+//                setUpTextSize(statArray);
+//                if (mHideTitle) {
+//                    hideTitle();
+//
+//                }
+//                int value = statArray.getInteger(R.styleable.StatisticView_statValue, sDefaultStatValue);
+//                setValue(value + "");
+//                String title = statArray.getString(R.styleable.StatisticView_statTitle);
+//                setTitle(title);
+//                statArray.recycle();
             }
-            int value = statArray.getInteger(R.styleable.StatisticView_statValue, sDefaultStatValue);
-            setValue(value + "");
-            String title = statArray.getString(R.styleable.StatisticView_statTitle);
-            setTitle(title);
-            statArray.recycle();
+            addView(mRootView);
         }
     }
 
@@ -169,9 +173,13 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
         }
     }
 
-    private void setupDefaultTextSize(Context context) {
-        sDefTitleSize = context.getResources().getDimensionPixelSize(R.dimen.font_16);
-        sDefValSize = context.getResources().getDimensionPixelSize(R.dimen.font_16);
+    private void setupDefaultTextSize() {
+        if(sDefTitleSize == 0) {
+            sDefTitleSize = getResources().getDimensionPixelSize(R.dimen.font_16);
+        }
+        if (sDefValSize == 0) {
+            sDefValSize = getResources().getDimensionPixelSize(R.dimen.font_16);
+        }
     }
 
     public void showModifers() {
@@ -270,16 +278,16 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-        if (listener != null) {
+        if (mStatisticViewListener != null) {
             int id = view.getId();
             if (id == R.id.dec) {
-                listener.onDecreaseClicked(this);
+                mStatisticViewListener.onDecreaseClicked(this);
             } else if (id == R.id.inc) {
-                listener.onIncreaseClicked(this);
-            } else if (id == android.R.id.custom) {
-                listener.onSkillValueClick(this);
+                mStatisticViewListener.onIncreaseClicked(this);
+            } else if (id == R.id.statistic_view_value) {
+                mStatisticViewListener.onSkillValueClick(this);
             } else if (id == android.R.id.title) {
-                listener.onSkillTitleClick(this);
+                mStatisticViewListener.onSkillTitleClick(this);
             } else {
                 mCachedOnClick.onClick(view);
             }
