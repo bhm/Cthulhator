@@ -1,10 +1,8 @@
-package com.bustiblelemons.cthulhator.character.characterslist.logic;
+package com.bustiblelemons.cthulhator.character.persistance;
 
 import android.content.Context;
 import android.util.LruCache;
 
-import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
-import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharactersSet;
 import com.bustiblelemons.cthulhator.system.Grouping;
 import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
 import com.bustiblelemons.logging.Logger;
@@ -51,7 +49,7 @@ public class SavedCharactersProvider {
         return Storage.getStorageFile(context, sCharactersCacheFile);
     }
 
-    public static void saveCharacter(Context context, SavedCharacter character) {
+    public static <C extends SavedCharacter> void saveCharacter(Context context, C character) {
         getInstance()._saveCharacter(context, character);
     }
 
@@ -79,7 +77,7 @@ public class SavedCharactersProvider {
 
     }
 
-    private synchronized void _saveCharacter(Context context, SavedCharacter character) {
+    private synchronized <C extends SavedCharacter> void _saveCharacter(Context context, C character) {
         if (mCharacterSet == null) {
             mCharacterSet = _getCharacterSet(context);
         }

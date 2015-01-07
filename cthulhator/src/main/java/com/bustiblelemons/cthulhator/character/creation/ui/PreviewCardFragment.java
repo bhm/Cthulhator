@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
+import com.bustiblelemons.cthulhator.character.persistance.SavedCharacter;
 import com.bustiblelemons.fragments.AbsParcelableArgFragment;
 import com.bustiblelemons.views.loadingimage.RemoteImage;
 

@@ -3,7 +3,8 @@ package com.bustiblelemons.cthulhator.character.characterslist.logic;
 import android.content.Context;
 
 import com.bustiblelemons.async.AbsAsynTask;
-import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
+import com.bustiblelemons.cthulhator.character.persistance.SavedCharacter;
+import com.bustiblelemons.cthulhator.character.persistance.SavedCharactersProvider;
 import com.bustiblelemons.logging.Logger;
 
 /**

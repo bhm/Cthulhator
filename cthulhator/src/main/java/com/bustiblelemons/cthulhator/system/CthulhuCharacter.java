@@ -3,10 +3,10 @@ package com.bustiblelemons.cthulhator.system;
 import android.support.v4.util.LruCache;
 import android.util.Pair;
 
-import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
 import com.bustiblelemons.cthulhator.character.history.model.HistoryEvent;
+import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
 import com.bustiblelemons.cthulhator.character.possessions.model.Possesion;
-import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
+import com.bustiblelemons.cthulhator.system.edition.GameEdition;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 import com.bustiblelemons.randomuserdotme.model.Location;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -18,17 +18,17 @@ import java.util.List;
  * Created by bhm on 29.07.14.
  */
 @JsonIgnoreProperties({"cachedStats", "cachdSkills"})
-public class CthulhuCharacter extends SavedCharacter {
+public class CthulhuCharacter extends CharacterWrappper {
 
     private transient LruCache<CharacterProperty, List<Possesion>> cachedAffectedPossessions =
             new LruCache<CharacterProperty, List<Possesion>>(20);
     private Pair<Long, List<HistoryEvent>> historyForCurrentAge;
 
-    private CthulhuCharacter(CthulhuEdition edition) {
-        setEdition(edition);
+    private CthulhuCharacter(GameEdition edition) {
+        super(edition);
     }
 
-    public static CthulhuCharacter forEdition(CthulhuEdition edition) {
+    public static CthulhuCharacter forEdition(GameEdition edition) {
         return new CthulhuCharacter(edition);
     }
 

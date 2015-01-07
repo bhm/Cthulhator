@@ -1,4 +1,4 @@
-package com.bustiblelemons.cthulhator.character.characterslist.model;
+package com.bustiblelemons.cthulhator.character.persistance;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -16,20 +16,18 @@ import com.bustiblelemons.cthulhator.system.brp.statistics.BRPStatistic;
 import com.bustiblelemons.cthulhator.system.brp.statistics.HitPoints;
 import com.bustiblelemons.cthulhator.system.brp.statistics.Sanity;
 import com.bustiblelemons.cthulhator.system.damage.DamageBonusFactory;
-import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
+import com.bustiblelemons.cthulhator.system.edition.GameEdition;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 import com.bustiblelemons.cthulhator.system.properties.PropertyType;
 import com.bustiblelemons.cthulhator.system.properties.PropertyValueRetreiver;
 import com.bustiblelemons.cthulhator.system.properties.Relation;
-import com.bustiblelemons.cthulhator.system.time.CthulhuPeriod;
+import com.bustiblelemons.cthulhator.system.time.YearsPeriodImpl;
 import com.bustiblelemons.randomuserdotme.model.Location;
 import com.bustiblelemons.randomuserdotme.model.Name;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import org.joda.time.DateTime;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -38,134 +36,62 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Created by bhm on 12.08.14.
+ * Created by hiv on 07.01.15.
  */
-
-//TODO move JSONIgnore parts into a retreiver/wrapper class
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class SavedCharacter implements Parcelable, Serializable, PropertyValueRetreiver {
-
-    @JsonIgnore
-    public static final Parcelable.Creator<SavedCharacter>           CREATOR                    = new Parcelable.Creator<SavedCharacter>() {
-        public SavedCharacter createFromParcel(Parcel source) {
-            return new SavedCharacter(source);
-        }
-
-        public SavedCharacter[] newArray(int size) {
-            return new SavedCharacter[size];
-        }
-    };
-    @JsonIgnore
-    private static      LruCache<CharacterProperty, List<Possesion>> cachedAffectedPossessions  =
-            new LruCache<CharacterProperty, List<Possesion>>(20);
-    @JsonIgnore
-    private static      int                                          sShouldHaveAssignedAtLeast = 2;
+public class CharacterWrappper extends SavedCharacter implements PropertyValueRetreiver {
 
     static {
         sShouldHaveAssignedAtLeast = BRPStatistic.values().length / 5;
     }
 
+    public static final Parcelable.Creator<CharacterWrappper>        CREATOR                   =
+            new Parcelable.Creator<CharacterWrappper>() {
+                public CharacterWrappper createFromParcel(Parcel source) {
+                    return new CharacterWrappper(source);
+                }
+
+                public CharacterWrappper[] newArray(int size) {
+                    return new CharacterWrappper[size];
+                }
+            };
+    private static      LruCache<CharacterProperty, List<Possesion>> cachedAffectedPossessions =
+            new LruCache<CharacterProperty, List<Possesion>>(20);
+
+    private static YearsPeriodImpl sDefaultPeriod             = YearsPeriodImpl.JAZZAGE;
+    private static int             sShouldHaveAssignedAtLeast = 2;
+
     @JsonIgnore
-    private static AtomicInteger          sAtomicId   = new AtomicInteger(-1);
-    protected      Set<CharacterProperty> properties  = new HashSet<CharacterProperty>();
-    protected      List<Possesion>        possesions  = new ArrayList<Possesion>();
-    protected      Set<HistoryEvent>      fullHistory = new HashSet<HistoryEvent>();
+    private long suggestedDate        = Long.MIN_VALUE;
     @JsonIgnore
-    private Integer mId;
-    private CthulhuEdition edition = CthulhuEdition.CoC5;
-    private CharacterDescription description;
-    private BirthData            birth;
-    private int                  age;
-    private CthulhuPeriod period               = CthulhuPeriod.JAZZAGE;
+    private int  skillPointsAvailable = -1;
     @JsonIgnore
-    private long          suggestedDate        = Long.MIN_VALUE;
+    private int  careerPoints         = -1;
     @JsonIgnore
-    private int           skillPointsAvailable = -1;
-    @JsonIgnore
-    private int           careerPoints         = -1;
-    @JsonIgnore
-    private int           hobbyPoints          = -1;
+    private int  hobbyPoints          = -1;
     @JsonIgnore
     private Sanity sanity;
 
-    public SavedCharacter() {
-    }
-
-    private SavedCharacter(Parcel in) {
-        int propSize = in.readInt();
-        CharacterProperty[] props = new CharacterProperty[propSize];
-        in.readTypedArray(props, CharacterProperty.CREATOR);
-        this.properties = new HashSet<CharacterProperty>();
-        Collections.addAll(this.properties, props);
-        this.possesions = new ArrayList<Possesion>();
-        in.readList(this.possesions, List.class.getClassLoader());
-        int fullHistorySize = in.readInt();
-        HistoryEvent[] events = new HistoryEvent[fullHistorySize];
-        in.readTypedArray(events, HistoryEvent.CREATOR);
-        this.fullHistory = new HashSet<HistoryEvent>();
-        Collections.addAll(this.fullHistory, events);
-        int tmpEdition = in.readInt();
-        this.edition = tmpEdition == -1 ? null : CthulhuEdition.values()[tmpEdition];
-        int tmpPeriod = in.readInt();
-        this.period = tmpPeriod == -1 ? null : CthulhuPeriod.values()[tmpPeriod];
-        this.description = in.readParcelable(CharacterDescription.class.getClassLoader());
-        this.birth = in.readParcelable(BirthData.class.getClassLoader());
-        this.age = in.readInt();
+    public CharacterWrappper(Parcel in) {
+        super(in);
         this.suggestedDate = in.readLong();
         this.skillPointsAvailable = in.readInt();
     }
 
-    @JsonIgnore
-    public int getId() {
-        if (mId == null) {
-            mId = new Integer(sAtomicId.getAndIncrement());
-        }
-        return mId;
+    public CharacterWrappper(SavedCharacter character) {
+        super.setProperties(character.getProperties());
+        super.setDescription(character.getDescription());
+        super.setPeriod(character.getPeriod());
+        super.setBirth(character.getBirth());
+        super.setAge(character.getAge());
+        super.setFullHistory(character.getFullHistory());
+        super.setPossesions(character.getPossesions());
+        setEdition(character.getEdition());
     }
 
-    public void setFullHistory(Set<HistoryEvent> fullHistory) {
-        this.fullHistory = fullHistory;
-    }
-
-    public CthulhuEdition getEdition() {
-        if (edition == null) {
-            edition = CthulhuEdition.CoC5;
-        }
-        return edition;
-    }
-
-    public void setEdition(CthulhuEdition edition) {
-        if (edition == null) {
-            return;
-        }
-        this.edition = edition;
-        this.properties.clear();
-        fillStatistics();
-        addDamageBonus();
-        addHitPoints();
-        updatSecondaryStatistics();
-        fillSkillsList();
-        updateSkillPointPools();
-        setupAgeAndBirth();
-    }
-
-    private void addHitPoints() {
-        int con = getStatisticValue(BRPStatistic.CON.name());
-        int siz = getStatisticValue(BRPStatistic.SIZ.name());
-        CharacterProperty property = HitPoints.forProperties(getEdition(), con, siz)
-                .asCharacterProperty();
-        addCharacterProperty(property);
-    }
-
-    private void addDamageBonus() {
-        int con = getStatisticValue(BRPStatistic.CON.name());
-        int siz = getStatisticValue(BRPStatistic.SIZ.name());
-        CharacterProperty damageBonus = DamageBonusFactory.forEdition(this.edition, con, siz)
-                .asCharacterProperty();
-        addCharacterProperty(damageBonus);
+    public CharacterWrappper(GameEdition edition) {
+        setEdition(edition);
     }
 
     @JsonIgnore
@@ -173,19 +99,10 @@ public class SavedCharacter implements Parcelable, Serializable, PropertyValueRe
         return updateRelatedProperties(getStatistics());
     }
 
-    public CthulhuPeriod getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(CthulhuPeriod period) {
-        this.period = period;
-        setupAgeAndBirth();
-    }
-
     @JsonIgnore
     private void setupAgeAndBirth() {
         int edu = getStatisticValue(BRPStatistic.EDU.name());
-        int year = period.getDefaultYear();
+        int year = getPeriod().getDefaultYear();
         int suggestedAge = edu + 6;
         setAge(suggestedAge);
         int estimateYear = year - getAge();
@@ -245,13 +162,13 @@ public class SavedCharacter implements Parcelable, Serializable, PropertyValueRe
 
     @JsonIgnore
     private void updateSkillPointPools() {
-        if (edition != null) {
-            fillSkillPointPools(this.edition);
+        if (getEdition() != null) {
+            fillSkillPointPools(getEdition());
         }
     }
 
     @JsonIgnore
-    private void fillSkillPointPools(CthulhuEdition edition) {
+    private void fillSkillPointPools(GameEdition edition) {
         fillCareerPoints(edition);
         CharacterProperty edu = getPropertyByName(BRPStatistic.EDU.name());
         CharacterProperty pointsProperty = BRPSkillPointPools.CAREER.asProperty();
@@ -261,7 +178,7 @@ public class SavedCharacter implements Parcelable, Serializable, PropertyValueRe
     }
 
     @JsonIgnore
-    private void fillCareerPoints(CthulhuEdition edition) {
+    private void fillCareerPoints(GameEdition edition) {
         CharacterProperty __int = getPropertyByName(BRPStatistic.INT.name());
         CharacterProperty pointsProperty = BRPSkillPointPools.HOBBY.asProperty();
         int hobbyPointsValue = __int.getValue() * edition.getCareerSkillPointMultiplier();
@@ -341,7 +258,9 @@ public class SavedCharacter implements Parcelable, Serializable, PropertyValueRe
 
     @JsonIgnore
     public void fillStatistics() {
-        addPropertiesList(getEdition().getCharacteristics());
+        if (properties == null && properties.isEmpty()) {
+            addPropertiesList(getEdition().getCharacteristics());
+        }
     }
 
     @JsonIgnore
@@ -367,29 +286,89 @@ public class SavedCharacter implements Parcelable, Serializable, PropertyValueRe
         return modified;
     }
 
-    public CharacterDescription getDescription() {
-        return description;
+    public void setEdition(GameEdition edition) {
+        if (edition == null) {
+            return;
+        }
+        super.setEdition(edition);
+        fillStatistics();
+        addDamageBonus();
+        addHitPoints();
+        updatSecondaryStatistics();
+        fillSkillsList();
+        updateSkillPointPools();
+        setupAgeAndBirth();
     }
 
-    public void setDescription(CharacterDescription description) {
-        this.description = description;
+    private void addHitPoints() {
+        int con = getStatisticValue(BRPStatistic.CON.name());
+        int siz = getStatisticValue(BRPStatistic.SIZ.name());
+        CharacterProperty property = HitPoints.forProperties(getEdition(), con, siz)
+                .asCharacterProperty();
+        addCharacterProperty(property);
+    }
+
+    private void addDamageBonus() {
+        int con = getStatisticValue(BRPStatistic.CON.name());
+        int siz = getStatisticValue(BRPStatistic.SIZ.name());
+        CharacterProperty damageBonus = DamageBonusFactory.forEdition(getEdition(), con, siz)
+                .asCharacterProperty();
+        addCharacterProperty(damageBonus);
     }
 
     @JsonIgnore
-    public String getName() {
-        return description != null && description.getName() != null ? description.getName().getFullName() : null;
-    }
-
-    @JsonIgnore
-    public String getPhotoUrl() {
-        if (description != null && description.getPortraitList() != null) {
-            for (Portrait portrait : description.getPortraitList()) {
-                if (portrait != null && portrait.getUrl() != null) {
-                    return portrait.getUrl();
-                }
+    public boolean hasAssignedStatistics() {
+        int count = 0;
+        for (CharacterProperty property : getStatistics()) {
+            if (property != null && property.getValue() > 0) {
+                count++;
             }
         }
-        return null;
+        return count >= sShouldHaveAssignedAtLeast;
+    }
+
+    @JsonIgnore
+    public long getSuggestedBirthDateEpoch() {
+        if (Long.MIN_VALUE == suggestedDate) {
+            DateTime now = new DateTime();
+            int year = getAge() + getPeriod().getDefaultYear();
+            int month = now.getMonthOfYear();
+            int dayOfMonth = now.getDayOfMonth();
+            int hour = now.getHourOfDay();
+            int minute = now.getMinuteOfHour();
+            DateTime time = new DateTime(year, month, dayOfMonth, hour, minute);
+            suggestedDate = time.getMillis();
+        }
+        return suggestedDate;
+    }
+
+    @JsonIgnore
+    public void setSuggestedDate(long suggestedDate) {
+        this.suggestedDate = suggestedDate;
+    }
+
+
+    @JsonIgnore
+    public Set<CharacterProperty> randomizeStatistics() {
+        careerPoints = -1;
+        skillPointsAvailable = -1;
+        hobbyPoints = -1;
+        for (CharacterProperty property : getStatistics()) {
+            if (property != null) {
+                int newRand = property.randomValue();
+                property.setValue(newRand);
+            }
+        }
+        updateSkills();
+        return getStatistics();
+    }
+
+    @JsonIgnore
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeLong(this.suggestedDate);
+        dest.writeInt(this.skillPointsAvailable);
     }
 
     @JsonIgnore
@@ -482,41 +461,6 @@ public class SavedCharacter implements Parcelable, Serializable, PropertyValueRe
         return setPropertyValue(BRPStatistic.SAN.name(), san);
     }
 
-    public BirthData getBirth() {
-        return birth;
-    }
-
-    public void setBirth(BirthData birth) {
-        this.birth = birth;
-    }
-
-    public List<Portrait> getPortraits() {
-        return description != null ? description.getPortraitList() : new ArrayList<Portrait>();
-    }
-
-    public void setPortraits(List<Portrait> portraits) {
-        if (description == null) {
-            description = new CharacterDescription();
-        }
-        description.setPortraitList(portraits);
-    }
-
-    @JsonIgnore
-    public Portrait getMainPortrait() {
-        Portrait r = null;
-        if (getPortraits() != null) {
-            for (Portrait portrait : getPortraits()) {
-                if (r == null && portrait != null) {
-                    r = portrait;
-                }
-                if (portrait != null && portrait.isMain()) {
-                    return portrait;
-                }
-            }
-        }
-        return r;
-    }
-
     @JsonIgnore
     public void addPropertiesList(Set<CharacterProperty> characterProperties) {
         if (properties == null) {
@@ -582,26 +526,6 @@ public class SavedCharacter implements Parcelable, Serializable, PropertyValueRe
     }
 
     @JsonIgnore
-    public List<HistoryEvent> getHistoryEvents(long tillDate) {
-        List<HistoryEvent> events = new ArrayList<HistoryEvent>();
-        if (fullHistory != null) {
-            for (HistoryEvent event : fullHistory) {
-                if (event != null && event.isBefore(tillDate)) {
-                    events.add(event);
-                }
-            }
-        }
-        return events;
-    }
-
-    @JsonIgnore
-    public List<HistoryEvent> getHistoryEvents(long tillDate, Location around) {
-        List<HistoryEvent> r = getHistoryEvents(tillDate);
-        //TODO Filter by location long/lat and distance toleration according to times
-        return r;
-    }
-
-    @JsonIgnore
     public CharacterProperty getStatistic(String byName) {
         for (CharacterProperty stat : getStatistics()) {
             String statName = stat.getName();
@@ -623,93 +547,6 @@ public class SavedCharacter implements Parcelable, Serializable, PropertyValueRe
         return null;
     }
 
-    public Set<CharacterProperty> getProperties() {
-        return properties;
-    }
-
-    public void setProperties(Set<CharacterProperty> properties) {
-        this.properties = properties;
-    }
-
-    public List<Possesion> getPossesions() {
-        return possesions;
-    }
-
-    public void setPossesions(List<Possesion> possesions) {
-        this.possesions = possesions;
-    }
-
-    public Set<HistoryEvent> getFullHistory() {
-        if (fullHistory == null) {
-            fullHistory = new HashSet<HistoryEvent>(5);
-        }
-        return fullHistory;
-    }
-
-    public void setFullHistory(Collection<HistoryEvent> fullHistory) {
-        this.fullHistory = new HashSet<HistoryEvent>(fullHistory);
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    @JsonIgnore
-    public Name getNameObject() {
-        return getDescription() != null ? getDescription().getName() : null;
-    }
-
-    @Override
-    public String toString() {
-        return "SavedCharacter{" +
-                "properties=" + properties +
-                ", possesions=" + possesions +
-                ", fullHistory=" + fullHistory +
-                ", edition=" + edition +
-                ", description=" + description +
-                ", birth=" + birth +
-                ", cachedAffectedPossessions=" + cachedAffectedPossessions +
-                ", age=" + age +
-                '}';
-    }
-
-    @JsonIgnore
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @JsonIgnore
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        int propSize = this.properties != null ? this.properties.size() : 0;
-        dest.writeInt(propSize);
-        CharacterProperty[] props = new CharacterProperty[propSize];
-        if (this.properties != null) {
-            props = this.properties.toArray(new CharacterProperty[propSize]);
-        }
-        dest.writeTypedArray(props, flags);
-        dest.writeList(this.possesions);
-        int historySize = this.fullHistory != null ? this.fullHistory.size() : 0;
-        dest.writeInt(historySize);
-        HistoryEvent[] h = new HistoryEvent[historySize];
-        if (fullHistory != null) {
-            h = this.fullHistory.toArray(new HistoryEvent[historySize]);
-        }
-        dest.writeTypedArray(h, flags);
-        dest.writeInt(this.edition == null ? -1 : this.edition.ordinal());
-        dest.writeInt(this.period == null ? -1 : this.period.ordinal());
-        dest.writeParcelable(this.description, flags);
-        dest.writeParcelable(this.birth, flags);
-        dest.writeInt(this.age);
-        dest.writeLong(this.suggestedDate);
-        dest.writeInt(this.skillPointsAvailable);
-    }
-
     public int getSkillPointsAvailable() {
         if (skillPointsAvailable < 0) {
             skillPointsAvailable = getHobbyPoints() + getCareerPoints();
@@ -727,7 +564,7 @@ public class SavedCharacter implements Parcelable, Serializable, PropertyValueRe
             CharacterProperty _int = getPropertyByName(BRPStatistic.INT.name());
             if (_int != null) {
                 int intVal = _int.getValue();
-                hobbyPoints = edition.getHobbySkillPointMultiplier() * intVal;
+                hobbyPoints = getEdition().getHobbySkillPointMultiplier() * intVal;
             }
         }
         return hobbyPoints;
@@ -739,71 +576,117 @@ public class SavedCharacter implements Parcelable, Serializable, PropertyValueRe
             CharacterProperty _int = getPropertyByName(BRPStatistic.EDU.name());
             if (_int != null) {
                 int intVal = _int.getValue();
-                careerPoints = edition.getCareerSkillPointMultiplier() * intVal;
+                careerPoints = getEdition().getCareerSkillPointMultiplier() * intVal;
             }
         }
         return careerPoints;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        SavedCharacter character = (SavedCharacter) o;
-
-        if (birth != null ? !birth.equals(character.birth) : character.birth != null) return false;
-        if (description != null ? !description.equals(character.description) : character.description != null)
-            return false;
-        if (edition != character.edition) return false;
-        if (period != character.period) return false;
-        if (properties != null ? !properties.equals(character.properties) : character.properties != null)
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = properties != null ? properties.hashCode() : 0;
-        result = 31 * result + (edition != null ? edition.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-
-        //TODO birth data does not rapport correctly
-        result = 31 * result + (birth != null ? birth.hashCode() : 0);
-        result = 31 * result + (period != null ? period.hashCode() : 0);
-        return result;
-    }
-
-    @JsonIgnore
-    public boolean hasAssignedStatistics() {
-        int count = 0;
-        for (CharacterProperty property : getStatistics()) {
-            if (property != null && property.getValue() > 0) {
-                count++;
+    public int onRetreivePropertValue(String propertyName) {
+        for (CharacterProperty property : properties) {
+            if (property != null && property.nameMatches(propertyName)) {
+                return property.getValue();
             }
         }
-        return count >= sShouldHaveAssignedAtLeast;
+        return 0;
     }
 
     @JsonIgnore
-    public long getSuggestedBirthDateEpoch() {
-        if (Long.MIN_VALUE == suggestedDate) {
-            DateTime now = new DateTime();
-            int year = getAge() + getPeriod().getDefaultYear();
-            int month = now.getMonthOfYear();
-            int dayOfMonth = now.getDayOfMonth();
-            int hour = now.getHourOfDay();
-            int minute = now.getMinuteOfHour();
-            DateTime time = new DateTime(year, month, dayOfMonth, hour, minute);
-            suggestedDate = time.getMillis();
+    public String getName() {
+        return getDescription() != null && getDescription().getName() != null ? getDescription().getName().getFullName() : null;
+    }
+
+    @JsonIgnore
+    public String getPhotoUrl() {
+        if (getDescription() != null
+                && getDescription().getMainPortrait() != null) {
+            return getDescription().getMainPortrait().getUrl();
         }
-        return suggestedDate;
+        return null;
+    }
+
+    public List<Portrait> getPortraits() {
+        return getDescription() != null ? getDescription().getPortraitList() : new ArrayList<Portrait>();
+    }
+
+    public void setPortraits(List<Portrait> portraits) {
+        if (getDescription() == null) {
+            setDescription(new CharacterDescription());
+        }
+        getDescription().setPortraitList(portraits);
     }
 
     @JsonIgnore
-    public void setSuggestedDate(long suggestedDate) {
-        this.suggestedDate = suggestedDate;
+    public Portrait getMainPortrait() {
+        Portrait r = null;
+        if (getPortraits() != null) {
+            for (Portrait portrait : getPortraits()) {
+                if (r == null && portrait != null) {
+                    r = portrait;
+                }
+                if (portrait != null && portrait.isMain()) {
+                    return portrait;
+                }
+            }
+        }
+        return r;
+    }
+
+    @JsonIgnore
+    public List<HistoryEvent> getHistoryEvents(long tillDate) {
+        List<HistoryEvent> events = new ArrayList<HistoryEvent>();
+        if (fullHistory != null) {
+            for (HistoryEvent event : fullHistory) {
+                if (event != null && event.isBefore(tillDate)) {
+                    events.add(event);
+                }
+            }
+        }
+        return events;
+    }
+
+
+    @Override
+    public YearsPeriodImpl getPeriod() {
+        YearsPeriodImpl period = super.getPeriod();
+        return period == null ? sDefaultPeriod : period;
+    }
+
+    public void setPeriod(YearsPeriodImpl period) {
+        super.setPeriod(period);
+        setupAgeAndBirth();
+    }
+
+    @JsonIgnore
+    public Name getNameObject() {
+        return getDescription() != null ? getDescription().getName() : null;
+    }
+
+
+    @JsonIgnore
+    public Sanity getSanity() {
+        return getSanity(false);
+    }
+
+    @JsonIgnore
+    public Sanity getSanity(boolean fresh) {
+        if (sanity == null || fresh) {
+            sanity = new Sanity();
+            int pow = getStatisticValue(BRPStatistic.POW.name());
+            int max = pow * 5;
+            sanity.setMax(max);
+            sanity.setCurrent(max);
+        }
+        return sanity;
+    }
+
+
+    @JsonIgnore
+    public List<HistoryEvent> getHistoryEvents(long tillDate, Location around) {
+        List<HistoryEvent> r = getHistoryEvents(tillDate);
+        //TODO Filter by location long/lat and distance toleration according to times
+        return r;
     }
 
     public boolean removeHistoryEvent(HistoryEvent event) {
@@ -828,43 +711,4 @@ public class SavedCharacter implements Parcelable, Serializable, PropertyValueRe
         return true;
     }
 
-    @JsonIgnore
-    public Set<CharacterProperty> randomizeStatistics() {
-        careerPoints = -1;
-        skillPointsAvailable = -1;
-        hobbyPoints = -1;
-        for (CharacterProperty property : getStatistics()) {
-            if (property != null) {
-                int newRand = property.randomValue();
-                property.setValue(newRand);
-            }
-        }
-        updateSkills();
-        return getStatistics();
-    }
-
-    public Sanity getSanity() {
-        return getSanity(false);
-    }
-
-    public Sanity getSanity(boolean fresh) {
-        if (sanity == null || fresh) {
-            sanity = new Sanity();
-            int pow = getStatisticValue(BRPStatistic.POW.name());
-            int max = pow * 5;
-            sanity.setMax(max);
-            sanity.setCurrent(max);
-        }
-        return sanity;
-    }
-
-    @Override
-    public int onRetreivePropertValue(String propertyName) {
-        for (CharacterProperty property : properties) {
-            if (property != null && property.nameMatches(propertyName)) {
-                return property.getValue();
-            }
-        }
-        return 0;
-    }
 }

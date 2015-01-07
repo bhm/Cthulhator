@@ -6,11 +6,12 @@ import android.support.v7.widget.Toolbar;
 
 import com.bustiblelemons.activities.AbsArgActivity;
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
 import com.bustiblelemons.cthulhator.character.description.model.CharacterDescription;
+import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
 import com.bustiblelemons.cthulhator.character.portrait.model.Portrait;
 import com.bustiblelemons.cthulhator.character.viewer.logic.OnExpandCharacterViewer;
 import com.bustiblelemons.cthulhator.character.viewer.ui.CharacterViewerFragment;
+import com.bustiblelemons.cthulhator.system.properties.PropertyValueRetreiver;
 import com.bustiblelemons.views.loadingimage.RemoteImage;
 import com.kbeanie.imagechooser.api.ChosenImage;
 import com.kbeanie.imagechooser.api.ImageChooserListener;
@@ -23,8 +24,9 @@ import butterknife.Optional;
 /**
  * Created by bhm on 20.07.14.
  */
-public class CharacterViewerActivity extends AbsArgActivity<SavedCharacter>
+public class CharacterViewerActivity extends AbsArgActivity<CharacterWrappper>
         implements ImageChooserListener,
+                   PropertyValueRetreiver,
                    OnExpandCharacterViewer {
 
     public static final String CHARCTER_ID       = "character_id";
@@ -35,7 +37,7 @@ public class CharacterViewerActivity extends AbsArgActivity<SavedCharacter>
     @InjectView(R.id.header)
     Toolbar     mToolbar;
 
-    private SavedCharacter          mSavedCharacter;
+    private CharacterWrappper          mSavedCharacter;
     private CharacterViewerFragment mCharacterViewerFragment;
     private Portrait                mMainPortrait;
     private CharacterDescription    mDescription;
@@ -61,7 +63,7 @@ public class CharacterViewerActivity extends AbsArgActivity<SavedCharacter>
     }
 
     @Override
-    protected void onInstanceArgumentRead(SavedCharacter arg) {
+    protected void onInstanceArgumentRead(CharacterWrappper arg) {
         if (arg != null) {
             mSavedCharacter = arg;
             loadIcon();
@@ -123,5 +125,13 @@ public class CharacterViewerActivity extends AbsArgActivity<SavedCharacter>
             mToolbar.setTitle(null);
             mToolbar.setBackgroundColor(sTransparentColor);
         }
+    }
+
+    @Override
+    public int onRetreivePropertValue(String propertyName) {
+        if (mSavedCharacter != null) {
+            return mSavedCharacter.onRetreivePropertValue(propertyName);
+        }
+        return 0;
     }
 }

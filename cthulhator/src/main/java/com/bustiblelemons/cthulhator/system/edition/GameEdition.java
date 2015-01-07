@@ -13,7 +13,7 @@ import java.util.Set;
 /**
  * Created by bhm on 13.08.14.
  */
-public enum CthulhuEdition {
+public enum GameEdition {
     ToC {
         @Override
         public Set<CharacterProperty> getCharacteristics() {
@@ -30,10 +30,10 @@ public enum CthulhuEdition {
             return 10;
         }
     };
-    private static LruCache<CthulhuEdition, Set<CharacterProperty>> skillsCache =
-            new LruCache<CthulhuEdition, Set<CharacterProperty>>(3);
-    private static LruCache<CthulhuEdition, Set<CharacterProperty>> cache       =
-            new LruCache<CthulhuEdition, Set<CharacterProperty>>(3);
+    private static LruCache<GameEdition, Set<CharacterProperty>> skillsCache =
+            new LruCache<GameEdition, Set<CharacterProperty>>(3);
+    private static LruCache<GameEdition, Set<CharacterProperty>> cache       =
+            new LruCache<GameEdition, Set<CharacterProperty>>(3);
 
     public int getHobbySkillPointMultiplier() {
         return 10;
@@ -70,7 +70,7 @@ public enum CthulhuEdition {
         if (skillsCache.get(this) == null) {
             Set<CharacterProperty> r = new HashSet<CharacterProperty>();
             for (BRPSkill s : BRPSkill.values()) {
-                for (CthulhuEdition edition : s.getEditions()) {
+                for (GameEdition edition : s.getEditions()) {
                     if (this.equals(edition)) {
                         r.add(s.asCharacterProperty(this));
                     }

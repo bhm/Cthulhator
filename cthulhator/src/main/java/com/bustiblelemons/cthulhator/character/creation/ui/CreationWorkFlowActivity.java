@@ -8,11 +8,11 @@ import android.widget.Toast;
 
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.characterslist.logic.SavedCharacterTransformer;
-import com.bustiblelemons.cthulhator.character.characterslist.logic.SavedCharactersProvider;
-import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
+import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
+import com.bustiblelemons.cthulhator.character.persistance.SavedCharactersProvider;
 import com.bustiblelemons.cthulhator.settings.Settings;
 import com.bustiblelemons.cthulhator.system.CthulhuCharacter;
-import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
+import com.bustiblelemons.cthulhator.system.edition.GameEdition;
 import com.bustiblelemons.cthulhator.view.charactercard.CharacterCardView;
 import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
 import com.bustiblelemons.views.card.CardView;
@@ -32,8 +32,8 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
     CharacterCardView mCharacterCardView;
     @InjectView(R.id.add_character_equipement)
     CardView          mEquipmentCardView;
-    private SavedCharacter mSavedCharacter;
-    private CthulhuEdition mEdition = CthulhuEdition.CoC5;
+    private CharacterWrappper mCharacterWrappper;
+    private GameEdition mEdition = GameEdition.CoC5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +44,12 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
             addDetails.setOnClickListener(this);
         }
         ButterKnife.inject(this);
-        mSavedCharacter = getInstanceArgument();
-        if (mSavedCharacter == null) {
+        mCharacterWrappper = getInstanceArgument();
+        if (mCharacterWrappper == null) {
             mEdition = Settings.getEdition(this);
-            mSavedCharacter = CthulhuCharacter.forEdition(mEdition);
+            mCharacterWrappper = CthulhuCharacter.forEdition(mEdition);
         } else {
-            mEdition = mSavedCharacter.getEdition();
+            mEdition = mCharacterWrappper.getEdition();
         }
         if (mCharacterCardView != null) {
             mCharacterCardView.setOnCharacterCardViewClick(this);
@@ -67,13 +67,13 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
     public void onClick(View v) {
         switch (v.getId()) {
         case R.id.add_character_details:
-            launchRandomCharacter(mSavedCharacter);
+            launchRandomCharacter(mCharacterWrappper);
             break;
         case R.id.add_character_history:
-            launchHistoryEditor(mSavedCharacter);
+            launchHistoryEditor(mCharacterWrappper);
             break;
         case R.id.add_character_statistics:
-            launchStatisticsCreator(mSavedCharacter);
+            launchStatisticsCreator(mCharacterWrappper);
             break;
         case R.id.add_character_equipement:
             break;
@@ -82,7 +82,7 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
 
     @OnClick(R.id.done)
     public void onSaveCharacter(View view) {
-        SavedCharactersProvider.saveCharacter(this, mSavedCharacter);
+        SavedCharactersProvider.saveCharacter(this, mCharacterWrappper);
         onBackPressed();
     }
 
@@ -92,7 +92,7 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
         if (data != null) {
             Bundle e = data.getExtras();
             if (e != null && e.containsKey(INSTANCE_ARGUMENT)) {
-                SavedCharacter passedBack = e.getParcelable(INSTANCE_ARGUMENT);
+                CharacterWrappper passedBack = e.getParcelable(INSTANCE_ARGUMENT);
                 log.d("passedback %s", passedBack);
                 if (passedBack != null) {
                     onInstanceArgumentRead(passedBack);
@@ -102,34 +102,34 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
     }
 
     @Override
-    protected void onInstanceArgumentRead(SavedCharacter arg) {
-        mSavedCharacter = arg;
-        if (mSavedCharacter != null && mCharacterCardView != null) {
+    protected void onInstanceArgumentRead(CharacterWrappper arg) {
+        mCharacterWrappper = arg;
+        if (mCharacterWrappper != null && mCharacterCardView != null) {
             CharacterInfo characterInfo = SavedCharacterTransformer.getInstance()
                     .withContext(this)
-                    .transform(mSavedCharacter);
+                    .transform(mCharacterWrappper);
             mCharacterCardView.setCardInfo(characterInfo);
         }
     }
 
     @Override
     public void onImageClick(CharacterCardView view) {
-        launchRandomCharacter(mSavedCharacter);
+        launchRandomCharacter(mCharacterWrappper);
     }
 
     @Override
     public void onMainInfoClick(CharacterCardView view) {
-        launchRandomCharacter(mSavedCharacter);
+        launchRandomCharacter(mCharacterWrappper);
     }
 
     @Override
     public void onShortInfoClick(CharacterCardView view) {
-        launchRandomCharacter(mSavedCharacter);
+        launchRandomCharacter(mCharacterWrappper);
     }
 
     @Override
     public void onExtraInfoClick(CharacterCardView view) {
-        launchStatisticsCreator(mSavedCharacter);
+        launchStatisticsCreator(mCharacterWrappper);
     }
 
     @Override

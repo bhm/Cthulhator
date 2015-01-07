@@ -5,7 +5,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
 import com.bustiblelemons.cthulhator.character.creation.ui.AbsCharacterCreationActivity;
 import com.bustiblelemons.cthulhator.character.history.logic.HistoryAdapter;
 import com.bustiblelemons.cthulhator.character.history.logic.LoadHistoryEventsAsyn;
@@ -15,6 +14,7 @@ import com.bustiblelemons.cthulhator.character.history.logic.ReportCharacterSett
 import com.bustiblelemons.cthulhator.character.history.model.BirthData;
 import com.bustiblelemons.cthulhator.character.history.model.HistoryEvent;
 import com.bustiblelemons.cthulhator.character.history.model.TimeSpan;
+import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
 import com.bustiblelemons.cthulhator.settings.Settings;
 import com.bustiblelemons.cthulhator.settings.character.CharacterSettings;
 import com.bustiblelemons.cthulhator.system.brp.statistics.BRPStatistic;
@@ -50,12 +50,12 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
     StickyListHeadersListView listView;
 
     private TimeSpan span = TimeSpan.EMPTY;
-    private SavedCharacter mSavedCharacter;
-    private HistoryAdapter mHistoryAdapter;
-    private DateTime       mBirthDate;
-    private DateTime       mSuggestedDate;
-    private TimeSpan       mSpan;
-    private Toolbar        mToolbar;
+    private CharacterWrappper mSavedCharacter;
+    private HistoryAdapter    mHistoryAdapter;
+    private DateTime          mBirthDate;
+    private DateTime          mSuggestedDate;
+    private TimeSpan          mSpan;
+    private Toolbar           mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +108,7 @@ public class HistoryEditorActivity extends AbsCharacterCreationActivity
     }
 
     @Override
-    protected void onInstanceArgumentRead(SavedCharacter arg) {
+    protected void onInstanceArgumentRead(CharacterWrappper arg) {
         mSavedCharacter = arg;
     }
 

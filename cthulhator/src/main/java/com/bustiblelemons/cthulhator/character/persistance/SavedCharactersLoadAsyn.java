@@ -1,10 +1,9 @@
-package com.bustiblelemons.cthulhator.character.characterslist.logic;
+package com.bustiblelemons.cthulhator.character.persistance;
 
 import android.content.Context;
 
 import com.bustiblelemons.async.AbsSimpleAsync;
-import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
-import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharactersSet;
+import com.bustiblelemons.cthulhator.character.characterslist.logic.SavedCharacterTransformer;
 import com.bustiblelemons.cthulhator.system.Grouping;
 import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
 
@@ -34,7 +33,7 @@ public class SavedCharactersLoadAsyn extends AbsSimpleAsync<Grouping, List<Chara
                     CharacterInfo characterInfo =
                             SavedCharacterTransformer.getInstance()
                                     .withContext(getContext())
-                                    .transform(savedCharacter);
+                                    .transform(new CharacterWrappper(savedCharacter));
                     infos.add(characterInfo);
                 }
                 publishProgress(g, infos);

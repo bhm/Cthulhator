@@ -1,7 +1,7 @@
 package com.bustiblelemons.cthulhator.system.brp.skills;
 
 import com.bustiblelemons.cthulhator.system.brp.statistics.BRPStatistic;
-import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
+import com.bustiblelemons.cthulhator.system.edition.GameEdition;
 import com.bustiblelemons.cthulhator.system.properties.ActionGroup;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 import com.bustiblelemons.cthulhator.system.properties.ModifierType;
@@ -21,7 +21,7 @@ import java.util.Set;
 public enum BRPSkill {
     Accounting {
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 15;
         }
     },
@@ -62,7 +62,7 @@ public enum BRPSkill {
         }
 
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 5;
         }
     },
@@ -91,7 +91,7 @@ public enum BRPSkill {
         }
 
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 5;
         }
     },
@@ -121,19 +121,19 @@ public enum BRPSkill {
     },
     Climb {
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 40;
         }
     },
     Conceal {
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 15;
         }
     },
     Credit_Rating {
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 15;
         }
     },
@@ -179,13 +179,13 @@ public enum BRPSkill {
     },
     DriveAuto {
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 20;
         }
     },
     ElectricalRepair {
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 10;
         }
     },
@@ -202,7 +202,7 @@ public enum BRPSkill {
         }
 
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 5;
         }
     },
@@ -219,14 +219,14 @@ public enum BRPSkill {
         }
 
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 30;
         }
     },
     Geology,
     Hide {
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 10;
         }
     },
@@ -243,13 +243,13 @@ public enum BRPSkill {
         }
 
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 20;
         }
     },
     Jump {
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 25;
         }
     },
@@ -266,7 +266,7 @@ public enum BRPSkill {
         }
 
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 5;
         }
     },
@@ -283,7 +283,7 @@ public enum BRPSkill {
         }
 
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 25;
         }
     },
@@ -300,7 +300,7 @@ public enum BRPSkill {
         }
 
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 25;
         }
     },
@@ -320,7 +320,7 @@ public enum BRPSkill {
     },
     MechanicalRepair {
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 5;
         }
     },
@@ -337,19 +337,19 @@ public enum BRPSkill {
         }
 
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 5;
         }
     },
     NaturalHistory {
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 10;
         }
     },
     Navigate {
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 10;
         }
     },
@@ -366,7 +366,7 @@ public enum BRPSkill {
         }
 
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 5;
         }
     },
@@ -389,14 +389,14 @@ public enum BRPSkill {
     },
     Persuade {
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 15;
         }
     },
     Pharmacy,
     Photography {
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 10;
         }
     },
@@ -405,37 +405,37 @@ public enum BRPSkill {
     Psychoanalysis,
     Ride {
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 5;
         }
     },
     Speak {
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 10;
         }
     },
     SpotHidden {
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 25;
         }
     },
     Swim {
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 25;
         }
     },
     Throw {
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 25;
         }
     },
     Track {
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 10;
         }
     }
@@ -455,7 +455,7 @@ public enum BRPSkill {
 
 
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 20;
         }
     },
@@ -472,7 +472,7 @@ public enum BRPSkill {
         }
 
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 40;
         }
     },
@@ -490,7 +490,7 @@ public enum BRPSkill {
 
 
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 25;
         }
     },
@@ -508,7 +508,7 @@ public enum BRPSkill {
 
 
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 25;
         }
     },
@@ -526,7 +526,7 @@ public enum BRPSkill {
 
 
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 15;
         }
     },
@@ -544,7 +544,7 @@ public enum BRPSkill {
 
 
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 20;
         }
     },
@@ -562,7 +562,7 @@ public enum BRPSkill {
 
 
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 20;
         }
     },
@@ -580,7 +580,7 @@ public enum BRPSkill {
 
 
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 15;
         }
     },
@@ -597,7 +597,7 @@ public enum BRPSkill {
         }
 
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 25;
         }
     },
@@ -614,7 +614,7 @@ public enum BRPSkill {
         }
 
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 30;
         }
     },
@@ -631,14 +631,14 @@ public enum BRPSkill {
         }
 
         @Override
-        public int getBaseValue(CthulhuEdition edition) {
+        public int getBaseValue(GameEdition edition) {
             return 15;
         }
     };
-    private Set<CthulhuEdition> editions = new HashSet<CthulhuEdition>();
+    private Set<GameEdition> editions = new HashSet<GameEdition>();
 
     {
-        editions.add(CthulhuEdition.CoC5);
+        editions.add(GameEdition.CoC5);
     }
 
     private List<ActionGroup> mActionGroups;
@@ -649,7 +649,7 @@ public enum BRPSkill {
         return Collections.emptySet();
     }
 
-    public CharacterProperty asCharacterProperty(CthulhuEdition edition) {
+    public CharacterProperty asCharacterProperty(GameEdition edition) {
         CharacterProperty r = new CharacterProperty();
         r.setName(name());
         r.setNameResId(getNameResId());
@@ -665,18 +665,18 @@ public enum BRPSkill {
         return r;
     }
 
-    public int getBaseValue(CthulhuEdition edition) {
-        if (CthulhuEdition.CoC6.equals(edition)) {
+    public int getBaseValue(GameEdition edition) {
+        if (GameEdition.CoC6.equals(edition)) {
             return 1;
         } else {
             return 0;
         }
     }
 
-    public Set<CthulhuEdition> getEditions() {
+    public Set<GameEdition> getEditions() {
         if (editions == null) {
-            editions = new HashSet<CthulhuEdition>();
-            editions.add(CthulhuEdition.CoC5);
+            editions = new HashSet<GameEdition>();
+            editions.add(GameEdition.CoC5);
         }
         return editions;
     }

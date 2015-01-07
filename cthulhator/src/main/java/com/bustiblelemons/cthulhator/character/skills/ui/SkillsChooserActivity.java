@@ -5,8 +5,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
 import com.bustiblelemons.cthulhator.character.creation.ui.AbsCharacterCreationActivity;
+import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
 import com.bustiblelemons.cthulhator.character.skills.logic.OnSaveSkills;
 import com.bustiblelemons.cthulhator.character.skills.logic.OnSkillPointsPoolChanged;
 import com.bustiblelemons.cthulhator.character.skills.model.SkillsPackage;
@@ -28,7 +28,7 @@ public class SkillsChooserActivity extends AbsCharacterCreationActivity
     public static final int REQUEST_CODE = 6;
     @InjectView(R.id.header)
     Toolbar mToolbar;
-    private SavedCharacter     mSavedCharacter;
+    private CharacterWrappper  mSavedCharacter;
     private SkillsListFragment mSkillEditorFragment;
     private String mPoolPrefix = "";
     private int mPointsAvailable;
@@ -66,7 +66,7 @@ public class SkillsChooserActivity extends AbsCharacterCreationActivity
 
 
     @Override
-    protected void onInstanceArgumentRead(SavedCharacter arg) {
+    protected void onInstanceArgumentRead(CharacterWrappper arg) {
         mSavedCharacter = arg;
     }
 

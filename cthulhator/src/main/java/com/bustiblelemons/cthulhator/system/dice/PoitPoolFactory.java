@@ -1,7 +1,7 @@
 package com.bustiblelemons.cthulhator.system.dice;
 
 import com.bustiblelemons.cthulhator.system.dice.model.ValueSpace;
-import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
+import com.bustiblelemons.cthulhator.system.edition.GameEdition;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 
 import java.util.Collection;
@@ -12,7 +12,7 @@ import java.util.Collections;
  */
 public class PoitPoolFactory {
 
-    public static ValueSpace characteristicPoolFromEdition(CthulhuEdition edition) {
+    public static ValueSpace characteristicPoolFromEdition(GameEdition edition) {
         Collection<CharacterProperty> list = Collections.emptyList();
         if (edition != null) {
             list = edition.getCharacteristics();
@@ -36,7 +36,7 @@ public class PoitPoolFactory {
         return r;
     }
 
-    public static ValueSpace randomPoolFromEdition(CthulhuEdition edition) {
+    public static ValueSpace randomPoolFromEdition(GameEdition edition) {
         Collection<CharacterProperty> list = Collections.emptyList();
         if (edition != null) {
             list = edition.getCharacteristics();

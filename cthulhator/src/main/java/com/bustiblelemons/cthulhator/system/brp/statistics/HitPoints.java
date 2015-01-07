@@ -1,6 +1,6 @@
 package com.bustiblelemons.cthulhator.system.brp.statistics;
 
-import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
+import com.bustiblelemons.cthulhator.system.edition.GameEdition;
 import com.bustiblelemons.cthulhator.system.properties.ActionGroup;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 import com.bustiblelemons.cthulhator.system.properties.ModifierType;
@@ -31,7 +31,7 @@ public class HitPoints {
     private int current = 0;
     private int min     = -2;
 
-    public static HitPoints forProperties(CthulhuEdition edition, float con, float siz) {
+    public static HitPoints forProperties(GameEdition edition, float con, float siz) {
         HitPoints hitPoints = new HitPoints();
         int value = getValue(con, siz, edition);
         hitPoints.setMax(value);
@@ -40,7 +40,7 @@ public class HitPoints {
         return hitPoints;
     }
 
-    private static int getValue(float con, float siz, CthulhuEdition edition) {
+    private static int getValue(float con, float siz, GameEdition edition) {
         float sum;
         int value;
         switch (edition) {

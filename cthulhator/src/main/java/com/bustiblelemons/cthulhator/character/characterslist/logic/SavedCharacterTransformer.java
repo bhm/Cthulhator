@@ -3,8 +3,9 @@ package com.bustiblelemons.cthulhator.character.characterslist.logic;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
 import com.bustiblelemons.cthulhator.character.description.model.CharacterDescription;
+import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
+import com.bustiblelemons.cthulhator.character.persistance.SavedCharacter;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
 import com.bustiblelemons.randomuserdotme.model.Location;
@@ -30,13 +31,20 @@ public class SavedCharacterTransformer {
         return this;
     }
 
-    public CharacterInfo transform(final SavedCharacter savedCharacter) {
+    public <E extends CharacterWrappper>  CharacterInfo transform(final E savedCharacter) {
         if (savedCharacter != null) {
             CharacterInfoImpl impl = new CharacterInfoImpl();
-            impl.setName(savedCharacter.getName());
-            impl.setUrl(savedCharacter.getPhotoUrl());
-            String extrainfo = getMainCharacteristics(savedCharacter);
-            impl.setExtrainfo(extrainfo);
+            if (savedCharacter.getDescription() != null) {
+                CharacterDescription description = savedCharacter.getDescription();
+                if (description.getName() != null) {
+                    impl.setName(savedCharacter.getDescription().getName().getFullName());
+                }
+                if (description.getMainPortrait() != null) {
+                    impl.setUrl(description.getMainPortrait().getUrl());
+                }
+                String extrainfo = getMainCharacteristics(savedCharacter);
+                impl.setExtrainfo(extrainfo);
+            }
             String mainInfo = getLocationInfo(savedCharacter);
             impl.setMainInfo(mainInfo);
             impl.setId(savedCharacter.getId());
@@ -47,7 +55,7 @@ public class SavedCharacterTransformer {
         return null;
     }
 
-    private String getLocationInfo(SavedCharacter savedCharacter) {
+    private  <E extends SavedCharacter> String getLocationInfo(SavedCharacter savedCharacter) {
         String location = "";
         CharacterDescription des = savedCharacter.getDescription();
         if (des != null && des.getLocation() != null) {
@@ -59,7 +67,7 @@ public class SavedCharacterTransformer {
         return String.format(Locale.ENGLISH, "%s", location);
     }
 
-    private String getMainCharacteristics(SavedCharacter savedCharacter) {
+    private  <E extends CharacterWrappper> String getMainCharacteristics(E savedCharacter) {
         StringBuilder b = new StringBuilder();
         String prefix = "";
         for (CharacterProperty p : savedCharacter.getTopCharacteristics(3)) {

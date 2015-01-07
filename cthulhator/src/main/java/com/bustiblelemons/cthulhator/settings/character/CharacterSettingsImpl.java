@@ -3,7 +3,7 @@ package com.bustiblelemons.cthulhator.settings.character;
 import android.support.v4.util.LruCache;
 
 import com.bustiblelemons.cthulhator.character.history.model.YearsPeriod;
-import com.bustiblelemons.cthulhator.system.time.CthulhuPeriod;
+import com.bustiblelemons.cthulhator.system.time.YearsPeriodImpl;
 import com.bustiblelemons.google.apis.GoogleSearchGender;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -19,19 +19,19 @@ public class CharacterSettingsImpl implements CharacterSettings {
     private static final LruCache<Integer, CharacterSettingsImpl> cache =
             new LruCache<Integer, CharacterSettingsImpl>(3);
     private static CharacterSettings sDefaults;
-    private CthulhuPeriod cthulhuPeriod = CthulhuPeriod.JAZZAGE;
-    private boolean modern;
-    private int year;
+    private YearsPeriodImpl mYearsPeriodImpl = YearsPeriodImpl.JAZZAGE;
+    private boolean            modern;
+    private int                year;
     private GoogleSearchGender googleSearchGender;
 
     public CharacterSettingsImpl() {
-        this.year = CthulhuPeriod.JAZZAGE.getDefaultYear();
+        this.year = YearsPeriodImpl.JAZZAGE.getDefaultYear();
         this.googleSearchGender = GoogleSearchGender.ANY;
     }
 
     private CharacterSettingsImpl(int year, GoogleSearchGender googleSearchGender) {
         this.year = year;
-        setCthulhuPeriod(CthulhuPeriod.fromYear(this.year));
+        setCthulhuPeriod(YearsPeriodImpl.fromYear(this.year));
         this.googleSearchGender = googleSearchGender;
     }
 
@@ -77,15 +77,15 @@ public class CharacterSettingsImpl implements CharacterSettings {
     }
 
     @Override
-    public CthulhuPeriod getCthulhuPeriod() {
-        return cthulhuPeriod;
+    public YearsPeriodImpl getCthulhuPeriod() {
+        return mYearsPeriodImpl;
     }
 
-    public void setCthulhuPeriod(CthulhuPeriod cthulhuPeriod) {
-        if (cthulhuPeriod == null) {
-            this.cthulhuPeriod = CthulhuPeriod.JAZZAGE;
+    public void setCthulhuPeriod(YearsPeriodImpl yearsPeriodImpl) {
+        if (yearsPeriodImpl == null) {
+            this.mYearsPeriodImpl = YearsPeriodImpl.JAZZAGE;
         }
-        this.cthulhuPeriod = cthulhuPeriod;
+        this.mYearsPeriodImpl = yearsPeriodImpl;
     }
 
     @Override
@@ -111,7 +111,7 @@ public class CharacterSettingsImpl implements CharacterSettings {
 
     @Override
     public String toString() {
-        String period = WordUtils.capitalizeFully(cthulhuPeriod.getName());
+        String period = WordUtils.capitalizeFully(mYearsPeriodImpl.getName());
         String gender = WordUtils.capitalizeFully(googleSearchGender.getName());
         return String.format(Locale.ENGLISH, "%s %s", period, gender);
     }

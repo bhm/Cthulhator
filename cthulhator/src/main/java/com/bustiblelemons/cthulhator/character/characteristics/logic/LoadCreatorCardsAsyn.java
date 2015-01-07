@@ -6,7 +6,7 @@ import com.bustiblelemons.async.AbsSimpleAsync;
 import com.bustiblelemons.cthulhator.character.creation.logic.CreatorCardFactory;
 import com.bustiblelemons.cthulhator.character.creation.logic.RelatedPropertesRetreiver;
 import com.bustiblelemons.cthulhator.character.creation.model.CreatorCard;
-import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
+import com.bustiblelemons.cthulhator.system.edition.GameEdition;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 
 import java.util.Collection;
@@ -20,7 +20,7 @@ public class LoadCreatorCardsAsyn
 
     private OnCreatorCardsCreated     mOnCreatorCardsCreated;
     private RelatedPropertesRetreiver mRetreiver;
-    private CthulhuEdition            mEdition;
+    private GameEdition               mEdition;
 
     public LoadCreatorCardsAsyn(Context context) {
         super(context);
@@ -41,7 +41,7 @@ public class LoadCreatorCardsAsyn
         return this;
     }
 
-    public LoadCreatorCardsAsyn withEdition(CthulhuEdition edition) {
+    public LoadCreatorCardsAsyn withEdition(GameEdition edition) {
         mEdition = edition;
         return this;
     }

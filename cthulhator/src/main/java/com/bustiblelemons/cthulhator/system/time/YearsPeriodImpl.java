@@ -9,7 +9,7 @@ import java.util.Locale;
 /**
  * Created by bhm on 03.08.14.
  */
-public enum CthulhuPeriod implements YearsPeriod {
+public enum YearsPeriodImpl implements YearsPeriod {
     GASLIGHT {
         @Override
         public int getDefaultYear() {
@@ -65,8 +65,8 @@ public enum CthulhuPeriod implements YearsPeriod {
 
     };
 
-    public static CthulhuPeriod fromYear(int year) {
-        for (CthulhuPeriod p : values()) {
+    public static YearsPeriodImpl fromYear(int year) {
+        for (YearsPeriodImpl p : values()) {
             if (year <= p.getMaxYear() && year >= p.getMinYear()) {
                 return p;
             }
@@ -91,6 +91,8 @@ public enum CthulhuPeriod implements YearsPeriod {
         int r = getDefaultYear() - getMinYear() / divider;
         return r > 1 ? r - 1 : 0;
     }
+
+
 
     @Override
     public String getName() {

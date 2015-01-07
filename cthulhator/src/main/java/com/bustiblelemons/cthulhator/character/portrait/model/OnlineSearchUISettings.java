@@ -1,7 +1,7 @@
 package com.bustiblelemons.cthulhator.character.portrait.model;
 
 import com.bustiblelemons.cthulhator.settings.character.CharacterSettings;
-import com.bustiblelemons.cthulhator.system.time.CthulhuPeriod;
+import com.bustiblelemons.cthulhator.system.time.YearsPeriodImpl;
 import com.bustiblelemons.google.apis.GoogleSearchGender;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -22,7 +22,7 @@ public class OnlineSearchUISettings {
 
     public static OnlineSearchUISettings from(CharacterSettings settings) {
         GoogleSearchGender gender = settings.getGender();
-        CthulhuPeriod period = settings.getCthulhuPeriod();
+        YearsPeriodImpl period = settings.getCthulhuPeriod();
         OnlineSearchUISettings r = new OnlineSearchUISettings();
         r.setGenderSpinnerPosition(gender.ordinal());
         r.setPeriodSpinnerPosition(period.ordinal());
@@ -58,7 +58,7 @@ public class OnlineSearchUISettings {
         private static OnlineSearchUISettings sDefaults;
 
         static {
-            CthulhuPeriod p = CthulhuPeriod.JAZZAGE;
+            YearsPeriodImpl p = YearsPeriodImpl.JAZZAGE;
             sDefaults = new OnlineSearchUISettings();
             sDefaults.setGenderSpinnerPosition(GoogleSearchGender.ANY.ordinal());
             sDefaults.setPeriodSpinnerPosition(p.ordinal());

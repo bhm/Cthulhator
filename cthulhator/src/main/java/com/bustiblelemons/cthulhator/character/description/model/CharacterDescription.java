@@ -33,6 +33,8 @@ public class CharacterDescription implements Serializable, Parcelable {
     private Location        location;
     private RandomTraitsSet traits;
     private List<Portrait>  portraitList;
+    @JsonIgnore
+    private Portrait        mMainPortrait;
 
     public CharacterDescription() {
     }
@@ -75,6 +77,21 @@ public class CharacterDescription implements Serializable, Parcelable {
 
     public void setPortraitList(List<Portrait> portraitList) {
         this.portraitList = portraitList;
+    }
+
+    @JsonIgnore
+    public Portrait getMainPortrait() {
+        mMainPortrait = null;
+        if (mMainPortrait == null) {
+            for (Portrait p : getPortraitList()) {
+                if (p != null && p.isMain()) {
+                    return p;
+                } else if (p != null && mMainPortrait == null) {
+                    mMainPortrait = p;
+                }
+            }
+        }
+        return mMainPortrait;
     }
 
     @JsonIgnore

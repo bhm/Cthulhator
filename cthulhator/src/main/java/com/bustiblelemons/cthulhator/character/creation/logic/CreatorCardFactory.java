@@ -1,7 +1,7 @@
 package com.bustiblelemons.cthulhator.character.creation.logic;
 
 import com.bustiblelemons.cthulhator.character.creation.model.CreatorCard;
-import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
+import com.bustiblelemons.cthulhator.system.edition.GameEdition;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class CreatorCardFactory {
 
-    public static List<CreatorCard> getCardsFrom(CthulhuEdition edition,
+    public static List<CreatorCard> getCardsFrom(GameEdition edition,
                                                  RelatedPropertesRetreiver retreiver,
                                                  Collection<CharacterProperty> properties) {
         if (edition == null) {

@@ -1,7 +1,8 @@
 package com.bustiblelemons.cthulhator.character.characteristics.logic;
 
-import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
+
+import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
 
 public interface OnStatisitcsRandomized {
-    void onStatisitcsRandomzied(SavedCharacter character);
+    void onStatisitcsRandomzied(CharacterWrappper character);
 }

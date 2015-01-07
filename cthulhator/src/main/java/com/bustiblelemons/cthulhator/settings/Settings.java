@@ -5,7 +5,7 @@ import android.content.Context;
 import com.bustiblelemons.cthulhator.character.portrait.model.OnlineSearchUISettings;
 import com.bustiblelemons.cthulhator.settings.character.CharacterSettings;
 import com.bustiblelemons.cthulhator.settings.character.CharacterSettingsImpl;
-import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
+import com.bustiblelemons.cthulhator.system.edition.GameEdition;
 import com.bustiblelemons.settings.BaseSettings;
 import com.bustiblelemons.storage.Storage;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -67,11 +67,11 @@ public class Settings extends BaseSettings {
         }
     }
 
-    public static void setEdition(Context context, CthulhuEdition ed) {
+    public static void setEdition(Context context, GameEdition ed) {
         setEnum(context, EDITION, ed);
     }
 
-    public static CthulhuEdition getEdition(Context context) {
-        return getEnum(context, EDITION, CthulhuEdition.class, CthulhuEdition.CoC5.name());
+    public static GameEdition getEdition(Context context) {
+        return getEnum(context, EDITION, GameEdition.class, GameEdition.CoC5.name());
     }
 }

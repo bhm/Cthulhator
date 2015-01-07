@@ -3,7 +3,7 @@ package com.bustiblelemons.cthulhator.system.properties;
 import android.content.Context;
 
 import com.bustiblelemons.async.AbsSimpleAsync;
-import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
+import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
 
 import java.util.Set;
 
@@ -12,9 +12,9 @@ import java.util.Set;
  */
 public class NotifyCorelativesAsyn extends AbsSimpleAsync<CharacterProperty, CharacterProperty> {
 
-    private SavedCharacter savedCharacter;
+    private CharacterWrappper savedCharacter;
 
-    public NotifyCorelativesAsyn(Context context, SavedCharacter savedCharacter) {
+    public NotifyCorelativesAsyn(Context context, CharacterWrappper savedCharacter) {
         super(context);
         this.savedCharacter = savedCharacter;
     }

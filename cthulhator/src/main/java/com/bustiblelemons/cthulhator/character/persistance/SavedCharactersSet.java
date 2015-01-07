@@ -1,4 +1,4 @@
-package com.bustiblelemons.cthulhator.character.characterslist.model;
+package com.bustiblelemons.cthulhator.character.persistance;
 
 import android.os.Parcel;
 import android.os.Parcelable;

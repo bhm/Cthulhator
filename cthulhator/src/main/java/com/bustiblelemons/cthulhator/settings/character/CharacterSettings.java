@@ -1,6 +1,6 @@
 package com.bustiblelemons.cthulhator.settings.character;
 
-import com.bustiblelemons.cthulhator.system.time.CthulhuPeriod;
+import com.bustiblelemons.cthulhator.system.time.YearsPeriodImpl;
 import com.bustiblelemons.google.apis.GoogleSearchGender;
 
 import java.io.Serializable;
@@ -17,5 +17,5 @@ public interface CharacterSettings extends Serializable {
 
     String getQuery();
 
-    CthulhuPeriod getCthulhuPeriod();
+    YearsPeriodImpl getCthulhuPeriod();
 }

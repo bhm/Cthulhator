@@ -16,13 +16,13 @@ import com.bustiblelemons.cthulhator.character.characteristics.logic.LoadCreator
 import com.bustiblelemons.cthulhator.character.characteristics.logic.OnCreatorCardsCreated;
 import com.bustiblelemons.cthulhator.character.characteristics.logic.OnStatisitcsRandomized;
 import com.bustiblelemons.cthulhator.character.characteristics.logic.RandomizeStatisitcsAsyn;
-import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
 import com.bustiblelemons.cthulhator.character.creation.logic.CreatorCardsAdapter;
 import com.bustiblelemons.cthulhator.character.creation.logic.RelatedPropertesRetreiver;
 import com.bustiblelemons.cthulhator.character.creation.model.CreatorCard;
 import com.bustiblelemons.cthulhator.character.creation.ui.AbsCharacterCreationActivity;
+import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
 import com.bustiblelemons.cthulhator.system.CthulhuCharacter;
-import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
+import com.bustiblelemons.cthulhator.system.edition.GameEdition;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 import com.bustiblelemons.cthulhator.view.characteristiccard.CharacteristicCard;
 import com.bustiblelemons.logging.Logger;
@@ -56,8 +56,8 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     @InjectView(R.id.recycler)
     RecyclerView mRecyclerView;
 
-    private CthulhuEdition mEdition = CthulhuEdition.CoC5;
-    private SavedCharacter             mSavedCharacter;
+    private GameEdition mEdition = GameEdition.CoC5;
+    private CharacterWrappper          mSavedCharacter;
     private Toolbar                    mToolbar;
     private RecyclerView.LayoutManager mManager;
     private CreatorCardsAdapter        mCardsAdapter;
@@ -160,7 +160,7 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         if (data != null) {
             Bundle e = data.getExtras();
             if (e != null && e.containsKey(INSTANCE_ARGUMENT)) {
-                SavedCharacter passedBack = e.getParcelable(INSTANCE_ARGUMENT);
+                CharacterWrappper passedBack = e.getParcelable(INSTANCE_ARGUMENT);
                 log.d("passedback %s", passedBack);
                 if (passedBack != null) {
                     onInstanceArgumentRead(passedBack);
@@ -171,7 +171,7 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
 
 
     @Override
-    protected void onInstanceArgumentRead(SavedCharacter arg) {
+    protected void onInstanceArgumentRead(CharacterWrappper arg) {
         mSavedCharacter = arg;
     }
 
@@ -219,7 +219,7 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     }
 
     @Override
-    public void onStatisitcsRandomzied(SavedCharacter character) {
+    public void onStatisitcsRandomzied(CharacterWrappper character) {
         mStatisticsSet = mSavedCharacter.getStatistics();
         loadCardsAsync(mStatisticsSet);
     }

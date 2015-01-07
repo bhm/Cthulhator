@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.characterslist.logic.SavedCharacterTransformer;
-import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
+import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
 import com.bustiblelemons.cthulhator.character.viewer.CharacterViewerCard;
 import com.bustiblelemons.cthulhator.character.viewer.logic.CharacterViewerAdapter;
 import com.bustiblelemons.cthulhator.character.viewer.logic.OnExpandCharacterViewer;
@@ -32,7 +32,7 @@ import butterknife.Optional;
 /**
  * Created by hiv on 17.11.14.
  */
-public class CharacterViewerFragment extends AbsArgFragment<SavedCharacter> {
+public class CharacterViewerFragment extends AbsArgFragment<CharacterWrappper> {
     @InjectView(R.id.recycler)
     RecyclerView mRecyclerView;
     @Optional
@@ -46,7 +46,7 @@ public class CharacterViewerFragment extends AbsArgFragment<SavedCharacter> {
     TextView     mExtraInfoView;
     private Animation                  mSlideInAnimation;
     private Animation                  mSlideOutAnimation;
-    private SavedCharacter             mSavedCharacter;
+    private CharacterWrappper             mSavedCharacter;
     private RecyclerView.LayoutManager mManager;
     private RecyclerView.ItemAnimator  mAnimator;
     private OnExpandCharacterViewer    mExpandCallback;
@@ -79,7 +79,7 @@ public class CharacterViewerFragment extends AbsArgFragment<SavedCharacter> {
     };
     private PropertyValueRetreiver mRetreiver;
 
-    public static CharacterViewerFragment newInstance(SavedCharacter savedCharacter) {
+    public static CharacterViewerFragment newInstance(CharacterWrappper savedCharacter) {
         CharacterViewerFragment r = new CharacterViewerFragment();
         r.setNewInstanceArgument(savedCharacter);
         return r;
@@ -118,13 +118,12 @@ public class CharacterViewerFragment extends AbsArgFragment<SavedCharacter> {
     }
 
     @Override
-    protected void onInstanceArgumentRead(SavedCharacter instanceArgument) {
+    protected void onInstanceArgumentRead(CharacterWrappper instanceArgument) {
         if (instanceArgument != null) {
             mSavedCharacter = instanceArgument;
             CharacterInfo characterInfo = SavedCharacterTransformer.getInstance()
                     .withContext(getContext()).transform(mSavedCharacter);
             loadCharacterInfo(characterInfo);
-
         }
     }
 

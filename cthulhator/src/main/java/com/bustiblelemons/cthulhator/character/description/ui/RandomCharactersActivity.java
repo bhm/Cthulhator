@@ -9,12 +9,12 @@ import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.adapters.PhotosPagerAdapter;
 import com.bustiblelemons.cthulhator.async.QueryGImagesAsyn;
 import com.bustiblelemons.cthulhator.async.ReceiveGoogleImages;
-import com.bustiblelemons.cthulhator.character.characterslist.model.SavedCharacter;
 import com.bustiblelemons.cthulhator.character.creation.ui.AbsCharacterCreationActivity;
 import com.bustiblelemons.cthulhator.character.description.logic.CharacteristicTraitsAdapter;
 import com.bustiblelemons.cthulhator.character.description.logic.RandomUserMELocationPagerAdapter;
 import com.bustiblelemons.cthulhator.character.description.logic.RandomUserMENamePagerAdapter;
 import com.bustiblelemons.cthulhator.character.description.model.CharacterDescription;
+import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
 import com.bustiblelemons.cthulhator.character.portrait.logic.OnBroadcastOnlineSearchSettings;
 import com.bustiblelemons.cthulhator.character.portrait.logic.OnOpenSearchSettings;
 import com.bustiblelemons.cthulhator.character.portrait.model.Portrait;
@@ -23,7 +23,7 @@ import com.bustiblelemons.cthulhator.character.portrait.ui.RandomCharSettingsDia
 import com.bustiblelemons.cthulhator.settings.Settings;
 import com.bustiblelemons.cthulhator.settings.character.CharacterSettings;
 import com.bustiblelemons.cthulhator.system.CthulhuCharacter;
-import com.bustiblelemons.cthulhator.system.edition.CthulhuEdition;
+import com.bustiblelemons.cthulhator.system.edition.GameEdition;
 import com.bustiblelemons.google.apis.GenderTransformer;
 import com.bustiblelemons.google.apis.search.params.GImageSearch;
 import com.bustiblelemons.google.apis.search.params.GoogleImageSearch;
@@ -102,7 +102,7 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
     private RandomCharSettingsDialog         randomCharSettingsDialog;
     private PortraitsSettingsFragment        mPortraitSettingsFragment;
     private CharacterSettings                mCharacterSettings;
-    private SavedCharacter                   mSavedCharacter;
+    private CharacterWrappper                mSavedCharacter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -359,7 +359,7 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
     private void saveCharacter() {
         CharacterDescription description = new CharacterDescription();
         if (mSavedCharacter == null) {
-            mSavedCharacter = CthulhuCharacter.forEdition(CthulhuEdition.CoC5);
+            mSavedCharacter = CthulhuCharacter.forEdition(GameEdition.CoC5);
         }
         description = addName(description);
         description = addLocation(description);
@@ -452,7 +452,7 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
     }
 
     @Override
-    protected void onInstanceArgumentRead(SavedCharacter arg) {
+    protected void onInstanceArgumentRead(CharacterWrappper arg) {
         mSavedCharacter = arg;
     }
 }
