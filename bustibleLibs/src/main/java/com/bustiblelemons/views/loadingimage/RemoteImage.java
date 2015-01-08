@@ -164,7 +164,7 @@ public class RemoteImage extends ImageView implements ImageLoadingListener,
         loadDefault();
     }
 
-    private void loadDefault() {
+    public void loadDefault() {
         setImageResource(noImageRes);
     }
 
