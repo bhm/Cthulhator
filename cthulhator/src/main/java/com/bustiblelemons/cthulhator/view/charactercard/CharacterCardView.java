@@ -2,6 +2,8 @@ package com.bustiblelemons.cthulhator.view.charactercard;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v7.graphics.Palette;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -22,8 +24,8 @@ import butterknife.OnClick;
  * Created by bhm on 21.09.14.
  */
 public class CharacterCardView extends RippleView implements
-                                                      View.OnClickListener,
-                                                      RemoteImage.PaletteColorsGeneratedSelective {
+                                                  View.OnClickListener,
+                                                  RemoteImage.PaletteColorsGeneratedSelective {
 
     @InjectView(R.id.name)
     TextView    mMainInfoView;
@@ -55,6 +57,43 @@ public class CharacterCardView extends RippleView implements
     private OnMenuClicked mOnMenuClicked;
 
     private LayoutType mLayoutType;
+
+    private class OldPallette {
+        private Integer  mainTextColor;
+        private Integer  infoTextColor;
+        private Drawable background;
+
+        private void loadOldBackground(View view) {
+            if (view != null) {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    view.setBackgroundDrawable(background);
+                } else {
+                    view.setBackground(background);
+                }
+            }
+        }
+
+        private <V extends TextView> void loadOldMainTextColor(V view) {
+            if (view != null) {
+                view.setTextColor(mainTextColor);
+            }
+        }
+
+        private <V extends TextView> void loadOldInfoTextColor(V view) {
+            if (view != null) {
+                view.setTextColor(infoTextColor);
+            }
+        }
+
+    }
+
+    public void loadOldPallete() {
+        if (mOldPallette != null) {
+            mOldPallette.loadOldBackground(mMainInfoBackground);
+        }
+    }
+
+    private OldPallette mOldPallette;
 
     public CharacterCardView(Context context) {
         super(context);
@@ -186,11 +225,14 @@ public class CharacterCardView extends RippleView implements
         if (provider == null) {
             return;
         }
+        loadOldPallete();
         setMainText(provider.getName());
         setShortText(provider.getMainInfo());
         setExtraText(provider.getExtraInfo());
         if (mRemoteImage != null && provider.getPortraitUrl() != null) {
             mRemoteImage.forceLoadFrom(provider.getPortraitUrl());
+        } else {
+            mRemoteImage.loadDefault();
         }
     }
 
@@ -271,6 +313,10 @@ public class CharacterCardView extends RippleView implements
                                              Palette.Swatch darkMuted) {
         if (darkMuted != null && mMainInfoBackground != null) {
             int backgroundColor = darkMuted.getRgb();
+            if (mOldPallette == null) {
+                mOldPallette = new OldPallette();
+            }
+            mOldPallette.background = mMainInfoBackground.getBackground();
             mMainInfoBackground.setBackgroundColor(backgroundColor);
         }
     }
@@ -279,9 +325,17 @@ public class CharacterCardView extends RippleView implements
     public void onPaletteLightColorsGenerated(RemoteImage loadingImage, Palette.Swatch vibrant,
                                               Palette.Swatch muted) {
         if (vibrant != null && mMainInfoView != null) {
+            if (mOldPallette == null) {
+                mOldPallette = new OldPallette();
+            }
+            mOldPallette.mainTextColor = mMainInfoView.getCurrentTextColor();
             mMainInfoView.setTextColor(vibrant.getTitleTextColor());
         }
         if (vibrant != null && mShortInfoView != null) {
+            if (mOldPallette == null) {
+                mOldPallette = new OldPallette();
+            }
+            mOldPallette.infoTextColor = mShortInfoView.getCurrentTextColor();
             mShortInfoView.setTextColor(vibrant.getBodyTextColor());
         }
     }
