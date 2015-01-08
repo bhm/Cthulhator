@@ -80,15 +80,23 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
                         statArray.getBoolean(R.styleable.StatisticView_valueBiggerIfTitleMissing,
                                 mValueBiggerIfTitleMissing);
                 setUpTextSize(statArray);
-//                if (mHideTitle) {
-//                    hideTitle();
-//
-//                }
-//                int value = statArray.getInteger(R.styleable.StatisticView_statValue, sDefaultStatValue);
-//                setValue(value + "");
-//                String title = statArray.getString(R.styleable.StatisticView_statTitle);
-//                setTitle(title);
-//                statArray.recycle();
+                if (mHideTitle) {
+                    hideTitle();
+                }
+                try {
+                    TypedValue typedValue = new TypedValue();
+                    if(statArray.getValue(R.styleable.StatisticView_statValue, typedValue)) {
+                        if (typedValue != null) {
+                            CharSequence value = typedValue.coerceToString();
+                            setValue(value);
+                        }
+                    }
+                    String title = statArray.getString(R.styleable.StatisticView_statTitle);
+                    setTitle(title);
+                    statArray.recycle();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
             addView(mRootView);
         }
@@ -174,7 +182,7 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
     }
 
     private void setupDefaultTextSize() {
-        if(sDefTitleSize == 0) {
+        if (sDefTitleSize == 0) {
             sDefTitleSize = getResources().getDimensionPixelSize(R.dimen.font_16);
         }
         if (sDefValSize == 0) {
@@ -232,7 +240,7 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
         mValueView.setLayoutParams(params);
     }
 
-    public void setTitle(String title) {
+    public void setTitle(CharSequence title) {
         if (mTitleView != null) {
             mTitleView.setText(title);
         }
