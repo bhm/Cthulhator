@@ -80,6 +80,7 @@ public class CharacterWrappper extends SavedCharacter implements PropertyValueRe
     }
 
     public CharacterWrappper(SavedCharacter character) {
+        super.setId(character.getId());
         super.setProperties(character.getProperties());
         super.setDescription(character.getDescription());
         super.setPeriod(character.getPeriod());
@@ -711,4 +712,7 @@ public class CharacterWrappper extends SavedCharacter implements PropertyValueRe
         return true;
     }
 
+    public static CharacterWrappper from(SavedCharacter character) {
+        return new CharacterWrappper(character);
+    }
 }

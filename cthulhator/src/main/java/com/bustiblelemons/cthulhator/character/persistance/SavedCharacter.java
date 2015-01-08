@@ -49,7 +49,7 @@ public class SavedCharacter implements Parcelable, Serializable {
     private int                  age;
     private YearsPeriodImpl      period;
 
-    private static AtomicInteger sAtomicId = new AtomicInteger(-1);
+    private static AtomicInteger sAtomicId = new AtomicInteger(0);
 
     @JsonIgnore
     private Integer mId;
@@ -234,5 +234,9 @@ public class SavedCharacter implements Parcelable, Serializable {
         result = 31 * result + (birth != null ? birth.hashCode() : 0);
         result = 31 * result + (period != null ? period.hashCode() : 0);
         return result;
+    }
+
+    public void setId(int id) {
+        mId = id;
     }
 }

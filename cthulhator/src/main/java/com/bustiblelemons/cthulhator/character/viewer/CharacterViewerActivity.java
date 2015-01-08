@@ -4,10 +4,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
-import com.bustiblelemons.activities.AbsArgActivity;
+import com.bustiblelemons.activities.AbsArgSerializableActivity;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.description.model.CharacterDescription;
 import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
+import com.bustiblelemons.cthulhator.character.persistance.SavedCharactersProvider;
 import com.bustiblelemons.cthulhator.character.portrait.model.Portrait;
 import com.bustiblelemons.cthulhator.character.viewer.logic.OnExpandCharacterViewer;
 import com.bustiblelemons.cthulhator.character.viewer.ui.CharacterViewerFragment;
@@ -24,12 +25,12 @@ import butterknife.Optional;
 /**
  * Created by bhm on 20.07.14.
  */
-public class CharacterViewerActivity extends AbsArgActivity<CharacterWrappper>
+public class CharacterViewerActivity extends AbsArgSerializableActivity<Integer>
         implements ImageChooserListener,
                    PropertyValueRetreiver,
                    OnExpandCharacterViewer {
 
-    public static final String CHARCTER_ID       = "character_id";
+    public static final String CHARACTER_ID      = "character_id";
     private static      int    sTransparentColor = Color.TRANSPARENT;
     private static      int    sSolidColor       = Color.TRANSPARENT;
     @InjectView(android.R.id.icon)
@@ -37,10 +38,11 @@ public class CharacterViewerActivity extends AbsArgActivity<CharacterWrappper>
     @InjectView(R.id.header)
     Toolbar     mToolbar;
 
-    private CharacterWrappper          mSavedCharacter;
+    private CharacterWrappper       mSavedCharacter;
     private CharacterViewerFragment mCharacterViewerFragment;
     private Portrait                mMainPortrait;
     private CharacterDescription    mDescription;
+    private Integer                 mCharacterId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +52,17 @@ public class CharacterViewerActivity extends AbsArgActivity<CharacterWrappper>
         }
         setContentView(R.layout.activity_character_viewer);
         ButterKnife.inject(this);
-        mSavedCharacter = getInstanceArgument();
-        attachCharacterViewer();
-        loadIcon();
+        mCharacterId = getInstanceArgument();
+        if (mCharacterId != null) {
+            loadCharacter(mCharacterId);
+            attachCharacterViewer();
+            loadIcon();
+        }
+    }
+
+    private void loadCharacter(Integer characterId) {
+        mSavedCharacter = CharacterWrappper
+                .from(SavedCharactersProvider.getSavedCharacterById(this, characterId));
     }
 
     private void attachCharacterViewer() {
@@ -63,9 +73,9 @@ public class CharacterViewerActivity extends AbsArgActivity<CharacterWrappper>
     }
 
     @Override
-    protected void onInstanceArgumentRead(CharacterWrappper arg) {
+    protected void onInstanceArgumentRead(Integer arg) {
         if (arg != null) {
-            mSavedCharacter = arg;
+            loadCharacter(arg);
             loadIcon();
             attachCharacterViewer();
         }
@@ -79,7 +89,6 @@ public class CharacterViewerActivity extends AbsArgActivity<CharacterWrappper>
             }
         }
     }
-
 
     @Override
     public void onImageChosen(ChosenImage chosenImage) {

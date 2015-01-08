@@ -79,7 +79,7 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
                 mValueBiggerIfTitleMissing =
                         statArray.getBoolean(R.styleable.StatisticView_valueBiggerIfTitleMissing,
                                 mValueBiggerIfTitleMissing);
-//                setUpTextSize(statArray);
+                setUpTextSize(statArray);
 //                if (mHideTitle) {
 //                    hideTitle();
 //

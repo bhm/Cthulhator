@@ -171,12 +171,13 @@ public class CharactersListActivity extends AbsActionBarActivity
 
     @Override
     public void onOpenSavedCharacter(int id) {
-        SavedCharacter character = SavedCharactersProvider.getSavedCharacterById(this, id);
-        onRetreiveCharacter(character, id);
+        Intent i = new Intent(this, CharacterViewerActivity.class);
+        i.putExtras(CharacterViewerActivity.getArguments(id));
+        startActivity(i);
     }
 
     @Override
-    public void onRetreiveCharacter(SavedCharacter savedCharacter, int hashCode) {
+    public void onRetreiveCharacter(SavedCharacter savedCharacter, int id) {
         if (savedCharacter != null) {
             Intent i = new Intent(this, CharacterViewerActivity.class);
             i.putExtras(CharacterViewerActivity.getArguments(savedCharacter));

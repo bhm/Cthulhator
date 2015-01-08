@@ -42,7 +42,7 @@ public class MainActivity extends AbsActionBarActivity {
 
     private boolean launchCharacterViewer(int characterId) {
         Intent i = new Intent(this, CharacterViewerActivity.class);
-        i.putExtra(CharacterViewerActivity.CHARCTER_ID, characterId);
+        i.putExtra(CharacterViewerActivity.CHARACTER_ID, characterId);
         startActivity(i);
         return true;
     }
