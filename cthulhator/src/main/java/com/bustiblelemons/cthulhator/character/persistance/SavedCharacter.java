@@ -87,6 +87,32 @@ public class SavedCharacter implements Parcelable, Serializable {
         this.age = in.readInt();
     }
 
+    @JsonIgnore
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        int propSize = this.properties != null ? this.properties.size() : 0;
+        dest.writeInt(propSize);
+        CharacterProperty[] props = new CharacterProperty[propSize];
+        if (this.properties != null) {
+            props = this.properties.toArray(new CharacterProperty[propSize]);
+        }
+        dest.writeTypedArray(props, flags);
+        dest.writeList(this.possesions);
+        int historySize = this.fullHistory != null ? this.fullHistory.size() : 0;
+        dest.writeInt(historySize);
+        HistoryEvent[] history = new HistoryEvent[historySize];
+        if (fullHistory != null) {
+            history = this.fullHistory.toArray(new HistoryEvent[historySize]);
+        }
+        dest.writeTypedArray(history, flags);
+        dest.writeInt(this.edition == null ? -1 : this.edition.ordinal());
+        dest.writeInt(this.period == null ? -1 : this.period.ordinal());
+        dest.writeParcelable(this.description, flags);
+        dest.writeParcelable(this.birth, flags);
+        dest.writeInt(this.age);
+    }
+
+
     public YearsPeriodImpl getPeriod() {
         return period;
     }
@@ -180,31 +206,6 @@ public class SavedCharacter implements Parcelable, Serializable {
         return 0;
     }
 
-    @JsonIgnore
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        int propSize = this.properties != null ? this.properties.size() : 0;
-        dest.writeInt(propSize);
-        CharacterProperty[] props = new CharacterProperty[propSize];
-        if (this.properties != null) {
-            props = this.properties.toArray(new CharacterProperty[propSize]);
-        }
-        dest.writeTypedArray(props, flags);
-        dest.writeList(this.possesions);
-        int historySize = this.fullHistory != null ? this.fullHistory.size() : 0;
-        dest.writeInt(historySize);
-        HistoryEvent[] h = new HistoryEvent[historySize];
-        if (fullHistory != null) {
-            h = this.fullHistory.toArray(new HistoryEvent[historySize]);
-        }
-        dest.writeTypedArray(h, flags);
-        dest.writeInt(this.edition == null ? -1 : this.edition.ordinal());
-        dest.writeInt(this.period == null ? -1 : this.period.ordinal());
-        dest.writeParcelable(this.description, flags);
-        dest.writeParcelable(this.birth, flags);
-        dest.writeInt(this.age);
-
-    }
 
     @Override
     public boolean equals(Object o) {

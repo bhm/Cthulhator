@@ -37,10 +37,10 @@ public class CharacterProperty extends ObservableCharacterProperty
             return new CharacterProperty[size];
         }
     };
-    private String name;
-    private int value = 0;
+    private String            name;
     private int               maxValue;
     private int               minValue;
+    private int               value;
     private int               baseValue;
     private PropertyFormat    format;
     private PropertyType      type;
@@ -83,6 +83,35 @@ public class CharacterProperty extends ObservableCharacterProperty
         Collections.addAll(relations, rel);
         this.nameResId = in.readInt();
         this.shortNameResId = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeString(this.displayValue);
+        List<ValueSpace> spaces;
+        if (this.valueSpaceSet != null) {
+            spaces = new ArrayList<ValueSpace>(this.valueSpaceSet);
+        } else {
+            spaces = new ArrayList<ValueSpace>(0);
+        }
+        dest.writeTypedList(spaces);
+        dest.writeInt(this.value);
+        dest.writeInt(this.maxValue);
+        dest.writeInt(this.minValue);
+        dest.writeInt(this.baseValue);
+        dest.writeInt(this.format == null ? -1 : this.format.ordinal());
+        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
+        parcelizeActionGroups(dest);
+        int relationsSize = this.relations != null ? this.relations.size() : 0;
+        dest.writeInt(relationsSize);
+        Relation[] rel = new Relation[relationsSize];
+        if (this.relations != null) {
+            rel = this.relations.toArray(new Relation[relationsSize]);
+        }
+        dest.writeTypedArray(rel, flags);
+        dest.writeInt(this.nameResId);
+        dest.writeInt(this.shortNameResId);
     }
 
     @JsonProperty("value_space")
@@ -323,35 +352,6 @@ public class CharacterProperty extends ObservableCharacterProperty
     @Override
     public int describeContents() {
         return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
-        dest.writeString(this.displayValue);
-        List<ValueSpace> spaces;
-        if (this.valueSpaceSet != null) {
-            spaces = new ArrayList<ValueSpace>(this.valueSpaceSet);
-        } else {
-            spaces = new ArrayList<ValueSpace>(0);
-        }
-        dest.writeTypedList(spaces);
-        dest.writeInt(this.value);
-        dest.writeInt(this.maxValue);
-        dest.writeInt(this.minValue);
-        dest.writeInt(this.baseValue);
-        dest.writeInt(this.format == null ? -1 : this.format.ordinal());
-        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
-        parcelizeActionGroups(dest);
-        int relationsSize = this.relations != null ? this.relations.size() : 0;
-        dest.writeInt(relationsSize);
-        Relation[] rel = new Relation[relationsSize];
-        if (this.relations != null) {
-            rel = this.relations.toArray(new Relation[relationsSize]);
-        }
-        dest.writeTypedArray(rel, flags);
-        dest.writeInt(this.nameResId);
-        dest.writeInt(this.shortNameResId);
     }
 
     private void parcelizeActionGroups(Parcel dest) {
