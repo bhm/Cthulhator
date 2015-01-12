@@ -1,6 +1,5 @@
 package com.bustiblelemons.cthulhator.character.characteristics.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -154,20 +153,6 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data != null) {
-            Bundle e = data.getExtras();
-            if (e != null && e.containsKey(INSTANCE_ARGUMENT)) {
-                CharacterWrappper passedBack = e.getParcelable(INSTANCE_ARGUMENT);
-                log.d("passedback %s", passedBack);
-                if (passedBack != null) {
-                    onInstanceArgumentRead(passedBack);
-                }
-            }
-        }
-    }
 
 
     @Override
