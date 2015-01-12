@@ -79,6 +79,14 @@ public class CharacterWrappper extends SavedCharacter implements PropertyValueRe
         this.skillPointsAvailable = in.readInt();
     }
 
+    @JsonIgnore
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeLong(this.suggestedDate);
+        dest.writeInt(this.skillPointsAvailable);
+    }
+
     public CharacterWrappper(SavedCharacter character) {
         super.setId(character.getId());
         super.setProperties(character.getProperties());
@@ -88,7 +96,10 @@ public class CharacterWrappper extends SavedCharacter implements PropertyValueRe
         super.setAge(character.getAge());
         super.setFullHistory(character.getFullHistory());
         super.setPossesions(character.getPossesions());
-        setEdition(character.getEdition());
+        super.setEdition(character.getEdition());
+        addDamageBonus();
+        addHitPoints();
+        updateSkillPointPools();
     }
 
     public CharacterWrappper(GameEdition edition) {
@@ -370,14 +381,6 @@ public class CharacterWrappper extends SavedCharacter implements PropertyValueRe
         }
         updateSkills();
         return getStatistics();
-    }
-
-    @JsonIgnore
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeLong(this.suggestedDate);
-        dest.writeInt(this.skillPointsAvailable);
     }
 
     @JsonIgnore
