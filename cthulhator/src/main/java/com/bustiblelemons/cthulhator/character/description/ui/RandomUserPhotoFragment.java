@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.fragments.AbsArgFragment;
+import com.bustiblelemons.cthulhator.fragments.AbsFragmentWithSerializable;
 import com.bustiblelemons.model.OnlinePhotoUrl;
 import com.bustiblelemons.views.loadingimage.RemoteImage;
 
@@ -16,7 +16,7 @@ import butterknife.InjectView;
 /**
  * Created by bhm on 02.08.14.
  */
-public class RandomUserPhotoFragment extends AbsArgFragment<OnlinePhotoUrl> {
+public class RandomUserPhotoFragment extends AbsFragmentWithSerializable<OnlinePhotoUrl> {
 
     @InjectView(android.R.id.icon)
     RemoteImage imageView;

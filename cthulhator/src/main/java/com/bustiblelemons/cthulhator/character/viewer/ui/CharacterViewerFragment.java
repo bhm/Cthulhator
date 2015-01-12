@@ -19,7 +19,7 @@ import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
 import com.bustiblelemons.cthulhator.character.viewer.CharacterViewerCard;
 import com.bustiblelemons.cthulhator.character.viewer.logic.CharacterViewerAdapter;
 import com.bustiblelemons.cthulhator.character.viewer.logic.OnExpandCharacterViewer;
-import com.bustiblelemons.cthulhator.fragments.AbsArgFragment;
+import com.bustiblelemons.cthulhator.fragments.AbsFragmentWithParcelable;
 import com.bustiblelemons.cthulhator.system.properties.PropertyValueRetreiver;
 import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
 
@@ -32,7 +32,7 @@ import butterknife.Optional;
 /**
  * Created by hiv on 17.11.14.
  */
-public class CharacterViewerFragment extends AbsArgFragment<CharacterWrappper> {
+public class CharacterViewerFragment extends AbsFragmentWithParcelable<CharacterWrappper> {
     @InjectView(R.id.recycler)
     RecyclerView mRecyclerView;
     @Optional
@@ -46,7 +46,7 @@ public class CharacterViewerFragment extends AbsArgFragment<CharacterWrappper> {
     TextView     mExtraInfoView;
     private Animation                  mSlideInAnimation;
     private Animation                  mSlideOutAnimation;
-    private CharacterWrappper             mSavedCharacter;
+    private CharacterWrappper          mSavedCharacter;
     private RecyclerView.LayoutManager mManager;
     private RecyclerView.ItemAnimator  mAnimator;
     private OnExpandCharacterViewer    mExpandCallback;

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.history.model.YearsPeriod;
-import com.bustiblelemons.cthulhator.fragments.AbsArgFragment;
+import com.bustiblelemons.cthulhator.fragments.AbsFragmentWithSerializable;
 import com.bustiblelemons.views.TitledSeekBar;
 
 import butterknife.ButterKnife;
@@ -16,7 +16,7 @@ import butterknife.InjectView;
 /**
  * Created by bhm on 03.08.14.
  */
-public class PeriodFragment extends AbsArgFragment<YearsPeriod> {
+public class PeriodFragment extends AbsFragmentWithSerializable<YearsPeriod> {
 
     @InjectView(R.id.year_seekbar)
     TitledSeekBar yearSeekbar;

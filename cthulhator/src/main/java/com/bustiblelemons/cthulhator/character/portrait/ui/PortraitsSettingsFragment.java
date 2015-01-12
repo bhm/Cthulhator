@@ -16,7 +16,7 @@ import com.bustiblelemons.cthulhator.character.history.model.YearsPeriod;
 import com.bustiblelemons.cthulhator.character.portrait.logic.OnBroadcastOnlineSearchSettings;
 import com.bustiblelemons.cthulhator.character.portrait.logic.OnOpenSearchSettings;
 import com.bustiblelemons.cthulhator.character.portrait.model.OnlineSearchUISettings;
-import com.bustiblelemons.cthulhator.fragments.AbsArgFragment;
+import com.bustiblelemons.cthulhator.fragments.AbsFragmentWithSerializable;
 import com.bustiblelemons.cthulhator.settings.Settings;
 import com.bustiblelemons.cthulhator.settings.character.CharacterSettings;
 import com.bustiblelemons.cthulhator.settings.character.CharacterSettingsImpl;
@@ -31,7 +31,7 @@ import butterknife.OnClick;
 /**
  * Created by bhm on 23.07.14.
  */
-public class PortraitsSettingsFragment extends AbsArgFragment<CharacterSettings>
+public class PortraitsSettingsFragment extends AbsFragmentWithSerializable<CharacterSettings>
         implements View.OnClickListener,
                    GenderSpinnerAdapter.GenderSelected,
                    TitledSeekBar.onValueChanged,

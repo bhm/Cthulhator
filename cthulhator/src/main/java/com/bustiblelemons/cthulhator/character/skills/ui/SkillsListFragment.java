@@ -16,7 +16,7 @@ import com.bustiblelemons.cthulhator.character.skills.logic.OnSaveSkills;
 import com.bustiblelemons.cthulhator.character.skills.logic.OnSkillPointsPoolChanged;
 import com.bustiblelemons.cthulhator.character.skills.logic.SkillsAdapterSticky;
 import com.bustiblelemons.cthulhator.character.skills.model.SkillsPackage;
-import com.bustiblelemons.cthulhator.fragments.AbsArgFragment;
+import com.bustiblelemons.cthulhator.fragments.AbsFragmentWithSerializable;
 import com.bustiblelemons.cthulhator.system.properties.ActionGroup;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 
@@ -34,7 +34,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 /**
  * Created by bhm on 20.07.14.
  */
-public class SkillsListFragment extends AbsArgFragment<SkillsPackage>
+public class SkillsListFragment extends AbsFragmentWithSerializable<SkillsPackage>
         implements OnSkillChanged, CharacterPropertySortAsyn.OnPropertiesSorted,
                    CanModifyPointPool {
 

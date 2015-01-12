@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.fragments.AbsArgFragment;
+import com.bustiblelemons.cthulhator.fragments.AbsFragmentWithSerializable;
 import com.micromobs.android.floatlabel.FloatLabelEditText;
 
 import butterknife.ButterKnife;
@@ -17,7 +17,7 @@ import io.github.scottmaclure.character.traits.model.RandomTraitsSet;
 /**
  * Created by bhm on 02.08.14.
  */
-public class CharacteristicSetFragment extends AbsArgFragment<RandomTraitsSet> {
+public class CharacteristicSetFragment extends AbsFragmentWithSerializable<RandomTraitsSet> {
 
     @InjectView(R.id.hair)
     FloatLabelEditText hair;
