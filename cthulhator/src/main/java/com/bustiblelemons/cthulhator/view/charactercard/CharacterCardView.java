@@ -58,10 +58,14 @@ public class CharacterCardView extends RippleView implements
 
     private LayoutType mLayoutType;
 
-    private class OldPallette {
-        private Integer  mainTextColor;
-        private Integer  infoTextColor;
-        private Drawable background;
+    private class OldData {
+        private Integer      mainTextColor;
+        private Integer      shortInfoTextColor;
+        private Drawable     background;
+        private CharSequence mainText;
+        private CharSequence shortInfoText;
+        public  CharSequence extraText;
+        private Integer      extraTextColor;
 
         private void loadOldBackground(View view) {
             if (view != null) {
@@ -81,19 +85,52 @@ public class CharacterCardView extends RippleView implements
 
         private <V extends TextView> void loadOldInfoTextColor(V view) {
             if (view != null) {
-                view.setTextColor(infoTextColor);
+                view.setTextColor(shortInfoTextColor);
             }
         }
 
-    }
+        private <V extends TextView> void loadOldExtraTextColor(V view) {
+            if (view != null) {
+                view.setTextColor(extraTextColor);
+            }
+        }
 
-    public void loadOldPallete() {
-        if (mOldPallette != null) {
-            mOldPallette.loadOldBackground(mMainInfoBackground);
+        public <V extends TextView> void loadOldMainText(V infoView) {
+            if (infoView != null) {
+                infoView.setText(mainText);
+            }
+        }
+
+        public <V extends TextView> void loadOldShortInfoText(V infoView) {
+            if (infoView != null) {
+                infoView.setText(shortInfoText);
+            }
+        }
+
+        public <V extends TextView> void loadOldExtraText(V infoView) {
+            if (infoView != null) {
+                infoView.setText(extraText);
+            }
         }
     }
 
-    private OldPallette mOldPallette;
+    public void loadInitialData() {
+        if (mOldData != null) {
+            mOldData.loadOldBackground(mMainInfoBackground);
+            mOldData.loadOldMainTextColor(mMainInfoView);
+            mOldData.loadOldInfoTextColor(mShortInfoView);
+            mOldData.loadOldExtraTextColor(mExtraInfoView);
+            loadOldTexts();
+        }
+    }
+
+    private void loadOldTexts() {
+        mOldData.loadOldMainText(mMainInfoView);
+        mOldData.loadOldShortInfoText(mShortInfoView);
+        mOldData.loadOldExtraText(mExtraInfoView);
+    }
+
+    private OldData mOldData;
 
     public CharacterCardView(Context context) {
         super(context);
@@ -205,6 +242,10 @@ public class CharacterCardView extends RippleView implements
 
     private void setExtraInfoColor(int color) {
         if (mExtraInfoView != null) {
+            if (mOldData == null) {
+                mOldData = new OldData();
+            }
+            mOldData.extraTextColor = mExtraInfoView.getCurrentTextColor();
             mExtraInfoView.setTextColor(color);
         }
     }
@@ -225,7 +266,7 @@ public class CharacterCardView extends RippleView implements
         if (provider == null) {
             return;
         }
-        loadOldPallete();
+        loadInitialData();
         setMainText(provider.getName());
         setShortText(provider.getMainInfo());
         setExtraText(provider.getExtraInfo());
@@ -238,18 +279,39 @@ public class CharacterCardView extends RippleView implements
 
     public void setMainText(String text) {
         if (mMainInfoView != null && !TextUtils.isEmpty(text)) {
+            CharSequence old = mMainInfoView.getText();
+            if (!TextUtils.isEmpty(old)) {
+                if (mOldData == null) {
+                    mOldData = new OldData();
+                }
+                mOldData.mainText = old;
+            }
             mMainInfoView.setText(text);
         }
     }
 
     private void setExtraText(String text) {
         if (mExtraInfoView != null && !TextUtils.isEmpty(text)) {
+            CharSequence old = mExtraInfoView.getText();
+            if (!TextUtils.isEmpty(old)) {
+                if (mOldData == null) {
+                    mOldData = new OldData();
+                }
+                mOldData.extraText = old;
+            }
             mExtraInfoView.setText(text);
         }
     }
 
     private void setShortText(String text) {
         if (mShortInfoView != null && !TextUtils.isEmpty(text)) {
+            CharSequence old = mShortInfoView.getText();
+            if (!TextUtils.isEmpty(old)) {
+                if (mOldData == null) {
+                    mOldData = new OldData();
+                }
+                mOldData.shortInfoText = old;
+            }
             mShortInfoView.setText(text);
         }
     }
@@ -313,10 +375,10 @@ public class CharacterCardView extends RippleView implements
                                              Palette.Swatch darkMuted) {
         if (darkMuted != null && mMainInfoBackground != null) {
             int backgroundColor = darkMuted.getRgb();
-            if (mOldPallette == null) {
-                mOldPallette = new OldPallette();
+            if (mOldData == null) {
+                mOldData = new OldData();
             }
-            mOldPallette.background = mMainInfoBackground.getBackground();
+            mOldData.background = mMainInfoBackground.getBackground();
             mMainInfoBackground.setBackgroundColor(backgroundColor);
         }
     }
@@ -325,17 +387,17 @@ public class CharacterCardView extends RippleView implements
     public void onPaletteLightColorsGenerated(RemoteImage loadingImage, Palette.Swatch vibrant,
                                               Palette.Swatch muted) {
         if (vibrant != null && mMainInfoView != null) {
-            if (mOldPallette == null) {
-                mOldPallette = new OldPallette();
+            if (mOldData == null) {
+                mOldData = new OldData();
             }
-            mOldPallette.mainTextColor = mMainInfoView.getCurrentTextColor();
+            mOldData.mainTextColor = mMainInfoView.getCurrentTextColor();
             mMainInfoView.setTextColor(vibrant.getTitleTextColor());
         }
         if (vibrant != null && mShortInfoView != null) {
-            if (mOldPallette == null) {
-                mOldPallette = new OldPallette();
+            if (mOldData == null) {
+                mOldData = new OldData();
             }
-            mOldPallette.infoTextColor = mShortInfoView.getCurrentTextColor();
+            mOldData.shortInfoTextColor = mShortInfoView.getCurrentTextColor();
             mShortInfoView.setTextColor(vibrant.getBodyTextColor());
         }
     }
