@@ -78,19 +78,19 @@ public class CharacterCardView extends RippleView implements
         }
 
         private <V extends TextView> void loadOldMainTextColor(V view) {
-            if (view != null) {
+            if (view != null && mainTextColor != null) {
                 view.setTextColor(mainTextColor);
             }
         }
 
         private <V extends TextView> void loadOldInfoTextColor(V view) {
-            if (view != null) {
+            if (view != null && shortInfoTextColor != null) {
                 view.setTextColor(shortInfoTextColor);
             }
         }
 
         private <V extends TextView> void loadOldExtraTextColor(V view) {
-            if (view != null) {
+            if (view != null && extraTextColor != null) {
                 view.setTextColor(extraTextColor);
             }
         }
