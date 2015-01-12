@@ -171,20 +171,28 @@ public class CharacterWrappper extends SavedCharacter implements PropertyValueRe
     @JsonIgnore
     private void fillSkillPointPools(GameEdition edition) {
         fillCareerPoints(edition);
+        fillHobbyPoints(edition);
+    }
+
+    private void fillHobbyPoints(GameEdition edition) {
         CharacterProperty edu = getPropertyByName(BRPStatistic.EDU.name());
-        CharacterProperty pointsProperty = BRPSkillPointPools.CAREER.asProperty();
-        int hobbyPointsValue = edu.getValue() * edition.getCareerSkillPointMultiplier();
-        pointsProperty.setValue(hobbyPointsValue);
-        addCharacterProperty(pointsProperty);
+        if (edu != null) {
+            CharacterProperty pointsProperty = BRPSkillPointPools.CAREER.asProperty();
+            int hobbyPointsValue = edu.getValue() * edition.getCareerSkillPointMultiplier();
+            pointsProperty.setValue(hobbyPointsValue);
+            addCharacterProperty(pointsProperty);
+        }
     }
 
     @JsonIgnore
     private void fillCareerPoints(GameEdition edition) {
         CharacterProperty __int = getPropertyByName(BRPStatistic.INT.name());
-        CharacterProperty pointsProperty = BRPSkillPointPools.HOBBY.asProperty();
-        int hobbyPointsValue = __int.getValue() * edition.getCareerSkillPointMultiplier();
-        pointsProperty.setValue(hobbyPointsValue);
-        addCharacterProperty(pointsProperty);
+        if (__int != null) {
+            CharacterProperty pointsProperty = BRPSkillPointPools.HOBBY.asProperty();
+            int hobbyPointsValue = __int.getValue() * edition.getCareerSkillPointMultiplier();
+            pointsProperty.setValue(hobbyPointsValue);
+            addCharacterProperty(pointsProperty);
+        }
     }
 
     @JsonIgnore
@@ -259,7 +267,7 @@ public class CharacterWrappper extends SavedCharacter implements PropertyValueRe
 
     @JsonIgnore
     public void fillStatistics() {
-        if (properties == null && properties.isEmpty()) {
+        if (properties == null || properties.isEmpty()) {
             addPropertiesList(getEdition().getCharacteristics());
         }
     }
