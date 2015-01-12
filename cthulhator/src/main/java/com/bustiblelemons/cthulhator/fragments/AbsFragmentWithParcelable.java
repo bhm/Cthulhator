@@ -31,9 +31,9 @@ public abstract class AbsFragmentWithParcelable<A extends Parcelable> extends Ab
 
     public void readInstanceArgument(Bundle savedInstanceState) {
         if (BundleTools.contains(savedInstanceState, NEW_INSTANCE_ARG)) {
-            instanceArgument = (A) savedInstanceState.getParcelable(NEW_INSTANCE_ARG);
+            instanceArgument = savedInstanceState.getParcelable(NEW_INSTANCE_ARG);
         } else if (hasArgument(NEW_INSTANCE_ARG)) {
-            instanceArgument = (A) getArguments().getParcelable(NEW_INSTANCE_ARG);
+            instanceArgument = getArguments().getParcelable(NEW_INSTANCE_ARG);
         }
         onInstanceArgumentRead(instanceArgument);
     }
