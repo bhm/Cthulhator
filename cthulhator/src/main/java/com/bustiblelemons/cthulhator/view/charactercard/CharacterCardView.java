@@ -280,10 +280,8 @@ public class CharacterCardView extends RippleView implements
     public void setMainText(String text) {
         if (mMainInfoView != null && !TextUtils.isEmpty(text)) {
             CharSequence old = mMainInfoView.getText();
-            if (!TextUtils.isEmpty(old)) {
-                if (mOldData == null) {
-                    mOldData = new OldData();
-                }
+            if (mOldData == null) {
+                mOldData = new OldData();
                 mOldData.mainText = old;
             }
             mMainInfoView.setText(text);
@@ -293,10 +291,8 @@ public class CharacterCardView extends RippleView implements
     private void setExtraText(String text) {
         if (mExtraInfoView != null && !TextUtils.isEmpty(text)) {
             CharSequence old = mExtraInfoView.getText();
-            if (!TextUtils.isEmpty(old)) {
-                if (mOldData == null) {
-                    mOldData = new OldData();
-                }
+            if (mOldData == null) {
+                mOldData = new OldData();
                 mOldData.extraText = old;
             }
             mExtraInfoView.setText(text);
@@ -306,10 +302,8 @@ public class CharacterCardView extends RippleView implements
     private void setShortText(String text) {
         if (mShortInfoView != null && !TextUtils.isEmpty(text)) {
             CharSequence old = mShortInfoView.getText();
-            if (!TextUtils.isEmpty(old)) {
-                if (mOldData == null) {
-                    mOldData = new OldData();
-                }
+            if (mOldData == null) {
+                mOldData = new OldData();
                 mOldData.shortInfoText = old;
             }
             mShortInfoView.setText(text);
