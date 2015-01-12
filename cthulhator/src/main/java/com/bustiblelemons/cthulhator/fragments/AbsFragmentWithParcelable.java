@@ -1,6 +1,7 @@
 package com.bustiblelemons.cthulhator.fragments;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +10,10 @@ import com.bustiblelemons.fragments.AbsFragment;
 import com.bustiblelemons.fragments.PagerTitle;
 import com.bustiblelemons.utils.BundleTools;
 
-import java.io.Serializable;
-
 /**
  * Created by bhm on 02.08.14.
  */
-public abstract class AbsArgFragment<A extends Serializable> extends AbsFragment
+public abstract class AbsFragmentWithParcelable<A extends Parcelable> extends AbsFragment
         implements PagerTitle {
 
     private static final String NEW_INSTANCE_ARG = "new_instance_arg";
@@ -32,9 +31,9 @@ public abstract class AbsArgFragment<A extends Serializable> extends AbsFragment
 
     public void readInstanceArgument(Bundle savedInstanceState) {
         if (BundleTools.contains(savedInstanceState, NEW_INSTANCE_ARG)) {
-            instanceArgument = (A) savedInstanceState.getSerializable(NEW_INSTANCE_ARG);
+            instanceArgument = (A) savedInstanceState.getParcelable(NEW_INSTANCE_ARG);
         } else if (hasArgument(NEW_INSTANCE_ARG)) {
-            instanceArgument = (A) getArguments().getSerializable(NEW_INSTANCE_ARG);
+            instanceArgument = (A) getArguments().getParcelable(NEW_INSTANCE_ARG);
         }
         onInstanceArgumentRead(instanceArgument);
     }
@@ -54,12 +53,12 @@ public abstract class AbsArgFragment<A extends Serializable> extends AbsFragment
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(NEW_INSTANCE_ARG, instanceArgument);
+        outState.putParcelable(NEW_INSTANCE_ARG, instanceArgument);
     }
 
     public Bundle getArgumentBundle(A instanceArgument) {
         Bundle r = new Bundle();
-        r.putSerializable(NEW_INSTANCE_ARG, instanceArgument);
+        r.putParcelable(NEW_INSTANCE_ARG, instanceArgument);
         return r;
     }
 
