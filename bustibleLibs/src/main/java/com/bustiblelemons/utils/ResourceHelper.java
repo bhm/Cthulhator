@@ -10,8 +10,12 @@ import java.util.Locale;
  */
 public class ResourceHelper {
 
-    public static final String UNDERSCORE_SPLITER = "_";
-    private             String mSpliter           = UNDERSCORE_SPLITER;
+    public static final  String UNDERSCORE_SPLITER = "_";
+    private static final String STATUS_BAR_HEIGHT  = "status_bar_height";
+    private static final String DIMEN              = "dimen";
+    private static final String STRING             = "string";
+    private static final String ANDROID_PACKAGE    = "android";
+    private              String mSpliter           = UNDERSCORE_SPLITER;
     private final Context mContext;
     private       String  mPackageName;
     private String[] mParts = new String[0];
@@ -79,10 +83,22 @@ public class ResourceHelper {
     public int getIdentifierForString(String resName) {
         int resId = 0;
         try {
-            return mContext.getResources().getIdentifier(resName, "string", mPackageName);
+            return mContext.getResources().getIdentifier(resName, STRING, mPackageName);
         } catch (Resources.NotFoundException e) {
             e.printStackTrace();
         }
         return resId;
+    }
+
+    public int getStatusBarHeight() {
+        int result = 0;
+        if (mContext != null) {
+            Resources resources = mContext.getResources();
+            int resourceId = resources.getIdentifier(STATUS_BAR_HEIGHT, DIMEN, ANDROID_PACKAGE);
+            if (resourceId > 0) {
+                result = resources.getDimensionPixelSize(resourceId);
+            }
+        }
+        return result;
     }
 }
