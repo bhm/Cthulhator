@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
 import com.bustiblelemons.cthulhator.character.portrait.model.Portrait;
 import com.bustiblelemons.cthulhator.character.viewer.CharacterViewerCard;
-import com.bustiblelemons.cthulhator.character.viewer.SeeThrough;
 import com.bustiblelemons.cthulhator.character.viewer.logic.CharacterViewerAdapter;
 import com.bustiblelemons.cthulhator.character.viewer.logic.OnExpandCharacterViewer;
 import com.bustiblelemons.cthulhator.fragments.AbsFragmentWithParcelable;
@@ -73,7 +71,6 @@ public class CharacterViewerFragment extends AbsFragmentWithParcelable<Character
     };
 
     private CharacterViewerAdapter mAdapter;
-    private int                    mSeeThroughSize;
 
     public static CharacterViewerFragment newInstance(CharacterWrappper savedCharacter) {
         CharacterViewerFragment r = new CharacterViewerFragment();
@@ -84,7 +81,6 @@ public class CharacterViewerFragment extends AbsFragmentWithParcelable<Character
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mSeeThroughSize = getSeeThroughHeight(activity);
         if (mSlideInAnimation == null) {
             mSlideInAnimation = AnimationUtils.loadAnimation(activity, R.anim.abc_slide_in_bottom);
             mSlideInAnimation.setAnimationListener(sAnimationListener);
@@ -96,15 +92,6 @@ public class CharacterViewerFragment extends AbsFragmentWithParcelable<Character
         setupCallbacks(activity);
     }
 
-    private int getSeeThroughHeight(Activity activity) {
-        Display display = activity.getWindowManager().getDefaultDisplay();
-        if (display != null) {
-            SeeThrough p = new SeeThrough().withHeightPercentage(DEFAULT_SCREEN_PERCENTAGE);
-            display.getSize(p);
-            return p.getCalculatedHeight();
-        }
-        return 0;
-    }
 
     private void setupCallbacks(Activity activity) {
         if (activity instanceof OnExpandCharacterViewer) {
@@ -160,8 +147,7 @@ public class CharacterViewerFragment extends AbsFragmentWithParcelable<Character
             mRecyclerView.setAnimation(mSlideInAnimation);
             if (mAdapter == null) {
                 mAdapter = new CharacterViewerAdapter(getActivity());
-                mAdapter.withCharacterWrapper(mCharacterWrappper)
-                        .withSeeThroughSize(mSeeThroughSize);
+                mAdapter.withCharacterWrapper(mCharacterWrappper);
                 mRecyclerView.setAdapter(mAdapter);
                 mAdapter.refreshData(CharacterViewerCard.values());
             }

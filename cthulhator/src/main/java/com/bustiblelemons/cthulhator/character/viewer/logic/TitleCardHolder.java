@@ -16,7 +16,9 @@ import butterknife.Optional;
  * Created by hiv on 08.02.15.
  */
 public class TitleCardHolder extends CharacterViewerCardHolder {
-    private CharacterInfoProvider mCharacterInfoProvider;
+
+    private final View                  mRootView;
+    private       CharacterInfoProvider mCharacterInfoProvider;
 
     @Optional
     @InjectView(R.id.main_info)
@@ -28,8 +30,16 @@ public class TitleCardHolder extends CharacterViewerCardHolder {
     @InjectView(R.id.extra_info)
     TextView mExtraInfoView;
 
+    private HeightSizeListener mHeightSizeListener;
+
+    public TitleCardHolder withHeightSizeListener(HeightSizeListener callback) {
+        mHeightSizeListener = callback;
+        return this;
+    }
+
     public TitleCardHolder(View view) {
         super(view);
+        mRootView = view;
     }
 
     public TitleCardHolder withCharacterInfoProivder(CharacterInfoProvider proivder) {
@@ -42,6 +52,11 @@ public class TitleCardHolder extends CharacterViewerCardHolder {
         if (mCharacterInfoProvider != null && mMainInfoView != null) {
             CharacterInfo info = mCharacterInfoProvider.onRetreiveCharacterInfo(mMainInfoView.getContext());
             loadCharacterInfo(info);
+            if (mRootView != null) {
+                mRootView.measure(0, 0);
+                int height = mRootView.getMeasuredHeight();
+                mHeightSizeListener.onHeightSizeReported(this, height);
+            }
         }
     }
 

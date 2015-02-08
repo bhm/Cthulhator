@@ -11,7 +11,7 @@
         android:id="@android:id/icon"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitCenter"
+        android:scaleType="centerCrop"
         app:no_image="@drawable/no_face_poly"/>
 
     <android.support.v7.widget.RecyclerView

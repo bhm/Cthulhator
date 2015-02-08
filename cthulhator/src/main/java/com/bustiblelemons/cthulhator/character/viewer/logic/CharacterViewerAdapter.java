@@ -16,10 +16,11 @@ import com.bustiblelemons.recycler.AbsRecyclerHolder;
  */
 public class CharacterViewerAdapter extends AbsRecyclerAdapter<CharacterViewerCard,
         AbsRecyclerHolder<CharacterViewerCard>> implements CharacterInfoProvider,
-                                                           PropertyValueRetreiver {
+                                                           PropertyValueRetreiver,
+                                                           HeightSizeListener {
 
     private CharacterWrappper mCharacterWrappper;
-    private int mSeeThroughSize;
+    private HeightSizeRelay   mHeightSizeRelay;
 
     public CharacterViewerAdapter(Context context) {
         super(context);
@@ -46,9 +47,12 @@ public class CharacterViewerAdapter extends AbsRecyclerAdapter<CharacterViewerCa
     public AbsRecyclerHolder<CharacterViewerCard> getViewHolder(View view, int viewType) {
         switch (getItem(viewType)) {
         case SEE_THROUGH:
-            return new SeeThroughCardHolder(view, mSeeThroughSize);
+            SeeThroughCardHolder holder = new SeeThroughCardHolder(view);
+            mHeightSizeRelay = new HeightSizeRelay(holder);
+            return holder;
         case TITLE:
             return new TitleCardHolder(view)
+                    .withHeightSizeListener(mHeightSizeRelay)
                     .withCharacterInfoProivder(this)
                     .withPropertyValueRetreiver(this);
         default:
@@ -77,8 +81,8 @@ public class CharacterViewerAdapter extends AbsRecyclerAdapter<CharacterViewerCa
         return 0;
     }
 
-    public CharacterViewerAdapter withSeeThroughSize(int seeThroughSize) {
-        mSeeThroughSize = seeThroughSize;
-        return this;
+    @Override
+    public void onHeightSizeReported(Object reporter, int height) {
+
     }
 }
