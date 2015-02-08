@@ -63,12 +63,17 @@ public class CharacterViewerAdapter extends AbsRecyclerAdapter<CharacterViewerCa
 
     @Override
     public CharacterInfo onRetreiveCharacterInfo(Context arg) {
-
+        if (mCharacterWrappper != null) {
+            return mCharacterWrappper.onRetreiveCharacterInfo(arg);
+        }
         return null;
     }
 
     @Override
     public int onRetreivePropertValue(String propertyName) {
+        if (mCharacterWrappper != null) {
+            return mCharacterWrappper.onRetreivePropertValue(propertyName);
+        }
         return 0;
     }
 

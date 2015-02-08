@@ -733,6 +733,7 @@ public class CharacterWrappper extends SavedCharacter implements PropertyValueRe
         return new CharacterWrappper(character);
     }
 
+    //FIXME this class should not know of Context.class
     @Override
     public CharacterInfo onRetreiveCharacterInfo(Context arg) {
         if (mCharacterInfo == null) {
