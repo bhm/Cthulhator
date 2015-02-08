@@ -29,12 +29,12 @@ public abstract class AbsRecyclerAdapter<I, VH extends AbsRecyclerHolder<I>>
 
     public abstract int getLayoutId(int viewType);
 
-    public abstract VH getViewHolder(View view);
+    public abstract VH getViewHolder(View view, int viewType);
 
     @Override
     public VH onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = inflater.inflate(getLayoutId(viewType), viewGroup, false);
-        return getViewHolder(view);
+        return getViewHolder(view, viewType);
     }
 
     @Override
