@@ -9,8 +9,11 @@ import com.bustiblelemons.recycler.AbsRecyclerHolder;
  * Created by hiv on 08.02.15.
  */
 public class SeeThroughCardHolder extends AbsRecyclerHolder<CharacterViewerCard> {
-    public SeeThroughCardHolder(View view) {
+
+
+    public SeeThroughCardHolder(View view, int seeThroughSize) {
         super(view);
+        view.setMinimumHeight(seeThroughSize);
     }
 
     @Override

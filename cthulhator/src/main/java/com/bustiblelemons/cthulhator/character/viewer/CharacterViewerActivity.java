@@ -12,7 +12,6 @@ import com.bustiblelemons.cthulhator.character.persistance.SavedCharactersProvid
 import com.bustiblelemons.cthulhator.character.portrait.model.Portrait;
 import com.bustiblelemons.cthulhator.character.viewer.logic.OnExpandCharacterViewer;
 import com.bustiblelemons.cthulhator.character.viewer.ui.CharacterViewerFragment;
-import com.bustiblelemons.views.loadingimage.RemoteImage;
 import com.kbeanie.imagechooser.api.ChosenImage;
 import com.kbeanie.imagechooser.api.ImageChooserListener;
 
@@ -31,8 +30,7 @@ public class CharacterViewerActivity extends AbsArgSerializableActivity<Integer>
     public static final String CHARACTER_ID      = "character_id";
     private static      int    sTransparentColor = Color.TRANSPARENT;
     private static      int    sSolidColor       = Color.TRANSPARENT;
-    @InjectView(android.R.id.icon)
-    RemoteImage mPortraitView;
+    @Optional
     @InjectView(R.id.header)
     Toolbar     mToolbar;
 
@@ -54,7 +52,6 @@ public class CharacterViewerActivity extends AbsArgSerializableActivity<Integer>
         if (mCharacterId != null) {
             loadCharacter(mCharacterId);
             attachCharacterViewer();
-            loadIcon();
         }
     }
 
@@ -74,17 +71,7 @@ public class CharacterViewerActivity extends AbsArgSerializableActivity<Integer>
     protected void onInstanceArgumentRead(Integer arg) {
         if (arg != null) {
             loadCharacter(arg);
-            loadIcon();
             attachCharacterViewer();
-        }
-    }
-
-    private void loadIcon() {
-        if (mSavedCharacter != null && mPortraitView != null) {
-            mMainPortrait = mSavedCharacter.getMainPortrait();
-            if (mMainPortrait != null) {
-                mPortraitView.loadFrom(mMainPortrait.getUrl());
-            }
         }
     }
 

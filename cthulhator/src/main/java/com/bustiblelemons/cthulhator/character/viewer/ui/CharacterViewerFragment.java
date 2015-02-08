@@ -6,22 +6,22 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.TextView;
 
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.character.characterslist.logic.SavedCharacterTransformer;
 import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
+import com.bustiblelemons.cthulhator.character.portrait.model.Portrait;
 import com.bustiblelemons.cthulhator.character.viewer.CharacterViewerCard;
+import com.bustiblelemons.cthulhator.character.viewer.SeeThrough;
 import com.bustiblelemons.cthulhator.character.viewer.logic.CharacterViewerAdapter;
 import com.bustiblelemons.cthulhator.character.viewer.logic.OnExpandCharacterViewer;
 import com.bustiblelemons.cthulhator.fragments.AbsFragmentWithParcelable;
-import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
+import com.bustiblelemons.views.loadingimage.RemoteImage;
 
 import at.markushi.ui.CircleButton;
 import butterknife.ButterKnife;
@@ -32,19 +32,15 @@ import butterknife.Optional;
 /**
  * Created by hiv on 17.11.14.
  */
-public class CharacterViewerFragment extends AbsFragmentWithParcelable<CharacterWrappper>{
+public class CharacterViewerFragment extends AbsFragmentWithParcelable<CharacterWrappper> {
 
+    private static final int DEFAULT_SCREEN_PERCENTAGE = 75;
     @InjectView(R.id.recycler)
     RecyclerView mRecyclerView;
-    @Optional
-    @InjectView(R.id.main_info)
-    TextView     mMainInfoView;
-    @Optional
-    @InjectView(R.id.short_info)
-    TextView     mShortInfoView;
-    @Optional
-    @InjectView(R.id.extra_info)
-    TextView     mExtraInfoView;
+
+    @InjectView(android.R.id.icon)
+    RemoteImage mImage;
+
     private Animation                  mSlideInAnimation;
     private Animation                  mSlideOutAnimation;
     private CharacterWrappper          mCharacterWrappper;
@@ -75,7 +71,9 @@ public class CharacterViewerFragment extends AbsFragmentWithParcelable<Character
 
         }
     };
+
     private CharacterViewerAdapter mAdapter;
+    private int                    mSeeThroughSize;
 
     public static CharacterViewerFragment newInstance(CharacterWrappper savedCharacter) {
         CharacterViewerFragment r = new CharacterViewerFragment();
@@ -86,6 +84,7 @@ public class CharacterViewerFragment extends AbsFragmentWithParcelable<Character
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        mSeeThroughSize = getSeeThroughHeight(activity);
         if (mSlideInAnimation == null) {
             mSlideInAnimation = AnimationUtils.loadAnimation(activity, R.anim.abc_slide_in_bottom);
             mSlideInAnimation.setAnimationListener(sAnimationListener);
@@ -95,6 +94,16 @@ public class CharacterViewerFragment extends AbsFragmentWithParcelable<Character
             mSlideOutAnimation.setAnimationListener(sAnimationListener);
         }
         setupCallbacks(activity);
+    }
+
+    private int getSeeThroughHeight(Activity activity) {
+        Display display = activity.getWindowManager().getDefaultDisplay();
+        if (display != null) {
+            SeeThrough p = new SeeThrough().withHeightPercentage(DEFAULT_SCREEN_PERCENTAGE);
+            display.getSize(p);
+            return p.getCalculatedHeight();
+        }
+        return 0;
     }
 
     private void setupCallbacks(Activity activity) {
@@ -115,9 +124,11 @@ public class CharacterViewerFragment extends AbsFragmentWithParcelable<Character
     protected void onInstanceArgumentRead(CharacterWrappper instanceArgument) {
         if (instanceArgument != null) {
             mCharacterWrappper = instanceArgument;
-            CharacterInfo characterInfo = SavedCharacterTransformer.getInstance()
-                    .withContext(getContext()).transform(mCharacterWrappper);
-            loadCharacterInfo(characterInfo);
+            Portrait p = mCharacterWrappper.getMainPortrait();
+            if (mImage != null &&  p != null) {
+                mImage.loadFrom(p.getUrl());
+            }
+            expandRecyclerView(true);
         }
     }
 
@@ -134,58 +145,37 @@ public class CharacterViewerFragment extends AbsFragmentWithParcelable<Character
         }
     }
 
-    private void loadCharacterInfo(CharacterInfo provider) {
-        if (provider != null) {
-            setMainText(provider.getName());
-            setShortText(provider.getMainInfo());
-            setExtraText(provider.getExtraInfo());
-        }
-    }
-
-    public void setMainText(String text) {
-        if (mMainInfoView != null && !TextUtils.isEmpty(text)) {
-            mMainInfoView.setText(text);
-        }
-    }
-
-    private void setExtraText(String text) {
-        if (mExtraInfoView != null && !TextUtils.isEmpty(text)) {
-            mExtraInfoView.setText(text);
-        }
-    }
-
-    private void setShortText(String text) {
-        if (mShortInfoView != null && !TextUtils.isEmpty(text)) {
-            mShortInfoView.setText(text);
-        }
-    }
-
     @Optional
     @OnClick(R.id.expand)
     public void onExpandRecycler(CircleButton circleButton) {
         if (mRecyclerView != null) {
             boolean expand = mRecyclerView.getVisibility() != View.VISIBLE;
-            if (expand) {
-                mRecyclerView.setVisibility(View.VISIBLE);
-                mRecyclerView.setAnimation(mSlideInAnimation);
-                if (mAdapter == null) {
-                    mAdapter = new CharacterViewerAdapter(getActivity());
-                    mAdapter.withCharacterWrapper(mCharacterWrappper);
-                    mRecyclerView.setAdapter(mAdapter);
-                    mAdapter.refreshData(CharacterViewerCard.values());
-                }
-                mSlideInAnimation.start();
-            } else {
-                mRecyclerView.setAnimation(mSlideOutAnimation);
-                mSlideOutAnimation.start();
-                mRecyclerView.setVisibility(View.GONE);
+            expandRecyclerView(expand);
+        }
+    }
+
+    private void expandRecyclerView(boolean expand) {
+        if (expand) {
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mRecyclerView.setAnimation(mSlideInAnimation);
+            if (mAdapter == null) {
+                mAdapter = new CharacterViewerAdapter(getActivity());
+                mAdapter.withCharacterWrapper(mCharacterWrappper)
+                        .withSeeThroughSize(mSeeThroughSize);
+                mRecyclerView.setAdapter(mAdapter);
+                mAdapter.refreshData(CharacterViewerCard.values());
             }
-            if (mExpandCallback != null) {
-                if (expand) {
-                    mExpandCallback.onExpandCharacterViewer();
-                } else {
-                    mExpandCallback.onCollapseCharacterViewer();
-                }
+            mSlideInAnimation.start();
+        } else {
+            mRecyclerView.setAnimation(mSlideOutAnimation);
+            mSlideOutAnimation.start();
+            mRecyclerView.setVisibility(View.GONE);
+        }
+        if (mExpandCallback != null) {
+            if (expand) {
+                mExpandCallback.onExpandCharacterViewer();
+            } else {
+                mExpandCallback.onCollapseCharacterViewer();
             }
         }
     }

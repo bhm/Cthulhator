@@ -5,6 +5,9 @@ import android.view.View;
 
 import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
 import com.bustiblelemons.cthulhator.character.viewer.CharacterViewerCard;
+import com.bustiblelemons.cthulhator.system.properties.PropertyValueRetreiver;
+import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
+import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfoProvider;
 import com.bustiblelemons.recycler.AbsRecyclerAdapter;
 import com.bustiblelemons.recycler.AbsRecyclerHolder;
 
@@ -12,9 +15,11 @@ import com.bustiblelemons.recycler.AbsRecyclerHolder;
  * Created by hiv on 10.12.14.
  */
 public class CharacterViewerAdapter extends AbsRecyclerAdapter<CharacterViewerCard,
-        AbsRecyclerHolder<CharacterViewerCard>> {
+        AbsRecyclerHolder<CharacterViewerCard>> implements CharacterInfoProvider,
+                                                           PropertyValueRetreiver {
 
-    private CharacterWrappper      mCharacterWrappper;
+    private CharacterWrappper mCharacterWrappper;
+    private int mSeeThroughSize;
 
     public CharacterViewerAdapter(Context context) {
         super(context);
@@ -41,11 +46,11 @@ public class CharacterViewerAdapter extends AbsRecyclerAdapter<CharacterViewerCa
     public AbsRecyclerHolder<CharacterViewerCard> getViewHolder(View view, int viewType) {
         switch (getItem(viewType)) {
         case SEE_THROUGH:
-            return new SeeThroughCardHolder(view);
+            return new SeeThroughCardHolder(view, mSeeThroughSize);
         case TITLE:
             return new TitleCardHolder(view)
-                    .withCharacterInfoProivder(mCharacterWrappper)
-                    .withPropertyValueRetreiver(mCharacterWrappper);
+                    .withCharacterInfoProivder(this)
+                    .withPropertyValueRetreiver(this);
         default:
             return new CharacterViewerCardHolder(view).withPropertyValueRetreiver(mCharacterWrappper);
         }
@@ -53,6 +58,22 @@ public class CharacterViewerAdapter extends AbsRecyclerAdapter<CharacterViewerCa
 
     public CharacterViewerAdapter withCharacterWrapper(CharacterWrappper characterWrappper) {
         mCharacterWrappper = characterWrappper;
+        return this;
+    }
+
+    @Override
+    public CharacterInfo onRetreiveCharacterInfo(Context arg) {
+
+        return null;
+    }
+
+    @Override
+    public int onRetreivePropertValue(String propertyName) {
+        return 0;
+    }
+
+    public CharacterViewerAdapter withSeeThroughSize(int seeThroughSize) {
+        mSeeThroughSize = seeThroughSize;
         return this;
     }
 }
