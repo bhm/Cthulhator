@@ -36,7 +36,7 @@ public class CreatorCardsAdapter extends AbsRecyclerAdapter<CreatorCard, Creator
     }
 
     @Override
-    public CreatorCardHolder getViewHolder(View view) {
+    public CreatorCardHolder getViewHolder(View view, int viewType) {
         CreatorCardHolder holder = new CreatorCardHolder(view);
         holder.setRetreiver(mRetreiver);
         holder.setOnPropertyChanged(mPropertyChanged);

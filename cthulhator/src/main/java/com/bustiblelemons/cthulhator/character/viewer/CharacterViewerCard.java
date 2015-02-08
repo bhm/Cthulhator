@@ -6,12 +6,38 @@ import com.bustiblelemons.cthulhator.system.brp.statistics.HitPoints;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by hiv on 17.11.14.
  */
 public enum CharacterViewerCard {
+
+    SEE_THROUGH {
+        @Override
+        public int getLayoutId() {
+            return R.layout.card_see_through;
+        }
+
+        @Override
+        public Collection<String> getPropertyNames() {
+            return Collections.emptyList();
+        }
+    },
+
+    TITLE {
+        @Override
+        public int getLayoutId() {
+            return R.layout.card_title;
+        }
+
+        @Override
+        public Collection<String> getPropertyNames() {
+            return Collections.emptyList();
+        }
+    },
+
     COMBAT {
         private List<String> mNames;
 

@@ -1,11 +1,13 @@
 package com.bustiblelemons.cthulhator.character.persistance;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.util.LruCache;
 
 import com.bustiblelemons.cthulhator.character.characteristics.logic.CharacterPropertyComparators;
+import com.bustiblelemons.cthulhator.character.characterslist.logic.SavedCharacterTransformer;
 import com.bustiblelemons.cthulhator.character.description.model.CharacterDescription;
 import com.bustiblelemons.cthulhator.character.history.model.BirthData;
 import com.bustiblelemons.cthulhator.character.history.model.HistoryEvent;
@@ -22,6 +24,8 @@ import com.bustiblelemons.cthulhator.system.properties.PropertyType;
 import com.bustiblelemons.cthulhator.system.properties.PropertyValueRetreiver;
 import com.bustiblelemons.cthulhator.system.properties.Relation;
 import com.bustiblelemons.cthulhator.system.time.YearsPeriodImpl;
+import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
+import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfoProvider;
 import com.bustiblelemons.randomuserdotme.model.Location;
 import com.bustiblelemons.randomuserdotme.model.Name;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -40,7 +44,8 @@ import java.util.TreeSet;
 /**
  * Created by hiv on 07.01.15.
  */
-public class CharacterWrappper extends SavedCharacter implements PropertyValueRetreiver {
+public class CharacterWrappper extends SavedCharacter implements PropertyValueRetreiver,
+                                                                 CharacterInfoProvider {
 
     static {
         sShouldHaveAssignedAtLeast = BRPStatistic.values().length / 5;
@@ -71,7 +76,8 @@ public class CharacterWrappper extends SavedCharacter implements PropertyValueRe
     @JsonIgnore
     private int  hobbyPoints          = -1;
     @JsonIgnore
-    private Sanity sanity;
+    private Sanity        sanity;
+    private CharacterInfo mCharacterInfo;
 
     public CharacterWrappper(Parcel in) {
         super(in);
@@ -725,5 +731,14 @@ public class CharacterWrappper extends SavedCharacter implements PropertyValueRe
 
     public static CharacterWrappper from(SavedCharacter character) {
         return new CharacterWrappper(character);
+    }
+
+    @Override
+    public CharacterInfo onRetreiveCharacterInfo(Context arg) {
+        if (mCharacterInfo == null) {
+            mCharacterInfo = SavedCharacterTransformer.getInstance().withContext(arg)
+                    .transform(this);
+        }
+        return mCharacterInfo;
     }
 }

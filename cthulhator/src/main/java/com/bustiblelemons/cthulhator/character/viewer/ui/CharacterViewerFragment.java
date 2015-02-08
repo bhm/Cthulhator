@@ -1,6 +1,7 @@
 package com.bustiblelemons.cthulhator.character.viewer.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,7 +21,6 @@ import com.bustiblelemons.cthulhator.character.viewer.CharacterViewerCard;
 import com.bustiblelemons.cthulhator.character.viewer.logic.CharacterViewerAdapter;
 import com.bustiblelemons.cthulhator.character.viewer.logic.OnExpandCharacterViewer;
 import com.bustiblelemons.cthulhator.fragments.AbsFragmentWithParcelable;
-import com.bustiblelemons.cthulhator.system.properties.PropertyValueRetreiver;
 import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
 
 import at.markushi.ui.CircleButton;
@@ -32,7 +32,8 @@ import butterknife.Optional;
 /**
  * Created by hiv on 17.11.14.
  */
-public class CharacterViewerFragment extends AbsFragmentWithParcelable<CharacterWrappper> {
+public class CharacterViewerFragment extends AbsFragmentWithParcelable<CharacterWrappper>{
+
     @InjectView(R.id.recycler)
     RecyclerView mRecyclerView;
     @Optional
@@ -46,13 +47,10 @@ public class CharacterViewerFragment extends AbsFragmentWithParcelable<Character
     TextView     mExtraInfoView;
     private Animation                  mSlideInAnimation;
     private Animation                  mSlideOutAnimation;
-    private CharacterWrappper          mSavedCharacter;
+    private CharacterWrappper          mCharacterWrappper;
     private RecyclerView.LayoutManager mManager;
     private RecyclerView.ItemAnimator  mAnimator;
     private OnExpandCharacterViewer    mExpandCallback;
-
-    private CharacterViewerAdapter mAdapter;
-
     private final Animation.AnimationListener sAnimationListener = new Animation.AnimationListener() {
         @Override
         public void onAnimationStart(Animation animation) {
@@ -77,7 +75,7 @@ public class CharacterViewerFragment extends AbsFragmentWithParcelable<Character
 
         }
     };
-    private PropertyValueRetreiver mRetreiver;
+    private CharacterViewerAdapter mAdapter;
 
     public static CharacterViewerFragment newInstance(CharacterWrappper savedCharacter) {
         CharacterViewerFragment r = new CharacterViewerFragment();
@@ -96,16 +94,12 @@ public class CharacterViewerFragment extends AbsFragmentWithParcelable<Character
             mSlideOutAnimation = AnimationUtils.loadAnimation(activity, R.anim.abc_slide_out_bottom);
             mSlideOutAnimation.setAnimationListener(sAnimationListener);
         }
-        if (mManager == null) {
-            mManager = new LinearLayoutManager(activity);
-        }
+        setupCallbacks(activity);
+    }
 
+    private void setupCallbacks(Activity activity) {
         if (activity instanceof OnExpandCharacterViewer) {
             mExpandCallback = (OnExpandCharacterViewer) activity;
-        }
-
-        if (activity instanceof PropertyValueRetreiver) {
-            mRetreiver = (PropertyValueRetreiver) activity;
         }
     }
 
@@ -113,22 +107,25 @@ public class CharacterViewerFragment extends AbsFragmentWithParcelable<Character
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_character_viewer, container, false);
         ButterKnife.inject(this, rootView);
-        initRecycler();
+        initRecycler(inflater.getContext());
         return rootView;
     }
 
     @Override
     protected void onInstanceArgumentRead(CharacterWrappper instanceArgument) {
         if (instanceArgument != null) {
-            mSavedCharacter = instanceArgument;
+            mCharacterWrappper = instanceArgument;
             CharacterInfo characterInfo = SavedCharacterTransformer.getInstance()
-                    .withContext(getContext()).transform(mSavedCharacter);
+                    .withContext(getContext()).transform(mCharacterWrappper);
             loadCharacterInfo(characterInfo);
         }
     }
 
-    private void initRecycler() {
+    private void initRecycler(Context context) {
         if (mRecyclerView != null) {
+            if (mManager == null) {
+                mManager = new LinearLayoutManager(context);
+            }
             mRecyclerView.setLayoutManager(mManager);
             if (mAnimator == null) {
                 mAnimator = new DefaultItemAnimator();
@@ -173,7 +170,7 @@ public class CharacterViewerFragment extends AbsFragmentWithParcelable<Character
                 mRecyclerView.setAnimation(mSlideInAnimation);
                 if (mAdapter == null) {
                     mAdapter = new CharacterViewerAdapter(getActivity());
-                    mAdapter.withPropertyValueRetreiver(mRetreiver);
+                    mAdapter.withCharacterWrapper(mCharacterWrappper);
                     mRecyclerView.setAdapter(mAdapter);
                     mAdapter.refreshData(CharacterViewerCard.values());
                 }
@@ -192,4 +189,5 @@ public class CharacterViewerFragment extends AbsFragmentWithParcelable<Character
             }
         }
     }
+
 }

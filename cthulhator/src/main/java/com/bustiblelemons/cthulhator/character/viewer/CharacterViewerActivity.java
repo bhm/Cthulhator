@@ -12,7 +12,6 @@ import com.bustiblelemons.cthulhator.character.persistance.SavedCharactersProvid
 import com.bustiblelemons.cthulhator.character.portrait.model.Portrait;
 import com.bustiblelemons.cthulhator.character.viewer.logic.OnExpandCharacterViewer;
 import com.bustiblelemons.cthulhator.character.viewer.ui.CharacterViewerFragment;
-import com.bustiblelemons.cthulhator.system.properties.PropertyValueRetreiver;
 import com.bustiblelemons.views.loadingimage.RemoteImage;
 import com.kbeanie.imagechooser.api.ChosenImage;
 import com.kbeanie.imagechooser.api.ImageChooserListener;
@@ -27,7 +26,6 @@ import butterknife.Optional;
  */
 public class CharacterViewerActivity extends AbsArgSerializableActivity<Integer>
         implements ImageChooserListener,
-                   PropertyValueRetreiver,
                    OnExpandCharacterViewer {
 
     public static final String CHARACTER_ID      = "character_id";
@@ -136,11 +134,4 @@ public class CharacterViewerActivity extends AbsArgSerializableActivity<Integer>
         }
     }
 
-    @Override
-    public int onRetreivePropertValue(String propertyName) {
-        if (mSavedCharacter != null) {
-            return mSavedCharacter.onRetreivePropertValue(propertyName);
-        }
-        return 0;
-    }
 }

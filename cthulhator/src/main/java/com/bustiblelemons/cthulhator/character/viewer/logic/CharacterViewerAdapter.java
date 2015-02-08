@@ -3,8 +3,8 @@ package com.bustiblelemons.cthulhator.character.viewer.logic;
 import android.content.Context;
 import android.view.View;
 
+import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
 import com.bustiblelemons.cthulhator.character.viewer.CharacterViewerCard;
-import com.bustiblelemons.cthulhator.system.properties.PropertyValueRetreiver;
 import com.bustiblelemons.recycler.AbsRecyclerAdapter;
 import com.bustiblelemons.recycler.AbsRecyclerHolder;
 
@@ -14,15 +14,10 @@ import com.bustiblelemons.recycler.AbsRecyclerHolder;
 public class CharacterViewerAdapter extends AbsRecyclerAdapter<CharacterViewerCard,
         AbsRecyclerHolder<CharacterViewerCard>> {
 
-    private PropertyValueRetreiver    mRetreiver;
+    private CharacterWrappper      mCharacterWrappper;
 
     public CharacterViewerAdapter(Context context) {
         super(context);
-    }
-
-    public CharacterViewerAdapter withPropertyValueRetreiver(PropertyValueRetreiver retreiver) {
-        mRetreiver = retreiver;
-        return this;
     }
 
     @Override
@@ -43,9 +38,21 @@ public class CharacterViewerAdapter extends AbsRecyclerAdapter<CharacterViewerCa
     }
 
     @Override
-    public AbsRecyclerHolder<CharacterViewerCard> getViewHolder(View view) {
-        CharacterViewerCardHolder holder = new CharacterViewerCardHolder(view);
-        holder.withPropertyValueRetreiver(mRetreiver);
-        return holder;
+    public AbsRecyclerHolder<CharacterViewerCard> getViewHolder(View view, int viewType) {
+        switch (getItem(viewType)) {
+        case SEE_THROUGH:
+            return new SeeThroughCardHolder(view);
+        case TITLE:
+            return new TitleCardHolder(view)
+                    .withCharacterInfoProivder(mCharacterWrappper)
+                    .withPropertyValueRetreiver(mCharacterWrappper);
+        default:
+            return new CharacterViewerCardHolder(view).withPropertyValueRetreiver(mCharacterWrappper);
+        }
+    }
+
+    public CharacterViewerAdapter withCharacterWrapper(CharacterWrappper characterWrappper) {
+        mCharacterWrappper = characterWrappper;
+        return this;
     }
 }

@@ -26,7 +26,7 @@ public class SavedCharactersAdapter extends AbsRecyclerAdapter<CharacterInfo, Sa
     }
 
     @Override
-    public SavedCharacterHolder getViewHolder(View view) {
+    public SavedCharacterHolder getViewHolder(View view, int viewType) {
         SavedCharacterHolder h = new SavedCharacterHolder(view)
                 .withOnOpenSavedCharacter(mOnOpenSavedCharacter);
         view.setOnClickListener(h);
