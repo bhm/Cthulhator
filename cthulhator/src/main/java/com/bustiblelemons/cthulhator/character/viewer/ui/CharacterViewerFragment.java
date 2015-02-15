@@ -19,18 +19,18 @@ import com.bustiblelemons.cthulhator.character.viewer.CharacterViewerCard;
 import com.bustiblelemons.cthulhator.character.viewer.logic.CharacterViewerAdapter;
 import com.bustiblelemons.cthulhator.character.viewer.logic.OnExpandCharacterViewer;
 import com.bustiblelemons.cthulhator.fragments.AbsFragmentWithParcelable;
+import com.bustiblelemons.cthulhator.view.FabListener;
 import com.bustiblelemons.views.loadingimage.RemoteImage;
 
 import at.markushi.ui.CircleButton;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
-import butterknife.Optional;
 
 /**
  * Created by hiv on 17.11.14.
  */
-public class CharacterViewerFragment extends AbsFragmentWithParcelable<CharacterWrappper> {
+public class CharacterViewerFragment extends AbsFragmentWithParcelable<CharacterWrappper>
+        implements FabListener<CircleButton> {
 
     private static final int DEFAULT_SCREEN_PERCENTAGE = 75;
     @InjectView(R.id.recycler)
@@ -107,18 +107,6 @@ public class CharacterViewerFragment extends AbsFragmentWithParcelable<Character
         return rootView;
     }
 
-    @Override
-    protected void onInstanceArgumentRead(CharacterWrappper instanceArgument) {
-        if (instanceArgument != null) {
-            mCharacterWrappper = instanceArgument;
-            Portrait p = mCharacterWrappper.getMainPortrait();
-            if (mImage != null &&  p != null) {
-                mImage.loadFrom(p.getUrl());
-            }
-            expandRecyclerView(true);
-        }
-    }
-
     private void initRecycler(Context context) {
         if (mRecyclerView != null) {
             if (mManager == null) {
@@ -132,38 +120,28 @@ public class CharacterViewerFragment extends AbsFragmentWithParcelable<Character
         }
     }
 
-    @Optional
-    @OnClick(R.id.expand)
-    public void onExpandRecycler(CircleButton circleButton) {
-        if (mRecyclerView != null) {
-            boolean expand = mRecyclerView.getVisibility() != View.VISIBLE;
-            expandRecyclerView(expand);
-        }
-    }
-
-    private void expandRecyclerView(boolean expand) {
-        if (expand) {
-            mRecyclerView.setVisibility(View.VISIBLE);
-            mRecyclerView.setAnimation(mSlideInAnimation);
+    @Override
+    protected void onInstanceArgumentRead(CharacterWrappper instanceArgument) {
+        if (instanceArgument != null) {
+            mCharacterWrappper = instanceArgument;
+            Portrait p = mCharacterWrappper.getMainPortrait();
+            if (mImage != null && p != null) {
+                mImage.loadFrom(p.getUrl());
+            }
             if (mAdapter == null) {
                 mAdapter = new CharacterViewerAdapter(getActivity());
                 mAdapter.withCharacterWrapper(mCharacterWrappper);
+                mAdapter.withFabListener(this);
                 mRecyclerView.setAdapter(mAdapter);
-                mAdapter.refreshData(CharacterViewerCard.values());
             }
-            mSlideInAnimation.start();
-        } else {
-            mRecyclerView.setAnimation(mSlideOutAnimation);
-            mSlideOutAnimation.start();
-            mRecyclerView.setVisibility(View.GONE);
-        }
-        if (mExpandCallback != null) {
-            if (expand) {
-                mExpandCallback.onExpandCharacterViewer();
-            } else {
-                mExpandCallback.onCollapseCharacterViewer();
-            }
+            mAdapter.refreshData(CharacterViewerCard.values());
         }
     }
 
+    @Override
+    public void onButtonClicked(CircleButton button) {
+        if (mRecyclerView != null) {
+            mRecyclerView.scrollToPosition(1);
+        }
+    }
 }

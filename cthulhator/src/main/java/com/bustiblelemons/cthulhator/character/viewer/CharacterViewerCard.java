@@ -1,6 +1,7 @@
 package com.bustiblelemons.cthulhator.character.viewer;
 
 import com.bustiblelemons.cthulhator.R;
+import com.bustiblelemons.cthulhator.system.brp.skills.BRPSkill;
 import com.bustiblelemons.cthulhator.system.brp.statistics.BRPStatistic;
 import com.bustiblelemons.cthulhator.system.brp.statistics.HitPoints;
 
@@ -87,6 +88,9 @@ public enum CharacterViewerCard {
         public Collection<String> getPropertyNames() {
             if (mNames == null) {
                 mNames = new ArrayList<String>(1);
+                mNames.add(BRPStatistic.INT.name());
+                mNames.add(BRPStatistic.EDU.name());
+                mNames.add(BRPStatistic.APP.name());
                 mNames.add(BRPStatistic.APP.name());
             }
             return mNames;
@@ -103,7 +107,8 @@ public enum CharacterViewerCard {
         public Collection<String> getPropertyNames() {
             if (mNames == null) {
                 mNames = new ArrayList<String>(1);
-                mNames.add(BRPStatistic.POW.name());
+                mNames.add(BRPSkill.CthulhuMythos.name());
+                mNames.add(BRPStatistic.SAN.name());
             }
             return mNames;
         }
@@ -119,7 +124,7 @@ public enum CharacterViewerCard {
         public Collection<String> getPropertyNames() {
             if (mNames == null) {
                 mNames = new ArrayList<String>(1);
-                mNames.add(BRPStatistic.POW.name());
+                mNames.add(BRPStatistic.APP.name());
             }
             return mNames;
         }

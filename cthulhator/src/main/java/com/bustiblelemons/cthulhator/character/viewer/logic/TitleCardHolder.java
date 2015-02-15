@@ -6,10 +6,13 @@ import android.widget.TextView;
 
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.viewer.CharacterViewerCard;
+import com.bustiblelemons.cthulhator.view.FabListener;
 import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
 import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfoProvider;
 
+import at.markushi.ui.CircleButton;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import butterknife.Optional;
 
 /**
@@ -18,8 +21,6 @@ import butterknife.Optional;
 public class TitleCardHolder extends CharacterViewerCardHolder {
 
     private final View                  mRootView;
-    private       CharacterInfoProvider mCharacterInfoProvider;
-
     @Optional
     @InjectView(R.id.main_info)
     TextView mMainInfoView;
@@ -29,17 +30,26 @@ public class TitleCardHolder extends CharacterViewerCardHolder {
     @Optional
     @InjectView(R.id.extra_info)
     TextView mExtraInfoView;
-
-    private HeightSizeListener mHeightSizeListener;
-
-    public TitleCardHolder withHeightSizeListener(HeightSizeListener callback) {
-        mHeightSizeListener = callback;
-        return this;
-    }
+    private       CharacterInfoProvider mCharacterInfoProvider;
+    private HeightSizeListener        mHeightSizeListener;
+    private FabListener<CircleButton> mFabListener;
 
     public TitleCardHolder(View view) {
         super(view);
         mRootView = view;
+    }
+
+    @Optional
+    @OnClick(R.id.expand)
+    public void onExpand(CircleButton button) {
+        if (mFabListener != null) {
+            mFabListener.onButtonClicked(button);
+        }
+    }
+
+    public TitleCardHolder withHeightSizeListener(HeightSizeListener callback) {
+        mHeightSizeListener = callback;
+        return this;
     }
 
     public TitleCardHolder withCharacterInfoProivder(CharacterInfoProvider proivder) {
@@ -84,5 +94,10 @@ public class TitleCardHolder extends CharacterViewerCardHolder {
         if (mShortInfoView != null && !TextUtils.isEmpty(text)) {
             mShortInfoView.setText(text);
         }
+    }
+
+    public TitleCardHolder withFabListener(FabListener<CircleButton> fabListener) {
+        mFabListener = fabListener;
+        return null;
     }
 }

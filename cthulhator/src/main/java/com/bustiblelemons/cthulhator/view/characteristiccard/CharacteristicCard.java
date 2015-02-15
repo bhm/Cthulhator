@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * Created by hiv on 02.11.14.
  */
-public class CharacteristicCard extends RelativeLayout implements SkillView.OnValueButtonsClicked {
+public class CharacteristicCard extends RelativeLayout implements SkillView.ValueModifierListener {
     private View rootView;
     private int  defValSize;
     private int  defTitleSize;
@@ -113,7 +113,7 @@ public class CharacteristicCard extends RelativeLayout implements SkillView.OnVa
         if (skillView != null) {
             skillView.setMinValue(property.getMinValue());
             skillView.setMaxValue(property.getMaxValue());
-            skillView.setOnValueButtonsClicked(this);
+            skillView.setValueModifierListener(this);
             skillView.setTag(R.id.tag_property, property);
             int nameResId = ResourceHelper.from(getContext())
                     .getIdentifierForStringByNameParts("stat", property.getName());

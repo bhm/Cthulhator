@@ -12,7 +12,7 @@ import com.bustiblelemons.views.SkillView;
  * Created by bhm on 31.08.14.
  */
 public class SkillViewHolder implements ViewHolder<CharacterProperty>,
-                                        SkillView.OnValueButtonsClicked {
+                                        SkillView.ValueModifierListener {
     private OnSkillChanged     onSkillChanged;
     private SkillView          skillView;
     private CharacterProperty  mProperty;
@@ -36,7 +36,7 @@ public class SkillViewHolder implements ViewHolder<CharacterProperty>,
             skillView.setMaxValue(item.getMaxValue());
             skillView.setTitle(item.getName());
             skillView.setIntValue(item.getValue());
-            skillView.setOnValueButtonsClicked(this);
+            skillView.setValueModifierListener(this);
         }
     }
 

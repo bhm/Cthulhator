@@ -6,9 +6,12 @@ import android.view.View;
 import com.bustiblelemons.cthulhator.character.viewer.CharacterViewerCard;
 import com.bustiblelemons.cthulhator.system.properties.PropertyValueRetreiver;
 import com.bustiblelemons.recycler.AbsRecyclerHolder;
+import com.bustiblelemons.views.SkillView;
 import com.bustiblelemons.views.StatisticView;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by hiv on 10.12.14.
@@ -17,6 +20,9 @@ public class CharacterViewerCardHolder extends AbsRecyclerHolder<CharacterViewer
 
     private View                   mView;
     private PropertyValueRetreiver mRetreiver;
+    private static final Map<String, StatisticView> sStatViewsCache  = new HashMap<String, StatisticView>();
+    private static final Map<String, SkillView>     sSkillViewsCache = new HashMap<String, SkillView>();
+
 
     public CharacterViewerCardHolder(View view) {
         super(view);
@@ -44,11 +50,22 @@ public class CharacterViewerCardHolder extends AbsRecyclerHolder<CharacterViewer
 
     private void setupPropertyView(String propName) {
         if (!TextUtils.isEmpty(propName)) {
-            View propertyView = mView.findViewWithTag(propName);
+            View propertyView;
+            if (sStatViewsCache.containsKey(propName)) {
+                propertyView = sStatViewsCache.get(propName);
+            } else {
+                propertyView = mView.findViewWithTag(propName);
+            }
             if (propertyView instanceof StatisticView) {
                 StatisticView view = (StatisticView) propertyView;
                 int value = mRetreiver.onRetreivePropertValue(propName);
-                view.setValue(value + "");
+                view.setIntValue(value);
+                sStatViewsCache.put(propName, view);
+            } else if (propertyView instanceof SkillView) {
+                SkillView view = (SkillView) propertyView;
+                int value = mRetreiver.onRetreivePropertValue(propName);
+                view.setIntValue(value);;
+                sSkillViewsCache.put(propName, view);
             }
         }
     }
