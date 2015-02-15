@@ -15,7 +15,6 @@
     <string name="dex">DEX</string>
     <string name="str">STR</string>
     <string name="siz">SIZ</string>
-    <string name="kon">KON</string>
     <string name="activity_test">Test</string>
     <string name="hit_points">Hit Points</string>
     <string name="hit_points_tag">HitPoints</string>
@@ -102,5 +101,6 @@
     <string name="unknown_name">No name</string>
     <string name="unknown_statistics">No statistics</string>
     <string name="unknonw_location">Unknown location</string>
+    <string name="CthulhuMythos">CthulhuMythos</string>
 
 </resources>
