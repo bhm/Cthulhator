@@ -98,6 +98,6 @@ public class TitleCardHolder extends CharacterViewerCardHolder {
 
     public TitleCardHolder withFabListener(FabListener<CircleButton> fabListener) {
         mFabListener = fabListener;
-        return null;
+        return this;
     }
 }
