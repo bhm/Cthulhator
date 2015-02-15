@@ -401,7 +401,7 @@ public class CharacterProperty extends ObservableCharacterProperty
         if (name == null) {
             return false;
         }
-        return name.equals(this.name);
+        return name.equalsIgnoreCase(this.name);
     }
 
     @Override
