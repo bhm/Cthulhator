@@ -15,9 +15,9 @@
         <com.bustiblelemons.views.SkillView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:percentile="true"
-            app:showModifiers="true"
-            app:statTitle="@string/mythos"
+            android:tag="@string/pow"
+            app:showModifiers="false"
+            app:statTitle="@string/power"
             app:statValue="@integer/placeholder_perc_val"
             app:titleSize="@dimen/font_16"
             app:valueSize="@dimen/font_18"/>
@@ -29,7 +29,8 @@
         <com.bustiblelemons.views.SkillView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:showModifiers="true"
+            android:tag="@string/san"
+            app:showModifiers="false"
             app:statTitle="@string/sanity"
             app:statValue="@integer/placeholder_perc_val"
             app:titleSize="@dimen/font_16"

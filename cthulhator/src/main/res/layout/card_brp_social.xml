@@ -1,9 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/light_background">
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    <FrameLayout
+        style="@style/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_16">
 
-</RelativeLayout>
+        <com.bustiblelemons.views.SkillView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:tag="@string/CthulhuMythos"
+            app:percentile="true"
+            app:showModifiers="true"
+            app:statTitle="@string/appearance"
+            app:statValue="@integer/placeholder_perc_val"
+            app:titleSize="@dimen/font_16"
+            app:valueSize="@dimen/font_18"/>
+    </FrameLayout>
+
+
+</FrameLayout>
