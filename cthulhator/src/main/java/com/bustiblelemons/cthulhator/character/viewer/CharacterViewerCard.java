@@ -90,8 +90,8 @@ public enum CharacterViewerCard {
                 mNames = new ArrayList<String>(1);
                 mNames.add(BRPStatistic.INT.name());
                 mNames.add(BRPStatistic.EDU.name());
-                mNames.add(BRPStatistic.APP.name());
-                mNames.add(BRPStatistic.APP.name());
+                mNames.add(BRPStatistic.IDEA.name());
+                mNames.add(BRPStatistic.KNOW.name());
             }
             return mNames;
         }
