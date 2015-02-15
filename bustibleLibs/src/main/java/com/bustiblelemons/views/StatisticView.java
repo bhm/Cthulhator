@@ -41,6 +41,37 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
     private OnClickListener       mCachedOnClick;
     private StatisticViewListener mStatisticViewListener;
     private boolean               mValueBiggerIfTitleMissing;
+    private int                   mIntValue;
+    private int mJump = 1;
+    private int mMinValue;
+    private int mMaxValue;
+    private StatisticViewListener mPrivateStatisticViewListener = new StatisticViewListener() {
+        @Override
+        public void onSkillValueClick(StatisticView view) {
+
+        }
+
+        @Override
+        public void onSkillTitleClick(StatisticView view) {
+
+        }
+
+        @Override
+        public boolean onIncreaseClicked(StatisticView view) {
+            if (canIncrease()) {
+
+            }
+            return false;
+        }
+
+        @Override
+        public boolean onDecreaseClicked(StatisticView view) {
+            if (canDecrease()) {
+
+            }
+            return false;
+        }
+    };
 
     public StatisticView(Context context) {
         super(context);
@@ -71,32 +102,34 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
             mDecView = (ImageView) mRootView.findViewById(R.id.dec);
             setOnClick(mValueView, mTitleView, mIncView, mDecView);
             if (attrs != null) {
-                TypedArray statArray = context.obtainStyledAttributes(attrs, R.styleable.StatisticView);
-                positionValues(statArray);
-                setupModifiers(statArray);
-                mIsPercentile = statArray.getBoolean(R.styleable.StatisticView_percentile, false);
-                mHideTitle = statArray.getBoolean(R.styleable.StatisticView_hideTitle, mHideTitle);
+                TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.StatisticView);
+                positionValues(array);
+                setupModifiers(array);
+                mIsPercentile = array.getBoolean(R.styleable.StatisticView_percentile, false);
+                mHideTitle = array.getBoolean(R.styleable.StatisticView_hideTitle, mHideTitle);
                 mValueBiggerIfTitleMissing =
-                        statArray.getBoolean(R.styleable.StatisticView_valueBiggerIfTitleMissing,
+                        array.getBoolean(R.styleable.StatisticView_valueBiggerIfTitleMissing,
                                 mValueBiggerIfTitleMissing);
-                setUpTextSize(statArray);
+                mMaxValue = array.getInteger(R.styleable.StatisticView_maxValue, mMaxValue);
+                mMinValue = array.getInteger(R.styleable.StatisticView_minValue, mMinValue);
+                setUpTextSize(array);
                 if (mHideTitle) {
                     hideTitle();
                 }
                 try {
                     TypedValue typedValue = new TypedValue();
-                    if(statArray.getValue(R.styleable.StatisticView_statValue, typedValue)) {
+                    if (array.getValue(R.styleable.StatisticView_statValue, typedValue)) {
                         if (typedValue != null) {
                             CharSequence value = typedValue.coerceToString();
                             setValue(value);
                         }
                     }
-                    String title = statArray.getString(R.styleable.StatisticView_statTitle);
+                    String title = array.getString(R.styleable.StatisticView_statTitle);
                     setTitle(title);
-                    statArray.recycle();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                array.recycle();
             }
             addView(mRootView);
         }
@@ -286,24 +319,68 @@ public class StatisticView extends RelativeLayout implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-        if (mStatisticViewListener != null) {
-            int id = view.getId();
-            if (id == R.id.dec) {
+        int id = view.getId();
+        if (id == R.id.dec) {
+            if (mStatisticViewListener != null) {
                 mStatisticViewListener.onDecreaseClicked(this);
-            } else if (id == R.id.inc) {
-                mStatisticViewListener.onIncreaseClicked(this);
-            } else if (id == R.id.statistic_view_value) {
-                mStatisticViewListener.onSkillValueClick(this);
-            } else if (id == android.R.id.title) {
-                mStatisticViewListener.onSkillTitleClick(this);
-            } else {
-                mCachedOnClick.onClick(view);
             }
-        } else {
-            if (mCachedOnClick != null) {
-                mCachedOnClick.onClick(view);
+        } else if (id == R.id.inc) {
+            if (mStatisticViewListener != null) {
+                mStatisticViewListener.onIncreaseClicked(this);
+            }
+        } else if (id == R.id.statistic_view_value) {
+            if (mStatisticViewListener != null) {
+                mStatisticViewListener.onSkillValueClick(this);
+            }
+        } else if (id == android.R.id.title) {
+            if (mStatisticViewListener != null) {
+                mStatisticViewListener.onSkillTitleClick(this);
             }
         }
+        if (mCachedOnClick != null) {
+            mCachedOnClick.onClick(view);
+        }
+    }
+
+    public boolean canDecrease() {
+        return getIntValue() - mJump >= getMinValue();
+    }
+
+    public int getJump() {
+        return mJump;
+    }
+
+    public void setJump(int jump) {
+        mJump = jump;
+    }
+
+    public boolean canIncrease() {
+        return getIntValue() + mJump <= getMaxValue();
+    }
+
+    public int getIntValue() {
+        return mIntValue;
+    }
+
+    public void setIntValue(int intValue) {
+        this.mIntValue = intValue;
+        setValue(intValue + "");
+    }
+
+    public int getMinValue() {
+        return mMinValue;
+    }
+
+    public void setMinValue(int minValue) {
+        mMinValue = minValue;
+    }
+
+    public int getMaxValue() {
+        return mMaxValue;
+    }
+
+    public void setMaxValue(int maxValue) {
+        mMaxValue = maxValue;
     }
 
     public interface StatisticViewListener extends PropertyViewListener<StatisticView> {

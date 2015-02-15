@@ -110,7 +110,7 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         }
     };
     private int             mJump     = 1;
-    private OnValueButtonsClicked mOnValueButtonsClicked;
+    private ValueModifierListener mValueModifierListener;
 
     public SkillView(Context context) {
         super(context);
@@ -273,7 +273,7 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         showModifiers = skillArray.getBoolean(R.styleable.SkillView_showModifiers, false);
         setupIncreaseModifier(skillArray);
         setIncreaseDrawable(incDrawable);
-        setupDecreaseDrawablew(skillArray);
+        setupDecreaseDrawable(skillArray);
         if (showModifiers) {
             showModifers();
         } else {
@@ -281,7 +281,7 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         }
     }
 
-    private void setupDecreaseDrawablew(TypedArray skillArray) {
+    private void setupDecreaseDrawable(TypedArray skillArray) {
         decDrawable = skillArray.getDrawable(R.styleable.SkillView_decreaseSrc);
         if (decDrawable == null) {
             decDrawable = getResources().getDrawable(R.drawable.decrease_selector);
@@ -488,21 +488,29 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         if (cachedOnClick != null) {
             cachedOnClick.onClick(view);
         }
-        if (mSkillViewListener != null) {
-            int id = view.getId();
-            if (id == R.id.dec) {
-                if (mOnValueButtonsClicked != null) {
-                    mOnValueButtonsClicked.onDecreaseClicked(this);
-                }
+        int id = view.getId();
+        if (id == R.id.dec) {
+            mPrivateValueModifierListener.onDecreaseClicked(this);
+            if (mValueModifierListener != null) {
+                mValueModifierListener.onDecreaseClicked(this);
+            }
+            if (mSkillViewListener != null) {
                 mSkillViewListener.onDecreaseClicked(this);
-            } else if (id == R.id.inc) {
-                if (mOnValueButtonsClicked != null) {
-                    mOnValueButtonsClicked.onIncreaseClicked(this);
-                }
+            }
+        } else if (id == R.id.inc) {
+            mPrivateValueModifierListener.onIncreaseClicked(this);
+            if (mValueModifierListener != null) {
+                mValueModifierListener.onIncreaseClicked(this);
+            }
+            if (mSkillViewListener != null) {
                 mSkillViewListener.onIncreaseClicked(this);
-            } else if (id == android.R.id.custom) {
+            }
+        } else if (id == android.R.id.custom) {
+            if (mSkillViewListener != null) {
                 mSkillViewListener.onSkillValueClick(this);
-            } else if (id == android.R.id.title) {
+            }
+        } else if (id == android.R.id.title) {
+            if (mSkillViewListener != null) {
                 mSkillViewListener.onSkillTitleClick(this);
             }
         }
@@ -512,11 +520,33 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
         this.isPercentile = percentile;
     }
 
-    public void setOnValueButtonsClicked(OnValueButtonsClicked onValueButtonsClicked) {
-        this.mOnValueButtonsClicked = onValueButtonsClicked;
+    public void setValueModifierListener(ValueModifierListener valueModifierListener) {
+        this.mValueModifierListener = valueModifierListener;
     }
 
-    public interface OnValueButtonsClicked {
+    private ValueModifierListener mPrivateValueModifierListener = new ValueModifierListener() {
+        @Override
+        public boolean onIncreaseClicked(SkillView view) {
+            if (canIncrease()) {
+                int val = mValue++;
+                setIntValue(val);
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public boolean onDecreaseClicked(SkillView view) {
+            if (canDecrease()) {
+                int val = mValue--;
+                setIntValue(val);
+                return true;
+            }
+            return false;
+        }
+    };
+
+    public interface ValueModifierListener {
         boolean onIncreaseClicked(SkillView view);
 
         boolean onDecreaseClicked(SkillView view);
