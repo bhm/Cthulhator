@@ -63,6 +63,9 @@
         <attr name="showModifiers"/>
         <attr name="increaseSrc"/>
         <attr name="decreaseSrc"/>
+        <attr name="minValue"/>
+        <attr name="defaultValue"/>
+        <attr name="maxValue"/>
         <attr name="valueBiggerIfTitleMissing" format="boolean"/>
         <attr name="valueBelow" format="boolean"/>
 
