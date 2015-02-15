@@ -2,6 +2,7 @@ package com.bustiblelemons.cthulhator.character.viewer.logic;
 
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.bustiblelemons.cthulhator.character.viewer.CharacterViewerCard;
 import com.bustiblelemons.cthulhator.system.properties.PropertyValueRetreiver;
@@ -9,7 +10,6 @@ import com.bustiblelemons.recycler.AbsRecyclerHolder;
 import com.bustiblelemons.views.SkillView;
 import com.bustiblelemons.views.StatisticView;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,15 +18,34 @@ import java.util.Map;
  */
 public class CharacterViewerCardHolder extends AbsRecyclerHolder<CharacterViewerCard> {
 
-    private View                   mView;
     private PropertyValueRetreiver mRetreiver;
-    private static final Map<String, StatisticView> sStatViewsCache  = new HashMap<String, StatisticView>();
-    private static final Map<String, SkillView>     sSkillViewsCache = new HashMap<String, SkillView>();
+    private HashMap<String, View> viewMap = new HashMap<String, View>();
 
 
     public CharacterViewerCardHolder(View view) {
         super(view);
-        mView = view;
+        if (view instanceof ViewGroup) {
+            findTaggedChildren((ViewGroup) view);
+        }
+    }
+
+    private void findTaggedChildren(ViewGroup root) {
+        for (int i = 0; i < root.getChildCount(); i++) {
+            View child = root.getChildAt(i);
+            if (child instanceof SkillView
+                    || child instanceof StatisticView) {
+                Object tag = child.getTag();
+                if (tag instanceof String) {
+                    String s = (String) tag;
+                    if (!TextUtils.isEmpty(s)) {
+                        viewMap.put(s, child);
+                    }
+                }
+            } else if (child instanceof ViewGroup) {
+                ViewGroup group = (ViewGroup) child;
+                findTaggedChildren(group);
+            }
+        }
     }
 
     public CharacterViewerCardHolder withPropertyValueRetreiver(PropertyValueRetreiver retreiver) {
@@ -40,34 +59,16 @@ public class CharacterViewerCardHolder extends AbsRecyclerHolder<CharacterViewer
         if (mRetreiver == null) {
             return;
         }
-        if (item != null && mView != null && item.getPropertyNames() != null) {
-            Collection<String> propertyNames = item.getPropertyNames();
-            for (String propName : propertyNames) {
-                setupPropertyView(propName);
-            }
-        }
-    }
-
-    private void setupPropertyView(String propName) {
-        if (!TextUtils.isEmpty(propName)) {
-            View propertyView;
-            if (sStatViewsCache.containsKey(propName)) {
-                propertyView = sStatViewsCache.get(propName);
-            } else if (sSkillViewsCache.containsKey(propName)) {
-                propertyView = sSkillViewsCache.get(propName);
-            } else {
-                propertyView = mView.findViewWithTag(propName);
-            }
-            if (propertyView instanceof StatisticView) {
-                StatisticView view = (StatisticView) propertyView;
-                int value = mRetreiver.onRetreivePropertValue(propName);
-                view.setIntValue(value);
-                sStatViewsCache.put(propName, view);
-            } else if (propertyView instanceof SkillView) {
-                SkillView view = (SkillView) propertyView;
-                int value = mRetreiver.onRetreivePropertValue(propName);
-                view.setIntValue(value);;
-                sSkillViewsCache.put(propName, view);
+        for (Map.Entry<String, View> e : viewMap.entrySet()) {
+            View v = e.getValue();
+            String name = e.getKey();
+            int val = mRetreiver.onRetreivePropertValue(name);
+            if (v instanceof StatisticView) {
+                StatisticView statisticView = (StatisticView) v;
+                statisticView.setIntValue(val);
+            } else if (v instanceof SkillView) {
+                SkillView skillView = (SkillView) v;
+                skillView.setIntValue(val);
             }
         }
     }
