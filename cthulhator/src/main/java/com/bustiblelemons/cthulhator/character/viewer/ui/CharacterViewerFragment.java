@@ -141,7 +141,7 @@ public class CharacterViewerFragment extends AbsFragmentWithParcelable<Character
     @Override
     public void onButtonClicked(CircleButton button) {
         if (mRecyclerView != null) {
-            mRecyclerView.scrollToPosition(1);
+            mRecyclerView.scrollToPosition(0);
         }
     }
 }
