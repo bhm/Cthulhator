@@ -53,6 +53,8 @@ public class CharacterViewerCardHolder extends AbsRecyclerHolder<CharacterViewer
             View propertyView;
             if (sStatViewsCache.containsKey(propName)) {
                 propertyView = sStatViewsCache.get(propName);
+            } else if (sSkillViewsCache.containsKey(propName)) {
+                propertyView = sSkillViewsCache.get(propName);
             } else {
                 propertyView = mView.findViewWithTag(propName);
             }
