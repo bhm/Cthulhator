@@ -22,7 +22,7 @@ public class CharacterViewerAdapter extends AbsRecyclerAdapter<CharacterViewerCa
     private FabListener<CircleButton> mFabListener;
 
     public CharacterViewerAdapter(Context context) {
-        super(context);
+        super();
     }
 
     @Override
@@ -56,6 +56,8 @@ public class CharacterViewerAdapter extends AbsRecyclerAdapter<CharacterViewerCa
                     .withPropertyValueRetreiver(mCharacterWrappper);
 //        case MIND:
 //            return new MindViewerCardHolder(view).withPropertyValueRetreiver(mCharacterWrappper);
+        case SKILLS:
+            return new TopSkillsViewerHolder(view).withPropertyValueRetriever(mCharacterWrappper);
         default:
             return new CharacterViewerCardHolder(view).withPropertyValueRetreiver(mCharacterWrappper);
         }

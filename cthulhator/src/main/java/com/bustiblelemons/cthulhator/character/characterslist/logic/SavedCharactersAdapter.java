@@ -1,6 +1,5 @@
 package com.bustiblelemons.cthulhator.character.characterslist.logic;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -16,8 +15,8 @@ public class SavedCharactersAdapter extends AbsRecyclerAdapter<CharacterInfo, Sa
 
     private OnOpenSavedCharacter mOnOpenSavedCharacter;
 
-    public SavedCharactersAdapter(Context context) {
-        super(context);
+    public SavedCharactersAdapter() {
+        super();
     }
 
     @Override

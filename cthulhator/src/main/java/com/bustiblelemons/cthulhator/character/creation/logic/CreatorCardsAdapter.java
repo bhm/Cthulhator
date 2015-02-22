@@ -1,6 +1,5 @@
 package com.bustiblelemons.cthulhator.character.creation.logic;
 
-import android.content.Context;
 import android.view.View;
 
 import com.bustiblelemons.cthulhator.R;
@@ -16,8 +15,8 @@ public class CreatorCardsAdapter extends AbsRecyclerAdapter<CreatorCard, Creator
     private RelatedPropertesRetreiver            mRetreiver;
     private CharacteristicCard.OnPropertyChanged mPropertyChanged;
 
-    public CreatorCardsAdapter(Context context) {
-        super(context);
+    public CreatorCardsAdapter() {
+        super();
     }
 
     public CreatorCardsAdapter withRelatedPropertiesCallback(RelatedPropertesRetreiver callback) {

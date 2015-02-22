@@ -45,7 +45,8 @@ import java.util.TreeSet;
  * Created by hiv on 07.01.15.
  */
 public class CharacterWrappper extends SavedCharacter implements PropertyValueRetreiver,
-                                                                 CharacterInfoProvider {
+                                                                 CharacterInfoProvider,
+                                                                 TopSkillsRetriever {
 
     static {
         sShouldHaveAssignedAtLeast = BRPStatistic.values().length / 5;
@@ -157,7 +158,7 @@ public class CharacterWrappper extends SavedCharacter implements PropertyValueRe
     }
 
     @JsonIgnore
-    public Collection<CharacterProperty> getTopSkills(int max) {
+    public List<CharacterProperty> getTopSkills(int max) {
         List<CharacterProperty> r = new ArrayList<CharacterProperty>();
         int i = 0;
         for (CharacterProperty property : getTopSkills()) {
@@ -171,10 +172,10 @@ public class CharacterWrappper extends SavedCharacter implements PropertyValueRe
     }
 
     @JsonIgnore
-    public Collection<CharacterProperty> getTopSkills() {
-        Set<CharacterProperty> r =
-                new TreeSet<CharacterProperty>(CharacterPropertyComparators.VALUE_DESC);
+    public List<CharacterProperty> getTopSkills() {
+        List<CharacterProperty> r = new ArrayList<CharacterProperty>();
         r.addAll(getSkills());
+        Collections.sort(r, CharacterPropertyComparators.VALUE_DESC);
         return r;
     }
 

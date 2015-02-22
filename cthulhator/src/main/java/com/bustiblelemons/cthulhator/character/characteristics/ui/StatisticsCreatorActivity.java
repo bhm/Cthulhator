@@ -97,7 +97,7 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
         }
         mRecyclerView.setItemAnimator(mAnimator);
         mSavedCharacter = getInstanceArgument();
-        mCardsAdapter = new CreatorCardsAdapter(this)
+        mCardsAdapter = new CreatorCardsAdapter()
                 .withRelatedPropertiesCallback(this)
                 .withPropertyChangedCallback(this);
         mRecyclerView.setAdapter(mCardsAdapter);
@@ -195,7 +195,7 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     @Override
     public void onCreatorCardsCreated(List<CreatorCard> cards) {
         if (mCardsAdapter == null) {
-            mCardsAdapter = new CreatorCardsAdapter(this)
+            mCardsAdapter = new CreatorCardsAdapter()
                     .withRelatedPropertiesCallback(this)
                     .withPropertyChangedCallback(this);
             mRecyclerView.setAdapter(mCardsAdapter);

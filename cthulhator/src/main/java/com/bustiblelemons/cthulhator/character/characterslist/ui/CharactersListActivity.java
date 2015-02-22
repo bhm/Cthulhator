@@ -143,7 +143,7 @@ public class CharactersListActivity extends AbsActionBarActivity
     public void onCharactersInfoLoaded(Grouping grouping, List<CharacterInfo> characters) {
         if (characters != null) {
             if (listAdapter == null) {
-                listAdapter = new SavedCharactersAdapter(this)
+                listAdapter = new SavedCharactersAdapter()
                         .withOpenSaveCharacter(this);
                 recyclerView.setAdapter(listAdapter);
             }

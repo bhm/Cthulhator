@@ -28,7 +28,7 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
     private              boolean isPercentile   = false;
     private              boolean valueLeft      = false;
     private              boolean hideTitle      = false;
-    private              boolean showModifiers  = false;
+    private              boolean mShowModifiers = false;
     private              int     titleSizeResId = R.dimen.font_16;
     private              int     valueSizeResId = R.dimen.font_16;
     private              int     titleGravity   = Gravity.RIGHT;
@@ -270,10 +270,14 @@ public class SkillView extends RelativeLayout implements View.OnClickListener {
     }
 
     private void setupModifiers(TypedArray skillArray) {
-        showModifiers = skillArray.getBoolean(R.styleable.SkillView_showModifiers, false);
+        mShowModifiers = skillArray.getBoolean(R.styleable.SkillView_showModifiers, false);
         setupIncreaseModifier(skillArray);
         setIncreaseDrawable(incDrawable);
         setupDecreaseDrawable(skillArray);
+        setShowModifiers(mShowModifiers);
+    }
+
+    public void setShowModifiers(boolean showModifiers) {
         if (showModifiers) {
             showModifers();
         } else {
