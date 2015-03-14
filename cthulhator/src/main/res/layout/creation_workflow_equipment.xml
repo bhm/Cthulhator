@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.bustiblelemons.views.card.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@id/add_character_equipement"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/add_character_statistics"
+    app:card_description="@string/hint_equipment"
+    app:card_image="@drawable/ic_bag"
+    app:card_title="@string/add_character_equipment"/>
+

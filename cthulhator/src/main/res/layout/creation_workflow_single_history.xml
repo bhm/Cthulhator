@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.bustiblelemons.views.card.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@id/add_character_history"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/add_character_details"
+    android:visibility="visible"
+    app:card_description="@string/hint_history"
+    app:card_image="@drawable/ic_pocketwatch"
+    app:card_title="@string/add_character_history"
+    tools:visibility="visible"/>

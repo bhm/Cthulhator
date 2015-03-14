@@ -8,83 +8,18 @@
                 android:background="@color/light_background"
                 tools:context=".CreationWorkFlowActivity">
 
-    <com.bustiblelemons.cthulhator.view.charactercard.CharacterCardView
-        android:id="@id/preview_card"
-        style="@style/card.peeking.top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:extraInfoColor="@color/black_54"
-        app:extraText="@string/placeholder_top_stats"
-        app:mainInfoColor="@color/white_87"
-        app:mainText="@string/hint_name"
-        app:no_image="@drawable/no_face_poly"
-        app:shortInfoColor="@color/white_87"
-        app:shortText="@string/placeholder_short_info"
-        app:show_menu="false"/>
-
-    <ScrollView
-        android:id="@id/questionare"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/preview_card">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/padding_16">
-
-            <com.bustiblelemons.views.card.CardView
-                android:id="@id/add_character_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                app:card_description="@string/hint_assign_name"
-                app:card_image="@drawable/ic_johnny_automatic_mirror_drawing"
-                app:card_title="@string/add_character_info"
-                tools:visibility="gone"/>
-
-            <com.bustiblelemons.views.card.CardView
-                android:id="@id/add_character_history"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/add_character_details"
-                android:visibility="visible"
-                app:card_description="@string/hint_history"
-                app:card_image="@drawable/ic_pocketwatch"
-                app:card_title="@string/add_character_history"
-                tools:visibility="gone"/>
-
-            <com.bustiblelemons.views.card.CardView
-                android:id="@id/add_character_statistics"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/add_character_history"
-                app:card_description="@string/hint_assign_statistics"
-                app:card_image="@drawable/ic_strongmaninacircle"
-                app:card_title="@string/add_character_statistics"/>
-
-            <com.bustiblelemons.views.card.CardView
-                android:id="@id/add_character_equipement"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/add_character_statistics"
-                app:card_description="@string/hint_equipment"
-                app:card_image="@drawable/ic_bag"
-                app:card_title="@string/add_character_equipment"/>
-
-        </RelativeLayout>
-    </ScrollView>
+   <android.support.v7.widget.RecyclerView
+       android:id="@id/recycler"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"/>
 
     <at.markushi.ui.CircleButton
         android:id="@id/done"
         android:layout_width="@dimen/fab"
         android:layout_height="@dimen/fab"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@id/questionare"
-        android:layout_marginBottom="@dimen/fab_offset"
+        android:layout_alignParentBottom="true"
         android:layout_marginLeft="@dimen/padding_16"
         android:layout_marginRight="@dimen/padding_16"
-        android:layout_marginTop="@dimen/fab_offset"
         android:src="@drawable/ic_navigation_accept"
         app:cb_color="@color/fab_done"/>
 

@@ -2,6 +2,8 @@ package com.bustiblelemons.cthulhator.character.skills.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.bustiblelemons.cthulhator.R;
@@ -17,6 +19,7 @@ import java.util.Collection;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import butterknife.Optional;
 
 /**
  * Created by bhm on 31.08.14.
@@ -33,11 +36,19 @@ public class SkillsChooserActivity extends AbsCharacterCreationActivity
     private String mPoolPrefix = "";
     private int mPointsAvailable;
 
+    @Optional
+    @InjectView(android.R.id.list)
+    RecyclerView mRecyclerView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skill_chooser);
         ButterKnife.inject(this);
+        if (mRecyclerView != null) {
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        }
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
         }

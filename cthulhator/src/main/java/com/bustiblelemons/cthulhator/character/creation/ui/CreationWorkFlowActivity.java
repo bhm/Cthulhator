@@ -1,49 +1,50 @@
 package com.bustiblelemons.cthulhator.character.creation.ui;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.character.characterslist.logic.SavedCharacterTransformer;
 import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
 import com.bustiblelemons.cthulhator.character.persistance.SavedCharactersProvider;
+import com.bustiblelemons.cthulhator.character.skills.logic.CreationWorkflowAdapter;
+import com.bustiblelemons.cthulhator.character.skills.logic.OnCreationWorkflowListener;
+import com.bustiblelemons.cthulhator.character.skills.model.CreationWorkflowCard;
 import com.bustiblelemons.cthulhator.settings.Settings;
 import com.bustiblelemons.cthulhator.system.CthulhuCharacter;
 import com.bustiblelemons.cthulhator.system.edition.GameEdition;
-import com.bustiblelemons.cthulhator.view.charactercard.CharacterCardView;
 import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
-import com.bustiblelemons.views.card.CardView;
+import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfoProvider;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import butterknife.Optional;
 
 /**
  * Created by bhm on 29.08.14.
  */
 public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
-        implements View.OnClickListener, CharacterCardView.OnCharacterCardViewClick,
-                   CardView.OnTitleClick {
+        implements OnCreationWorkflowListener, CharacterInfoProvider {
 
-    @InjectView(R.id.preview_card)
-    CharacterCardView mCharacterCardView;
-    @InjectView(R.id.add_character_equipement)
-    CardView          mEquipmentCardView;
-    private CharacterWrappper mCharacterWrappper;
+    @Optional
+    @InjectView(R.id.recycler)
+    RecyclerView mRecyclerView;
+
     private GameEdition mEdition = GameEdition.CoC5;
+    private CharacterWrappper       mCharacterWrappper;
+    private CreationWorkflowAdapter mRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creation_workflow);
-        View addDetails = findViewById(R.id.add_character_details);
-        if (addDetails != null) {
-            addDetails.setOnClickListener(this);
-        }
         ButterKnife.inject(this);
+        if (mRecyclerView != null) {
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        }
         mCharacterWrappper = getInstanceArgument();
         if (mCharacterWrappper == null) {
             mEdition = Settings.getEdition(this);
@@ -51,34 +52,10 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
         } else {
             mEdition = mCharacterWrappper.getEdition();
         }
-        if (mCharacterCardView != null) {
-            mCharacterCardView.setOnCharacterCardViewClick(this);
-        }
-        if (mEquipmentCardView != null) {
-            mEquipmentCardView.setOnTitleClick(this);
-        }
+        setupAdapter();
+
     }
 
-    @OnClick({R.id.add_character_details,
-            R.id.add_character_history,
-            R.id.add_character_statistics,
-            R.id.add_character_equipement})
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-        case R.id.add_character_details:
-            launchRandomCharacter(mCharacterWrappper);
-            break;
-        case R.id.add_character_history:
-            launchHistoryEditor(mCharacterWrappper);
-            break;
-        case R.id.add_character_statistics:
-            launchStatisticsCreator(mCharacterWrappper);
-            break;
-        case R.id.add_character_equipement:
-            break;
-        }
-    }
 
     @OnClick(R.id.done)
     public void onSaveCharacter(View view) {
@@ -87,53 +64,40 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data != null) {
-            Bundle e = data.getExtras();
-            if (e != null && e.containsKey(INSTANCE_ARGUMENT)) {
-                CharacterWrappper passedBack = e.getParcelable(INSTANCE_ARGUMENT);
-                log.d("passedback %s", passedBack);
-                if (passedBack != null) {
-                    onInstanceArgumentRead(passedBack);
-                }
-            }
-        }
-    }
-
-    @Override
     protected void onInstanceArgumentRead(CharacterWrappper arg) {
         mCharacterWrappper = arg;
-        if (mCharacterWrappper != null && mCharacterCardView != null) {
-            CharacterInfo characterInfo = SavedCharacterTransformer.getInstance()
-                    .withContext(this)
-                    .transform(mCharacterWrappper);
-            mCharacterCardView.setCardInfo(characterInfo);
+        setupAdapter();
+    }
+
+    private void setupAdapter() {
+        if (mRecyclerAdapter == null) {
+            mRecyclerAdapter = new CreationWorkflowAdapter();
+            mRecyclerView.setAdapter(mRecyclerAdapter);
+        }
+        mRecyclerAdapter.refreshData(CreationWorkflowCard.values());
+        mRecyclerAdapter.withCharacterInfoProvider(this)
+                .withCreationWorkflowCardListener(this);
+    }
+
+    @Override
+    public void onCreationWorkflowClicked(CreationWorkflowCard card) {
+        switch (card) {
+        case DETAILS:
+            launchRandomCharacter(mCharacterWrappper);
+            break;
+        case HISTORY:
+            launchHistoryEditor(mCharacterWrappper);
+            break;
+        case STATS:
+            launchStatisticsCreator(mCharacterWrappper);
+            break;
+        case EQUIPMENT:
+            break;
         }
     }
 
     @Override
-    public void onImageClick(CharacterCardView view) {
-        launchRandomCharacter(mCharacterWrappper);
-    }
-
-    @Override
-    public void onMainInfoClick(CharacterCardView view) {
-        launchRandomCharacter(mCharacterWrappper);
-    }
-
-    @Override
-    public void onShortInfoClick(CharacterCardView view) {
-        launchRandomCharacter(mCharacterWrappper);
-    }
-
-    @Override
-    public void onExtraInfoClick(CharacterCardView view) {
-        launchStatisticsCreator(mCharacterWrappper);
-    }
-
-    @Override
-    public void onCardTitleClick(CardView cardView, TextView view) {
-        Toast.makeText(this, view.getText(), Toast.LENGTH_LONG).show();
+    public CharacterInfo onRetreiveCharacterInfo(Context arg) {
+        return mCharacterWrappper.onRetreiveCharacterInfo(arg);
     }
 }
