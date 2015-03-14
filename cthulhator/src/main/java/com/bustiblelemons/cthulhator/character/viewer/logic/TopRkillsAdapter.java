@@ -13,9 +13,6 @@ import com.bustiblelemons.recycler.AbsRecyclerHolder;
 public class TopRkillsAdapter
         extends AbsRecyclerAdapter<CharacterProperty, AbsRecyclerHolder<CharacterProperty>> {
 
-    public TopRkillsAdapter() {
-        super();
-    }
 
     @Override
     public int getLayoutId(int viewType) {

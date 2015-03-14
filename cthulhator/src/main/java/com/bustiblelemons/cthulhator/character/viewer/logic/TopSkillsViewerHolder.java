@@ -17,7 +17,7 @@ import java.util.List;
 public class TopSkillsViewerHolder extends AbsRecyclerHolder<CharacterViewerCard> {
 
     private final RecyclerView               mRecycler;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private       RecyclerView.LayoutManager mLayoutManager;
     private       TopSkillsRetriever         mRetreiver;
     private       TopRkillsAdapter           mRecyclerAdapter;
 

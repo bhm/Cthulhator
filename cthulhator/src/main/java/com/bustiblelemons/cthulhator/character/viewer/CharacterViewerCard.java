@@ -128,17 +128,7 @@ public enum CharacterViewerCard {
             }
             return mNames;
         }
-    }, SKILLS {
-        @Override
-        public int getLayoutId() {
-            return R.layout.card_brp_skills;
-        }
-
-        @Override
-        public Collection<String> getPropertyNames() {
-            return null;
-        }
-    },;
+    };
 
     public abstract int getLayoutId();
 

@@ -19,10 +19,10 @@ import java.util.List;
 public abstract class AbsRecyclerAdapter<I, VH extends AbsRecyclerHolder<I>>
         extends RecyclerView.Adapter<VH> {
 
-    private List<I> mData = new ArrayList<I>(0);
+    private List<I> mData;
 
     public AbsRecyclerAdapter() {
-
+        mData = new ArrayList<I>(10);
     }
 
     public abstract int getLayoutId(int viewType);
@@ -157,7 +157,11 @@ public abstract class AbsRecyclerAdapter<I, VH extends AbsRecyclerHolder<I>>
         if (data == null) {
             throw new NullPointerException("param cannot be null");
         }
-        this.mData = new ArrayList<I>(data);
+        if(mData == null) {
+            mData = new ArrayList<I>(data.size());
+        }
+        mData.clear();
+        mData.addAll(data);
     }
 
     public void removeItem(int pos) {
