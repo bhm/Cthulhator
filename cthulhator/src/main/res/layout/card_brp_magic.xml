@@ -37,4 +37,5 @@
             app:valueSize="@dimen/font_18"/>
 
     </LinearLayout>
+
 </FrameLayout>

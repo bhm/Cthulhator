@@ -22,9 +22,7 @@ import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -35,7 +33,8 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
  * Created by bhm on 20.07.14.
  */
 public class SkillsListFragment extends AbsFragmentWithSerializable<SkillsPackage>
-        implements OnSkillChanged, CharacterPropertySortAsyn.OnPropertiesSorted,
+        implements OnSkillChanged,
+                   CharacterPropertySortAsyn.OnPropertiesSorted,
                    CanModifyPointPool {
 
     public static final String TAG = SkillsListFragment.class.getSimpleName();
@@ -45,15 +44,15 @@ public class SkillsListFragment extends AbsFragmentWithSerializable<SkillsPackag
     @InjectView(R.id.points_available)
     TextView                  mPointsAvailableView;
 
-    private SkillsAdapterSticky mSkillsAdapter;
-    private int                 mPointsAvailable;
-    private int mCareerPoints = 0;
-    private int mHobbyPoints  = 0;
-    private Set<CharacterProperty> mSkills;
-    private Comparator<CharacterProperty> mComparator = CharacterPropertyComparators.ACTION_GROUP;
+    private int                           mCareerPoints = 0;
+    private int                           mHobbyPoints  = 0;
+    private Comparator<CharacterProperty> mComparator   = CharacterPropertyComparators.ACTION_GROUP;
+    private SkillsAdapterSticky      mSkillsAdapter;
+    private Collection<CharacterProperty>   mSkills;
+    private int                      mPointsAvailable;
     private int                      mMaxPoints;
     private OnSaveSkills             mOnSaveSkills;
-    private SkillsPackage            mSkillsPacakge;
+    private SkillsPackage            mSkillsPackage;
     private OnSkillPointsPoolChanged mPointsPoolChanged;
 
     public static SkillsListFragment newInstance(SkillsPackage arg) {
@@ -88,15 +87,15 @@ public class SkillsListFragment extends AbsFragmentWithSerializable<SkillsPackag
     @Override
     protected void onInstanceArgumentRead(SkillsPackage arg) {
         if (arg != null) {
-            mSkillsPacakge = arg;
+            mSkillsPackage = arg;
             setupSkillsList();
             setupPoints();
         }
     }
 
     private void setupPoints() {
-        mPointsAvailable = mSkillsPacakge.getAvailableSkillPoints();
-        mMaxPoints = mSkillsPacakge.getMaxPoints();
+        mPointsAvailable = mSkillsPackage.getAvailableSkillPoints();
+        mMaxPoints = mSkillsPackage.getMaxPoints();
         setPointsAvailable(mPointsAvailable);
     }
 
@@ -107,7 +106,7 @@ public class SkillsListFragment extends AbsFragmentWithSerializable<SkillsPackag
     }
 
     private void setupSkillsList() {
-        mSkills = new HashSet<CharacterProperty>(mSkillsPacakge.getData());
+        mSkills = mSkillsPackage.getData();
         CharacterPropertySortAsyn sortAsyn = new CharacterPropertySortAsyn(getContext(), this,
                 mSkills);
         sortAsyn.executeCrossPlatform(mComparator);
@@ -157,7 +156,7 @@ public class SkillsListFragment extends AbsFragmentWithSerializable<SkillsPackag
 
     @Override
     public void onCharacterPropertiesSortedByGroup(Comparator<CharacterProperty> comparator,
-                                                   ActionGroup header,
+                                                   ActionGroup actionGroup,
                                                    List<CharacterProperty> sortedSet) {
         if (mSkillsAdapter != null) {
             mSkillsAdapter.addItems(sortedSet);

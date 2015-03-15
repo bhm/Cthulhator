@@ -5,7 +5,7 @@ import android.content.Context;
 import com.bustiblelemons.async.AbsSimpleAsync;
 import com.bustiblelemons.cthulhator.character.history.model.HistoryEvent;
 import com.bustiblelemons.cthulhator.character.history.model.TimeSpan;
-import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
+import com.bustiblelemons.cthulhator.character.persistance.CharacterWrapper;
 
 import java.util.Collection;
 import java.util.Set;
@@ -17,11 +17,11 @@ import java.util.TreeSet;
 public class LoadHistoryEventsAsyn
         extends AbsSimpleAsync<TimeSpan, Set<HistoryEvent>> {
 
-    private final CharacterWrappper        mSavedCharacter;
+    private final CharacterWrapper      mSavedCharacter;
     private       OnHistoryEventsLoaded onHistoryEventsLoaded;
     private       TimeSpan              mTimespan;
 
-    public LoadHistoryEventsAsyn(Context context, CharacterWrappper savedCharacter) {
+    public LoadHistoryEventsAsyn(Context context, CharacterWrapper savedCharacter) {
         super(context);
         mSavedCharacter = savedCharacter;
     }

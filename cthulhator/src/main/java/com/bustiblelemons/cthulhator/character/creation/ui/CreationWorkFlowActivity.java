@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
+import com.bustiblelemons.cthulhator.character.persistance.CharacterWrapper;
 import com.bustiblelemons.cthulhator.character.persistance.SavedCharactersProvider;
 import com.bustiblelemons.cthulhator.character.skills.logic.CreationWorkflowAdapter;
 import com.bustiblelemons.cthulhator.character.skills.logic.OnCreationWorkflowListener;
@@ -34,7 +34,7 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
     RecyclerView mRecyclerView;
 
     private GameEdition mEdition = GameEdition.CoC5;
-    private CharacterWrappper       mCharacterWrappper;
+    private CharacterWrapper        mCharacterWrapper;
     private CreationWorkflowAdapter mRecyclerAdapter;
 
     @Override
@@ -45,12 +45,12 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
         if (mRecyclerView != null) {
             mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
-        mCharacterWrappper = getInstanceArgument();
-        if (mCharacterWrappper == null) {
+        mCharacterWrapper = getInstanceArgument();
+        if (mCharacterWrapper == null) {
             mEdition = Settings.getEdition(this);
-            mCharacterWrappper = CthulhuCharacter.forEdition(mEdition);
+            mCharacterWrapper = CthulhuCharacter.forEdition(mEdition);
         } else {
-            mEdition = mCharacterWrappper.getEdition();
+            mEdition = mCharacterWrapper.getEdition();
         }
         setupAdapter();
 
@@ -59,13 +59,13 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
 
     @OnClick(R.id.done)
     public void onSaveCharacter(View view) {
-        SavedCharactersProvider.saveCharacter(this, mCharacterWrappper);
+        SavedCharactersProvider.saveCharacter(this, mCharacterWrapper);
         onBackPressed();
     }
 
     @Override
-    protected void onInstanceArgumentRead(CharacterWrappper arg) {
-        mCharacterWrappper = arg;
+    protected void onInstanceArgumentRead(CharacterWrapper arg) {
+        mCharacterWrapper = arg;
         setupAdapter();
     }
 
@@ -83,13 +83,13 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
     public void onCreationWorkflowClicked(CreationWorkflowCard card) {
         switch (card) {
         case DETAILS:
-            launchRandomCharacter(mCharacterWrappper);
+            launchRandomCharacter(mCharacterWrapper);
             break;
         case HISTORY:
-            launchHistoryEditor(mCharacterWrappper);
+            launchHistoryEditor(mCharacterWrapper);
             break;
         case STATS:
-            launchStatisticsCreator(mCharacterWrappper);
+            launchStatisticsCreator(mCharacterWrapper);
             break;
         case EQUIPMENT:
             break;
@@ -98,6 +98,6 @@ public class CreationWorkFlowActivity extends AbsCharacterCreationActivity
 
     @Override
     public CharacterInfo onRetreiveCharacterInfo(Context arg) {
-        return mCharacterWrappper.onRetreiveCharacterInfo(arg);
+        return mCharacterWrapper.onRetreiveCharacterInfo(arg);
     }
 }

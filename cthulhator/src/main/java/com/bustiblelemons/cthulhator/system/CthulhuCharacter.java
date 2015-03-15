@@ -4,7 +4,7 @@ import android.support.v4.util.LruCache;
 import android.util.Pair;
 
 import com.bustiblelemons.cthulhator.character.history.model.HistoryEvent;
-import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
+import com.bustiblelemons.cthulhator.character.persistance.CharacterWrapper;
 import com.bustiblelemons.cthulhator.character.possessions.model.Possesion;
 import com.bustiblelemons.cthulhator.system.edition.GameEdition;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
@@ -18,7 +18,7 @@ import java.util.List;
  * Created by bhm on 29.07.14.
  */
 @JsonIgnoreProperties({"cachedStats", "cachdSkills"})
-public class CthulhuCharacter extends CharacterWrappper {
+public class CthulhuCharacter extends CharacterWrapper {
 
     private transient LruCache<CharacterProperty, List<Possesion>> cachedAffectedPossessions =
             new LruCache<CharacterProperty, List<Possesion>>(20);

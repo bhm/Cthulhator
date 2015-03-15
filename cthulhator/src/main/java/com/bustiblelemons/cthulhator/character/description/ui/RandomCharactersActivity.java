@@ -14,7 +14,7 @@ import com.bustiblelemons.cthulhator.character.description.logic.CharacteristicT
 import com.bustiblelemons.cthulhator.character.description.logic.RandomUserMELocationPagerAdapter;
 import com.bustiblelemons.cthulhator.character.description.logic.RandomUserMENamePagerAdapter;
 import com.bustiblelemons.cthulhator.character.description.model.CharacterDescription;
-import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
+import com.bustiblelemons.cthulhator.character.persistance.CharacterWrapper;
 import com.bustiblelemons.cthulhator.character.portrait.logic.OnBroadcastOnlineSearchSettings;
 import com.bustiblelemons.cthulhator.character.portrait.logic.OnOpenSearchSettings;
 import com.bustiblelemons.cthulhator.character.portrait.model.Portrait;
@@ -102,7 +102,7 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
     private RandomCharSettingsDialog         randomCharSettingsDialog;
     private PortraitsSettingsFragment        mPortraitSettingsFragment;
     private CharacterSettings                mCharacterSettings;
-    private CharacterWrappper                mSavedCharacter;
+    private CharacterWrapper                 mSavedCharacter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -452,7 +452,7 @@ public class RandomCharactersActivity extends AbsCharacterCreationActivity
     }
 
     @Override
-    protected void onInstanceArgumentRead(CharacterWrappper arg) {
+    protected void onInstanceArgumentRead(CharacterWrapper arg) {
         mSavedCharacter = arg;
     }
 }

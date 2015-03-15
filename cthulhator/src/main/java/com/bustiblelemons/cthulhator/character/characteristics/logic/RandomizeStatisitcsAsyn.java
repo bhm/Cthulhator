@@ -3,12 +3,12 @@ package com.bustiblelemons.cthulhator.character.characteristics.logic;
 import android.content.Context;
 
 import com.bustiblelemons.async.AbsSimpleAsync;
-import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
+import com.bustiblelemons.cthulhator.character.persistance.CharacterWrapper;
 
 /**
  * Created by hiv on 12.11.14.
  */
-public class RandomizeStatisitcsAsyn extends AbsSimpleAsync<CharacterWrappper, CharacterWrappper> {
+public class RandomizeStatisitcsAsyn extends AbsSimpleAsync<CharacterWrapper, CharacterWrapper> {
 
     private OnStatisitcsRandomized mOnStatisticsRandomized;
 
@@ -22,8 +22,8 @@ public class RandomizeStatisitcsAsyn extends AbsSimpleAsync<CharacterWrappper, C
     }
 
     @Override
-    protected CharacterWrappper call(CharacterWrappper... params) throws Exception {
-        for (CharacterWrappper character : params) {
+    protected CharacterWrapper call(CharacterWrapper... params) throws Exception {
+        for (CharacterWrapper character : params) {
             if (character != null) {
                 character.randomizeStatistics();
                 publishProgress(character, character);
@@ -38,7 +38,7 @@ public class RandomizeStatisitcsAsyn extends AbsSimpleAsync<CharacterWrappper, C
     }
 
     @Override
-    protected void onProgressUpdate(CharacterWrappper param, CharacterWrappper result) {
+    protected void onProgressUpdate(CharacterWrapper param, CharacterWrapper result) {
         if (mOnStatisticsRandomized != null) {
             mOnStatisticsRandomized.onStatisitcsRandomzied(result);
         }

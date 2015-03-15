@@ -6,13 +6,14 @@
     android:layout_height="wrap_content"
     android:background="@color/light_background">
 
-    <FrameLayout
+    <RelativeLayout
         style="@style/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_16">
 
         <com.bustiblelemons.views.SkillView
+            android:id="@id/app"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:tag="@string/app"
@@ -22,7 +23,24 @@
             app:statValue="@integer/placeholder_perc_val"
             app:titleSize="@dimen/font_16"
             app:valueSize="@dimen/font_18"/>
-    </FrameLayout>
 
+        <View
+            android:id="@id/___divider_3"
+            android:layout_below="@id/app"
+            style="@style/full_bleed_divider"
+            android:layout_width="match_parent"/>
+
+        <TextView
+            android:layout_below="@id/___divider_3"
+            android:textColor="@color/black_54"
+            android:id="@id/skills_list"
+            android:textAllCaps="true"
+            android:gravity="center"
+            android:padding="@dimen/padding_12"
+            android:text="@string/show_skills"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
 
 </FrameLayout>

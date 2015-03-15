@@ -102,5 +102,6 @@
     <string name="unknown_statistics">No statistics</string>
     <string name="unknonw_location">Unknown location</string>
     <string name="CthulhuMythos">CthulhuMythos</string>
+    <string name="show_skills">Show Skills</string>
 
 </resources>

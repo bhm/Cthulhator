@@ -13,12 +13,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.bustiblelemons.cthulhator.R;
-import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
+import com.bustiblelemons.cthulhator.character.persistance.CharacterWrapper;
 import com.bustiblelemons.cthulhator.character.portrait.model.Portrait;
 import com.bustiblelemons.cthulhator.character.viewer.CharacterViewerCard;
 import com.bustiblelemons.cthulhator.character.viewer.logic.CharacterViewerAdapter;
 import com.bustiblelemons.cthulhator.character.viewer.logic.OnExpandCharacterViewer;
-import com.bustiblelemons.cthulhator.fragments.AbsFragmentWithParcelable;
+import com.bustiblelemons.cthulhator.fragments.AbsFragmentWithArg;
 import com.bustiblelemons.cthulhator.view.FabListener;
 import com.bustiblelemons.views.loadingimage.RemoteImage;
 
@@ -29,7 +29,7 @@ import butterknife.InjectView;
 /**
  * Created by hiv on 17.11.14.
  */
-public class CharacterViewerFragment extends AbsFragmentWithParcelable<CharacterWrappper>
+public class CharacterViewerFragment extends AbsFragmentWithArg<CharacterWrapper>
         implements FabListener<CircleButton> {
 
     private static final int DEFAULT_SCREEN_PERCENTAGE = 75;
@@ -41,7 +41,7 @@ public class CharacterViewerFragment extends AbsFragmentWithParcelable<Character
 
     private Animation                  mSlideInAnimation;
     private Animation                  mSlideOutAnimation;
-    private CharacterWrappper          mCharacterWrappper;
+    private CharacterWrapper           mCharacterWrapper;
     private RecyclerView.LayoutManager mManager;
     private RecyclerView.ItemAnimator  mAnimator;
     private OnExpandCharacterViewer    mExpandCallback;
@@ -72,7 +72,7 @@ public class CharacterViewerFragment extends AbsFragmentWithParcelable<Character
 
     private CharacterViewerAdapter mAdapter;
 
-    public static CharacterViewerFragment newInstance(CharacterWrappper savedCharacter) {
+    public static CharacterViewerFragment newInstance(CharacterWrapper savedCharacter) {
         CharacterViewerFragment r = new CharacterViewerFragment();
         r.setNewInstanceArgument(savedCharacter);
         return r;
@@ -121,16 +121,16 @@ public class CharacterViewerFragment extends AbsFragmentWithParcelable<Character
     }
 
     @Override
-    protected void onInstanceArgumentRead(CharacterWrappper instanceArgument) {
+    protected void onInstanceArgumentRead(CharacterWrapper instanceArgument) {
         if (instanceArgument != null) {
-            mCharacterWrappper = instanceArgument;
-            Portrait p = mCharacterWrappper.getMainPortrait();
+            mCharacterWrapper = instanceArgument;
+            Portrait p = mCharacterWrapper.getMainPortrait();
             if (mImage != null && p != null) {
                 mImage.loadFrom(p.getUrl());
             }
             if (mAdapter == null) {
                 mAdapter = new CharacterViewerAdapter(getActivity());
-                mAdapter.withCharacterWrapper(mCharacterWrappper);
+                mAdapter.withCharacterWrapper(mCharacterWrapper);
                 mAdapter.withFabListener(this);
                 mRecyclerView.setAdapter(mAdapter);
             }

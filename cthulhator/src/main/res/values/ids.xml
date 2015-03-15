@@ -115,4 +115,6 @@
     <item name="go_back" type="id"/>
     <item name="___divider_1" type="id"/>
     <item name="___divider_2" type="id"/>
+    <item name="dex_oon" type="id"/>
+    <item name="___divider_3" type="id"/>
 </resources>
