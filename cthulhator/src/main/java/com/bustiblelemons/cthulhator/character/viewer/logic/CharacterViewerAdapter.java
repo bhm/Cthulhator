@@ -3,7 +3,7 @@ package com.bustiblelemons.cthulhator.character.viewer.logic;
 import android.content.Context;
 import android.view.View;
 
-import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
+import com.bustiblelemons.cthulhator.character.persistance.CharacterWrapper;
 import com.bustiblelemons.cthulhator.character.viewer.CharacterViewerCard;
 import com.bustiblelemons.cthulhator.view.FabListener;
 import com.bustiblelemons.recycler.AbsRecyclerAdapter;
@@ -17,7 +17,7 @@ import at.markushi.ui.CircleButton;
 public class CharacterViewerAdapter extends AbsRecyclerAdapter<CharacterViewerCard,
         AbsRecyclerHolder<CharacterViewerCard>> {
 
-    private CharacterWrappper         mCharacterWrappper;
+    private CharacterWrapper          mCharacterWrapper;
     private HeightSizeRelay           mHeightSizeRelay;
     private FabListener<CircleButton> mFabListener;
 
@@ -52,17 +52,17 @@ public class CharacterViewerAdapter extends AbsRecyclerAdapter<CharacterViewerCa
             return new TitleCardHolder(view)
                     .withFabListener(mFabListener)
                     .withHeightSizeListener(mHeightSizeRelay)
-                    .withCharacterInfoProivder(mCharacterWrappper)
-                    .withPropertyValueRetreiver(mCharacterWrappper);
+                    .withCharacterInfoProivder(mCharacterWrapper)
+                    .withPropertyValueRetreiver(mCharacterWrapper);
 //        case MIND:
 //            return new MindViewerCardHolder(view).withPropertyValueRetreiver(mCharacterWrappper);
         default:
-            return new CharacterViewerCardHolder(view).withPropertyValueRetreiver(mCharacterWrappper);
+            return new CharacterViewerCardHolder(view).withPropertyValueRetreiver(mCharacterWrapper);
         }
     }
 
-    public CharacterViewerAdapter withCharacterWrapper(CharacterWrappper characterWrappper) {
-        mCharacterWrappper = characterWrappper;
+    public CharacterViewerAdapter withCharacterWrapper(CharacterWrapper characterWrapper) {
+        mCharacterWrapper = characterWrapper;
         return this;
     }
 }

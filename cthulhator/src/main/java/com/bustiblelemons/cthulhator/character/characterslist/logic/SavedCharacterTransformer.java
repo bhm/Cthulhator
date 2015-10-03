@@ -4,7 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.bustiblelemons.cthulhator.character.description.model.CharacterDescription;
-import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
+import com.bustiblelemons.cthulhator.character.persistance.CharacterWrapper;
 import com.bustiblelemons.cthulhator.character.persistance.SavedCharacter;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
 import com.bustiblelemons.cthulhator.view.charactercard.CharacterInfo;
@@ -31,7 +31,7 @@ public class SavedCharacterTransformer {
         return this;
     }
 
-    public <E extends CharacterWrappper>  CharacterInfo transform(final E savedCharacter) {
+    public <E extends CharacterWrapper>  CharacterInfo transform(final E savedCharacter) {
         if (savedCharacter != null) {
             CharacterInfoImpl impl = new CharacterInfoImpl();
             if (savedCharacter.getDescription() != null) {
@@ -67,7 +67,7 @@ public class SavedCharacterTransformer {
         return String.format(Locale.ENGLISH, "%s", location);
     }
 
-    private  <E extends CharacterWrappper> String getMainCharacteristics(E savedCharacter) {
+    private  <E extends CharacterWrapper> String getMainCharacteristics(E savedCharacter) {
         StringBuilder b = new StringBuilder();
         String prefix = "";
         for (CharacterProperty p : savedCharacter.getTopCharacteristics(3)) {

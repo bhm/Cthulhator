@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.history.model.HistoryEvent;
-import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
+import com.bustiblelemons.cthulhator.character.persistance.CharacterWrapper;
 import com.bustiblelemons.cthulhator.settings.Settings;
 import com.bustiblelemons.cthulhator.settings.character.CharacterSettings;
 import com.bustiblelemons.cthulhator.system.brp.statistics.BRPStatistic;
@@ -22,7 +22,7 @@ public class HistoryEventFactory {
 
     private static HistoryEventFactory INSTANCE;
     private        Context             mContext;
-    private        CharacterWrappper   mSavedCharacter;
+    private        CharacterWrapper    mSavedCharacter;
 
     public HistoryEventFactory(Context context) {
         mContext = context;
@@ -39,7 +39,7 @@ public class HistoryEventFactory {
         return INSTANCE;
     }
 
-    public HistoryEventFactory withCharacter(CharacterWrappper mSavedCharacter) {
+    public HistoryEventFactory withCharacter(CharacterWrapper mSavedCharacter) {
         this.mSavedCharacter = mSavedCharacter;
         return this;
     }

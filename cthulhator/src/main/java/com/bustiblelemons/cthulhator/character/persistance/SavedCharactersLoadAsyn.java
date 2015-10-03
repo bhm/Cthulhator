@@ -33,7 +33,7 @@ public class SavedCharactersLoadAsyn extends AbsSimpleAsync<Grouping, List<Chara
                     CharacterInfo characterInfo =
                             SavedCharacterTransformer.getInstance()
                                     .withContext(getContext())
-                                    .transform(new CharacterWrappper(savedCharacter));
+                                    .transform(new CharacterWrapper(savedCharacter));
                     infos.add(characterInfo);
                 }
                 publishProgress(g, infos);

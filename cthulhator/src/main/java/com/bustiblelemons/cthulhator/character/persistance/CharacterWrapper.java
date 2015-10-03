@@ -44,7 +44,7 @@ import java.util.TreeSet;
 /**
  * Created by hiv on 07.01.15.
  */
-public class CharacterWrappper extends SavedCharacter implements PropertyValueRetreiver,
+public class CharacterWrapper extends SavedCharacter implements PropertyValueRetreiver,
                                                                  CharacterInfoProvider,
                                                                  TopSkillsRetriever {
 
@@ -52,14 +52,14 @@ public class CharacterWrappper extends SavedCharacter implements PropertyValueRe
         sShouldHaveAssignedAtLeast = BRPStatistic.values().length / 5;
     }
 
-    public static final Parcelable.Creator<CharacterWrappper>        CREATOR                   =
-            new Parcelable.Creator<CharacterWrappper>() {
-                public CharacterWrappper createFromParcel(Parcel source) {
-                    return new CharacterWrappper(source);
+    public static final Parcelable.Creator<CharacterWrapper>         CREATOR                   =
+            new Parcelable.Creator<CharacterWrapper>() {
+                public CharacterWrapper createFromParcel(Parcel source) {
+                    return new CharacterWrapper(source);
                 }
 
-                public CharacterWrappper[] newArray(int size) {
-                    return new CharacterWrappper[size];
+                public CharacterWrapper[] newArray(int size) {
+                    return new CharacterWrapper[size];
                 }
             };
     private static      LruCache<CharacterProperty, List<Possesion>> cachedAffectedPossessions =
@@ -80,7 +80,7 @@ public class CharacterWrappper extends SavedCharacter implements PropertyValueRe
     private Sanity        sanity;
     private CharacterInfo mCharacterInfo;
 
-    public CharacterWrappper(Parcel in) {
+    public CharacterWrapper(Parcel in) {
         super(in);
         this.suggestedDate = in.readLong();
         this.skillPointsAvailable = in.readInt();
@@ -94,7 +94,7 @@ public class CharacterWrappper extends SavedCharacter implements PropertyValueRe
         dest.writeInt(this.skillPointsAvailable);
     }
 
-    public CharacterWrappper(SavedCharacter character) {
+    public CharacterWrapper(SavedCharacter character) {
         super.setId(character.getId());
         super.setProperties(character.getProperties());
         super.setDescription(character.getDescription());
@@ -109,7 +109,7 @@ public class CharacterWrappper extends SavedCharacter implements PropertyValueRe
         updateSkillPointPools();
     }
 
-    public CharacterWrappper(GameEdition edition) {
+    public CharacterWrapper(GameEdition edition) {
         setEdition(edition);
     }
 
@@ -730,8 +730,8 @@ public class CharacterWrappper extends SavedCharacter implements PropertyValueRe
         return true;
     }
 
-    public static CharacterWrappper from(SavedCharacter character) {
-        return new CharacterWrappper(character);
+    public static CharacterWrapper from(SavedCharacter character) {
+        return new CharacterWrapper(character);
     }
 
     //FIXME this class should not know of Context.class

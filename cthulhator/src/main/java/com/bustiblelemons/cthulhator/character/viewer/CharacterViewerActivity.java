@@ -7,7 +7,7 @@ import android.support.v7.widget.Toolbar;
 import com.bustiblelemons.activities.AbsArgSerializableActivity;
 import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.description.model.CharacterDescription;
-import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
+import com.bustiblelemons.cthulhator.character.persistance.CharacterWrapper;
 import com.bustiblelemons.cthulhator.character.persistance.SavedCharactersProvider;
 import com.bustiblelemons.cthulhator.character.portrait.model.Portrait;
 import com.bustiblelemons.cthulhator.character.viewer.logic.OnExpandCharacterViewer;
@@ -32,9 +32,9 @@ public class CharacterViewerActivity extends AbsArgSerializableActivity<Integer>
     private static      int    sSolidColor       = Color.TRANSPARENT;
     @Optional
     @InjectView(R.id.header)
-    Toolbar     mToolbar;
+    Toolbar mToolbar;
 
-    private CharacterWrappper       mSavedCharacter;
+    private CharacterWrapper        mSavedCharacter;
     private CharacterViewerFragment mCharacterViewerFragment;
     private Portrait                mMainPortrait;
     private CharacterDescription    mDescription;
@@ -56,7 +56,7 @@ public class CharacterViewerActivity extends AbsArgSerializableActivity<Integer>
     }
 
     private void loadCharacter(Integer characterId) {
-        mSavedCharacter = CharacterWrappper
+        mSavedCharacter = CharacterWrapper
                 .from(SavedCharactersProvider.getSavedCharacterById(this, characterId));
     }
 

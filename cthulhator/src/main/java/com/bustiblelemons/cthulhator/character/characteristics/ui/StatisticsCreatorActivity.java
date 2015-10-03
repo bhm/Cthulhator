@@ -19,7 +19,7 @@ import com.bustiblelemons.cthulhator.character.creation.logic.CreatorCardsAdapte
 import com.bustiblelemons.cthulhator.character.creation.logic.RelatedPropertesRetreiver;
 import com.bustiblelemons.cthulhator.character.creation.model.CreatorCard;
 import com.bustiblelemons.cthulhator.character.creation.ui.AbsCharacterCreationActivity;
-import com.bustiblelemons.cthulhator.character.persistance.CharacterWrappper;
+import com.bustiblelemons.cthulhator.character.persistance.CharacterWrapper;
 import com.bustiblelemons.cthulhator.system.CthulhuCharacter;
 import com.bustiblelemons.cthulhator.system.edition.GameEdition;
 import com.bustiblelemons.cthulhator.system.properties.CharacterProperty;
@@ -56,7 +56,7 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     RecyclerView mRecyclerView;
 
     private GameEdition mEdition = GameEdition.CoC5;
-    private CharacterWrappper          mSavedCharacter;
+    private CharacterWrapper           mSavedCharacter;
     private Toolbar                    mToolbar;
     private RecyclerView.LayoutManager mManager;
     private CreatorCardsAdapter        mCardsAdapter;
@@ -156,7 +156,7 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
 
 
     @Override
-    protected void onInstanceArgumentRead(CharacterWrappper arg) {
+    protected void onInstanceArgumentRead(CharacterWrapper arg) {
         mSavedCharacter = arg;
     }
 
@@ -204,7 +204,7 @@ public class StatisticsCreatorActivity extends AbsCharacterCreationActivity
     }
 
     @Override
-    public void onStatisitcsRandomzied(CharacterWrappper character) {
+    public void onStatisitcsRandomzied(CharacterWrapper character) {
         mStatisticsSet = mSavedCharacter.getStatistics();
         loadCardsAsync(mStatisticsSet);
     }

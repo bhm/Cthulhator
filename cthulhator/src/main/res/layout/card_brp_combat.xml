@@ -74,6 +74,7 @@
             android:layout_below="@id/str"/>
 
         <LinearLayout
+            android:id="@id/dex_oon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/___divider_2"
@@ -102,6 +103,23 @@
                 app:valueBelow="false"
                 app:valueSize="@dimen/font_24"/>
         </LinearLayout>
+
+        <View
+            android:id="@id/___divider_3"
+            android:layout_below="@id/dex_oon"
+            style="@style/full_bleed_divider"
+            android:layout_width="match_parent"/>
+
+        <TextView
+            android:layout_below="@id/___divider_3"
+            android:textColor="@color/black_54"
+            android:id="@id/skills_list"
+            android:textAllCaps="true"
+            android:gravity="center"
+            android:padding="@dimen/padding_12"
+            android:text="@string/show_skills"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </RelativeLayout>
 </FrameLayout>
