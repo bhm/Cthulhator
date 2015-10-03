@@ -10,6 +10,7 @@ import java.io.IOException;
 
 /**
  * Created by bhm on 29.07.14.
+ * TODO this needs to rewritten for a code maintained by someone elese
  */
 public abstract class AbsCache {
     public static final Logger log = new Logger(AbsCache.class);
