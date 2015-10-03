@@ -1,6 +1,5 @@
 package com.bustiblelemons.cthulhator.character.viewer.logic;
 
-import android.content.Context;
 import android.view.View;
 
 import com.bustiblelemons.cthulhator.character.persistance.CharacterWrapper;
@@ -21,8 +20,11 @@ public class CharacterViewerAdapter extends AbsRecyclerAdapter<CharacterViewerCa
     private HeightSizeRelay           mHeightSizeRelay;
     private FabListener<CircleButton> mFabListener;
 
-    public CharacterViewerAdapter(Context context) {
-        super();
+    private OnShowSkills mOnShowSkillsCallback;
+
+    public CharacterViewerAdapter withOnShowSkillsCallback(OnShowSkills arg) {
+        mOnShowSkillsCallback = arg;
+        return this;
     }
 
     @Override
@@ -53,7 +55,8 @@ public class CharacterViewerAdapter extends AbsRecyclerAdapter<CharacterViewerCa
                     .withFabListener(mFabListener)
                     .withHeightSizeListener(mHeightSizeRelay)
                     .withCharacterInfoProivder(mCharacterWrapper)
-                    .withPropertyValueRetreiver(mCharacterWrapper);
+                    .withPropertyValueRetreiver(mCharacterWrapper)
+                    .withOnShowSkillsCallback(mOnShowSkillsCallback);
 //        case MIND:
 //            return new MindViewerCardHolder(view).withPropertyValueRetreiver(mCharacterWrappper);
         default:

@@ -117,4 +117,5 @@
     <item name="___divider_2" type="id"/>
     <item name="dex_oon" type="id"/>
     <item name="___divider_3" type="id"/>
+    <item name="showSkills" type="id"/>
 </resources>

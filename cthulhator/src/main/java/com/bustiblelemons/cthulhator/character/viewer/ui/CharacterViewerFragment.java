@@ -18,6 +18,7 @@ import com.bustiblelemons.cthulhator.character.portrait.model.Portrait;
 import com.bustiblelemons.cthulhator.character.viewer.CharacterViewerCard;
 import com.bustiblelemons.cthulhator.character.viewer.logic.CharacterViewerAdapter;
 import com.bustiblelemons.cthulhator.character.viewer.logic.OnExpandCharacterViewer;
+import com.bustiblelemons.cthulhator.character.viewer.logic.OnShowSkills;
 import com.bustiblelemons.cthulhator.fragments.AbsFragmentWithArg;
 import com.bustiblelemons.cthulhator.view.FabListener;
 import com.bustiblelemons.views.loadingimage.RemoteImage;
@@ -71,6 +72,7 @@ public class CharacterViewerFragment extends AbsFragmentWithArg<CharacterWrapper
     };
 
     private CharacterViewerAdapter mAdapter;
+    private OnShowSkills mOnShowSkillsCallback;
 
     public static CharacterViewerFragment newInstance(CharacterWrapper savedCharacter) {
         CharacterViewerFragment r = new CharacterViewerFragment();
@@ -88,6 +90,9 @@ public class CharacterViewerFragment extends AbsFragmentWithArg<CharacterWrapper
         if (mSlideOutAnimation == null) {
             mSlideOutAnimation = AnimationUtils.loadAnimation(activity, R.anim.abc_slide_out_bottom);
             mSlideOutAnimation.setAnimationListener(sAnimationListener);
+        }
+        if (activity instanceof OnShowSkills) {
+            mOnShowSkillsCallback = (OnShowSkills) activity;            
         }
         setupCallbacks(activity);
     }
@@ -129,9 +134,10 @@ public class CharacterViewerFragment extends AbsFragmentWithArg<CharacterWrapper
                 mImage.loadFrom(p.getUrl());
             }
             if (mAdapter == null) {
-                mAdapter = new CharacterViewerAdapter(getActivity());
-                mAdapter.withCharacterWrapper(mCharacterWrapper);
-                mAdapter.withFabListener(this);
+                mAdapter = new CharacterViewerAdapter();
+                mAdapter.withCharacterWrapper(mCharacterWrapper)
+                        .withFabListener(this)
+                        .withOnShowSkillsCallback(mOnShowSkillsCallback);
                 mRecyclerView.setAdapter(mAdapter);
             }
             mAdapter.refreshData(CharacterViewerCard.values());

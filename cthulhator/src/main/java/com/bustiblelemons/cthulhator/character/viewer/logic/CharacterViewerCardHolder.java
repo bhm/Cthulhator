@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bustiblelemons.cthulhator.R;
 import com.bustiblelemons.cthulhator.character.viewer.CharacterViewerCard;
 import com.bustiblelemons.cthulhator.system.properties.PropertyValueRetreiver;
 import com.bustiblelemons.recycler.AbsRecyclerHolder;
@@ -13,13 +14,16 @@ import com.bustiblelemons.views.StatisticView;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.OnClick;
+
 /**
  * Created by hiv on 10.12.14.
  */
 public class CharacterViewerCardHolder extends AbsRecyclerHolder<CharacterViewerCard> {
 
     private PropertyValueRetreiver mRetreiver;
-    private HashMap<String, View> viewMap = new HashMap<String, View>();
+    private HashMap<String, View>  viewMap = new HashMap<String, View>();
+    private OnShowSkills mShowSkillsCallback;
 
 
     public CharacterViewerCardHolder(View view) {
@@ -71,5 +75,15 @@ public class CharacterViewerCardHolder extends AbsRecyclerHolder<CharacterViewer
                 skillView.setIntValue(val);
             }
         }
+    }
+
+    @OnClick(R.id.showSkills)
+    public void onShowSkills(View view) {
+
+    }
+
+    public CharacterViewerCardHolder withOnShowSkillsCallback(OnShowSkills showSkillsCallback) {
+        mShowSkillsCallback = showSkillsCallback;
+        return this;
     }
 }

@@ -11,6 +11,7 @@ import com.bustiblelemons.cthulhator.character.persistance.CharacterWrapper;
 import com.bustiblelemons.cthulhator.character.persistance.SavedCharactersProvider;
 import com.bustiblelemons.cthulhator.character.portrait.model.Portrait;
 import com.bustiblelemons.cthulhator.character.viewer.logic.OnExpandCharacterViewer;
+import com.bustiblelemons.cthulhator.character.viewer.logic.OnShowSkills;
 import com.bustiblelemons.cthulhator.character.viewer.ui.CharacterViewerFragment;
 import com.kbeanie.imagechooser.api.ChosenImage;
 import com.kbeanie.imagechooser.api.ImageChooserListener;
@@ -24,7 +25,7 @@ import butterknife.Optional;
  * Created by bhm on 20.07.14.
  */
 public class CharacterViewerActivity extends AbsArgSerializableActivity<Integer>
-        implements ImageChooserListener,
+        implements ImageChooserListener, OnShowSkills,
                    OnExpandCharacterViewer {
 
     public static final String CHARACTER_ID      = "character_id";
@@ -121,4 +122,8 @@ public class CharacterViewerActivity extends AbsArgSerializableActivity<Integer>
         }
     }
 
+    @Override
+    public void onShowSkills(CharacterViewerCard card) {
+
+    }
 }
