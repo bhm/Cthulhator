@@ -12,6 +12,7 @@ import java.util.concurrent.Executor;
 /**
  * @author jacek on 8/2/14 12:40
  * @origin com.bustiblelemons.async
+ * TODO move to RX code soon
  */
 public abstract class AbsAsynTask<P, R> extends AsyncTask<P, Pair<P, R>, R> {
     private Logger log = new Logger(AbsAsynTask.class);
